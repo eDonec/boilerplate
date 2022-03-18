@@ -1,0 +1,18 @@
+version: "3.9"
+services:
+  front:
+    build:
+      context: ./apps/front
+      dockerfile: Dockerfile
+    command:
+      - node
+      - server.js
+    ports:
+      - "3005:3005"
+    volumes:
+      - ./apps/front/.next/standalone:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=production
+      - PORT=3005
+      - ENV NEXT_TELEMETRY_DISABLED=1

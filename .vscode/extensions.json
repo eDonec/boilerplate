@@ -1,0 +1,10 @@
+{
+  "recommendations": [
+    // Tailwind CSS Intellisense
+    "bradlc.vscode-tailwindcss",
+    "esbenp.prettier-vscode",
+    "dbaeumer.vscode-eslint",
+    "edonec.edonec-extension-pack",
+    "aaron-bond.better-comments"
+  ]
+}

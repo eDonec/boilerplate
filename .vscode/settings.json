@@ -1,0 +1,64 @@
+{
+  "css.customData": [".vscode/css_custom_data.json"],
+  "editor.formatOnSave": true,
+  "editor.tabSize": 2,
+  "editor.codeActionsOnSave": {
+    "source.fixAll": true
+  },
+  "headwind.runOnSave": false,
+  "eslint.validate": ["javascript", "typescript"],
+  "[javascript]": {
+    "editor.formatOnSave": true
+  },
+  "[typescript]": {
+    "editor.formatOnSave": true
+  },
+  "[markdown]": {
+    "editor.formatOnSave": true
+  },
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/bower_components": true,
+    "**/dist": true,
+    "**/coverage": true
+  },
+  "editor.detectIndentation": false,
+  "typescript.referencesCodeLens.enabled": true,
+  "appService.zipIgnorePattern": [".vscode{,/**}"],
+  "appService.deploySubpath": "",
+  "files.exclude": {
+    "**/.git": true,
+    "**/.svn": true,
+    "**/.hg": true,
+    "**/CVS": true,
+    "**/.DS_Store": true,
+    "**/.classpath": true,
+    "**/.project": true,
+    "**/.settings": true,
+    "**/.factorypath": true,
+    "**/.next": true,
+    "**/.github": true,
+    "**/node_modules": true,
+    "**/.gitignore": true,
+    "**/.prettierignore": true,
+    "**/.prettierrc.js": true,
+    "**/next-env.d.ts": true,
+    "**/next.config.js": true,
+    "**/postcss.config.js": true,
+    "**/tsconfig.json": true,
+    "**/yarn.lock": true,
+    "**/jest.*.js": true,
+    "**/.gitkeep": true,
+    "cache": true,
+    "build": true,
+    ".husky": true,
+    "patches": true,
+    "docs": true,
+    "src/__mocks__": true,
+    "**/.history": true,
+    "cypress": true
+  },
+  "explorerExclude.backup": null,
+  "typescript.tsdk": "node_modules\\typescript\\lib",
+  "jest.jestCommandLine": "yarn test"
+}
