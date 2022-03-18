@@ -20,19 +20,8 @@
     }
   },
   "lint-staged": {
-    "apps/**/**/*.{js,jsx,ts,tsx,}": [
-      "eslint --max-warnings=0",
-      "prettier -w"
-    ],
-    "apps/**/src/**/*.{json,css,scss,md}": [
-      "prettier -w"
-    ],
-    "packages/**/**/*.{js,jsx,ts,tsx,}": [
-      "eslint --max-warnings=0",
-      "prettier -w"
-    ],
-    "packages/**/src/**/*.{json,css,scss,md}": [
-      "prettier -w"
+    "*.(ts|tsx)": [
+      "yarn lint"
     ]
   },
   "devDependencies": {
