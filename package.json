@@ -5,6 +5,9 @@
     "prepare": "husky install",
     "start": "yarn workspace client start",
     "build": "yarn workspace client build",
+    "lint": "yarn workspace client lint",
+    "format": "yarn workspace client format",
+    "postbuild": "yarn workspace client postbuild",
     "test": "yarn workspace client test"
   },
   "workspaces": [
