@@ -14,6 +14,11 @@
     "apps/*",
     "packages/*"
   ],
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
   "lint-staged": {
     "apps/**/**/*.{js,jsx,ts,tsx,}": [
       "eslint --max-warnings=0",

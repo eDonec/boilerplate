@@ -51,7 +51,7 @@
     "**/.gitkeep": true,
     "cache": true,
     "build": true,
-    ".husky": true,
+    "**/.husky": true,
     "patches": true,
     "docs": true,
     "src/__mocks__": true,
