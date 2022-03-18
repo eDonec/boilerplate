@@ -26,7 +26,7 @@
   "typescript.referencesCodeLens.enabled": true,
   "appService.zipIgnorePattern": [".vscode{,/**}"],
   "appService.deploySubpath": "",
-  "!files.exclude": {
+  "files.exclude": {
     "**/.git": true,
     "**/.svn": true,
     "**/.hg": true,
@@ -56,6 +56,7 @@
     "docs": true,
     "src/__mocks__": true,
     "**/.history": true,
+    "**/commitlint.config,js": true,
     "cypress": true
   },
   "explorerExclude.backup": null,
