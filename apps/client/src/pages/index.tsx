@@ -23,7 +23,7 @@ export default function HomePage() {
       <SEO />
       <main>
         <section className=' bg-primary-50 '>
-          <div className='layout flex min-h-screen flex-col items-center justify-center  bg-white text-center dark:bg-dark '>
+          <div className='layout text-cente flex min-h-screen flex-col items-center  justify-center bg-white'>
             <Vercel className='text-5xl' />
             <h1 className='mt-4'>
               Next.js + Tailwind CSS + TypeScript Starter
