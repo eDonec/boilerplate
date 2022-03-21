@@ -1,8 +1,14 @@
 import * as React from 'react';
 
+import Button from 'core-ui/Button';
+
 import ButtonLink from 'components/buttons/LinkButton';
 import UnstyledLink from 'components/links/UnstyledLink';
 import SEO from 'components/SEO';
+
+import { useAppDispatch, useAppSelector } from 'hooks/reduxHooks';
+
+import { decrementCounter, incrementCounter } from '_redux/reducers/counter';
 
 /**
  * SVGR Support
@@ -18,6 +24,17 @@ import Vercel from '~/svg/Vercel.svg';
 // to customize the default configuration.
 
 export default function HomePage() {
+  const dispatch = useAppDispatch();
+  const count = useAppSelector((state) => state.counter.count);
+
+  const increment = () => {
+    dispatch(incrementCounter());
+  };
+
+  const decrement = () => {
+    dispatch(decrementCounter());
+  };
+
   return (
     <>
       <SEO />
@@ -53,7 +70,11 @@ export default function HomePage() {
                 alt='Deploy with Vercel'
               />
             </UnstyledLink>
-
+            <h2 className='my-3'>Redux Counter : {count}</h2>
+            <div className='flex gap-2'>
+              <Button title='Increment' onClick={increment} />
+              <Button title='Decrement' onClick={decrement} />
+            </div>
             <footer className='absolute bottom-2 text-gray-700'>
               © {new Date().getFullYear()} By{' '}
               <UnstyledLink href='https://theodorusclarence.com?ref=tsnextstarter'>

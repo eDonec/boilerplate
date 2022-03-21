@@ -15,6 +15,7 @@ const customJestConfig = {
     // Handle module aliases (this will be automatically configured for you soon)
     '^components/(.*)$': '<rootDir>/components/$1',
     '^pages/(.*)$': '<rootDir>/pages/$1',
+    '^hooks/(.*)$': '<rootDir>/hooks/$1',
     '^constants/(.*)$': '<rootDir>/constants/$1',
     '^containers/(.*)$': '<rootDir>/containers/$1',
     '^_redux/(.*)$': '<rootDir>/_redux/$1',

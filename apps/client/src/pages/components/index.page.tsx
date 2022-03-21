@@ -54,7 +54,7 @@ export default function ComponentsPage() {
                 Set to {mode === 'dark' ? 'light' : 'dark'}
               </Button>
               <Button isLoading outline onClick={toggleMode}>
-                SOutlibne
+                Outline
               </Button>
               {/* <Button onClick={randomize}>Randomize CSS Variable</Button> */}
             </div>

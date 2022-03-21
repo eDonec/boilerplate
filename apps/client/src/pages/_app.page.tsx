@@ -1,8 +1,12 @@
+import { Provider } from 'react-redux';
+
 import { AppProps } from 'next/app';
 import Head from 'next/head';
 
 import 'styles/globals.css';
 import 'styles/colors.css';
+
+import store from '_redux/store';
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -16,7 +20,9 @@ function MyApp({ Component, pageProps }: AppProps) {
           crossOrigin='anonymous'
         />
       </Head>
-      <Component {...pageProps} />
+      <Provider store={store}>
+        <Component {...pageProps} />
+      </Provider>
     </>
   );
 }
