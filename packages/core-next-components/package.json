@@ -1,0 +1,9 @@
+{
+  "name": "core-next-components",
+  "version": "0.0.0",
+  "private": true,
+  "dependencies": {
+    "core-ui": "*",
+    "core-utils": "*"
+  }
+}

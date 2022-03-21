@@ -1,10 +1,9 @@
 import * as React from 'react';
 
-import UnstyledLink, { UnstyledLinkProps } from 'components/links/UnstyledLink';
+import { ButtonProps, getVariantsClsx } from 'core-ui/Button';
+import clsx from 'core-utils/clsx';
 
-import clsx from 'helpers/clsx';
-
-import { ButtonProps, getVariantsClsx } from './Button';
+import UnstyledLink, { UnstyledLinkProps } from '../UnstyledLink';
 
 type ButtonLinkProps = ButtonProps & UnstyledLinkProps;
 
@@ -29,7 +28,7 @@ const ButtonLink = React.forwardRef<HTMLAnchorElement, ButtonLinkProps>(
         {...rest}
         className={clsx(
           'inline-flex items-center rounded px-4 py-2 font-semibold',
-          'focus:outline-none focus-visible:ring focus-visible:ring-primary-500',
+          'focus-visible:ring-primary-500 focus:outline-none focus-visible:ring',
           'shadow-sm',
           'transition-colors duration-75',
           getVariantsClsx({ primary, outline, ghost, light, dark }, isDarkBg),

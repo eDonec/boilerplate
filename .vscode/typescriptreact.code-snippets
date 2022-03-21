@@ -44,7 +44,7 @@
     "prefix": "rcp",
     "body": [
       "import * as React from 'react';\n",
-      "import clsx from 'helpers/clsx';\n",
+      "import clsx from 'utils/clsx';\n",
       "export type T${1:${TM_FILENAME_BASE}}Props= {\n",
       "} & React.ComponentPropsWithoutRef<'div'>\n",
       "const ${1:${TM_FILENAME_BASE}}: React.FC<T${1:${TM_FILENAME_BASE}}Props> = ({className, ...rest}) => {",

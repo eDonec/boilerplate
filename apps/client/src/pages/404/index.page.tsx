@@ -1,13 +1,11 @@
-import * as React from 'react';
+import { ButtonLink, SEO } from 'core-next-components';
 
-import ButtonLink from 'components/buttons/LinkButton';
 import Layout from 'components/layout/Layout';
-import Seo from 'components/SEO';
 
 export default function NotFoundPage() {
   return (
     <Layout>
-      <Seo title='Not Found' />
+      <SEO title='Not Found' />
 
       <main>
         <section className='bg-white'>

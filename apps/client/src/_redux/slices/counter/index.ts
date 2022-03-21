@@ -1,5 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
+import { setCounterAsync } from './thunk';
+
 type CounterState = {
   count: number;
 };
@@ -18,6 +20,11 @@ const counterSlice = createSlice({
     decrementCounter: (state) => {
       state.count = Math.max(0, state.count - 1);
     },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(setCounterAsync.fulfilled, (state, { payload }) => {
+      state.count = payload;
+    });
   },
 });
 

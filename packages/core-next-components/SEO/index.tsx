@@ -3,7 +3,7 @@ import * as React from 'react';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 
-import { favicons } from 'constants/favicons';
+import { favicons } from './favicons';
 
 interface ISEOProps {
   date?: string;

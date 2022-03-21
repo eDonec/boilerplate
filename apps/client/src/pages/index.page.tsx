@@ -1,14 +1,12 @@
 import * as React from 'react';
 
+import { ButtonLink, SEO, UnstyledLink } from 'core-next-components';
 import Button from 'core-ui/Button';
 
-import ButtonLink from 'components/buttons/LinkButton';
-import UnstyledLink from 'components/links/UnstyledLink';
-import SEO from 'components/SEO';
+import { useAppSelector, useLoadingDispatch } from 'hooks/reduxHooks';
 
-import { useAppDispatch, useAppSelector } from 'hooks/reduxHooks';
-
-import { decrementCounter, incrementCounter } from '_redux/reducers/counter';
+import { decrementCounter, incrementCounter } from '_redux/slices/counter';
+import { setCounterAsync } from '_redux/slices/counter/thunk';
 
 /**
  * SVGR Support
@@ -24,15 +22,19 @@ import Vercel from '~/svg/Vercel.svg';
 // to customize the default configuration.
 
 export default function HomePage() {
-  const dispatch = useAppDispatch();
   const count = useAppSelector((state) => state.counter.count);
+  const { isLoading, dispatch, classicDispatch } = useLoadingDispatch();
 
   const increment = () => {
-    dispatch(incrementCounter());
+    classicDispatch(incrementCounter());
   };
 
   const decrement = () => {
-    dispatch(decrementCounter());
+    classicDispatch(decrementCounter());
+  };
+
+  const setAsync = () => {
+    dispatch(setCounterAsync(300));
   };
 
   return (
@@ -71,9 +73,18 @@ export default function HomePage() {
               />
             </UnstyledLink>
             <h2 className='my-3'>Redux Counter : {count}</h2>
-            <div className='flex gap-2'>
-              <Button title='Increment' onClick={increment} />
-              <Button title='Decrement' onClick={decrement} />
+            <div className='flex flex-col gap-2'>
+              <div className='flex gap-2'>
+                <Button disabled={count === 0 || isLoading} onClick={decrement}>
+                  Decrement
+                </Button>
+                <Button disabled={isLoading} onClick={increment}>
+                  Increment
+                </Button>
+              </div>
+              <Button onClick={setAsync} isLoading={isLoading}>
+                Set Counter to 300 Async
+              </Button>
             </div>
             <footer className='absolute bottom-2 text-gray-700'>
               © {new Date().getFullYear()} By{' '}

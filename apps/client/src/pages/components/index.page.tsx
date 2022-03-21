@@ -1,16 +1,18 @@
 // !STARTERCONF You can delete this page
 import * as React from 'react';
 
+import {
+  ButtonLink,
+  PrimaryLink,
+  SEO,
+  UnstyledLink,
+} from 'core-next-components';
+import Button from 'core-ui/Button';
+import clsx from 'core-utils/clsx';
+
 import { colorList } from 'constants/colorList';
 
-import Button from 'components/buttons/Button';
-import ButtonLink from 'components/buttons/LinkButton';
 import Layout from 'components/layout/Layout';
-import PrimaryLink from 'components/links/PrimaryLink';
-import UnstyledLink from 'components/links/UnstyledLink';
-import SEO from 'components/SEO';
-
-import clsx from 'helpers/clsx';
 
 type Color = typeof colorList[number];
 
