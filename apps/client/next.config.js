@@ -1,5 +1,8 @@
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const withTM = require('next-transpile-modules')(['core-ui']);
+
 /** @type {import('next').NextConfig} */
-module.exports = {
+module.exports = withTM({
   eslint: {
     dirs: ['src'],
   },
@@ -43,4 +46,4 @@ module.exports = {
 
     return config;
   },
-};
+});

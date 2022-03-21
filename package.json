@@ -44,5 +44,6 @@
     "lint-staged": "11.2.6",
     "tailwindcss": "3.0.22",
     "turbo": "^1.1.6"
-  }
+  },
+  "packageManager": "yarn@1.22.17"
 }
