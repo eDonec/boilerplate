@@ -3,12 +3,12 @@
   "private": true,
   "scripts": {
     "prepare": "husky install",
-    "start": "yarn workspace client start",
-    "build": "yarn workspace client build",
-    "lint": "yarn workspace client lint",
-    "format": "yarn workspace client format",
-    "postbuild": "yarn workspace client postbuild",
-    "test": "yarn workspace client test"
+    "start": "turbo run start --parallel",
+    "build": "turbo run build",
+    "lint": "turbo run lint",
+    "format": "turbo run format",
+    "postbuild": "turbo run postbuild",
+    "test": "turbo run test"
   },
   "workspaces": [
     "apps/*",
