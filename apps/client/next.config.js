@@ -20,6 +20,7 @@ module.exports = withTM({
     defaultLocale: 'en',
   },
   reactStrictMode: true,
+  pageExtensions: ['page.tsx'],
 
   // Uncoment to add domain whitelist
   // images: {

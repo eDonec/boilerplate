@@ -3,13 +3,13 @@ import { render } from '@testing-library/react';
 
 import { RouterContext } from 'next/dist/shared/lib/router-context';
 
-import SEO from '../';
+import HomePage from '../index.page';
 
-describe('SEO Renderer', () => {
+describe('HomePage Renderer', () => {
   it('should render successfully', () => {
     const { baseElement } = render(
       <RouterContext.Provider value={createMockRouter()}>
-        <SEO />
+        <HomePage />
       </RouterContext.Provider>
     );
 

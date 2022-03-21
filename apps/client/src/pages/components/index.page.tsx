@@ -41,7 +41,7 @@ export default function ComponentsPage() {
             )}
           >
             <h1>Built-in Components</h1>
-            <ButtonLink outline className='mt-2' href='/'>
+            <ButtonLink isLoading outline className='mt-2' href='/'>
               Back to Home
             </ButtonLink>
 
@@ -52,6 +52,9 @@ export default function ComponentsPage() {
                 dark={mode !== 'dark'}
               >
                 Set to {mode === 'dark' ? 'light' : 'dark'}
+              </Button>
+              <Button isLoading outline onClick={toggleMode}>
+                SOutlibne
               </Button>
               {/* <Button onClick={randomize}>Randomize CSS Variable</Button> */}
             </div>

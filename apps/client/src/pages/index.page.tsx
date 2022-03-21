@@ -1,7 +1,5 @@
 import * as React from 'react';
 
-import { Button } from 'core-ui';
-
 import ButtonLink from 'components/buttons/LinkButton';
 import UnstyledLink from 'components/links/UnstyledLink';
 import SEO from 'components/SEO';
@@ -43,8 +41,6 @@ export default function HomePage() {
             <ButtonLink className='mt-6' href='/components' light>
               See all components
             </ButtonLink>
-            <Button title='yo' />
-
             <UnstyledLink
               href='https://vercel.com/new/git/external?repository-url=https%3A%2F%2Fgithub.com%2Ftheodorusclarence%2Fts-nextjs-tailwind-starter'
               className='mt-4'
