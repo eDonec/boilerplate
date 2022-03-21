@@ -43,7 +43,7 @@ export default function ComponentsPage() {
             )}
           >
             <h1>Built-in Components</h1>
-            <ButtonLink isLoading outline className='mt-2' href='/'>
+            <ButtonLink outline className='mt-2' href='/'>
               Back to Home
             </ButtonLink>
 

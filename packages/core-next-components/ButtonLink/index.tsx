@@ -5,7 +5,7 @@ import clsx from 'core-utils/clsx';
 
 import UnstyledLink, { UnstyledLinkProps } from '../UnstyledLink';
 
-type ButtonLinkProps = ButtonProps & UnstyledLinkProps;
+type ButtonLinkProps = Omit<ButtonProps & UnstyledLinkProps, 'isLoading'>;
 
 const ButtonLink = React.forwardRef<HTMLAnchorElement, ButtonLinkProps>(
   (
