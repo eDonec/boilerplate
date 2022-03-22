@@ -1,4 +1,6 @@
 {
+  "name": "next",
+  "private": true,
   "dependencies": {
     "@reduxjs/toolkit": "^1.8.0",
     "core-ui": "*",
@@ -27,8 +29,6 @@
     "standard-version": "9.3.2",
     "typescript": "4.6.2"
   },
-  "name": "client",
-  "private": true,
   "scripts": {
     "build": "next build",
     "format": "prettier -w .",
