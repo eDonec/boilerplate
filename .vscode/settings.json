@@ -28,6 +28,7 @@
   "appService.deploySubpath": "",
   "!files.exclude": {
     "**/.git": true,
+    "**/.turbo": true,
     "**/.svn": true,
     "**/.hg": true,
     "**/CVS": true,
