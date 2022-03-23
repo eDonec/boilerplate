@@ -9,7 +9,7 @@
     "release": "standard-version -- --release-as minor",
     "lint": "turbo run lint",
     "format": "turbo run format",
-    "postversion": "git push --follow-tags origin master",
+    "postcommit": "git push --follow-tags origin master",
     "postbuild": "turbo run postbuild",
     "test": "turbo run test"
   },
