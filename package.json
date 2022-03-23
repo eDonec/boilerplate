@@ -6,7 +6,7 @@
     "prepare": "husky install",
     "start": "turbo run start --parallel",
     "build": "turbo run build",
-    "release": "standard-version -- --release-as ",
+    "release": "standard-version -- --release-as minor",
     "lint": "turbo run lint",
     "format": "turbo run format",
     "posttag": "git push --follow-tags origin master",
