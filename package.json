@@ -1,15 +1,15 @@
 {
   "name": "example-monorepo",
   "private": true,
-  "version": "1.2.0",
+  "version": "1.2.1",
   "scripts": {
     "prepare": "husky install",
     "start": "turbo run start --parallel",
     "build": "turbo run build",
-    "release": "standard-version -r minor",
+    "release": "standard-version -- --release-as ",
     "lint": "turbo run lint",
     "format": "turbo run format",
-    "push-release": "git push --follow-tags origin master",
+    "posttag": "git push --follow-tags origin master",
     "postbuild": "turbo run postbuild",
     "test": "turbo run test"
   },
