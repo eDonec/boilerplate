@@ -28,6 +28,7 @@
     "test": "craco test --watchAll=false",
     "eject": "craco eject"
   },
+  "homepage": "/dashboard",
   "browserslist": {
     "production": [
       ">0.2%",
