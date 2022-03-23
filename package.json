@@ -1,10 +1,12 @@
 {
   "name": "example-monorepo",
   "private": true,
+  "version": "1.1.0",
   "scripts": {
     "prepare": "husky install",
     "start": "turbo run start --parallel",
     "build": "turbo run build",
+    "release": "standard-version -r minor",
     "lint": "turbo run lint",
     "format": "turbo run format",
     "postbuild": "turbo run postbuild",
@@ -40,6 +42,7 @@
     "eslint": "7.32.0",
     "eslint-config-prettier": "8.3.0",
     "eslint-plugin-simple-import-sort": "7.0.0",
+    "standard-version": "9.3.2",
     "eslint-plugin-unused-imports": "1.1.5",
     "husky": "7.0.4",
     "lint-staged": "11.2.6",

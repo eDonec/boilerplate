@@ -24,7 +24,6 @@
     "postcss": "8.4.6",
     "prettier": "2.5.1",
     "prettier-plugin-tailwindcss": "0.1.7",
-    "standard-version": "9.3.2",
     "typescript": "4.6.2"
   },
   "name": "client",
@@ -38,7 +37,6 @@
     "lint:strict": "eslint --max-warnings=0 src",
     "postbuild": "next-sitemap",
     "push-release": "git push --follow-tags origin master",
-    "release": "standard-version",
     "start": "next dev -p 4200",
     "start:prod": "next start",
     "test": "jest",
