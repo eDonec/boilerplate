@@ -45,5 +45,5 @@
     "test:watch": "jest --watch",
     "typecheck": "tsc --noEmit --incremental false"
   },
-  "version": "1.0.0"
+  "version": "1.1.0"
 }
