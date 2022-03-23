@@ -24,7 +24,7 @@ export default function ComponentsPage() {
     return setMode((prevMode) => (prevMode === 'dark' ? 'light' : 'dark'));
   }
 
-  const textColor = mode === 'dark' ? 'text-gray-300' : 'text-gray-600';
+  const textColor = mode === 'dark' ? 'text-gray-200' : 'text-gray-600';
 
   return (
     <Layout>
@@ -76,7 +76,7 @@ export default function ComponentsPage() {
                     className={clsx(
                       'block max-w-xs rounded',
                       mode === 'dark'
-                        ? 'bg-dark border border-gray-600 dark:bg-white'
+                        ? 'bg-dark border border-gray-600 duration-700'
                         : 'border-gray-300 bg-white',
                       'focus:border-primary-400 focus:ring-primary-400 focus:outline-none focus:ring'
                     )}
