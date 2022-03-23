@@ -2,7 +2,7 @@ import { useCallback, useState } from 'react';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 
 import { AnyAction, ThunkAction } from '@reduxjs/toolkit';
-import objectEqual from 'core-utils/src/objectEqual';
+import objectEqual from 'core-utils/objectEqual';
 
 import { AppDispatch, RootState } from '_redux/store';
 

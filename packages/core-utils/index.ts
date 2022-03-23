@@ -1,2 +1,2 @@
-export { default as clsx } from './src/clsx';
-export { default as objectEqual } from './src/objectEqual';
+export { default as clsx } from './clsx';
+export { default as objectEqual } from './objectEqual';

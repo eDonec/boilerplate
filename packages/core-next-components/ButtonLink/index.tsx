@@ -1,7 +1,7 @@
 import * as React from 'react';
 
-import { ButtonProps, getVariantsClsx } from 'core-ui/src/Button';
-import clsx from 'core-utils/src/clsx';
+import { ButtonProps, getVariantsClsx } from 'core-ui/Button';
+import clsx from 'core-utils/clsx';
 
 import UnstyledLink, { UnstyledLinkProps } from '../UnstyledLink';
 

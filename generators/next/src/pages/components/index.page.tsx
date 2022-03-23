@@ -7,7 +7,7 @@ import {
   SEO,
   UnstyledLink,
 } from 'core-next-components';
-import Button from 'core-ui/src/Button';
+import Button from 'core-ui/Button';
 import clsx from 'core-utils/clsx';
 
 import { colorList } from 'constants/colorList';
