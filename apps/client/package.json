@@ -36,7 +36,6 @@
     "lint:fix": "eslint src --fix && yarn format",
     "lint:strict": "eslint --max-warnings=0 src",
     "postbuild": "next-sitemap",
-    "push-release": "git push --follow-tags origin master",
     "start": "next dev -p 4200",
     "start:prod": "next start",
     "test": "jest",
