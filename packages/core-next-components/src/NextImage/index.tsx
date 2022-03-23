@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import clsx from 'core-utils/clsx';
+import clsx from 'core-utils/src/clsx';
 
 import Image, { ImageProps } from 'next/image';
 

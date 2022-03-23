@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import { ButtonLink, SEO, UnstyledLink } from 'core-next-components';
-import Button from 'core-ui/Button';
+import Button from 'core-ui/src/Button';
 
 import { useAppSelector, useLoadingDispatch } from 'hooks/reduxHooks';
 

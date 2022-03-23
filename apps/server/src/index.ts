@@ -1,4 +1,4 @@
-import clsx from 'core-utils/clsx';
+import clsx from 'core-utils/src/clsx';
 import express from 'express';
 
 const app = express();
