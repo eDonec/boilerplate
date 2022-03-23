@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.2.0](https://gitlab.com/eDonec/tools/boilerplate/compare/v1.1.0...v1.2.0) (2022-03-23)
+
+
+### Bug Fixes
+
+* swap standard-version to monorepo level(for now) ([7e010d7](https://gitlab.com/eDonec/tools/boilerplate/commit/7e010d7fbe95b74e85ce204723c5ebefa2e7c56d))
+
 ## 1.1.0 (2022-03-23)
 
 ### Features
