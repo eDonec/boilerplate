@@ -1,6 +1,7 @@
 import React from 'react';
+import { useLocation } from 'react-router-dom';
 
-import Button from 'core-ui/src/Button';
+import { Button } from 'core-ui';
 
 import { useAppSelector, useLoadingDispatch } from 'hooks/reduxHooks';
 
@@ -23,9 +24,12 @@ const HomePage = () => {
     dispatch(setCounterAsync(300));
   };
 
+  useLocation();
+
   return (
     <div className='flex min-h-screen flex-col items-center justify-center'>
-      <h1 className='mb-4'>CRA + Tailwind CSS + TypeScript + Redux Toolkit</h1>
+      <h1 className='mb-4'>CRA + Tailwind CSS + TypeScript + Redux Tookit</h1>
+
       <h2 className='my-3'>Redux Counter : {count}</h2>
       <div className='flex flex-col gap-2'>
         <div className='flex gap-2'>

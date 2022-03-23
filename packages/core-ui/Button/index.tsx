@@ -1,6 +1,6 @@
 import { forwardRef } from 'react';
 
-import clsx from 'core-utils/src/clsx';
+import clsx from 'core-utils/clsx';
 
 export enum ButtonVariant {
   'primary' = 'primary',

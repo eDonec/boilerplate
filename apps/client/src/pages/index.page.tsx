@@ -1,5 +1,5 @@
 import { ButtonLink, SEO, UnstyledLink } from 'core-next-components';
-import Button from 'core-ui/src/Button';
+import Button from 'core-ui/Button';
 
 import { useAppSelector, useLoadingDispatch } from 'hooks/reduxHooks';
 
@@ -46,7 +46,7 @@ export default function HomePage() {
           >
             <Vercel className='text-5xl' />
             <h1 className='mt-4'>
-              Next.js + Tailwind CSS + TypeScript + Redux Toolkit
+              Next.js + Tailwind CSS + TypeScript + Redux Tookit
             </h1>
             <p className='mt-2 text-sm text-gray-800'>
               A starter for Next.js, Tailwind CSS, and TypeScript with Absolute

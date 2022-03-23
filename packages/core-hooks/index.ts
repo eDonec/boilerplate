@@ -1,2 +1,2 @@
-export { default as useFirstMount } from './src/useFirstMount';
-export { default as useUpdateEffect } from './src/useUpdateEffect';
+export { default as useFirstMount } from './useFirstMount';
+export { default as useUpdateEffect } from './useUpdateEffect';
