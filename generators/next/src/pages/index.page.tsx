@@ -1,5 +1,3 @@
-import * as React from 'react';
-
 import { ButtonLink, SEO, UnstyledLink } from 'core-next-components';
 import Button from 'core-ui/Button';
 
@@ -42,10 +40,13 @@ export default function HomePage() {
       <SEO />
       <main>
         <section className=' bg-primary-50 '>
-          <div className='layout text-cente flex min-h-screen flex-col items-center  justify-center bg-white'>
+          <div
+            className='
+          layout flex min-h-screen flex-col items-center justify-center  bg-white text-center'
+          >
             <Vercel className='text-5xl' />
             <h1 className='mt-4'>
-              Next.js + Tailwind CSS + TypeScript Starter
+              Next.js + Tailwind CSS + TypeScript + Redux Tookit
             </h1>
             <p className='mt-2 text-sm text-gray-800'>
               A starter for Next.js, Tailwind CSS, and TypeScript with Absolute

@@ -2,10 +2,9 @@ import clsx from 'core-utils/clsx';
 import express from 'express';
 
 const app = express();
-const port = 4000;
+const port = process.env.port || 4000;
 
-
-app.get('/', (_req, res) => {
+app.get('/api/v1', (_req, res) => {
   res.send(clsx(['Hello'], 'World', { ['!']: true }));
 });
 

@@ -6,7 +6,9 @@
   "private": true,
   "scripts": {
     "start": "nodemon src/index.ts",
-    "build": "tsc"
+    "build": "tsc",
+    "test": "jest --coverage",
+    "lint": "eslint src --fix"
   },
   "dependencies": {
     "express": "^4.17.3",

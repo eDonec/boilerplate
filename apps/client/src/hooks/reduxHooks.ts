@@ -19,7 +19,7 @@ export const useLoading = () => {
   const [loadingProcesses, setIsLoading] = useState(0);
 
   const startLoading = useCallback(() => {
-    setIsLoading((prev) => (prev += 1));
+    setIsLoading((prev) => prev + 1);
   }, []);
   const stopLoading = useCallback(() => {
     setIsLoading((prev) => Math.max(prev - 1, 0));

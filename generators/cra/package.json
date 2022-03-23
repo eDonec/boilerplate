@@ -23,10 +23,11 @@
     "web-vitals": "^2.1.0"
   },
   "scripts": {
-    "start": "PORT=3001 craco start",
+    "start": "craco start",
     "build": "craco build",
-    "test": "craco test --watchAll=false",
-    "eject": "craco eject"
+    "test": "craco test --watchAll=false --coverage",
+    "eject": "craco eject",
+    "lint": "eslint src --fix"
   },
   "browserslist": {
     "production": [

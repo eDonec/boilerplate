@@ -1,18 +1,8 @@
 module.exports = {
-  env: {
-    browser: true,
-    es2021: true,
-    node: true,
-  },
   plugins: ['@typescript-eslint', 'simple-import-sort', 'unused-imports'],
-  extends: [
-    'eslint:recommended',
-    'next',
-    'next/core-web-vitals',
-    'plugin:@typescript-eslint/recommended',
-    'prettier',
-  ],
   rules: {
+    'import/prefer-default-export': 'off',
+    'import/extensions': 'off',
     'dot-notation': 'error',
     '@typescript-eslint/no-empty-function': 'warn',
     'no-return-await': 'warn',
@@ -23,12 +13,6 @@ module.exports = {
     'no-var': 'error',
     'no-console': 'warn',
     '@typescript-eslint/explicit-module-boundary-types': 'off',
-
-    'react/display-name': 'off',
-    'react/jsx-curly-brace-presence': [
-      'warn',
-      { props: 'never', children: 'never' },
-    ],
 
     //#region  //*=========== Unused Import ===========
     '@typescript-eslint/no-unused-vars': 'off',
@@ -87,8 +71,31 @@ module.exports = {
     ],
     //#endregion  //*======== Import Sort ===========
   },
-  globals: {
-    React: true,
-    JSX: true,
-  },
+  overrides: [
+    {
+      env: {
+        jest: true,
+      },
+      files: ['**/__tests__/**/*.[jt]s?(x)', '**/?(*.)+(spec|test).[jt]s?(x)'],
+      extends: ['plugin:testing-library/react', 'plugin:jest/recommended'],
+      rules: {
+        'import/no-extraneous-dependencies': [
+          'off',
+          { devDependencies: ['**/?(*.)+(spec|test).[jt]s?(x)'] },
+        ],
+        'jest/no-mocks-import': 'off',
+      },
+    },
+  ],
+  ignorePatterns: [
+    '**/*.js',
+    '**/*.json',
+    'node_modules',
+    'public',
+    'styles',
+    '.next',
+    'coverage',
+    'dist',
+    '.turbo',
+  ],
 };

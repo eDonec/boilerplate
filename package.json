@@ -15,19 +15,16 @@
     "packages/*"
   ],
   "lint-staged": {
-    "apps/**/**/*.{js,jsx,ts,tsx,}": [
-      "eslint --max-warnings=0",
+    "apps/!(proxy)/**/*.{js,jsx,ts,tsx,}": [
+      "eslint --fix",
       "prettier -w"
     ],
-    "apps/**/src/**/*.{json,css,scss,md}": [
+    "packages/!(config)/**/*.{js,jsx,ts,tsx,}": [
+      "eslint --fix",
       "prettier -w"
     ],
-    "packages/**/**/*.{js,jsx,ts,tsx,}": [
-      "eslint --max-warnings=0",
-      "prettier -w"
-    ],
-    "packages/**/src/**/*.{json,css,scss,md}": [
-      "prettier -w"
+    "*.json": [
+      "prettier --write"
     ]
   },
   "devDependencies": {
@@ -35,12 +32,12 @@
     "@commitlint/config-conventional": "13.2.0",
     "@edonec/generator": "^1.0.1",
     "@tailwindcss/forms": "0.4.0",
-    "@typescript-eslint/eslint-plugin": "4.33.0",
-    "@typescript-eslint/parser": "4.33.0",
-    "eslint": "7.32.0",
-    "eslint-config-prettier": "8.3.0",
-    "eslint-plugin-simple-import-sort": "7.0.0",
-    "eslint-plugin-unused-imports": "1.1.5",
+    "@testing-library/jest-dom": "^5.16.2",
+    "@testing-library/react": "^12.1.4",
+    "@testing-library/react-hooks": "^7.0.2",
+    "@testing-library/user-event": "^13.5.0",
+    "esbuild": "^0.14.27",
+    "esbuild-jest-transform": "^1.1.0",
     "husky": "7.0.4",
     "lint-staged": "11.2.6",
     "tailwindcss": "3.0.22",

@@ -1,16 +1,11 @@
 {
-  "extends": "tsconfig/base.json",
+  "extends": "tsconfig/react.json",
   "compilerOptions": {
-    "target": "es5",
-    "lib": ["dom", "dom.iterable", "esnext"],
     "baseUrl": "./src",
     "paths": {
       "~/*": ["../public/*"]
-    },
-    "incremental": true,
-    "jsx": "preserve"
+    }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
-  "exclude": ["node_modules"],
-  "moduleResolution": ["node_modules", ".next", "node"]
+  "exclude": ["node_modules"]
 }
