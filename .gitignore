@@ -4,3 +4,5 @@ node_modules
 .turbo
 yarn-error.log
 coverage
+dist
+!generators/*/.env

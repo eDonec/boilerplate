@@ -14,7 +14,7 @@ import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
   <React.StrictMode>
-    <BrowserRouter>
+    <BrowserRouter basename='/dashboard'>
       <Provider store={store}>
         <AppRouter />
       </Provider>

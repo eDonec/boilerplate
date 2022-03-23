@@ -4,7 +4,7 @@ import HomePage from 'pages/HomePage';
 
 const AppRouter = () => (
   <Routes>
-    <Route path='/dashboard' element={<HomePage />} />
+    <Route path='/' element={<HomePage />} />
   </Routes>
 );
 

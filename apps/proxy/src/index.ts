@@ -5,6 +5,8 @@ import { createProxyMiddleware } from 'http-proxy-middleware';
 const app = express();
 const port = process.env.PORT || 3000;
 
+/** Route */
+
 app.use(
   '/dashboard',
   createProxyMiddleware({ target: `http://localhost:3001/`, ws: true })
