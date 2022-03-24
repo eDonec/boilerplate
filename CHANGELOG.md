@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.4](https://gitlab.com/eDonec/tools/boilerplate/compare/v0.0.3...v0.0.4) (2022-03-24)
+
+
+### Features
+
+* update express generator & bump egen version & and update error handeling ([d16970b](https://gitlab.com/eDonec/tools/boilerplate/commit/d16970b71a96368f1dad402e4b91e328c16d7714))
+
+
+### Bug Fixes
+
+* rename cra app in apps to dashboard ([bfed6c5](https://gitlab.com/eDonec/tools/boilerplate/commit/bfed6c57007beca00df5c457759e871a5a9624f5))
+
 ### [0.0.3](https://gitlab.com/eDonec/tools/boilerplate/compare/v0.0.2...v0.0.3) (2022-03-24)
 
 
