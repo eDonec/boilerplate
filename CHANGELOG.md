@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.3](https://gitlab.com/eDonec/tools/boilerplate/compare/v0.0.2...v0.0.3) (2022-03-24)
+
+
+### Features
+
+* add generator scripts with port selection as well as base url selection in apps ([c477f73](https://gitlab.com/eDonec/tools/boilerplate/commit/c477f73feca578f3ce7b7e52aeac90bc8c259c9a))
+* add jest and eslint configs ([29508f4](https://gitlab.com/eDonec/tools/boilerplate/commit/29508f4b147f606fdfc4ee8a800b466ac3ebc5f1))
+* server tests and packages test ([decebaa](https://gitlab.com/eDonec/tools/boilerplate/commit/decebaa2fb347dd17097c4425c6e9836d8f8a252))
+
+
+### Bug Fixes
+
+* coverage file location on next app test ([9286e9e](https://gitlab.com/eDonec/tools/boilerplate/commit/9286e9ec136867cade51a59f2fe26f45320167e1))
+* lint staged scripts ([a0a1845](https://gitlab.com/eDonec/tools/boilerplate/commit/a0a1845c7d5daa09363956e9e054aac9576e4769))
+
 ### 0.0.2 (2022-03-23)
 
 ### Features
