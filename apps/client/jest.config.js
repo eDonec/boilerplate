@@ -11,6 +11,7 @@ const createJestConfig = nextJest({
 const customJestConfig = {
   ...require('config/jest/jest-next'),
   rootDir: './src',
+  coverageDirectory: '../coverage',
 };
 
 // createJestConfig is exported this way to ensure that next/jest can load the Next.js config which is async
