@@ -1,6 +1,11 @@
 module.exports = {
   plugins: ["@typescript-eslint", "simple-import-sort", "unused-imports"],
   rules: {
+    "react/display-name": "off",
+    "@typescript-eslint/no-use-before-define": "off",
+    "spaced-comment": "off",
+    "react/prop-types": "off",
+    "consistent-return": "off",
     "import/prefer-default-export": "off",
     "import/extensions": "off",
     "dot-notation": "error",

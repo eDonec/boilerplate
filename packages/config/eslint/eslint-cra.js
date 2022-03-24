@@ -26,11 +26,6 @@ module.exports = {
       "warn",
       { props: "never", children: "never" },
     ],
-    "react/display-name": "off",
-    "@typescript-eslint/no-use-before-define": "off",
-    "spaced-comment": "off",
-    "react/prop-types": "off",
-    "consistent-return": "off",
   },
   globals: {
     React: true,
