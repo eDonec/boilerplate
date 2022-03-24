@@ -2,16 +2,16 @@ import {
   AsyncThunk,
   AsyncThunkOptions,
   AsyncThunkPayloadCreator,
-} from '@reduxjs/toolkit';
+} from "@reduxjs/toolkit";
 
-import { AppDispatch, RootState } from '_redux/store';
+import { AppDispatch, RootState } from "_redux/store";
 
 type CustomThunkApiConfig = {
   dispatch: AppDispatch;
   state: RootState;
 };
 
-declare module '@reduxjs/toolkit' {
+declare module "@reduxjs/toolkit" {
   export declare function createAsyncThunk<Returned, ThunkArg>(
     typePrefix: string,
     payloadCreator: AsyncThunkPayloadCreator<

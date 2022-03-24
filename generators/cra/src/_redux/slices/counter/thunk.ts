@@ -1,7 +1,7 @@
-import { createAsyncThunk } from '@reduxjs/toolkit';
+import { createAsyncThunk } from "@reduxjs/toolkit";
 
 export const setCounterAsync = createAsyncThunk(
-  'counter/setCounterAsync',
+  "counter/setCounterAsync",
   async (newCount: number) => {
     await new Promise<void>((resolve) => {
       setTimeout(() => {

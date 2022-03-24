@@ -1307,14 +1307,15 @@
   dependencies:
     postcss-value-parser "^4.2.0"
 
-"@edonec/generator@^1.0.1":
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/@edonec/generator/-/generator-1.0.1.tgz#b46b28b85935facad84936e27c0e4311454eda97"
-  integrity sha512-SCuygrD/fkpBKjOlMjyug5xmQjw+nKl/AzCrYKBlexW+myzzUcSPrqWGOOSVqZZMF+pfTlbrTYwrS4ID0WoyBg==
+"@edonec/generator@^1.2.0":
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/@edonec/generator/-/generator-1.2.0.tgz#fa3c7ecc7df2b86730fd33ce2cb2ff3936866d39"
+  integrity sha512-u5DijpuSn1gQ+uWxFx9OZO2blfsvt4gkhTLCcZoyzI2E1TVbKOjEIRLdpY1nx+bjZ1G0nvcG17qZuxeuSz52rw==
   dependencies:
     chalk "^5.0.1"
     chalk-animation "^1.6.0"
     fs-extra "^10.0.1"
+    glob "^7.2.0"
     inquirer "^8.2.1"
 
 "@endemolshinegroup/cosmiconfig-typescript-loader@^3.0.2":
@@ -2289,6 +2290,20 @@
   version "1.2.2"
   resolved "https://registry.yarnpkg.com/@types/minimist/-/minimist-1.2.2.tgz#ee771e2ba4b3dc5b372935d549fd9617bf345b8c"
   integrity sha512-jhuKLIRrhvCPLqwPcx6INqmKeiA5EWrsCOPhrlFSrbrmU4ZMPjj5Ul/oLCMDO98XRUIwVm78xICz4EPCektzeQ==
+
+"@types/mongodb-memory-server@^2.3.0":
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/@types/mongodb-memory-server/-/mongodb-memory-server-2.3.0.tgz#da9dc2c9ab52d936d28c04d519d6a4a380c922ef"
+  integrity sha512-nveg+f78qRwudPRFVfw2flEdEkhKJIr4rSyQFKagSMb4sGhjFQi0GEKi7zKXgkKkwIlMcLthM1G93vsXgtDxGQ==
+  dependencies:
+    mongodb-memory-server "*"
+
+"@types/mongoose@^5.11.97":
+  version "5.11.97"
+  resolved "https://registry.yarnpkg.com/@types/mongoose/-/mongoose-5.11.97.tgz#80b0357f3de6807eb597262f52e49c3e13ee14d8"
+  integrity sha512-cqwOVYT3qXyLiGw7ueU2kX9noE8DPGRY6z8eUxudhXY8NZ7DMKYAxyZkLSevGfhCX3dO/AoX5/SO9lAzfjon0Q==
+  dependencies:
+    mongoose "*"
 
 "@types/node@*":
   version "17.0.21"
@@ -9038,7 +9053,7 @@ mongodb-memory-server-core@8.4.1:
     uuid "^8.3.1"
     yauzl "^2.10.0"
 
-mongodb-memory-server@^8.4.1:
+mongodb-memory-server@*, mongodb-memory-server@^8.4.1:
   version "8.4.1"
   resolved "https://registry.yarnpkg.com/mongodb-memory-server/-/mongodb-memory-server-8.4.1.tgz#d52634fbb0b671b4cde95d2720dbfa6c554b2791"
   integrity sha512-TNdGbxFaYedFEQaxqvl9EMpL5RRj4yf09xGQ3MltWcvxvi0n9e7US7Q9eWp9+APn6lEzOxSEom1xYfGuqAPpQw==
@@ -9070,7 +9085,7 @@ mongodb@^4.4.0:
   optionalDependencies:
     saslprep "^1.0.3"
 
-mongoose@^6.2.8:
+mongoose@*, mongoose@^6.2.8:
   version "6.2.8"
   resolved "https://registry.yarnpkg.com/mongoose/-/mongoose-6.2.8.tgz#96fe81ff51a4c588fe810a0c06d7155d0e75e83d"
   integrity sha512-Wq6HG0sOJEQHp5YqMlxrnf93vBFwdY2zlAwqI97EPPSt69kiVV21pTv4cDanrCNWi4upG8ajQ/p9jpDjcECjkQ==
@@ -13049,10 +13064,8 @@ watchpack@^1.7.4:
   resolved "https://registry.yarnpkg.com/watchpack/-/watchpack-1.7.5.tgz#1267e6c55e0b9b5be44c2023aed5437a2c26c453"
   integrity sha512-9P3MWk6SrKjHsGkLT2KHXdQ/9SNkyoJbabxnKOoJepsvJjJG8uYTR3yTPxPQvNDI3w4Nz1xnE0TLHK4RIVe/MQ==
   dependencies:
-    chokidar "^3.4.1"
     graceful-fs "^4.1.2"
     neo-async "^2.5.0"
-    watchpack-chokidar2 "^2.0.1"
   optionalDependencies:
     chokidar "^3.4.1"
     watchpack-chokidar2 "^2.0.1"

@@ -38,7 +38,7 @@
     "postbuild": "next-sitemap",
     "push-release": "git push --follow-tags origin master",
     "release": "standard-version",
-    "start": "next dev -p 4200",
+    "start": "next dev -p {PORT}",
     "start:prod": "next start",
     "test": "jest --coverage",
     "test:watch": "jest --watch",

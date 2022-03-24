@@ -1,3 +1,3 @@
-import React from 'React';
+import React from "React";
 
 global.React = React;

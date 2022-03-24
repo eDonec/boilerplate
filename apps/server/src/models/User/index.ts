@@ -1,6 +1,6 @@
-import { model } from 'mongoose';
+import { model } from "mongoose";
 
-import schema from './schema';
-import { UserType } from './types';
+import schema from "./schema";
+import { UserType } from "./types";
 
-export default model<UserType>('User', schema);
+export default model<UserType>("User", schema);

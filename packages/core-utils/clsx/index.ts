@@ -1,3 +1,7 @@
+/* eslint-disable no-plusplus */
+/* eslint-disable no-restricted-syntax */
+/* eslint-disable @typescript-eslint/no-unused-expressions */
+/* eslint-disable no-cond-assign */
 /** Merge classes with tailwind-merge with clsx full feature */
 
 export type ClassValue =
@@ -18,18 +22,18 @@ type ClassArray = Array<ClassValue>;
 type TClsx = (...classes: ClassValue[]) => string;
 
 function toVal(mix: ClassValue) {
-  let k,
-    y,
-    str = '';
+  let k;
+  let y;
+  let str = "";
 
-  if (typeof mix === 'string' || typeof mix === 'number') {
+  if (typeof mix === "string" || typeof mix === "number") {
     str += mix;
-  } else if (typeof mix === 'object') {
+  } else if (typeof mix === "object") {
     if (Array.isArray(mix)) {
       for (k = 0; k < mix.length; k++) {
         if (mix[k]) {
           if ((y = toVal(mix[k]))) {
-            str && (str += ' ');
+            str && (str += " ");
             str += y;
           }
         }
@@ -37,7 +41,7 @@ function toVal(mix: ClassValue) {
     } else {
       for (k in mix) {
         if (mix?.[k]) {
-          str && (str += ' ');
+          str && (str += " ");
           str += k;
         }
       }
@@ -48,15 +52,15 @@ function toVal(mix: ClassValue) {
 }
 
 const clsx: TClsx = (...args) => {
-  let i = 0,
-    tmp,
-    x,
-    str = '';
+  let i = 0;
+  let tmp;
+  let x;
+  let str = "";
 
   while (i < args.length) {
     if ((tmp = args[i++])) {
       if ((x = toVal(tmp))) {
-        str && (str += ' ');
+        str && (str += " ");
         str += x;
       }
     }

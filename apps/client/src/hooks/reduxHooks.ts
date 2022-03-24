@@ -1,10 +1,10 @@
-import { useCallback, useState } from 'react';
-import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
+import { useCallback, useState } from "react";
+import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 
-import { AnyAction, ThunkAction } from '@reduxjs/toolkit';
-import objectEqual from 'core-utils/objectEqual';
+import { AnyAction, ThunkAction } from "@reduxjs/toolkit";
+import objectEqual from "core-utils/objectEqual";
 
-import { AppDispatch, RootState } from '_redux/store';
+import { AppDispatch, RootState } from "_redux/store";
 
 export const useAppDispatch = () => useDispatch<AppDispatch>();
 

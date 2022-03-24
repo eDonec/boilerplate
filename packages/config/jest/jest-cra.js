@@ -1,17 +1,17 @@
-const path = require('path');
+const path = require("path");
 
 module.exports = {
-  ...require('./jest-common'),
-  testEnvironment: 'jsdom',
+  ...require("./jest-common"),
+  testEnvironment: "jsdom",
   setupFilesAfterEnv: [
-    '@testing-library/jest-dom',
-    path.join(__dirname, 'jest-jsx-transform.config.js'),
+    "@testing-library/jest-dom",
+    path.join(__dirname, "jest-jsx-transform.config.js"),
   ],
-  collectCoverageFrom: ['**/src/**/*.{js,ts,jsx,tsx}'],
-  moduleFileExtensions: ['js', 'jsx', 'json', 'ts', 'tsx'],
+  collectCoverageFrom: ["**/src/**/*.{js,ts,jsx,tsx}"],
+  moduleFileExtensions: ["js", "jsx", "json", "ts", "tsx"],
   transform: {
-    '^.+\\.tsx?$': 'esbuild-jest',
-    '^.+\\.jsx?$': 'esbuild-jest',
+    "^.+\\.tsx?$": "esbuild-jest",
+    "^.+\\.jsx?$": "esbuild-jest",
   },
   coveragePathIgnorePatterns: [],
   coverageThreshold: null,

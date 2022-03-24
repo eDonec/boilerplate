@@ -29,6 +29,7 @@
     "eject": "craco eject",
     "lint": "eslint src --fix"
   },
+  "homepage": "{BASE_PATH}",
   "browserslist": {
     "production": [
       ">0.2%",

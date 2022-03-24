@@ -1,11 +1,11 @@
-import { useLocation } from 'react-router-dom';
+import { useLocation } from "react-router-dom";
 
-import { Button } from 'core-ui';
+import { Button } from "core-ui";
 
-import { useAppSelector, useLoadingDispatch } from 'hooks/reduxHooks';
+import { useAppSelector, useLoadingDispatch } from "hooks/reduxHooks";
 
-import { decrementCounter, incrementCounter } from '_redux/slices/counter';
-import { setCounterAsync } from '_redux/slices/counter/thunk';
+import { decrementCounter, incrementCounter } from "_redux/slices/counter";
+import { setCounterAsync } from "_redux/slices/counter/thunk";
 
 const HomePage = () => {
   const count = useAppSelector((state) => state.counter.count);
@@ -26,12 +26,12 @@ const HomePage = () => {
   useLocation();
 
   return (
-    <div className='flex min-h-screen flex-col items-center justify-center'>
-      <h1 className='mb-4'>CRA + Tailwind CSS + TypeScript + Redux Tookit</h1>
+    <div className="flex min-h-screen flex-col items-center justify-center">
+      <h1 className="mb-4">CRA + Tailwind CSS + TypeScript + Redux Tookit</h1>
 
-      <h2 className='my-3'>Redux Counter : {count}</h2>
-      <div className='flex flex-col gap-2'>
-        <div className='flex gap-2'>
+      <h2 className="my-3">Redux Counter : {count}</h2>
+      <div className="flex flex-col gap-2">
+        <div className="flex gap-2">
           <Button disabled={count === 0 || isLoading} onClick={decrement}>
             Decrement
           </Button>

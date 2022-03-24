@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import { useState } from "react";
 
-import useUpdateEffect from '../index';
+import useUpdateEffect from "../index";
 
 const TestPage = () => {
   const [didUpdate, setDidUpdate] = useState(false);

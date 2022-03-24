@@ -1,8 +1,8 @@
-import { useState } from 'react';
+import { useState } from "react";
 
-import clsx from 'core-utils/clsx';
+import clsx from "core-utils/clsx";
 
-import Image, { ImageProps } from 'next/image';
+import Image, { ImageProps } from "next/image";
 
 type NextImageProps = {
   useSkeleton?: boolean;
@@ -12,7 +12,7 @@ type NextImageProps = {
   width: string | number;
 } & (
   | { width: string | number; height: string | number }
-  | { layout: 'fill'; width?: string | number; height?: string | number }
+  | { layout: "fill"; width?: string | number; height?: string | number }
 ) &
   ImageProps;
 
@@ -32,8 +32,8 @@ export default function NextImage({
   blurClassName,
   ...rest
 }: NextImageProps) {
-  const [status, setStatus] = useState(useSkeleton ? 'loading' : 'complete');
-  const widthIsSet = className?.includes('w-') ?? false;
+  const [status, setStatus] = useState(useSkeleton ? "loading" : "complete");
+  const widthIsSet = className?.includes("w-") ?? false;
 
   return (
     <figure
@@ -43,15 +43,15 @@ export default function NextImage({
       <Image
         className={clsx(
           imgClassName,
-          (status !== 'loading' && 'lds-dual-ring') || '',
+          (status !== "loading" && "lds-dual-ring") || "",
           blurClassName
         )}
         src={src}
         width={width}
-        loading='lazy'
+        loading="lazy"
         height={height}
         alt={alt}
-        onLoadingComplete={() => setStatus('complete')}
+        onLoadingComplete={() => setStatus("complete")}
         {...rest}
       />
     </figure>

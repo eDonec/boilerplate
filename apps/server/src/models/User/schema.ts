@@ -1,6 +1,6 @@
-import { Schema } from 'mongoose';
+import { Schema } from "mongoose";
 
-import { UserType } from './types';
+import { UserType } from "./types";
 
 export default new Schema<UserType>({
   name: {

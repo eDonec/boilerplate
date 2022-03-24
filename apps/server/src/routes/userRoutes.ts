@@ -1,9 +1,9 @@
-import * as userController from 'controllers/userController';
-import { Router } from 'express';
+import * as userController from "controllers/userController";
+import { Router } from "express";
 
 const router = Router();
 
-const BASE_ROUTE = '/users';
+const BASE_ROUTE = "/users";
 
 router.get(BASE_ROUTE, userController.getUsers);
 

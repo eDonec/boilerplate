@@ -1,7 +1,6 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect } from 'react';
+import { useEffect } from "react";
 
-import useFirstMount from '../useFirstMount';
+import useFirstMount from "../useFirstMount";
 
 const useUpdateEffect: typeof useEffect = (effect, deps) => {
   const isFirstMount = useFirstMount();

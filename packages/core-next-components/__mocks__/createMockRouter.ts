@@ -1,12 +1,12 @@
-import { NextRouter } from 'next/router';
+import { NextRouter } from "next/router";
 
 export function createMockRouter(router: Partial<NextRouter> = {}): NextRouter {
   return {
-    basePath: '',
-    pathname: '/',
-    route: '/',
+    basePath: "",
+    pathname: "/",
+    route: "/",
     query: {},
-    asPath: '/',
+    asPath: "/",
     back: jest.fn(),
     beforePopState: jest.fn(),
     prefetch: jest.fn(),
@@ -21,7 +21,7 @@ export function createMockRouter(router: Partial<NextRouter> = {}): NextRouter {
     isFallback: false,
     isLocaleDomain: false,
     isReady: true,
-    defaultLocale: 'en',
+    defaultLocale: "en",
     domainLocales: [],
     isPreview: false,
     ...router,

@@ -1,5 +1,5 @@
-import User from 'models/User';
-import { UserType } from 'models/User/types';
+import User from "models/User";
+import { UserType } from "models/User/types";
 
 export const getUsers = () => User.find();
 

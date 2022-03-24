@@ -1,13 +1,13 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 
-const path = require('path');
-const { getLoader, loaderByName } = require('@craco/craco');
+const path = require("path");
+const { getLoader, loaderByName } = require("@craco/craco");
 
-const modules = ['core-hooks', 'core-ui', 'core-utils'];
+const modules = ["core-hooks", "core-ui", "core-utils"];
 const packages = [];
 
 packages.push(
-  ...modules.map((module) => path.join(__dirname, '../../packages', module))
+  ...modules.map((module) => path.join(__dirname, "../../packages", module))
 );
 
 module.exports = {
@@ -15,7 +15,7 @@ module.exports = {
     configure: (webpackConfig) => {
       const { isFound, match } = getLoader(
         webpackConfig,
-        loaderByName('babel-loader')
+        loaderByName("babel-loader")
       );
 
       if (isFound) {

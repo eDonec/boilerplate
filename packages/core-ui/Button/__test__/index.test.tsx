@@ -1,9 +1,9 @@
-import { render } from '@testing-library/react';
+import { render } from "@testing-library/react";
 
-import Button from '..';
+import Button from "..";
 
-describe('Button renderer', () => {
-  it('should render successfully', () => {
+describe("Button renderer", () => {
+  it("should render successfully", () => {
     const { baseElement } = render(<Button />);
 
     expect(baseElement).toBeTruthy();

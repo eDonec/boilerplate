@@ -1,15 +1,15 @@
 // eslint-disable-next-line @typescript-eslint/no-var-requires
-const withTM = require('next-transpile-modules')([
-  'core-ui',
-  'core-utils',
-  'core-hooks',
-  'core-next-components',
+const withTM = require("next-transpile-modules")([
+  "core-ui",
+  "core-utils",
+  "core-hooks",
+  "core-next-components",
 ]);
 
 /** @type {import('next').NextConfig} */
 module.exports = withTM({
   eslint: {
-    dirs: ['src'],
+    dirs: ["src"],
   },
   webpackDevMiddleware: (config) => {
     // Solve compiling problem via vagrant
@@ -21,11 +21,11 @@ module.exports = withTM({
     return config;
   },
   i18n: {
-    locales: ['en'],
-    defaultLocale: 'en',
+    locales: ["en"],
+    defaultLocale: "en",
   },
   reactStrictMode: true,
-  pageExtensions: ['page.tsx'],
+  pageExtensions: ["page.tsx"],
 
   // Uncoment to add domain whitelist
   // images: {
@@ -41,7 +41,7 @@ module.exports = withTM({
       issuer: /\.[jt]sx?$/,
       use: [
         {
-          loader: '@svgr/webpack',
+          loader: "@svgr/webpack",
           options: {
             typescript: true,
             icon: true,

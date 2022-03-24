@@ -1,15 +1,15 @@
 module.exports = {
-  ...require('./eslint-common'),
+  ...require("./eslint-common"),
   env: {
     browser: true,
     node: true,
   },
   extends: [
-    'eslint:recommended',
-    'next',
-    'next/core-web-vitals',
-    'plugin:@typescript-eslint/recommended',
-    'prettier',
+    "eslint:recommended",
+    "next",
+    "next/core-web-vitals",
+    "plugin:@typescript-eslint/recommended",
+    "prettier",
   ],
   globals: {
     React: true,
@@ -17,11 +17,11 @@ module.exports = {
   },
 
   rules: {
-    ...require('./eslint-common').rules,
-    'react/display-name': 'off',
-    'react/jsx-curly-brace-presence': [
-      'warn',
-      { props: 'never', children: 'never' },
+    ...require("./eslint-common").rules,
+    "react/display-name": "off",
+    "react/jsx-curly-brace-presence": [
+      "warn",
+      { props: "never", children: "never" },
     ],
   },
 };
