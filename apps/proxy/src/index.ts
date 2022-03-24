@@ -8,11 +8,6 @@ const port = process.env.PORT || 3000;
 /** PROXY */
 
 app.use(
-  "/auth*",
-  createProxyMiddleware({ target: "http://localhost:3005/", ws: true })
-);
-
-app.use(
   "/dashboard*",
   createProxyMiddleware({ target: "http://localhost:3001/", ws: true })
 );

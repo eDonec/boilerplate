@@ -1307,10 +1307,10 @@
   dependencies:
     postcss-value-parser "^4.2.0"
 
-"@edonec/generator@^1.2.0":
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/@edonec/generator/-/generator-1.2.0.tgz#fa3c7ecc7df2b86730fd33ce2cb2ff3936866d39"
-  integrity sha512-u5DijpuSn1gQ+uWxFx9OZO2blfsvt4gkhTLCcZoyzI2E1TVbKOjEIRLdpY1nx+bjZ1G0nvcG17qZuxeuSz52rw==
+"@edonec/generator@^1.2.2":
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/@edonec/generator/-/generator-1.2.2.tgz#4934230714c89e3216172fb6fc613efedd940d9a"
+  integrity sha512-jQMLOFKDw02ZPQ+hG2wWiLDsz70k6u7PYPVtxB4kGS7ZJ2GqwLG2l3U4wQX3iPQeJSLpx1fwQTRFm2Bel6cB+A==
   dependencies:
     chalk "^5.0.1"
     chalk-animation "^1.6.0"
