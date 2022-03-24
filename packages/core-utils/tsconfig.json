@@ -1,11 +1,10 @@
 {
-  "extends": "tsconfig/base.json",
+  "extends": "tsconfig/server.json",
+
   "compilerOptions": {
-    "lib": ["dom", "dom.iterable", "esnext"],
-    "module": "ESNext",
-    "target": "ES6",
-    "jsx": "react-jsx"
+    "rootDir": ".",
+    "outDir": "dist"
   },
   "include": ["."],
-  "exclude": ["dist", "build", "node_modules", "coverage"]
+  "exclude": ["node_modules", ".turbo", "coverage", "dist"]
 }

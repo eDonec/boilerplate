@@ -5,8 +5,8 @@ module.exports = {
   collectCoverageFrom: ['<rootDir>/**/*.{js,ts,jsx,tsx}'],
   moduleFileExtensions: ['js', 'jsx', 'json', 'ts', 'tsx'],
   transform: {
-    '^.+\\.tsx?$': 'esbuild-jest-transform',
-    '^.+\\.jsx?$': 'esbuild-jest-transform',
+    '^.+\\.tsx?$': 'esbuild-jest',
+    '^.+\\.jsx?$': 'esbuild-jest',
   },
   coveragePathIgnorePatterns: [],
   coverageThreshold: null,

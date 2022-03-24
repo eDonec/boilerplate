@@ -56,7 +56,8 @@
     "src/__mocks__": true,
     "**/.history": true,
     "**/commitlint.config,js": true,
-    "cypress": true
+    "cypress": true,
+    "**/tsconfig.tsbuildinfo": true
   },
   "explorerExclude.backup": null,
   "typescript.tsdk": "node_modules\\typescript\\lib",

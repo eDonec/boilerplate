@@ -11,8 +11,11 @@
     "lint": "eslint src --fix"
   },
   "dependencies": {
+    "core-utils": "*",
+    "dotenv": "^16.0.0",
     "express": "^4.17.3",
-    "core-utils": "*"
+    "mongoose": "^6.2.8",
+    "mongodb-memory-server": "^8.4.1"
   },
   "devDependencies": {
     "@types/express": "^4.17.13",

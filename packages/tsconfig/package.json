@@ -6,5 +6,8 @@
     "react.json",
     "server.json",
     "base.json"
-  ]
+  ],
+  "devDependencies": {
+    "tsconfig-paths": "^3.14.1"
+  }
 }
