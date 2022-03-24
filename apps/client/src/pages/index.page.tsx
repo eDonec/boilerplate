@@ -53,26 +53,15 @@ export default function HomePage() {
               Import, Seo, Link component, pre-configured with Husky{" "}
             </p>
             <p className="mt-2 text-sm text-gray-700">
-              <ButtonLink href="https://github.com/theodorusclarence/ts-nextjs-tailwind-starter">
-                See the repository
-              </ButtonLink>
+              <ButtonLink href="/dashboard">Go to dashboard</ButtonLink>
+            </p>
+            <p className="mt-2 text-sm text-gray-700">
+              <ButtonLink href="/api/v1">Go to API</ButtonLink>
             </p>
 
             <ButtonLink className="mt-6" href="/components" light>
               See all components
             </ButtonLink>
-            <UnstyledLink
-              href="https://vercel.com/new/git/external?repository-url=https%3A%2F%2Fgithub.com%2Ftheodorusclarence%2Fts-nextjs-tailwind-starter"
-              className="mt-4"
-            >
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                width="92"
-                height="32"
-                src="https://vercel.com/button"
-                alt="Deploy with Vercel"
-              />
-            </UnstyledLink>
             <h2 className="my-3">Redux Counter : {count}</h2>
             <div className="flex flex-col gap-2">
               <div className="flex gap-2">

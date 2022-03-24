@@ -28,7 +28,12 @@ const HomePage = () => {
   return (
     <div className="flex min-h-screen flex-col items-center justify-center">
       <h1 className="mb-4">CRA + Tailwind CSS + TypeScript + Redux Tookit</h1>
-
+      <p className="mt-2 text-sm text-gray-700">
+        <a href="/">Go to client</a>
+      </p>
+      <p className="mt-2 text-sm text-gray-700">
+        <a href="/api/v1">Go to API</a>
+      </p>
       <h2 className="my-3">Redux Counter : {count}</h2>
       <div className="flex flex-col gap-2">
         <div className="flex gap-2">
