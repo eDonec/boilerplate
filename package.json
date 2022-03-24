@@ -19,11 +19,11 @@
   ],
   "lint-staged": {
     "apps/!(proxy)/**/*.{js,jsx,ts,tsx,}": [
-      "eslint --fix",
+      "eslint --fix --max-warnings=0",
       "prettier -w"
     ],
     "packages/!(config)/**/*.{js,jsx,ts,tsx,}": [
-      "eslint --fix",
+      "eslint --fix --max-warnings=0",
       "prettier -w"
     ],
     "*.json": [
