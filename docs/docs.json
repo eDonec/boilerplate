@@ -9,7 +9,7 @@
       "name": "Auth",
       "item": [
         {
-          "name": "New Request",
+          "name": "login",
           "id": "1961779c-3da9-4d1e-9115-42fe581a3c89",
           "protocolProfileBehavior": {
             "disableBodyPruning": true
@@ -54,13 +54,13 @@
   ],
   "variable": [
     {
-      "id": "dff3b150-8bf4-4cc0-8ab4-b3a6e111e35e",
+      "id": "16ea4e72-02f5-4931-90b5-49ee156f9f14",
       "key": "token",
       "value": "",
       "type": "string"
     },
     {
-      "id": "da2e9df0-2336-4556-8aa2-e0b6990254c3",
+      "id": "1886c3db-e5be-4914-bae2-3bb57079b5fa",
       "key": "baseUrl",
       "value": "http://localhost:/api/v1",
       "type": "string"
