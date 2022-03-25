@@ -56,6 +56,8 @@ module.exports = {
           // zustand store
           ["^store", "^_redux"],
           // Other imports
+          ["^types"],
+          // other that didnt fit in
           ["^"],
           // relative paths up until 3 level
           [
@@ -68,9 +70,6 @@ module.exports = {
             "^\\.\\./\\.\\./\\.\\./?$",
             "^\\.\\./\\.\\./\\.\\.(?!/?$)",
           ],
-          ["^types"],
-          // other that didnt fit in
-          ["^"],
         ],
       },
     ],
