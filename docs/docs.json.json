@@ -4,5 +4,11 @@
     "name": "Boilerplate",
     "schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
   },
-  "item": []
+  "item": [
+    {
+      "name": "New Folder",
+      "item": [],
+      "id": "5586f4f7-1b2d-4d56-b01d-5e9964e5eb29"
+    }
+  ]
 }
