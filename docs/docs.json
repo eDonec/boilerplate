@@ -1,0 +1,69 @@
+{
+  "info": {
+    "_postman_id": "ced2b50d-8e46-4cfa-80ec-d061753de6fc",
+    "name": "Boilerplate",
+    "schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "New Request",
+          "id": "1961779c-3da9-4d1e-9115-42fe581a3c89",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": []
+          },
+          "response": []
+        }
+      ],
+      "id": "5586f4f7-1b2d-4d56-b01d-5e9964e5eb29"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": {
+      "token": "{{token}}"
+    }
+  },
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "id": "722f1492-4d14-4944-a96b-05ba1a2e088a",
+        "type": "text/javascript",
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "id": "72e035e7-6791-4655-b108-0abb60712762",
+        "type": "text/javascript",
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "id": "ac2295c6-7817-41b2-9634-edab24628a59",
+      "key": "token",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "id": "bf5866a2-ce39-4c3a-93f9-38b755c45b68",
+      "key": "baseUrl",
+      "value": "http://localhost:/api/v1",
+      "type": "string"
+    }
+  ]
+}
