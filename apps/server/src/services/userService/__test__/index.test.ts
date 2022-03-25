@@ -11,6 +11,12 @@ beforeAll(async () => connectToMockDB());
 afterEach(async () => clearMockDB());
 afterAll(async () => closeMockDB());
 
+it("should have an empty database", async () => {
+  const users = await userService.getUsers();
+
+  expect(users.length).toBe(0);
+});
+
 it("should add user to database", async () => {
   const user: UserType = {
     name: "Test user",
