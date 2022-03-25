@@ -4,18 +4,5 @@
     "name": "Boilerplate",
     "schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
   },
-  "item": [
-    {
-      "name": "New Request",
-      "id": "9aa40e14-0d90-4353-a88a-d6089394ed38",
-      "protocolProfileBehavior": {
-        "disableBodyPruning": true
-      },
-      "request": {
-        "method": "GET",
-        "header": []
-      },
-      "response": []
-    }
-  ]
+  "item": []
 }
