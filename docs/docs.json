@@ -9,7 +9,7 @@
       "name": "Auth",
       "item": [
         {
-          "name": "login",
+          "name": "Sign up classic",
           "id": "1961779c-3da9-4d1e-9115-42fe581a3c89",
           "protocolProfileBehavior": {
             "disableBodyPruning": true
@@ -55,13 +55,13 @@
   ],
   "variable": [
     {
-      "id": "25e83b0d-1f8e-4f54-84a2-014f9300e233",
+      "id": "8a9ec1f3-4e7a-4969-889a-f0b45234ca9c",
       "key": "token",
       "value": "",
       "type": "string"
     },
     {
-      "id": "941af0ac-d962-49c5-8720-0c422788e8a0",
+      "id": "ef4c8079-a147-4574-a095-bee396218b87",
       "key": "baseUrl",
       "value": "http://localhost:/api/v1",
       "type": "string"
