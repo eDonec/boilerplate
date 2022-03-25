@@ -10,5 +10,45 @@
       "item": [],
       "id": "5586f4f7-1b2d-4d56-b01d-5e9964e5eb29"
     }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": {}
+  },
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "id": "c0f54eb5-1c39-42dd-b209-83081936ca3a",
+        "type": "text/javascript",
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "id": "189655cc-2bf7-4ada-a7a2-6ea5b28e7190",
+        "type": "text/javascript",
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "id": "e97dff77-b42f-469f-8a8d-bad02eb67e79",
+      "key": "token",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "id": "e2abf385-543a-4aee-a365-e5aa1df20c94",
+      "key": "baseUrl",
+      "value": "http://localhost:/api/v1",
+      "type": "string"
+    }
   ]
 }
