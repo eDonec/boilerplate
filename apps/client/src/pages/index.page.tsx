@@ -1,6 +1,8 @@
 import { ButtonLink, SEO, UnstyledLink } from "core-next-components";
 import Button from "core-ui/Button";
 
+import { useTranslation } from "next-i18next";
+
 import { useAppSelector, useLoadingDispatch } from "hooks/reduxHooks";
 
 import { decrementCounter, incrementCounter } from "_redux/slices/counter";
@@ -14,7 +16,6 @@ import { setCounterAsync } from "_redux/slices/counter/thunk";
  * @see https://stackoverflow.com/questions/68103844/how-to-override-next-js-svg-module-declaration
  */
 import Vercel from "~/svg/Vercel.svg";
-
 // !STARTERCONF -> Select !STARTERCONF and CMD + SHIFT + F
 // Before you begin editing, follow all comments with `STARTERCONF`,
 // to customize the default configuration.
@@ -22,6 +23,7 @@ import Vercel from "~/svg/Vercel.svg";
 export default function HomePage() {
   const count = useAppSelector((state) => state.counter.count);
   const { isLoading, dispatch, classicDispatch } = useLoadingDispatch();
+  const { t } = useTranslation();
 
   const increment = () => {
     classicDispatch(incrementCounter());
@@ -45,6 +47,9 @@ export default function HomePage() {
           layout flex min-h-screen flex-col items-center justify-center  bg-white text-center"
           >
             <Vercel className="text-5xl" />
+
+            <h1>{`${t("signin")}`}</h1>
+
             <h1 className="mt-4">
               Next.js + Tailwind CSS + TypeScript + Redux Tookit
             </h1>

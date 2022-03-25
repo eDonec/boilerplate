@@ -52,6 +52,7 @@
   },
   "packageManager": "yarn@1.22.17",
   "dependencies": {
-    "craco": "^0.0.3"
+    "craco": "^0.0.3",
+    "next-i18next": "^10.5.0"
   }
 }

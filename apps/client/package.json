@@ -8,7 +8,8 @@
     "next": "12.1.0",
     "react": "17.0.2",
     "react-dom": "17.0.2",
-    "react-redux": "^7.2.6"
+    "react-redux": "^7.2.6",
+    "next-i18next": "^10.5.0"
   },
   "devDependencies": {
     "@svgr/webpack": "6.2.1",
