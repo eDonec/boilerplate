@@ -13,13 +13,15 @@
   ],
   "auth": {
     "type": "bearer",
-    "bearer": {}
+    "bearer": {
+      "token": "{{token}}"
+    }
   },
   "event": [
     {
       "listen": "prerequest",
       "script": {
-        "id": "c0f54eb5-1c39-42dd-b209-83081936ca3a",
+        "id": "722f1492-4d14-4944-a96b-05ba1a2e088a",
         "type": "text/javascript",
         "exec": [
           ""
@@ -29,7 +31,7 @@
     {
       "listen": "test",
       "script": {
-        "id": "189655cc-2bf7-4ada-a7a2-6ea5b28e7190",
+        "id": "72e035e7-6791-4655-b108-0abb60712762",
         "type": "text/javascript",
         "exec": [
           ""
@@ -39,13 +41,13 @@
   ],
   "variable": [
     {
-      "id": "e97dff77-b42f-469f-8a8d-bad02eb67e79",
+      "id": "35e8da83-dc22-4ded-926b-733ba23d67a4",
       "key": "token",
       "value": "",
       "type": "string"
     },
     {
-      "id": "e2abf385-543a-4aee-a365-e5aa1df20c94",
+      "id": "27b7733b-c105-4ec5-bd29-50df82acd8ce",
       "key": "baseUrl",
       "value": "http://localhost:/api/v1",
       "type": "string"
