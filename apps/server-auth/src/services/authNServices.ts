@@ -1,13 +1,11 @@
 import Auth from "models/Auth";
 import { nanoid } from "nanoid";
-import * as TokenService from "services/tokenServices";
 import { ACCESS_TYPE, AUTH_PROVIDERS } from "shared-types";
+import TokenGenerator from "token/TokenGenerator";
 
 import { constructRoleArray } from "helpers/constructRoleArray";
 
 import { ISignUpClassicBody } from "types/authNRoutes";
-
-export {};
 
 export const signUpClassic = async ({
   email,
@@ -23,21 +21,38 @@ export const signUpClassic = async ({
   });
 
   await newAuthClient.save();
-  const session = createRefreshToken(newAuthClient.id);
+  const sessionId = nanoid();
 
-  newAuthClient.sessions.push(session);
+  const refreshToken = new TokenGenerator(
+    {
+      aud: "all",
+      iss: "server-auth",
+      sid: sessionId,
+      payload: {
+        authId: newAuthClient.id,
+        sessionId,
+      },
+    },
+    true
+  );
+
+  newAuthClient.sessions.push(sessionId);
 
   await newAuthClient.save();
-  const accessToken = TokenService.createAccessToken(
-    newAuthClient.id,
-    session.sessionId
-  );
+  const accessToken = new TokenGenerator({
+    aud: "all",
+    iss: "server-auth",
+    sid: sessionId,
+    payload: {
+      authId: newAuthClient.id,
+    },
+  });
 
   return {
     authID: newAuthClient.id,
     token: {
-      accessToken,
-      refreshToken: session.refreshToken,
+      accessToken: accessToken.token,
+      refreshToken: refreshToken.token,
     },
     role: newAuthClient.role,
     access: constructRoleArray(
@@ -45,11 +60,4 @@ export const signUpClassic = async ({
       newAuthClient.customAccessList
     ),
   };
-};
-
-export const createRefreshToken = (id: string) => {
-  const sessionId = nanoid();
-  const refreshToken = TokenService.createRefreshToken(id, sessionId);
-
-  return { refreshToken, sessionId };
 };

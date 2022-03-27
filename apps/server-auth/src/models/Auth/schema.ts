@@ -8,21 +8,7 @@ import {
 
 import { hashPassword } from "helpers/hashPassword";
 
-import { AuthDocument, ISesssion } from "./types";
-
-const Session = new Schema<ISesssion>(
-  {
-    sessionId: {
-      type: String,
-      required: true,
-    },
-    refreshToken: {
-      type: String,
-      required: true,
-    },
-  },
-  { _id: false }
-);
+import { AuthDocument } from "./types";
 
 const AuthClient = new Schema<AuthDocument>({
   email: String,
@@ -46,7 +32,7 @@ const AuthClient = new Schema<AuthDocument>({
     required: true,
   },
   providerId: String,
-  sessions: [Session],
+  sessions: [String],
   role: [
     {
       type: Types.ObjectId,
@@ -101,7 +87,7 @@ export interface Itransform {
   notificationToken: string;
   isBanned: boolean;
   emailActivationToken: string;
-  sessions: ISesssion[];
+  sessions: string[];
 }
 
 export default AuthClient;
