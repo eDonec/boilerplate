@@ -160,14 +160,14 @@
   "auth": {
     "type": "bearer",
     "bearer": {
-      "token": "{{token}}"
+      "token": "{{accessToken}}"
     }
   },
   "event": [
     {
       "listen": "prerequest",
       "script": {
-        "id": "cbfe8cc4-0509-4bce-9c57-eec9c58efafa",
+        "id": "8b10a656-5522-4f34-9d3a-10d530479052",
         "type": "text/javascript",
         "exec": [
           ""
@@ -177,7 +177,7 @@
     {
       "listen": "test",
       "script": {
-        "id": "73c1d54a-ef19-4495-a689-289a88b31e8f",
+        "id": "ab8d130c-85e3-49fa-88d9-30ec1b2f406c",
         "type": "text/javascript",
         "exec": [
           ""
@@ -187,18 +187,18 @@
   ],
   "variable": [
     {
-      "id": "ca61cd7c-917b-4300-b456-d8f2d1c4c948",
+      "id": "bdb7bb54-40bb-4edd-b53d-dca4511cb3b9",
       "key": "baseUrl",
       "value": "http://localhost:3000/api/v1",
       "type": "string"
     },
     {
-      "id": "e69e4a5e-412a-4f8a-95d2-592ae5c9467b",
+      "id": "fe46c60f-25fe-4002-92fa-6a594fee099e",
       "key": "accessToken",
       "value": ""
     },
     {
-      "id": "f8ef6aa6-8e4a-4997-92df-517b2a5e3008",
+      "id": "c63cd46e-ea3b-49ba-aa37-f9019b32bf3c",
       "key": "refreshToken",
       "value": ""
     }
