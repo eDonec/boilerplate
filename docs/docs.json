@@ -91,8 +91,15 @@
             "disableBodyPruning": true
           },
           "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": {
+                "token": "{{refreshToken}}"
+              }
+            },
             "method": "GET",
-            "header": []
+            "header": [],
+            "url": "{{baseUrl}}/auth/n/refresh-token"
           },
           "response": []
         },
@@ -143,19 +150,19 @@
   ],
   "variable": [
     {
-      "id": "ccdd8337-dc87-495d-8ca7-89d7819ab4b0",
+      "id": "8b0f7de4-8a6f-4876-8c22-8667e01cf4b9",
       "key": "token",
       "value": "",
       "type": "string"
     },
     {
-      "id": "e08eeffa-79fb-4b8f-be4a-02b15cf8bb6a",
+      "id": "18456dfa-7056-4c1a-9023-49c32501db72",
       "key": "baseUrl",
       "value": "http://localhost:3000/api/v1",
       "type": "string"
     },
     {
-      "id": "f4ff8273-d7c4-4b04-8e9b-dca73393654a",
+      "id": "7d12bc85-e62f-4e30-ba7d-731d51090768",
       "key": "refreshToken",
       "value": "",
       "type": "string"
