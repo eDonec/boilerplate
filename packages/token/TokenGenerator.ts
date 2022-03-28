@@ -10,7 +10,7 @@ export default class TokenGenerator<
   T = string | object | Buffer
 > extends TokenValidator<T> {
   constructor(
-    token: IDecodedToken<T>,
+    token: Omit<IDecodedToken<T>, "exp">,
     isRefreshToken = false,
     secret?: Secret,
     exp?: string | number

@@ -24,5 +24,18 @@ router.post(
   asyncAuthNValidators.checkPassword,
   authNController.signInClassic
 );
+router.get(
+  `${BASE_ROUTE}/refresh-token`,
+  authNValidators.refreshTokenValidator,
+  asyncAuthNValidators.findAndValidateAuthClientByRefreshToken,
+  authNController.refreshAccessToken
+);
+
+router.get(
+  `${BASE_ROUTE}/logout`,
+  authNValidators.refreshTokenValidator,
+  asyncAuthNValidators.findAndValidateAuthClientByRefreshToken,
+  authNController.logoutAuthClientFromSession
+);
 
 export default router;
