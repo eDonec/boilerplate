@@ -51,8 +51,9 @@
               "script": {
                 "id": "f6fe6a5c-5b69-4068-9f8f-41012e74d7bd",
                 "exec": [
-                  "if(pm.response.code = 200)\r",
-                  "pm.collectionVariables.set(\"token\", pm.response.json().token.accessToken);\r",
+                  "if(pm.response.code === 200){\r",
+                  "    pm.collectionVariables.set(\"token\", pm.response.json().token.accessToken);\r",
+                  "}\r",
                   ""
                 ],
                 "type": "text/javascript"
@@ -68,7 +69,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"email\":\"email@example.com\",\r\n    \"password\": \"passwords\"\r\n}",
+              "raw": "{\r\n    \"email\":\"email@example.com\",\r\n    \"password\": \"password\"\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -114,13 +115,13 @@
   ],
   "variable": [
     {
-      "id": "d418b01c-d06a-4443-be57-e60c1412b436",
+      "id": "f530d573-4a8d-4961-a2fd-2daa1bc6a0ef",
       "key": "token",
       "value": "",
       "type": "string"
     },
     {
-      "id": "96ea27ea-c41b-42f5-9703-1f64fb7565be",
+      "id": "6d0fb09d-2339-4ee1-b955-19bffc8d0179",
       "key": "baseUrl",
       "value": "http://localhost:3000/api/v1",
       "type": "string"
