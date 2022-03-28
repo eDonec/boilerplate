@@ -53,6 +53,7 @@
                 "exec": [
                   "if(pm.response.code === 200){\r",
                   "    pm.collectionVariables.set(\"token\", pm.response.json().token.accessToken);\r",
+                  "    pm.collectionVariables.set(\"refreshToken\", pm.response.json().token.refreshToken);\r",
                   "}\r",
                   ""
                 ],
@@ -115,13 +116,13 @@
   ],
   "variable": [
     {
-      "id": "f530d573-4a8d-4961-a2fd-2daa1bc6a0ef",
+      "id": "4f16aa7f-f594-48c7-8f10-226ecf6ef8f2",
       "key": "token",
       "value": "",
       "type": "string"
     },
     {
-      "id": "6d0fb09d-2339-4ee1-b955-19bffc8d0179",
+      "id": "7c7ca6a2-d295-4220-9b44-2ae460444fb0",
       "key": "baseUrl",
       "value": "http://localhost:3000/api/v1",
       "type": "string"
