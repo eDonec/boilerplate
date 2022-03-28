@@ -15,7 +15,6 @@ export default class StringValidator {
         throw new CustomInputError({
           message: `${key} must have type string or number for this initiation`,
           fields: [key],
-          name: "String Validation Error!",
         });
       this[key] = new Validator(String(strings[key]), key);
     });

@@ -5,6 +5,7 @@ const stringsToTest = {
   validEmail: "email@test.com",
   shortPassword: "1234",
   longPassword: "12345678",
+  emptyString: "",
 };
 
 const validators = new StringValidator(stringsToTest);
@@ -12,6 +13,11 @@ const validators = new StringValidator(stringsToTest);
 describe("string Validators to initialize", () => {
   it("should initialize", () => {
     expect(validators).toBeTruthy();
+  });
+  it("should throw an erro in case of an empty string", () => {
+    expect(() => validators.emptyString.exists()).toThrowError(
+      "emptyString is empty"
+    );
   });
 });
 

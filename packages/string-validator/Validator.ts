@@ -18,7 +18,6 @@ export default class Validator {
       throw new CustomInputError({
         message: `${this.fieldName} is invaild`,
         fields: [this.fieldName],
-        name: "String Validation Error!",
       });
 
     return this;
@@ -29,7 +28,6 @@ export default class Validator {
       throw new CustomInputError({
         message: `${this.fieldName} is empty`,
         fields: [this.fieldName],
-        name: "String Validation Error!",
       });
 
     return this;
@@ -40,7 +38,6 @@ export default class Validator {
       throw new CustomInputError({
         message: `${this.fieldName} should be longer than a string`,
         fields: [this.fieldName],
-        name: "String Validation Error!",
       });
 
     return this;
@@ -51,7 +48,6 @@ export default class Validator {
       throw new CustomInputError({
         message: `${this.fieldName} should be longer than ${length}`,
         fields: [this.fieldName],
-        name: "String Validation Error!",
       });
 
     return this;
