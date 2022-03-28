@@ -78,13 +78,13 @@
   ],
   "variable": [
     {
-      "id": "74c9f536-9e2d-443a-8cb9-62e6b3eff773",
+      "id": "87adcb1c-ac5c-48e3-865d-0e1fb8ce02cd",
       "key": "token",
       "value": "",
       "type": "string"
     },
     {
-      "id": "5c103c77-0c2b-43ff-be5b-aeca3f917212",
+      "id": "1479bbfb-1861-4408-a94a-9cdfb1ac855c",
       "key": "baseUrl",
       "value": "http://localhost:3000/api/v1",
       "type": "string"
