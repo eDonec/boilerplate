@@ -1,0 +1,40 @@
+{
+  "name": "server-auth",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "start": "nodemon src/index.ts",
+    "build": "tsc",
+    "test": "jest --coverage",
+    "lint": "eslint src --fix"
+  },
+  "dependencies": {
+    "bcrypt": "5.0.1",
+    "body-parser": "1.19.2",
+    "core-utils": "*",
+    "custom-error": "*",
+    "date-fns": "^2.28.0",
+    "dotenv": "16.0.0",
+    "express": "4.17.3",
+    "jsonwebtoken": "8.5.1",
+    "mongodb-memory-server": "8.4.1",
+    "mongoose": "6.2.8",
+    "nanoid": "3.3.1",
+    "shared-types": "*",
+    "string-validator": "*",
+    "token": "*"
+  },
+  "devDependencies": {
+    "@types/bcrypt": "5.0.0",
+    "@types/body-parser": "1.19.2",
+    "@types/express": "4.17.13",
+    "@types/jsonwebtoken": "8.5.8",
+    "@types/mongodb-memory-server": "2.3.0",
+    "@types/mongoose": "5.11.97",
+    "nodemon": "2.0.15",
+    "ts-node": "10.7.0",
+    "typescript": "4.6.2"
+  }
+}

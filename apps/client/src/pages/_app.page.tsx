@@ -8,7 +8,7 @@ import Head from "next/head";
 import "styles/globals.css";
 import "styles/colors.css";
 
-import TranslationLayout from "components/Layout/translationLayout";
+import TranslationProvider from "components/TranslationProvider";
 
 import store from "_redux/store";
 
@@ -29,9 +29,9 @@ function MyApp({ Component, pageProps }: AppProps) {
         />
       </Head>
       <Provider store={store}>
-        <TranslationLayout>
+        <TranslationProvider>
           <Component {...pageProps} />
-        </TranslationLayout>
+        </TranslationProvider>
       </Provider>
     </>
   );

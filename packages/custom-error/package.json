@@ -1,0 +1,11 @@
+{
+  "name": "custom-error",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "test": "jest --coverage --passWithNoTests",
+    "lint": "eslint --fix"
+  },
+  "dependencies": {},
+  "devDependencies": {}
+}

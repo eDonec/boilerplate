@@ -6,7 +6,7 @@ import router from "routes";
 import "dotenv/config";
 
 const app = express();
-const port = process.env.port || 4000;
+const port = process.env.PORT || 4000;
 
 app.get("{BASE_PATH}", (_req, res) => {
   res.send(clsx(["Hello"], "World", { "!": true }));
