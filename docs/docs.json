@@ -83,6 +83,18 @@
             "url": "{{baseUrl}}/auth/n/sign-in/classic"
           },
           "response": []
+        },
+        {
+          "name": "New Request",
+          "id": "c9005ddb-06a3-474d-be7e-ff668cde161d",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": []
+          },
+          "response": []
         }
       ],
       "id": "5586f4f7-1b2d-4d56-b01d-5e9964e5eb29",
@@ -119,19 +131,19 @@
   ],
   "variable": [
     {
-      "id": "dced33bd-da22-42a6-8d3a-def80471e75e",
+      "id": "a7f9c874-8e83-4c77-967d-7c64c53d9055",
       "key": "token",
       "value": "",
       "type": "string"
     },
     {
-      "id": "5414f111-e24e-46d6-a659-1e34817a8647",
+      "id": "54d33eff-b226-44cd-8da1-fb8e8d0cc4cd",
       "key": "baseUrl",
       "value": "http://localhost:3000/api/v1",
       "type": "string"
     },
     {
-      "id": "cdf96718-5d4e-4ad3-941f-62761682eee2",
+      "id": "0472a2d8-805c-4815-a458-9c3a0d34472b",
       "key": "refreshToken",
       "value": "",
       "type": "string"
