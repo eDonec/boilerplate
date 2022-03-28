@@ -19,7 +19,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"email\":\"email@test.com\",\r\n    \"password\": \"password\"\r\n}",
+              "raw": "{\r\n    \"email\":\"email@example.com\",\r\n    \"password\": \"password\"\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -65,13 +65,13 @@
   ],
   "variable": [
     {
-      "id": "aa74dc16-cae5-4e13-ba06-0c7ea89bba38",
+      "id": "2b94da8a-72bf-4eac-b3c0-891736d1d487",
       "key": "token",
       "value": "",
       "type": "string"
     },
     {
-      "id": "62893f1c-2b96-46fb-b8f4-7bb5b697b199",
+      "id": "41f56343-e0b8-475e-be93-3f61bf12875e",
       "key": "baseUrl",
       "value": "http://localhost:3000/api/v1",
       "type": "string"
