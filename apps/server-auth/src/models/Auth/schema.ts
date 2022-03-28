@@ -27,7 +27,7 @@ const AuthClient = new Schema<AuthDocument>({
     },
   },
   authProvider: {
-    type: String,
+    type: [String],
     enum: AUTH_PROVIDERS,
     required: true,
   },
@@ -63,7 +63,7 @@ const AuthClient = new Schema<AuthDocument>({
     required: true,
     default: false,
   },
-  isSusspended: {
+  isSuspended: {
     type: Boolean,
     required: true,
     default: false,
@@ -72,8 +72,12 @@ const AuthClient = new Schema<AuthDocument>({
     type: Date,
     required: false,
   },
-  susspentionLiftTime: {
+  suspentionLiftTime: {
     type: Date,
+    required: false,
+  },
+  suspentionReason: {
+    type: String,
     required: false,
   },
   numberOfUnsuccessfulTrials: { type: Number, default: 0 },

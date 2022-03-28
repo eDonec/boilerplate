@@ -7,7 +7,7 @@ export type AuthType = {
   email?: string;
   userName?: string;
   password?: string;
-  authProvider: AUTH_PROVIDERS;
+  authProvider: [AUTH_PROVIDERS];
   providerId?: string;
   sessions: string[];
   role: RoleType;
@@ -15,8 +15,9 @@ export type AuthType = {
   isActive: boolean;
   expirationDate?: Date;
   isBanned: boolean;
-  isSusspended: boolean;
-  susspentionLiftTime: Date;
+  isSuspended: boolean;
+  suspentionLiftTime: Date;
+  suspentionReason: string;
   numberOfUnsuccessfulTrials: number;
   lastTrialSince: Date;
 };

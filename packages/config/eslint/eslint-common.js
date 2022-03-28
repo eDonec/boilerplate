@@ -18,7 +18,7 @@ module.exports = {
     "no-var": "error",
     "no-console": "warn",
     "@typescript-eslint/explicit-module-boundary-types": "off",
-
+    "no-param-reassign": "off",
     //#region  //*=========== Unused Import ===========
     "@typescript-eslint/no-unused-vars": "off",
     "unused-imports/no-unused-imports": "warn",
