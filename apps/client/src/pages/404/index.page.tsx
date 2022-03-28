@@ -1,6 +1,6 @@
 import { ButtonLink, SEO } from "core-next-components";
 
-import Layout from "components/layout/Layout";
+import Layout from "components/Layout";
 
 export default function NotFoundPage() {
   return (

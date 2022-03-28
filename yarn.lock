@@ -1024,7 +1024,7 @@
     core-js-pure "^3.20.2"
     regenerator-runtime "^0.13.4"
 
-"@babel/runtime@^7.10.2", "@babel/runtime@^7.11.2", "@babel/runtime@^7.12.5", "@babel/runtime@^7.13.17", "@babel/runtime@^7.14.5", "@babel/runtime@^7.15.4", "@babel/runtime@^7.16.3", "@babel/runtime@^7.17.2", "@babel/runtime@^7.7.6", "@babel/runtime@^7.8.4", "@babel/runtime@^7.9.2":
+"@babel/runtime@^7.10.2", "@babel/runtime@^7.11.2", "@babel/runtime@^7.12.0", "@babel/runtime@^7.12.5", "@babel/runtime@^7.13.17", "@babel/runtime@^7.13.6", "@babel/runtime@^7.14.5", "@babel/runtime@^7.15.4", "@babel/runtime@^7.16.3", "@babel/runtime@^7.17.2", "@babel/runtime@^7.7.6", "@babel/runtime@^7.8.4", "@babel/runtime@^7.9.2":
   version "7.17.8"
   resolved "https://registry.npmjs.org/@babel/runtime/-/runtime-7.17.8.tgz"
   integrity sha512-dQpEpK0O9o6lj6oPu0gRDbbnk+4LeHlNcBpspf6Olzt3GIX4P1lWF1gS+pHLDFlaJvbR6q7jCfQ08zA4QJBnmA==
@@ -7038,6 +7038,13 @@ html-minifier-terser@^6.0.2:
     relateurl "^0.2.7"
     terser "^5.10.0"
 
+html-parse-stringify2@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/html-parse-stringify2/-/html-parse-stringify2-2.0.1.tgz#dc5670b7292ca158b7bc916c9a6735ac8872834a"
+  integrity sha1-3FZwtyksoVi3vJFsmmc1rIhyg0o=
+  dependencies:
+    void-elements "^2.0.1"
+
 html-parse-stringify@^3.0.1:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/html-parse-stringify/-/html-parse-stringify-3.0.1.tgz#dfc1017347ce9f77c8141a507f233040c59c55d2"
@@ -7158,6 +7165,13 @@ i18next-fs-backend@^1.0.7:
   version "1.1.4"
   resolved "https://registry.npmjs.org/i18next-fs-backend/-/i18next-fs-backend-1.1.4.tgz"
   integrity sha512-/MfAGMP0jHonV966uFf9PkWWuDjPYLIcsipnSO3NxpNtAgRUKLTwvm85fEmsF6hGeu0zbZiCQ3W74jwO6K9uXA==
+
+i18next@20.1.0:
+  version "20.1.0"
+  resolved "https://registry.yarnpkg.com/i18next/-/i18next-20.1.0.tgz#397dce9ad230ea822f487dc62d6128df5b678456"
+  integrity sha512-sV+ZwTM4Ik4d6wKdwNS/ocKmvXi6DFA/YHMgdQX3i4L5993jnbo1/j1pK/c4+zBOjexer4dt+c5JHsFj4CUoXQ==
+  dependencies:
+    "@babel/runtime" "^7.12.0"
 
 i18next@^21.6.12:
   version "21.6.14"
@@ -10821,6 +10835,14 @@ react-error-overlay@^6.0.10:
   resolved "https://registry.npmjs.org/react-error-overlay/-/react-error-overlay-6.0.10.tgz"
   integrity sha512-mKR90fX7Pm5seCOfz8q9F+66VCc1PGsWSBxKbITjfKVQHMNF2zudxHnMdJiB1fRCb+XsbQV9sO9DCkgsMQgBIA==
 
+react-i18next@11.8.12:
+  version "11.8.12"
+  resolved "https://registry.yarnpkg.com/react-i18next/-/react-i18next-11.8.12.tgz#6a9f57277062fb6a6129cad4db5e6198d5c60b58"
+  integrity sha512-M2PSVP9MzT/7yofXfCOF5gAVotinrM4BXWiguk8uFSznJsfFzTjrp3K9CBWcXitpoCBVZGZJ2AnbaWGSNkJqfw==
+  dependencies:
+    "@babel/runtime" "^7.13.6"
+    html-parse-stringify2 "^2.0.1"
+
 react-i18next@^11.15.5:
   version "11.16.2"
   resolved "https://registry.yarnpkg.com/react-i18next/-/react-i18next-11.16.2.tgz#650b18c12a624057ee2651ba4b4a989b526be554"
@@ -13060,6 +13082,11 @@ void-elements@3.1.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/void-elements/-/void-elements-3.1.0.tgz#614f7fbf8d801f0bb5f0661f5b2f5785750e4f09"
   integrity sha1-YU9/v42AHwu18GYfWy9XhXUOTwk=
+
+void-elements@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/void-elements/-/void-elements-2.0.1.tgz#c066afb582bb1cb4128d60ea92392e94d5e9dbec"
+  integrity sha1-wGavtYK7HLQSjWDqkjkulNXp2+w=
 
 w3c-hr-time@^1.0.2:
   version "1.0.2"

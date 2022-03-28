@@ -12,7 +12,7 @@ import clsx from "core-utils/clsx";
 
 import { colorList } from "constants/colorList";
 
-import Layout from "components/layout/Layout";
+import Layout from "components/Layout";
 
 type Color = typeof colorList[number];
 
