@@ -1,4 +1,6 @@
+import CustomInputError from "custom-error/customInputError";
 import { IMiddleware } from "shared-types";
+import StringValidator from "string-validator";
 
 import { statusCodes } from "constants/statusCodes";
 
@@ -6,37 +8,24 @@ import { ISignUpClassicBody } from "types/authNRoutes";
 
 export const signUpClassicValidator: IMiddleware = (req, res, next) => {
   const { email, password, userName }: ISignUpClassicBody = req.body;
+  const validators = new StringValidator({ email, password, userName });
 
-  if (!email || !password) {
-    res.status(statusCodes.Unauthorized).send({
-      message: "Email and password are both mandatory!",
-      stack: "authentication validator server-auth",
-      fields: ["email", "password"],
-    });
-
-    return;
-  }
-
-  if (
-    typeof email !== "string" ||
-    typeof password !== "string" ||
-    (userName && typeof userName !== "string")
-  ) {
-    res.status(statusCodes.Unauthorized).send({
-      message: "Please provide the right body type",
-      stack: "authentication validator server-auth",
-      fields: ["email", "password", "userName"],
-    });
-
-    return;
-  }
-
-  if (password.length < 8) {
-    res.status(statusCodes.Unauthorized).send({
-      message: "Please provide a password with at least 8 characters",
-      stack: "authentication validator server-auth",
-      fields: ["password"],
-    });
+  try {
+    validators.email.exists().isString().isEmail();
+    validators.password.exists().isString().isLongerThan(8);
+    if (userName) validators.userName.isString().isLongerThan(6);
+  } catch (error) {
+    if (error instanceof CustomInputError)
+      res.status(statusCodes.Unauthorized).send({
+        message: error.message,
+        stack: "authentication validator server-auth",
+        fields: error.fields,
+        name: error.name,
+      });
+    else
+      res
+        .status(statusCodes["Internal Server Error"])
+        .send({ stack: ` ${__dirname} signUpClassicValidator line 26` });
 
     return;
   }

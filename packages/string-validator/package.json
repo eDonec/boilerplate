@@ -1,0 +1,13 @@
+{
+  "name": "string-validator",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "test": "jest --coverage",
+    "lint": "eslint --fix"
+  },
+  "dependencies": {
+    "custom-error": "*"
+  },
+  "devDependencies": {}
+}
