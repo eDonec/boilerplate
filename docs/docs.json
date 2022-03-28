@@ -127,7 +127,7 @@
                 "id": "c07aa4d4-9920-4ba0-a0e0-e90207011e8e",
                 "exec": [
                   "if(pm.response.code === 201){\r",
-                  "    pm.collectionVariables.unset('accessToken')\r",
+                  "    pm.collectionVariables.unset('token')\r",
                   "    pm.collectionVariables.unset('refreshToken')\r",
                   "}"
                 ],
@@ -187,19 +187,19 @@
   ],
   "variable": [
     {
-      "id": "0dd5c4f5-3d64-4891-843f-fb3f5e75065c",
+      "id": "559c48be-ac4d-4a69-81a2-800e36044f07",
       "key": "token",
       "value": "",
       "type": "string"
     },
     {
-      "id": "3b3f737e-34f7-45fe-8eb6-dcb184ada9a7",
+      "id": "29cd9b75-a49f-4868-a5cc-94eac2d91151",
       "key": "baseUrl",
       "value": "http://localhost:3000/api/v1",
       "type": "string"
     },
     {
-      "id": "bc0b50c7-1437-4b36-8992-7be146b8aa27",
+      "id": "f07b94e4-434a-4f8d-977a-7d3331294d20",
       "key": "refreshToken",
       "value": "",
       "type": "string"
