@@ -86,6 +86,22 @@
         },
         {
           "name": "Refresh Token",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "id": "b4374a36-70c3-4169-a289-2acb60ed1783",
+                "exec": [
+                  "if(pm.response.code === 201){\r",
+                  "    console.log(pm.response)\r",
+                  "    pm.collectionVariables.set(\"token\", pm.response);\r",
+                  "}\r",
+                  ""
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
           "id": "c9005ddb-06a3-474d-be7e-ff668cde161d",
           "protocolProfileBehavior": {
             "disableBodyPruning": true
@@ -150,19 +166,19 @@
   ],
   "variable": [
     {
-      "id": "a4c18731-f48a-4f59-91ee-de62f187c593",
+      "id": "c93b936e-cc71-4c8a-8386-f18f3a5af153",
       "key": "token",
       "value": "",
       "type": "string"
     },
     {
-      "id": "068f78db-e4dd-4e15-b88e-65cf8171a524",
+      "id": "0e6429c3-885a-4c19-9120-222c20d3cdaa",
       "key": "baseUrl",
       "value": "http://localhost:3000/api/v1",
       "type": "string"
     },
     {
-      "id": "916986a3-a303-40af-98fe-7d4fc324332f",
+      "id": "1ee3d4ef-6404-4dc6-86cc-0c932b5bf7b0",
       "key": "refreshToken",
       "value": "",
       "type": "string"
