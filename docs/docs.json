@@ -15,8 +15,18 @@
             "disableBodyPruning": true
           },
           "request": {
-            "method": "GET",
-            "header": []
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\":\"email@test.com\",\r\n    \"password\": \"password\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/auth/n/classic"
           },
           "response": []
         }
@@ -55,13 +65,13 @@
   ],
   "variable": [
     {
-      "id": "042db1fd-d0ed-40b7-ba0b-848893c4b023",
+      "id": "aa74dc16-cae5-4e13-ba06-0c7ea89bba38",
       "key": "token",
       "value": "",
       "type": "string"
     },
     {
-      "id": "ab0a25c0-e69e-46d6-9fe9-e15727534052",
+      "id": "62893f1c-2b96-46fb-b8f4-7bb5b697b199",
       "key": "baseUrl",
       "value": "http://localhost:3000/api/v1",
       "type": "string"
