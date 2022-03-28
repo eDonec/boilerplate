@@ -10,6 +10,19 @@
       "item": [
         {
           "name": "Sign up classic",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "id": "f6fe6a5c-5b69-4068-9f8f-41012e74d7bd",
+                "exec": [
+                  "pm.collectionVariables.set(\"token\", pm.response.json().token.accessToken);\r",
+                  ""
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
           "id": "1961779c-3da9-4d1e-9115-42fe581a3c89",
           "protocolProfileBehavior": {
             "disableBodyPruning": true
@@ -65,13 +78,13 @@
   ],
   "variable": [
     {
-      "id": "2b94da8a-72bf-4eac-b3c0-891736d1d487",
+      "id": "74c9f536-9e2d-443a-8cb9-62e6b3eff773",
       "key": "token",
       "value": "",
       "type": "string"
     },
     {
-      "id": "41f56343-e0b8-475e-be93-3f61bf12875e",
+      "id": "5c103c77-0c2b-43ff-be5b-aeca3f917212",
       "key": "baseUrl",
       "value": "http://localhost:3000/api/v1",
       "type": "string"
