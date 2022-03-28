@@ -42,6 +42,41 @@
             "url": "{{baseUrl}}/auth/n/classic"
           },
           "response": []
+        },
+        {
+          "name": "Sign in classic",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "id": "f6fe6a5c-5b69-4068-9f8f-41012e74d7bd",
+                "exec": [
+                  "pm.collectionVariables.set(\"token\", pm.response.json().token.accessToken);\r",
+                  ""
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "id": "2fba1503-e4d0-4c3f-aa77-ddd545184c3b",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\":\"email@example.com\",\r\n    \"password\": \"password\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/auth/n/classic"
+          },
+          "response": []
         }
       ],
       "id": "5586f4f7-1b2d-4d56-b01d-5e9964e5eb29",
@@ -78,13 +113,13 @@
   ],
   "variable": [
     {
-      "id": "3ab98fbc-b1ba-4633-a22f-53323027f9f6",
+      "id": "a63a4a73-44ee-4cbd-97f9-bc6bd193f9bb",
       "key": "token",
       "value": "",
       "type": "string"
     },
     {
-      "id": "41e8df63-63ec-425c-a5b2-506768608e47",
+      "id": "7c20cbc2-5ef6-4996-b9fa-eb1c0674507c",
       "key": "baseUrl",
       "value": "http://localhost:3000/api/v1",
       "type": "string"
