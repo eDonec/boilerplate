@@ -95,6 +95,18 @@
             "header": []
           },
           "response": []
+        },
+        {
+          "name": "Logout auth client from session by refresh token",
+          "id": "7051f2dd-7eee-422b-bd62-855e34cbf811",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": []
+          },
+          "response": []
         }
       ],
       "id": "5586f4f7-1b2d-4d56-b01d-5e9964e5eb29",
@@ -131,19 +143,19 @@
   ],
   "variable": [
     {
-      "id": "d0aec99e-820e-4fe7-9139-d8c57ea5657c",
+      "id": "f19e86a4-6ab3-42be-a698-2c4d6055bd7e",
       "key": "token",
       "value": "",
       "type": "string"
     },
     {
-      "id": "1c6e3f5a-a1ca-4c7e-b32f-e80a3ed3f3c6",
+      "id": "50148eba-dd8c-4eb4-afb7-f581a1b10997",
       "key": "baseUrl",
       "value": "http://localhost:3000/api/v1",
       "type": "string"
     },
     {
-      "id": "34e3f14b-43f0-48ca-86bd-904a4e9d8db2",
+      "id": "038d2cd2-2542-4734-a93b-c300f580da31",
       "key": "refreshToken",
       "value": "",
       "type": "string"
