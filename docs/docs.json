@@ -120,13 +120,35 @@
         },
         {
           "name": "Logout auth client from session by refresh token",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "id": "c07aa4d4-9920-4ba0-a0e0-e90207011e8e",
+                "exec": [
+                  "if(pm.response.code === 201){\r",
+                  "    pm.collectionVariables.unset('accessToken')\r",
+                  "    pm.collectionVariables.unset('refreshToken')\r",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
           "id": "7051f2dd-7eee-422b-bd62-855e34cbf811",
           "protocolProfileBehavior": {
             "disableBodyPruning": true
           },
           "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": {
+                "token": "{{refreshToken}}"
+              }
+            },
             "method": "GET",
-            "header": []
+            "header": [],
+            "url": "{{baseUrl}}/auth/n/logout"
           },
           "response": []
         }
@@ -165,19 +187,19 @@
   ],
   "variable": [
     {
-      "id": "aa51b69a-c09d-48f1-9d13-1b30781dfffa",
+      "id": "70e823b8-ba95-4cb2-a76e-9556c71b272b",
       "key": "token",
       "value": "",
       "type": "string"
     },
     {
-      "id": "cf8c36e8-5267-4477-96f8-3c41df4451e7",
+      "id": "7beccde7-417a-4393-81ad-9130ab4489bc",
       "key": "baseUrl",
       "value": "http://localhost:3000/api/v1",
       "type": "string"
     },
     {
-      "id": "75036b8d-d97a-454e-a466-d4c077fc4bbd",
+      "id": "59379285-59bb-4185-9f47-e7f367aa19b6",
       "key": "refreshToken",
       "value": "",
       "type": "string"
