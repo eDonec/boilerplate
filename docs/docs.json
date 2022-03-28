@@ -93,8 +93,7 @@
                 "id": "b4374a36-70c3-4169-a289-2acb60ed1783",
                 "exec": [
                   "if(pm.response.code === 201){\r",
-                  "    console.log(pm.response)\r",
-                  "    pm.collectionVariables.set(\"token\", pm.response);\r",
+                  "    pm.collectionVariables.set(\"token\", pm.response.text());\r",
                   "}\r",
                   ""
                 ],
@@ -166,19 +165,19 @@
   ],
   "variable": [
     {
-      "id": "8fbdab4f-f39a-4512-811a-da39d39a25eb",
+      "id": "aa51b69a-c09d-48f1-9d13-1b30781dfffa",
       "key": "token",
       "value": "",
       "type": "string"
     },
     {
-      "id": "f78fac64-6b82-4f02-a8b2-7c54b19ca218",
+      "id": "cf8c36e8-5267-4477-96f8-3c41df4451e7",
       "key": "baseUrl",
       "value": "http://localhost:3000/api/v1",
       "type": "string"
     },
     {
-      "id": "5f00ed84-9cfc-44d5-ad52-ac6df6f7c6a5",
+      "id": "75036b8d-d97a-454e-a466-d4c077fc4bbd",
       "key": "refreshToken",
       "value": "",
       "type": "string"
