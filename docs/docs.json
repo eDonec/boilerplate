@@ -126,7 +126,7 @@
               "script": {
                 "id": "c07aa4d4-9920-4ba0-a0e0-e90207011e8e",
                 "exec": [
-                  "if(pm.response.code === 201){\r",
+                  "if(pm.response.code === 200){\r",
                   "    pm.collectionVariables.unset('token')\r",
                   "    pm.collectionVariables.unset('refreshToken')\r",
                   "}"
@@ -187,19 +187,19 @@
   ],
   "variable": [
     {
-      "id": "c343bff2-bbf7-45ae-9737-c8741ecb41b3",
+      "id": "76c6e584-eb90-4038-bb01-f7004838a871",
       "key": "token",
       "value": "",
       "type": "string"
     },
     {
-      "id": "929fa553-97c7-4167-985f-0c974e531f57",
+      "id": "992418d9-cdc6-4a22-ae38-4a485c75236e",
       "key": "baseUrl",
       "value": "http://localhost:3000/api/v1",
       "type": "string"
     },
     {
-      "id": "b94f4506-5dfb-4e9b-abaf-2635d1e1c5fe",
+      "id": "6df06102-e105-48a5-b1ae-9e38a8f86bf3",
       "key": "refreshToken",
       "value": "",
       "type": "string"
