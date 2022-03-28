@@ -74,7 +74,7 @@
                 }
               }
             },
-            "url": "{{baseUrl}}/auth/n/classic"
+            "url": "{{baseUrl}}/auth/n/sign-in/classic"
           },
           "response": []
         }
@@ -113,13 +113,13 @@
   ],
   "variable": [
     {
-      "id": "a63a4a73-44ee-4cbd-97f9-bc6bd193f9bb",
+      "id": "19638374-3295-4641-8155-55b68f1dc8f3",
       "key": "token",
       "value": "",
       "type": "string"
     },
     {
-      "id": "7c20cbc2-5ef6-4996-b9fa-eb1c0674507c",
+      "id": "0c758bf9-f5b6-418b-a816-75688220398a",
       "key": "baseUrl",
       "value": "http://localhost:3000/api/v1",
       "type": "string"
