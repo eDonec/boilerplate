@@ -1,5 +1,12 @@
+import { useTranslation } from "react-i18next";
+
 import { ButtonLink, SEO, UnstyledLink } from "core-next-components";
 import Button from "core-ui/Button";
+
+// !STARTERCONF -> Select !STARTERCONF and CMD + SHIFT + F
+// Before you begin editing, follow all comments with `STARTERCONF`,
+// to customize the default configuration.
+import { useRouter } from "next/router";
 
 import { useAppSelector, useLoadingDispatch } from "hooks/reduxHooks";
 
@@ -15,13 +22,11 @@ import { setCounterAsync } from "_redux/slices/counter/thunk";
  */
 import Vercel from "~/svg/Vercel.svg";
 
-// !STARTERCONF -> Select !STARTERCONF and CMD + SHIFT + F
-// Before you begin editing, follow all comments with `STARTERCONF`,
-// to customize the default configuration.
-
 export default function HomePage() {
   const count = useAppSelector((state) => state.counter.count);
   const { isLoading, dispatch, classicDispatch } = useLoadingDispatch();
+  const { t } = useTranslation();
+  const router = useRouter();
 
   const increment = () => {
     classicDispatch(incrementCounter());
@@ -34,6 +39,9 @@ export default function HomePage() {
   const setAsync = () => {
     dispatch(setCounterAsync(300));
   };
+  const changeLanguage = (locale: string) => {
+    router.push(router.pathname, router.asPath, { locale });
+  };
 
   return (
     <>
@@ -45,6 +53,13 @@ export default function HomePage() {
           layout flex min-h-screen flex-col items-center justify-center  bg-white text-center"
           >
             <Vercel className="text-5xl" />
+            <div className="flex gap-2">
+              <Button onClick={() => changeLanguage("fr")}>Fr</Button>
+              <Button onClick={() => changeLanguage("en")}>En</Button>
+            </div>
+
+            <p>{t("signin")}</p>
+
             <h1 className="mt-4">
               Next.js + Tailwind CSS + TypeScript + Redux Tookit
             </h1>

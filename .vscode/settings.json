@@ -26,7 +26,15 @@
   "typescript.referencesCodeLens.enabled": true,
   "appService.zipIgnorePattern": [".vscode{,/**}"],
   "appService.deploySubpath": "",
-  "!files.exclude": {
+  "f@iles.exclude": {
+    "**/coverage": true,
+    "**/.eslintrc.js": true,
+    "**/Docker*": true,
+    "**/docker*": true,
+    "**/tsconfig.json": true,
+    "**/Makefile*": true,
+    "**/*.config*": true,
+    "**/*next*": true,
     "**/.git": true,
     "**/.turbo": true,
     "**/.svn": true,
@@ -57,7 +65,7 @@
     "**/.history": true,
     "**/commitlint.config,js": true,
     "cypress": true,
-    "**/tsconfig.tsbuildinfo": true
+    "**/tsconfig.*": true
   },
   "explorerExclude.backup": null,
   "typescript.tsdk": "node_modules\\typescript\\lib",

@@ -7,3 +7,4 @@ coverage
 dist
 !generators/*/.env
 tsconfig.tsbuildinfo
+!.env

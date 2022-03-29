@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.5](https://gitlab.com/eDonec/tools/boilerplate/compare/v0.0.4...v0.0.5) (2022-03-28)
+
+
+### Features
+
+* add classic sign-in to server-auth ([45ce565](https://gitlab.com/eDonec/tools/boilerplate/commit/45ce5655b520ac727887ef4af9e77e69a2fa6434))
+* add signup to server-auth ([5ca1df9](https://gitlab.com/eDonec/tools/boilerplate/commit/5ca1df9d612e3e99e8b363f8dcf4c74a0907c2f7))
+* add string validation Class and custom error handeling for it ([394b56d](https://gitlab.com/eDonec/tools/boilerplate/commit/394b56d7c193d84ce5ff2e2e9256cbaaa8ddd376))
+* add translation to client app ([99230c6](https://gitlab.com/eDonec/tools/boilerplate/commit/99230c6a7f9ab19b9d7164c6d10b31e68f32632b))
+* classic auth back-end baseUrl /auth/n/classic routes /sign-up /sign-in /refresh-token /logout ([dc7fa6b](https://gitlab.com/eDonec/tools/boilerplate/commit/dc7fa6bd26949ca66dfd6ec7fd5b336935eefd07))
+* merge master into branch ([b25c5ff](https://gitlab.com/eDonec/tools/boilerplate/commit/b25c5ff43d97dea3782bb12ebd555276e5d77fca))
+
+
+### Bug Fixes
+
+* express generator package.json name ([7960553](https://gitlab.com/eDonec/tools/boilerplate/commit/796055312085f122c8076412039d9848fe4e1dee))
+
 ### [0.0.4](https://gitlab.com/eDonec/tools/boilerplate/compare/v0.0.3...v0.0.4) (2022-03-24)
 
 
