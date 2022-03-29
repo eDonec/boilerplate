@@ -1,0 +1,206 @@
+{
+  "info": {
+    "_postman_id": "ced2b50d-8e46-4cfa-80ec-d061753de6fc",
+    "name": "Boilerplate",
+    "schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Sign up classic",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "id": "f6fe6a5c-5b69-4068-9f8f-41012e74d7bd",
+                "exec": [
+                  "if(pm.response.code === 201){\r",
+                  "    pm.collectionVariables.set(\"token\", pm.response.json().token.accessToken);\r",
+                  "    pm.collectionVariables.set(\"refreshToken\", pm.response.json().token.refreshToken);\r",
+                  "}\r",
+                  ""
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "id": "1961779c-3da9-4d1e-9115-42fe581a3c89",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\":\"email@example.com\",\r\n    \"password\": \"password\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/auth/n/classic"
+          },
+          "response": []
+        },
+        {
+          "name": "Sign in classic",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "id": "f6fe6a5c-5b69-4068-9f8f-41012e74d7bd",
+                "exec": [
+                  "if(pm.response.code === 200){\r",
+                  "    pm.collectionVariables.set(\"token\", pm.response.json().token.accessToken);\r",
+                  "    pm.collectionVariables.set(\"refreshToken\", pm.response.json().token.refreshToken);\r",
+                  "}\r",
+                  ""
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "id": "2fba1503-e4d0-4c3f-aa77-ddd545184c3b",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\":\"email@example.com\",\r\n    \"password\": \"password\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/auth/n/sign-in/classic"
+          },
+          "response": []
+        },
+        {
+          "name": "Refresh Token",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "id": "b4374a36-70c3-4169-a289-2acb60ed1783",
+                "exec": [
+                  "if(pm.response.code === 201){\r",
+                  "    pm.collectionVariables.set(\"token\", pm.response.text());\r",
+                  "}\r",
+                  ""
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "id": "c9005ddb-06a3-474d-be7e-ff668cde161d",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": {
+                "token": "{{refreshToken}}"
+              }
+            },
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/auth/n/refresh-token"
+          },
+          "response": []
+        },
+        {
+          "name": "Logout auth client from session by refresh token",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "id": "c07aa4d4-9920-4ba0-a0e0-e90207011e8e",
+                "exec": [
+                  "if(pm.response.code === 200){\r",
+                  "    pm.collectionVariables.unset('token')\r",
+                  "    pm.collectionVariables.unset('refreshToken')\r",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "id": "7051f2dd-7eee-422b-bd62-855e34cbf811",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": {
+                "token": "{{refreshToken}}"
+              }
+            },
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/auth/n/logout"
+          },
+          "response": []
+        }
+      ],
+      "id": "5586f4f7-1b2d-4d56-b01d-5e9964e5eb29",
+      "description": "Authentication service for the whole boilerplate"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": {
+      "token": "{{accessToken}}"
+    }
+  },
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "id": "8b10a656-5522-4f34-9d3a-10d530479052",
+        "type": "text/javascript",
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "id": "ab8d130c-85e3-49fa-88d9-30ec1b2f406c",
+        "type": "text/javascript",
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "id": "bdb7bb54-40bb-4edd-b53d-dca4511cb3b9",
+      "key": "baseUrl",
+      "value": "http://localhost:3000/api/v1",
+      "type": "string"
+    },
+    {
+      "id": "fe46c60f-25fe-4002-92fa-6a594fee099e",
+      "key": "accessToken",
+      "value": ""
+    },
+    {
+      "id": "c63cd46e-ea3b-49ba-aa37-f9019b32bf3c",
+      "key": "refreshToken",
+      "value": ""
+    }
+  ]
+}
