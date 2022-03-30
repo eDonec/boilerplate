@@ -1,5 +1,6 @@
 import { Provider } from "react-redux";
 
+import DarkModeProvider from "core-ui/DarkModeProvider";
 import i18n from "locales";
 
 import { AppProps } from "next/app";
@@ -30,11 +31,12 @@ function MyApp({ Component, pageProps }: AppProps) {
       </Head>
       <Provider store={store}>
         <TranslationProvider>
-          <Component {...pageProps} />
+          <DarkModeProvider>
+            <Component {...pageProps} />
+          </DarkModeProvider>
         </TranslationProvider>
       </Provider>
     </>
   );
 }
-// !Note to self Add dark mode here by using the class `dark` in top level
 export default MyApp;

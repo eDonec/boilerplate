@@ -1,6 +1,6 @@
 import { useLocation } from "react-router-dom";
 
-import { Button } from "core-ui";
+import { Button, useDarkMode } from "core-ui";
 
 import { useAppSelector, useLoadingDispatch } from "hooks/reduxHooks";
 
@@ -22,6 +22,7 @@ const HomePage = () => {
   const setAsync = () => {
     dispatch(setCounterAsync(300));
   };
+  const { toggleDarkMode } = useDarkMode();
 
   useLocation();
 
@@ -34,6 +35,9 @@ const HomePage = () => {
       <p className="mt-2 text-sm text-gray-700">
         <a href="/api/v1">Go to API</a>
       </p>
+      <Button onClick={toggleDarkMode} light>
+        Toggle Dark mode
+      </Button>
       <h2 className="my-3">Redux Counter : {count}</h2>
       <div className="flex flex-col gap-2">
         <div className="flex gap-2">

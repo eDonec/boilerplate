@@ -7,7 +7,6 @@ export enum ButtonVariant {
   "outline" = "outline",
   "ghost" = "ghost",
   "light" = "light",
-  "dark" = "dark",
 }
 
 export type ButtonProps = {
@@ -28,7 +27,6 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       outline,
       ghost,
       light,
-      dark,
       isDarkBg = false,
       ...rest
     },
@@ -47,16 +45,20 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
           "shadow-sm",
           "transition-colors duration-75",
           "disabled:cursor-not-allowed",
+          "dark:text-white",
+          "dark:bg-gray-900 dark:text-white",
+          "dark:border dark:border-gray-600",
+          "dark:hover:bg-gray-800 dark:active:bg-gray-700 dark:disabled:bg-gray-700",
           isLoading && [
             "transition-none hover:text-gray-600 disabled:cursor-wait",
             {
-              "text-white": primary || dark,
+              "text-white": primary,
               "text-black": light,
               "text-primary-500": outline || ghost,
             },
           ],
 
-          getVariantsClsx({ primary, outline, ghost, light, dark }, isDarkBg),
+          getVariantsClsx({ primary, outline, ghost, light }, isDarkBg),
           className
         )}
         {...rest}
@@ -71,7 +73,7 @@ export default Button;
 
 //#region  //*=========== Variants ===========
 export const getVariantsClsx = (
-  { outline, ghost, light, dark }: { [key in ButtonVariant]?: boolean },
+  { outline, ghost, light }: { [key in ButtonVariant]?: boolean },
   isDarkBg: boolean
 ) => {
   if (outline)
@@ -94,12 +96,6 @@ export const getVariantsClsx = (
       "border border-gray-300",
       "hover:bg-gray-100 hover:text-dark",
       "active:bg-white/80 disabled:bg-gray-200",
-    ];
-  if (dark)
-    return [
-      "bg-gray-900 text-white",
-      "border border-gray-600",
-      "hover:bg-gray-800 active:bg-gray-700 disabled:bg-gray-700",
     ];
 
   return [
