@@ -1,6 +1,7 @@
 import { useLocation } from "react-router-dom";
 
 import { Button, useDarkMode } from "core-ui";
+import Input from "forms/Input";
 
 import { useAppSelector, useLoadingDispatch } from "hooks/reduxHooks";
 
@@ -35,6 +36,7 @@ const HomePage = () => {
       <p className="mt-2 text-sm text-gray-700">
         <a href="/api/v1">Go to API</a>
       </p>
+      <Input type="text" placeholder="placeholder" label="Input for test" />
       <Button onClick={toggleDarkMode} light>
         Toggle Dark mode
       </Button>
