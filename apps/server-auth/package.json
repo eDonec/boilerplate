@@ -8,6 +8,7 @@
     "start": "nodemon src/index.ts",
     "build": "tsc",
     "test": "jest --coverage",
+    "seed": "ts-node src/seed/index.ts",
     "lint": "eslint src --fix"
   },
   "dependencies": {

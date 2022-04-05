@@ -33,12 +33,10 @@ const AuthClient = new Schema<AuthDocument>({
   },
   providerId: String,
   sessions: [String],
-  role: [
-    {
-      type: Types.ObjectId,
-      ref: "Role",
-    },
-  ],
+  role: {
+    type: Types.ObjectId,
+    ref: "Role",
+  },
   customAccessList: {
     type: [
       {
