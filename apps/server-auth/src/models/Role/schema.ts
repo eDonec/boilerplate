@@ -5,17 +5,19 @@ import { RoleType } from "./types";
 
 export default new Schema<RoleType>({
   name: { type: String, required: true },
-  access: {
-    ressource: {
-      type: String,
-      required: true,
-    },
-    privileges: [
-      {
+  access: [
+    {
+      ressource: {
         type: String,
-        enum: PRIVILEGE,
         required: true,
       },
-    ],
-  },
+      privileges: [
+        {
+          type: String,
+          enum: PRIVILEGE,
+          required: true,
+        },
+      ],
+    },
+  ],
 });
