@@ -151,18 +151,6 @@
             "url": "{{baseUrl}}/auth/n/logout"
           },
           "response": []
-        },
-        {
-          "name": "New Request",
-          "id": "30c50a79-9a67-40f7-aaea-d8ad3aac41c7",
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          },
-          "request": {
-            "method": "GET",
-            "header": []
-          },
-          "response": []
         }
       ],
       "id": "5586f4f7-1b2d-4d56-b01d-5e9964e5eb29",
@@ -199,23 +187,23 @@
   ],
   "variable": [
     {
-      "id": "6b34fea6-dfe8-4fa4-8793-c264f63ee9b2",
+      "id": "eb8fab20-7ce6-44b7-9214-aab114f3a53c",
       "key": "baseUrl",
       "value": "http://localhost:3000/api/v1",
       "type": "string"
     },
     {
-      "id": "30448baf-c1d3-4de7-a10a-498688522b81",
+      "id": "59167f6c-ca18-4263-9e92-fce6406cdb71",
       "key": "accessToken",
       "value": ""
     },
     {
-      "id": "4d7af526-898c-4f9d-a264-ca300d526581",
+      "id": "fb8e89fc-3c2b-44ca-8101-09eb6943ebb4",
       "key": "refreshToken",
       "value": ""
     },
     {
-      "id": "ce741181-74fc-410f-acff-4dd2bef71e8d",
+      "id": "e4f3399c-9dcb-4edb-aa6f-4332fb818217",
       "key": "token",
       "value": ""
     }
