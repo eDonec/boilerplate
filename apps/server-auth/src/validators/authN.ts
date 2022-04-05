@@ -1,8 +1,8 @@
 import CustomInputError from "custom-error/customInputError";
 import isAfter from "date-fns/isAfter";
 import { Request } from "express";
+import FieldValidator from "field-validator";
 import { IMiddleware } from "shared-types";
-import StringValidator from "string-validator";
 import TokenValidator from "token/TokenValidator";
 
 import { statusCodes } from "constants/statusCodes";
@@ -11,12 +11,14 @@ import { ISignUpClassicBody } from "types/authNRoutes";
 
 export const signUpClassicValidator: IMiddleware = (req, res, next) => {
   const { email, password, userName }: ISignUpClassicBody = req.body;
-  const validators = new StringValidator({ email, password, userName });
+  const validators = new FieldValidator({ email, password, userName });
+
+  validators.validate.email.exists().isString().isEmail();
+  validators.validate.password.exists().isString().minLength(8);
+  if (userName) validators.validate.userName.isString().minLength(6);
 
   try {
-    validators.email.exists().isString().isEmail();
-    validators.password.exists().isString().isLongerThan(8);
-    if (userName) validators.userName.isString().isLongerThan(6);
+    validators.resolveErrors();
   } catch (error) {
     if (error instanceof CustomInputError)
       res.status(statusCodes.Unauthorized).send({
@@ -38,12 +40,13 @@ export const signUpClassicValidator: IMiddleware = (req, res, next) => {
 
 export const signInClassicValidator: IMiddleware = (req, res, next) => {
   const { email, password, userName }: ISignUpClassicBody = req.body;
-  const validators = new StringValidator({ email, password, userName });
+  const validators = new FieldValidator({ email, password, userName });
 
+  validators.validate.email.exists().isString();
+  validators.validate.password.exists().isString();
+  if (userName) validators.validate.userName.isString();
   try {
-    validators.email.exists().isString();
-    validators.password.exists().isString();
-    if (userName) validators.userName.isString();
+    validators.resolveErrors();
   } catch (error) {
     if (error instanceof CustomInputError)
       res.status(statusCodes.Unauthorized).send({

@@ -169,9 +169,7 @@
       "script": {
         "id": "8b10a656-5522-4f34-9d3a-10d530479052",
         "type": "text/javascript",
-        "exec": [
-          ""
-        ]
+        "exec": [""]
       }
     },
     {
@@ -179,9 +177,7 @@
       "script": {
         "id": "ab8d130c-85e3-49fa-88d9-30ec1b2f406c",
         "type": "text/javascript",
-        "exec": [
-          ""
-        ]
+        "exec": [""]
       }
     }
   ],

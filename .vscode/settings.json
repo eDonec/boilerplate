@@ -69,5 +69,6 @@
   },
   "explorerExclude.backup": null,
   "typescript.tsdk": "node_modules\\typescript\\lib",
-  "jest.jestCommandLine": "yarn test"
+  "jest.jestCommandLine": "yarn test",
+  "eslint.alwaysShowStatus": true
 }

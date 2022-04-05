@@ -1,10 +1,10 @@
 export interface ICustomError {
   message: string;
-  fields?: string[];
+  fields: { fieldName: string; message: string }[];
   stack?: string;
 }
 export default class CustomInputError extends Error {
-  fields?: string[];
+  fields: { fieldName: string; message: string }[];
 
   constructor({ message, fields, stack }: ICustomError) {
     super(message);
