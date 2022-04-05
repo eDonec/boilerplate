@@ -8,7 +8,12 @@ export type AuthType = {
   userName?: string;
   password?: string;
   authProvider: [AUTH_PROVIDERS];
-  providerId?: string;
+  providerId?: [
+    {
+      provider: AUTH_PROVIDERS;
+      id: string;
+    }
+  ];
   sessions: string[];
   role: RoleType;
   customAccessList: ACCESS[];

@@ -7,6 +7,7 @@ it('Full access should have all the privilages!"', () => {
       PRIVILEGE.WRITE,
       PRIVILEGE.DELETE,
       PRIVILEGE.GRANT,
+      PRIVILEGE.REVOKE,
     ])
   );
 });

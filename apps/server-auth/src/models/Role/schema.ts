@@ -18,6 +18,10 @@ const Role = new Schema<RoleType>({
           required: true,
         },
       ],
+      meta: {
+        type: Schema.Types.Mixed,
+        default: null,
+      },
     },
   ],
 });

@@ -31,7 +31,21 @@ const AuthClient = new Schema<AuthDocument>({
     enum: AUTH_PROVIDERS,
     required: true,
   },
-  providerId: String,
+  providerId: {
+    type: [
+      {
+        provider: {
+          type: String,
+          enum: AUTH_PROVIDERS,
+          required: true,
+        },
+        id: {
+          type: String,
+          required: true,
+        },
+      },
+    ],
+  },
   sessions: [String],
   role: {
     type: Types.ObjectId,
