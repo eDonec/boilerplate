@@ -16,7 +16,6 @@ const ButtonLink = React.forwardRef<HTMLAnchorElement, ButtonLinkProps>(
       outline,
       ghost,
       light,
-      dark,
       isDarkBg = false,
       ...rest
     },
@@ -31,7 +30,7 @@ const ButtonLink = React.forwardRef<HTMLAnchorElement, ButtonLinkProps>(
           "focus-visible:ring-primary-500 focus:outline-none focus-visible:ring",
           "shadow-sm",
           "transition-colors duration-75",
-          getVariantsClsx({ primary, outline, ghost, light, dark }, isDarkBg),
+          getVariantsClsx({ primary, outline, ghost, light }, isDarkBg),
           "disabled:cursor-not-allowed",
           className
         )}

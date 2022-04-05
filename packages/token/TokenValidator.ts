@@ -7,7 +7,7 @@ export interface IDecodedToken<T = any> {
   iss: string;
   aud: string | string[];
   sid: string;
-  exp?: number;
+  exp: number;
   payload: T;
 }
 export default class TokenValidator<T = string | object | Buffer> {

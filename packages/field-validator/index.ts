@@ -10,6 +10,9 @@ export default class Validator {
   constructor(strings: Record<string, string | number | Date | undefined>) {
     if (!Object.keys(strings).length)
       throw new Error("At least one field should be passed");
+
+    const typeErrors: { fieldName: string; message: string }[] = [];
+
     Object.keys(strings).forEach((key) => {
       if (
         strings[key] &&
@@ -17,22 +20,34 @@ export default class Validator {
         typeof strings[key] !== "number" &&
         !(strings[key] instanceof Date)
       )
-        throw new CustomInputError({
-          message: `${key} must have type string or number or date for this initiation`,
-          fields: [],
+        typeErrors.push({
+          fieldName: key,
+          message: `${key} must be a string, number or Date`,
         });
+
       this.validate[key] = new FieldValidator(strings[key], key);
       this.fields.push(key);
     });
+    if (typeErrors.length)
+      throw new CustomInputError({
+        message: "All fields must be strings, numbers or Dates",
+        fields: typeErrors,
+      });
   }
 
   resolveErrors() {
-    const errors: CustomInputError[] = [];
+    const errors: { fields: CustomInputError["fields"]; message: string }[] =
+      [];
 
     this.fields.forEach((field) => {
       if (!this.validate) return;
-      if (this.validate[field].error instanceof CustomInputError)
-        errors.push(this.validate[field].error as CustomInputError);
+      if (this.validate[field].error)
+        errors.push(
+          this.validate[field].error as {
+            fields: CustomInputError["fields"];
+            message: string;
+          }
+        );
     });
     if (errors.length > 0) {
       const message = "Validation error!";

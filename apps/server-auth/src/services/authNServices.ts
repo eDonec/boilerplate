@@ -1,8 +1,11 @@
 import Auth from "models/Auth";
 import { AuthDocument } from "models/Auth/types";
+import Role from "models/Role";
 import { nanoid } from "nanoid";
 import { ACCESS_TYPE, AUTH_PROVIDERS } from "shared-types";
 import TokenGenerator from "token/TokenGenerator";
+
+import { PUBLIC_ROLE } from "constants/defaultRoles";
 
 import { constructRoleArray } from "helpers/constructRoleArray";
 
@@ -13,10 +16,15 @@ export const signUpClassic = async ({
   password,
   userName,
 }: ISignUpClassicBody) => {
+  const pulbicRole = await Role.findOne({ name: PUBLIC_ROLE.name });
+
+  if (!pulbicRole)
+    throw new Error("Public role not found please seed the database!");
   const newAuthClient = new Auth({
     email,
     password,
     userName,
+    role: pulbicRole,
     authType: ACCESS_TYPE.USER,
     authProvider: [AUTH_PROVIDERS.CLASSIC],
   });

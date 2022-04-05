@@ -10,6 +10,7 @@
     "@types/jest": "27.0.1",
     "@types/node": "16.7.13",
     "@types/react": "17.0.20",
+    "forms": "*",
     "@types/react-dom": "17.0.9",
     "core-hooks": "*",
     "core-ui": "*",

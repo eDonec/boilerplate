@@ -8,6 +8,7 @@ import {
   UnstyledLink,
 } from "core-next-components";
 import Button from "core-ui/Button";
+import { useDarkMode } from "core-ui/DarkModeProvider/useDarkMode";
 import clsx from "core-utils/clsx";
 
 import { colorList } from "constants/colorList";
@@ -16,30 +17,21 @@ import Layout from "components/Layout";
 
 type Color = typeof colorList[number];
 
-export default function ComponentsPage() {
-  const [mode, setMode] = React.useState<"dark" | "light">("light");
+const ComponentsPage = () => {
   const [color, setColor] = React.useState<Color>("sky");
-
-  function toggleMode() {
-    return setMode((prevMode) => (prevMode === "dark" ? "light" : "dark"));
-  }
-
-  const textColor = mode === "dark" ? "text-gray-200" : "text-gray-600";
+  const { toggleDarkMode } = useDarkMode();
 
   return (
     <Layout>
       <SEO description="Pre-built components with awesome default" />
 
-      <main className="dark">
-        <section
-          className={`${
-            mode === "dark" ? "bg-dark" : "bg-gray-50"
-          } ${color}  transition-[background-color] duration-700`}
-        >
+      <main>
+        <section className={`${color}`}>
           <div
             className={clsx(
               "layout min-h-screen py-20",
-              mode === "dark" ? "text-white" : "text-black"
+              "dark:text-white",
+              "text-black"
             )}
           >
             <h1>Built-in Components</h1>
@@ -48,14 +40,10 @@ export default function ComponentsPage() {
             </ButtonLink>
 
             <div className="mt-8 flex flex-wrap gap-2">
-              <Button
-                onClick={toggleMode}
-                light={mode === "dark"}
-                dark={mode !== "dark"}
-              >
-                Set to {mode === "dark" ? "light" : "dark"}
+              <Button onClick={toggleDarkMode} light>
+                Toggle Dark mode
               </Button>
-              <Button isLoading outline onClick={toggleMode}>
+              <Button isLoading outline onClick={toggleDarkMode}>
                 Outline
               </Button>
               {/* <Button onClick={randomize}>Randomize CSS Variable</Button> */}
@@ -64,7 +52,12 @@ export default function ComponentsPage() {
             <ol className="mt-8 space-y-6">
               <li className="space-y-2">
                 <h2 className="text-lg md:text-xl">Customize Colors</h2>
-                <p className={clsx("!mt-1 text-sm", textColor)}>
+                <p
+                  className={clsx(
+                    "!mt-1 text-sm",
+                    "text-gray-600 dark:text-gray-200"
+                  )}
+                >
                   You can change primary color to any Tailwind CSS colors. See
                   globals.css to change your color.
                 </p>
@@ -75,9 +68,8 @@ export default function ComponentsPage() {
                     value={color}
                     className={clsx(
                       "block max-w-xs rounded",
-                      mode === "dark"
-                        ? "bg-dark border border-gray-600 duration-700"
-                        : "border-gray-300 bg-white",
+                      "dark:bg-dark dark:border dark:border-gray-600 dark:duration-700",
+                      "border-gray-300 bg-white",
                       "focus:border-primary-400 focus:ring-primary-400 focus:outline-none focus:ring"
                     )}
                     onChange={(e) => setColor(e.target.value as Color)}
@@ -88,9 +80,6 @@ export default function ComponentsPage() {
                       </option>
                     ))}
                   </select>
-                  <ButtonLink href="https://github.com/theodorusclarence/ts-nextjs-tailwind-starter/blob/main/src/styles/colors.css">
-                    Check list of colors
-                  </ButtonLink>
                 </div>
                 <div className="flex flex-wrap gap-2 text-xs font-medium">
                   <div className="bg-primary-50 flex h-10 w-10 items-center justify-center rounded text-black">
@@ -126,28 +115,20 @@ export default function ComponentsPage() {
                 </div>
               </li>
               <li className="space-y-2">
-                <h2 className="text-lg md:text-xl">UnstyledLink</h2>
-                <p className={clsx("!mt-1 text-sm", textColor)}>
+                <h2 className="text-lg md:text-xl">Links</h2>
+                <p
+                  className={clsx(
+                    "!mt-1 text-sm",
+                    "text-gray-600 dark:text-gray-200"
+                  )}
+                >
                   No style applied, differentiate internal and outside links,
                   give custom cursor for outside links.
                 </p>
                 <div className="space-x-2">
-                  <UnstyledLink href="/">Internal Links</UnstyledLink>
-                  <UnstyledLink href="https://theodorusclarence.com">
-                    Outside Links
-                  </UnstyledLink>
-                </div>
-              </li>
-              <li className="space-y-2">
-                <h2 className="text-lg md:text-xl">PrimaryLink</h2>
-                <p className={clsx("!mt-1 text-sm", textColor)}>
-                  Add styling on top of UnstyledLink, giving a primary color to
-                  the link.
-                </p>
-                <div className="space-x-2">
-                  <PrimaryLink href="/">Internal Links</PrimaryLink>
+                  <UnstyledLink href="/">Internal unstiled Links</UnstyledLink>
                   <PrimaryLink href="https://theodorusclarence.com">
-                    Outside Links
+                    Outside styled Links
                   </PrimaryLink>
                 </div>
               </li>
@@ -157,4 +138,6 @@ export default function ComponentsPage() {
       </main>
     </Layout>
   );
-}
+};
+
+export default React.memo(ComponentsPage);

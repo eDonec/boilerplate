@@ -16,6 +16,9 @@
     "start": {
       "cache": false
     },
+    "seed": {
+      "cache": false
+    },
     "test": {
       "dependsOn": ["^build"],
       "outputs": ["coverage/**"]

@@ -3,19 +3,23 @@ import { PRIVILEGE } from "shared-types";
 
 import { RoleType } from "./types";
 
-export default new Schema<RoleType>({
-  name: { type: String, required: true },
-  access: {
-    ressource: {
-      type: String,
-      required: true,
-    },
-    privileges: [
-      {
+const Role = new Schema<RoleType>({
+  name: { type: String, required: true, unique: true },
+  access: [
+    {
+      ressource: {
         type: String,
-        enum: PRIVILEGE,
         required: true,
       },
-    ],
-  },
+      privileges: [
+        {
+          type: String,
+          enum: PRIVILEGE,
+          required: true,
+        },
+      ],
+    },
+  ],
 });
+
+export default Role;
