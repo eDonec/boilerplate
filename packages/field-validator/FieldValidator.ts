@@ -28,20 +28,54 @@ export default class FieldValidator {
     this.fieldName = fieldName;
   }
 
-  isEmail() {
-    if (typeof this.fieldToTest !== "string") {
-      this.error = new CustomInputError({
-        message: "Validation error!",
-        fields: [
-          {
-            fieldName: this.fieldName,
-            message: `${this.fieldName} is not a string`,
-          },
-        ],
-      });
+  isStringType(field?: string | number | Date): field is string {
+    if (typeof field === "string") return true;
 
-      return this;
-    }
+    this.error = new CustomInputError({
+      message: "Validation error!",
+      fields: [
+        {
+          fieldName: this.fieldName,
+          message: `${this.fieldName} is not a string`,
+        },
+      ],
+    });
+
+    return false;
+  }
+
+  isDateType(field?: string | number | Date): field is Date {
+    if (field instanceof Date) return true;
+    this.error = new CustomInputError({
+      message: "Validation error!",
+      fields: [
+        {
+          fieldName: this.fieldName,
+          message: `${this.fieldName} is not a Date`,
+        },
+      ],
+    });
+
+    return false;
+  }
+
+  isNumberType(field?: string | number | Date): field is number {
+    if (typeof field === "number") return true;
+    this.error = new CustomInputError({
+      message: "Validation error!",
+      fields: [
+        {
+          fieldName: this.fieldName,
+          message: `${this.fieldName} is not a number`,
+        },
+      ],
+    });
+
+    return false;
+  }
+
+  isEmail() {
+    if (!this.isStringType(this.fieldToTest)) return this;
     if (!emailRegex.test(this.fieldToTest))
       this.error = new CustomInputError({
         message: "Validation error!",
@@ -102,19 +136,7 @@ export default class FieldValidator {
   }
 
   isAlpha() {
-    if (typeof this.fieldToTest !== "string") {
-      this.error = new CustomInputError({
-        message: "Validation error!",
-        fields: [
-          {
-            fieldName: this.fieldName,
-            message: `${this.fieldName} is not a string`,
-          },
-        ],
-      });
-
-      return this;
-    }
+    if (!this.isStringType(this.fieldToTest)) return this;
     if (!alphaRegex.test(this.fieldToTest))
       this.error = new CustomInputError({
         message: "Validation error!",
@@ -130,19 +152,7 @@ export default class FieldValidator {
   }
 
   isAlphaSpace() {
-    if (typeof this.fieldToTest !== "string") {
-      this.error = new CustomInputError({
-        message: "Validation error!",
-        fields: [
-          {
-            fieldName: this.fieldName,
-            message: `${this.fieldName} is not a string`,
-          },
-        ],
-      });
-
-      return this;
-    }
+    if (!this.isStringType(this.fieldToTest)) return this;
     if (!alphaSpaceRegex.test(this.fieldToTest))
       this.error = new CustomInputError({
         message: "Validation error!",
@@ -158,19 +168,7 @@ export default class FieldValidator {
   }
 
   isAlphaNum() {
-    if (typeof this.fieldToTest !== "string") {
-      this.error = new CustomInputError({
-        message: "Validation error!",
-        fields: [
-          {
-            fieldName: this.fieldName,
-            message: `${this.fieldName} is not a string`,
-          },
-        ],
-      });
-
-      return this;
-    }
+    if (!this.isStringType(this.fieldToTest)) return this;
     if (!alphaNumRegex.test(this.fieldToTest))
       this.error = new CustomInputError({
         message: "Validation error!",
@@ -186,19 +184,7 @@ export default class FieldValidator {
   }
 
   maxLength(length: number) {
-    if (typeof this.fieldToTest !== "string") {
-      this.error = new CustomInputError({
-        message: "Validation error!",
-        fields: [
-          {
-            fieldName: this.fieldName,
-            message: `${this.fieldName} is not a string`,
-          },
-        ],
-      });
-
-      return this;
-    }
+    if (!this.isStringType(this.fieldToTest)) return this;
     if (this.fieldToTest.length > length)
       this.error = new CustomInputError({
         message: "Validation error!",
@@ -214,19 +200,7 @@ export default class FieldValidator {
   }
 
   minLength(length: number) {
-    if (typeof this.fieldToTest !== "string") {
-      this.error = new CustomInputError({
-        message: "Validation error!",
-        fields: [
-          {
-            fieldName: this.fieldName,
-            message: `${this.fieldName} is not a string`,
-          },
-        ],
-      });
-
-      return this;
-    }
+    if (!this.isStringType(this.fieldToTest)) return this;
     if (this.fieldToTest.length < length)
       this.error = new CustomInputError({
         message: "Validation error!",
@@ -242,6 +216,7 @@ export default class FieldValidator {
   }
 
   isPasswordMatch(val: string) {
+    if (!this.isStringType(this.fieldToTest)) return this;
     if (this.fieldToTest !== val)
       this.error = new CustomInputError({
         message: "Validation error!",
@@ -257,19 +232,7 @@ export default class FieldValidator {
   }
 
   isUrl() {
-    if (typeof this.fieldToTest !== "string") {
-      this.error = new CustomInputError({
-        message: "Validation error!",
-        fields: [
-          {
-            fieldName: this.fieldName,
-            message: `${this.fieldName} is not a string`,
-          },
-        ],
-      });
-
-      return this;
-    }
+    if (!this.isStringType(this.fieldToTest)) return this;
     if (!urlRegex.test(this.fieldToTest))
       this.error = new CustomInputError({
         message: "Validation error!",
@@ -301,19 +264,7 @@ export default class FieldValidator {
   }
 
   isAfterDate(date: Date) {
-    if (!(this.fieldToTest instanceof Date)) {
-      this.error = new CustomInputError({
-        message: "Validation error!",
-        fields: [
-          {
-            fieldName: this.fieldName,
-            message: `${this.fieldName} is not a date`,
-          },
-        ],
-      });
-
-      return this;
-    }
+    if (!this.isDateType(this.fieldToTest)) return this;
     if (!isAfter(date, this.fieldToTest))
       this.error = new CustomInputError({
         message: "Validation error!",
@@ -329,19 +280,7 @@ export default class FieldValidator {
   }
 
   isBeforDate(date: Date) {
-    if (!(this.fieldToTest instanceof Date)) {
-      this.error = new CustomInputError({
-        message: "Validation error!",
-        fields: [
-          {
-            fieldName: this.fieldName,
-            message: `${this.fieldName} is not a date`,
-          },
-        ],
-      });
-
-      return this;
-    }
+    if (!this.isDateType(this.fieldToTest)) return this;
 
     if (!isBefore(date, this.fieldToTest))
       this.error = new CustomInputError({
@@ -358,19 +297,7 @@ export default class FieldValidator {
   }
 
   isNumber() {
-    if (typeof this.fieldToTest !== "number") {
-      this.error = new CustomInputError({
-        message: "Validation error!",
-        fields: [
-          {
-            fieldName: this.fieldName,
-            message: `${this.fieldName} is not a number`,
-          },
-        ],
-      });
-
-      return this;
-    }
+    if (!this.isNumberType(this.fieldToTest)) return this;
     if (Number.isNaN(this.fieldToTest))
       this.error = new CustomInputError({
         message: "Validation error!",
@@ -386,19 +313,7 @@ export default class FieldValidator {
   }
 
   maxNumber(max: number) {
-    if (typeof this.fieldToTest !== "number") {
-      this.error = new CustomInputError({
-        message: "Validation error!",
-        fields: [
-          {
-            fieldName: this.fieldName,
-            message: `${this.fieldName} is not a number`,
-          },
-        ],
-      });
-
-      return this;
-    }
+    if (!this.isNumberType(this.fieldToTest)) return this;
     if (this.fieldToTest > max)
       this.error = new CustomInputError({
         message: "Validation error!",
@@ -414,19 +329,7 @@ export default class FieldValidator {
   }
 
   minNumber(min: number) {
-    if (typeof this.fieldToTest !== "number") {
-      this.error = new CustomInputError({
-        message: "Validation error!",
-        fields: [
-          {
-            fieldName: this.fieldName,
-            message: `${this.fieldName} is not a number`,
-          },
-        ],
-      });
-
-      return this;
-    }
+    if (!this.isNumberType(this.fieldToTest)) return this;
     if (this.fieldToTest < min)
       this.error = new CustomInputError({
         message: "Validation error!",
@@ -442,19 +345,7 @@ export default class FieldValidator {
   }
 
   isBetween(num1: number, num2: number) {
-    if (typeof this.fieldToTest !== "number") {
-      this.error = new CustomInputError({
-        message: "Validation error!",
-        fields: [
-          {
-            fieldName: this.fieldName,
-            message: `${this.fieldName} is not a number`,
-          },
-        ],
-      });
-
-      return this;
-    }
+    if (!this.isNumberType(this.fieldToTest)) return this;
     if (!(this.fieldToTest < num1 && this.fieldToTest > num2)) {
       this.error = new CustomInputError({
         message: "Validation error!",
