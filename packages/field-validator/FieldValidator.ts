@@ -13,7 +13,7 @@ import {
   urlRegex,
 } from "./regex";
 
-export default class StringValidator {
+export default class FieldValidator {
   fieldToTest?: string | number | Date;
 
   fieldName: string;

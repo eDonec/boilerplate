@@ -1,11 +1,11 @@
 import CustomInputError, { ICustomError } from "custom-error/customInputError";
 
-import FieldVailidator from "./FieldVailidator";
+import FieldValidator from "./FieldValidator";
 
 export default class Validator {
   fields: string[] = [];
 
-  validate: { [key: string]: FieldVailidator } = {};
+  validate: { [key: string]: FieldValidator } = {};
 
   constructor(strings: Record<string, string | number | Date | undefined>) {
     if (!Object.keys(strings).length)
@@ -21,7 +21,7 @@ export default class Validator {
           message: `${key} must have type string or number or date for this initiation`,
           fields: [],
         });
-      this.validate[key] = new FieldVailidator(strings[key], key);
+      this.validate[key] = new FieldValidator(strings[key], key);
       this.fields.push(key);
     });
   }
