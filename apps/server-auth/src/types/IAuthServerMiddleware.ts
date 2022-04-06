@@ -5,9 +5,9 @@ import { IMiddleware } from "shared-types";
 
 type IAuthServerMiddleware<
   R = Request,
-  Locals = any,
+  Locals = { currentAuth: AuthDocument },
   Body = any,
   B = any
-> = IMiddleware<R, Response<Body, { currentAuth: AuthDocument } | Locals>, B>;
+> = IMiddleware<R, Response<Body, Locals>, B>;
 
 export default IAuthServerMiddleware;

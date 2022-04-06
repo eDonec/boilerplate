@@ -1,4 +1,6 @@
+import { FormProvider, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
+import { useLocation } from "react-router-dom";
 
 import { Button, useDarkMode } from "core-ui";
 import Input from "forms/Input";
@@ -27,20 +29,41 @@ const HomePage = () => {
   };
   const { toggleDarkMode } = useDarkMode();
 
+  useLocation();
+  const methods = useForm({
+    defaultValues: { start: "" },
+  });
+  // eslint-disable-next-line no-console
+  const onSubmit = console.log;
+
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center">
+    <div className="flex min-h-screen flex-col items-center justify-center dark:text-gray-200">
       <LanguageSelector />
-      <h1 className="mb-4">{t("imagePicker.draggingPrompt")}</h1>
-      <p className="mt-2 text-sm text-gray-700">
-        <a href="/">{t("api.deleted")}</a>
+      <h1 className="mb-4">CRA + Tailwind CSS + TypeScript + Redux Tookit</h1>
+      <p className="mt-2 text-sm text-gray-700 dark:text-gray-200">
+        <a href="/">Go to client</a>
       </p>
-      <p className="mt-2 text-sm text-gray-700">
-        <a href="/api/v1">{t("api.created")}</a>
+      <p className="mt-2 text-sm text-gray-700 dark:text-gray-200">
+        <a href="/api/v1">Go to API</a>
       </p>
-      <h2 className="my-3">
-        {t("imagePicker.dragPrompt")} : {count}
-      </h2>
-      <Input type="text" placeholder="placeholder" label="Input for test" />
+      <FormProvider {...methods}>
+        <form onSubmit={methods.handleSubmit(onSubmit)}>
+          <Input
+            validate={[
+              { rule: "exists" },
+              { rule: "isEmpty" },
+              { rule: "isEmail" },
+            ]}
+            name="start"
+            type="textarea"
+            placeholder="placeholder"
+            label="Input for test"
+          />
+          <Button type="submit" light>
+            submit
+          </Button>
+        </form>
+      </FormProvider>
       <Button onClick={toggleDarkMode} light>
         Toggle Dark mode
       </Button>

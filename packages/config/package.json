@@ -12,6 +12,7 @@
     "eslint/eslint-cra.js"
   ],
   "devDependencies": {
+    "@testing-library/jest-dom": "^5.16.4",
     "@typescript-eslint/eslint-plugin": "5.16.0",
     "@typescript-eslint/parser": "5.16.0",
     "eslint-config-airbnb": "19.0.4",

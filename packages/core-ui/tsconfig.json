@@ -7,6 +7,6 @@
     "jsx": "react-jsx",
     "baseUrl": "./src"
   },
-  "include": ["."],
+  "include": [".", "../../apps/client/src/components/DarkModeProvider"],
   "exclude": ["dist", "build", "node_modules"]
 }

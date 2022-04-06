@@ -17,6 +17,7 @@ module.exports = {
     "max-lines": ["warn", 165],
     "no-underscore-dangle": "off",
     "no-var": "error",
+    "no-plusplus": "off",
     "no-console": "warn",
     "@typescript-eslint/explicit-module-boundary-types": "off",
     "no-param-reassign": "off",

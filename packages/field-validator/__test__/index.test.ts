@@ -60,8 +60,8 @@ describe("string Validators to initialize", () => {
   });
   it("should throw an error in case of an empty string", () => {
     expect(
-      validators.validate.emptyString.isEmpty().error?.message
-    ).toBeTruthy();
+      validators.validate.emptyString.isEmpty().error?.fields[0].message
+    ).toBe("emptyString is empty");
     expect(() => validators.resolveErrors()).toThrow("Validation error!");
   });
 });
@@ -123,7 +123,8 @@ it("should throw an error in case of an invalid number", () => {
 });
 it("should throw an error in case of isBetween", () => {
   expect(
-    validators.validate.validNumber.isBetween(10, 8).error?.message
+    validators.validate.validNumber.isBetween({ min: 10, max: 8 }).error
+      ?.message
   ).toBeTruthy();
   expect(() => validators.resolveErrors()).toThrow("Validation error!");
 });

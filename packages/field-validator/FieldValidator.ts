@@ -30,12 +30,15 @@ export default class FieldValidator {
     this.fieldName = fieldName;
   }
 
-  isStringType(field?: string | number | Date): field is string {
+  isStringType(
+    field: string | number | Date | undefined = this.fieldToTest
+  ): field is string {
     if (typeof field === "string") return true;
 
     this.error = {
       message: "Validation error!",
       fields: [
+        ...(this.error?.fields || []),
         {
           fieldName: this.fieldName,
           message: `${this.fieldName} is not a string`,
@@ -46,11 +49,14 @@ export default class FieldValidator {
     return false;
   }
 
-  isDateType(field?: string | number | Date): field is Date {
+  isDateType(
+    field: string | number | Date | undefined = this.fieldToTest
+  ): field is Date {
     if (field instanceof Date) return true;
     this.error = {
       message: "Validation error!",
       fields: [
+        ...(this.error?.fields || []),
         {
           fieldName: this.fieldName,
           message: `${this.fieldName} is not a Date`,
@@ -61,11 +67,19 @@ export default class FieldValidator {
     return false;
   }
 
-  isNumberType(field?: string | number | Date): field is number {
+  isNumberType(
+    field: string | number | Date | undefined = this.fieldToTest
+  ): field is number {
     if (typeof field === "number") return true;
+    if (!Number.isNaN(Number(field))) {
+      this.fieldToTest = Number(field);
+
+      return true;
+    }
     this.error = {
       message: "Validation error!",
       fields: [
+        ...(this.error?.fields || []),
         {
           fieldName: this.fieldName,
           message: `${this.fieldName} is not a number`,
@@ -82,6 +96,7 @@ export default class FieldValidator {
       this.error = {
         message: "Validation error!",
         fields: [
+          ...(this.error?.fields || []),
           {
             fieldName: this.fieldName,
             message: `${this.fieldName} must be a valid email address`,
@@ -97,6 +112,7 @@ export default class FieldValidator {
       this.error = {
         message: "Validation error!",
         fields: [
+          ...(this.error?.fields || []),
           {
             fieldName: this.fieldName,
             message: `${this.fieldName} not exist`,
@@ -112,6 +128,7 @@ export default class FieldValidator {
       this.error = {
         message: "Validation error!",
         fields: [
+          ...(this.error?.fields || []),
           {
             fieldName: this.fieldName,
             message: `${this.fieldName} is empty`,
@@ -127,6 +144,7 @@ export default class FieldValidator {
       this.error = {
         message: "Validation error!",
         fields: [
+          ...(this.error?.fields || []),
           {
             fieldName: this.fieldName,
             message: `${this.fieldName} must be a string`,
@@ -143,6 +161,7 @@ export default class FieldValidator {
       this.error = {
         message: "Validation error!",
         fields: [
+          ...(this.error?.fields || []),
           {
             fieldName: this.fieldName,
             message: `${this.fieldName} can only contain letters`,
@@ -159,6 +178,7 @@ export default class FieldValidator {
       this.error = {
         message: "Validation error!",
         fields: [
+          ...(this.error?.fields || []),
           {
             fieldName: this.fieldName,
             message: `${this.fieldName} can only contain letters and spaces`,
@@ -175,6 +195,7 @@ export default class FieldValidator {
       this.error = {
         message: "Validation error!",
         fields: [
+          ...(this.error?.fields || []),
           {
             fieldName: this.fieldName,
             message: `${this.fieldName} can only contain letters and numbers`,
@@ -191,6 +212,7 @@ export default class FieldValidator {
       this.error = {
         message: "Validation error!",
         fields: [
+          ...(this.error?.fields || []),
           {
             fieldName: this.fieldName,
             message: `${this.fieldName} must not exceed ${length}`,
@@ -207,6 +229,7 @@ export default class FieldValidator {
       this.error = {
         message: "Validation error!",
         fields: [
+          ...(this.error?.fields || []),
           {
             fieldName: this.fieldName,
             message: `${this.fieldName}  must be at least ${length}`,
@@ -223,6 +246,7 @@ export default class FieldValidator {
       this.error = {
         message: "Validation error!",
         fields: [
+          ...(this.error?.fields || []),
           {
             fieldName: this.fieldName,
             message: `${this.fieldName} should be a same password`,
@@ -239,6 +263,7 @@ export default class FieldValidator {
       this.error = {
         message: "Validation error!",
         fields: [
+          ...(this.error?.fields || []),
           {
             fieldName: this.fieldName,
             message: `${this.fieldName} should be a valid url`,
@@ -255,6 +280,7 @@ export default class FieldValidator {
       this.error = {
         message: "Validation error!",
         fields: [
+          ...(this.error?.fields || []),
           {
             fieldName: this.fieldName,
             message: `${this.fieldName} should be a valid date`,
@@ -271,6 +297,7 @@ export default class FieldValidator {
       this.error = {
         message: "Validation error!",
         fields: [
+          ...(this.error?.fields || []),
           {
             fieldName: this.fieldName,
             message: `${this.fieldName} should be after ${date}`,
@@ -288,6 +315,7 @@ export default class FieldValidator {
       this.error = {
         message: "Validation error!",
         fields: [
+          ...(this.error?.fields || []),
           {
             fieldName: this.fieldName,
             message: `${this.fieldName} should be before ${date} `,
@@ -304,6 +332,7 @@ export default class FieldValidator {
       this.error = {
         message: "Validation error!",
         fields: [
+          ...(this.error?.fields || []),
           {
             fieldName: this.fieldName,
             message: `${this.fieldName} should be a number`,
@@ -320,6 +349,7 @@ export default class FieldValidator {
       this.error = {
         message: "Validation error!",
         fields: [
+          ...(this.error?.fields || []),
           {
             fieldName: this.fieldName,
             message: `${this.fieldName}  must not exceed ${max}`,
@@ -336,6 +366,7 @@ export default class FieldValidator {
       this.error = {
         message: "Validation error!",
         fields: [
+          ...(this.error?.fields || []),
           {
             fieldName: this.fieldName,
             message: `${this.fieldName} must at least be ${min}`,
@@ -346,15 +377,16 @@ export default class FieldValidator {
     return this;
   }
 
-  isBetween(num1: number, num2: number) {
+  isBetween({ min, max }: { min: number; max: number }) {
     if (!this.isNumberType(this.fieldToTest)) return this;
-    if (!(this.fieldToTest < num1 && this.fieldToTest > num2)) {
+    if (!(this.fieldToTest > min && this.fieldToTest < max)) {
       this.error = {
         message: "Validation error!",
         fields: [
+          ...(this.error?.fields || []),
           {
             fieldName: this.fieldName,
-            message: `${this.fieldName} should be between ${num1} and ${num2} `,
+            message: `${this.fieldName} should be between ${min} and ${max} `,
           },
         ],
       };
