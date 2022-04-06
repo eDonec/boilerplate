@@ -3,6 +3,8 @@ import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
 
+import "locales";
+
 import "styles/globals.css";
 import "styles/colors.css";
 

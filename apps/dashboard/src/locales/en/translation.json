@@ -1,0 +1,25 @@
+{
+  "imagePicker": {
+    "dragPrompt": "Redux Counter",
+    "draggingPrompt": "CRA + Tailwind CSS + TypeScript + Redux Tookit",
+    "maxFilesPrompt": "(Max :maxFiles files)"
+  },
+  "api": {
+    "deleted": "Go to client",
+    "created": "Go to API",
+    "updated": "Set Counter to 300 Async",
+    "notFound": "Increment"
+  },
+  "user": {
+    "activation": "Decrement",
+    "resetPassword": "Password reset request success",
+    "forgetPassword": "Password reset successfully",
+    "logout": "Logged out successfully",
+    "loginFacebookError": "Missing Facebook Information",
+    "unauthorized": "You dont have access"
+  },
+  "homePage": {
+    "joinUsButton": "Join us",
+    "activation": "activation"
+  }
+}
