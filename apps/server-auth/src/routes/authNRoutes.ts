@@ -15,13 +15,14 @@ router.post(
   authNController.signUpClassic
 );
 router.post(
-  `${BASE_ROUTE}/sign-in/classic`,
+  `${BASE_ROUTE}/sign-in/classic/`,
   authNValidators.signInClassicValidator,
   asyncAuthNValidators.signInClassicValidator,
   asyncAuthNValidators.checkBanned,
   asyncAuthNValidators.checkAuthProvider(AUTH_PROVIDERS.CLASSIC),
   asyncAuthNValidators.checkSuspension,
   asyncAuthNValidators.checkPassword,
+  asyncAuthNValidators.checkAuthRole,
   authNController.signInClassic
 );
 router.get(
