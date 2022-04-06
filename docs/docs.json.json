@@ -23,9 +23,7 @@
       "script": {
         "id": "722f1492-4d14-4944-a96b-05ba1a2e088a",
         "type": "text/javascript",
-        "exec": [
-          ""
-        ]
+        "exec": [""]
       }
     },
     {
@@ -33,9 +31,7 @@
       "script": {
         "id": "72e035e7-6791-4655-b108-0abb60712762",
         "type": "text/javascript",
-        "exec": [
-          ""
-        ]
+        "exec": [""]
       }
     }
   ],

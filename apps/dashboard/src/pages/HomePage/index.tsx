@@ -1,7 +1,9 @@
-import { useLocation } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 import { Button, useDarkMode } from "core-ui";
 import Input from "forms/Input";
+
+import LanguageSelector from "components/LanguageSelector";
 
 import { useAppSelector, useLoadingDispatch } from "hooks/reduxHooks";
 
@@ -11,7 +13,7 @@ import { setCounterAsync } from "_redux/slices/counter/thunk";
 const HomePage = () => {
   const count = useAppSelector((state) => state.counter.count);
   const { isLoading, dispatch, classicDispatch } = useLoadingDispatch();
-
+  const { t } = useTranslation();
   const increment = () => {
     classicDispatch(incrementCounter());
   };
@@ -25,17 +27,19 @@ const HomePage = () => {
   };
   const { toggleDarkMode } = useDarkMode();
 
-  useLocation();
-
   return (
     <div className="flex min-h-screen flex-col items-center justify-center">
-      <h1 className="mb-4">CRA + Tailwind CSS + TypeScript + Redux Tookit</h1>
+      <LanguageSelector />
+      <h1 className="mb-4">{t("imagePicker.draggingPrompt")}</h1>
       <p className="mt-2 text-sm text-gray-700">
-        <a href="/">Go to client</a>
+        <a href="/">{t("api.deleted")}</a>
       </p>
       <p className="mt-2 text-sm text-gray-700">
-        <a href="/api/v1">Go to API</a>
+        <a href="/api/v1">{t("api.created")}</a>
       </p>
+      <h2 className="my-3">
+        {t("imagePicker.dragPrompt")} : {count}
+      </h2>
       <Input type="text" placeholder="placeholder" label="Input for test" />
       <Button onClick={toggleDarkMode} light>
         Toggle Dark mode
@@ -44,14 +48,14 @@ const HomePage = () => {
       <div className="flex flex-col gap-2">
         <div className="flex gap-2">
           <Button disabled={count === 0 || isLoading} onClick={decrement}>
-            Decrement
+            {t("user.activation")}
           </Button>
           <Button disabled={isLoading} onClick={increment}>
-            Increment
+            {t("api.notFound")}
           </Button>
         </div>
         <Button onClick={setAsync} isLoading={isLoading}>
-          Set Counter to 300 Async
+          {t("api.updated")}
         </Button>
       </div>
     </div>

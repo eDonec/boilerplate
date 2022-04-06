@@ -4,6 +4,7 @@ import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
 
 import DarkModeProvider from "core-ui/DarkModeProvider";
+import "locales";
 
 import "styles/globals.css";
 import "styles/colors.css";

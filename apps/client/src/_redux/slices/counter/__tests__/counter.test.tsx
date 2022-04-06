@@ -1,5 +1,4 @@
-import counter, { decrementCounter, incrementCounter } from "..";
-import { CounterState } from "..";
+import counter, { CounterState, decrementCounter, incrementCounter } from "..";
 
 describe("testable counter reducer", () => {
   const initialState: CounterState = {

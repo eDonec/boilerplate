@@ -1,0 +1,24 @@
+{
+  "imagePicker": {
+    "dragPrompt": "FR: Redux Counter",
+    "draggingPrompt": "FR: CRA + Tailwind CSS + TypeScript + Redux Tookit",
+    "maxFilesPrompt": "(Un maximum de :maxFiles fichier(s))"
+  },
+  "api": {
+    "deleted": "FR: Go to client",
+    "created": "FR: Go to API",
+    "updated": "FR: Set Counter to 300 Async",
+    "notFound": "FR: Increment"
+  },
+  "user": {
+    "activation": "FR: Decrement",
+    "resetPassword": "Réussite de la demande de réinitialisation du mot de passe",
+    "forgetPassword": "Réinitialisation du mot de passe avec succès",
+    "logout": "Déconnecté avec succès",
+    "unauthorized": "Tu n'as pas accès "
+  },
+  "homePage": {
+    "joinUsButton": "Nous rejoindre",
+    "activation": "activation"
+  }
+}
