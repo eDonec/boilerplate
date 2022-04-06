@@ -18,7 +18,7 @@ export const checkAuthRole: IAuthServerMiddleware = async (req, res, next) => {
   if (!dbRole) {
     res.status(statusCodes["Not Found"]).send({
       message: "Role not found",
-      stack: "Authorization denied for user",
+      stack: "Role not found in authorization check",
     });
 
     return;
