@@ -1,4 +1,5 @@
 /* eslint-disable no-console */
+import { json } from "body-parser";
 import clsx from "core-utils/clsx";
 import express from "express";
 import { connect, ConnectOptions } from "mongoose";
@@ -19,7 +20,7 @@ const databaseConfig: ConnectOptions = {
 
 if (!process.env.DATABASE_URI)
   throw new Error("Missing .env key : DATABASE_URI");
-
+app.use(json());
 app.use("/api/v1", router);
 
 connect(process.env.DATABASE_URI, databaseConfig)

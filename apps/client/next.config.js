@@ -21,9 +21,11 @@ module.exports = withTM({
     return config;
   },
   i18n: {
-    locales: ["en"],
+    locales: ["en", "fr"],
     defaultLocale: "en",
+    localeDetection: false,
   },
+
   reactStrictMode: true,
   pageExtensions: ["page.tsx"],
 

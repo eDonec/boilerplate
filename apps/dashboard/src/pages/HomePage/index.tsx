@@ -1,6 +1,7 @@
 import { useTranslation } from "react-i18next";
 
-import { Button } from "core-ui";
+import { Button, useDarkMode } from "core-ui";
+import Input from "forms/Input";
 
 import LanguageSelector from "components/LanguageSelector";
 
@@ -24,6 +25,7 @@ const HomePage = () => {
   const setAsync = () => {
     dispatch(setCounterAsync(300));
   };
+  const { toggleDarkMode } = useDarkMode();
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-center">
@@ -38,6 +40,11 @@ const HomePage = () => {
       <h2 className="my-3">
         {t("imagePicker.dragPrompt")} : {count}
       </h2>
+      <Input type="text" placeholder="placeholder" label="Input for test" />
+      <Button onClick={toggleDarkMode} light>
+        Toggle Dark mode
+      </Button>
+      <h2 className="my-3">Redux Counter : {count}</h2>
       <div className="flex flex-col gap-2">
         <div className="flex gap-2">
           <Button disabled={count === 0 || isLoading} onClick={decrement}>

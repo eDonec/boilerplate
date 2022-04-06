@@ -1,7 +1,7 @@
 {
   "name": "example-monorepo",
   "private": true,
-  "version": "0.0.4",
+  "version": "0.0.5",
   "scripts": {
     "prepare": "husky install",
     "start": "turbo run start --parallel",
@@ -9,6 +9,7 @@
     "release": "standard-version -- --release-as minor",
     "lint": "turbo run lint",
     "format": "turbo run format",
+    "seed": "turbo run seed",
     "postcommit": "git push --follow-tags origin master",
     "postbuild": "turbo run postbuild",
     "test": "turbo run test"
@@ -36,22 +37,23 @@
   "devDependencies": {
     "@commitlint/cli": "13.2.1",
     "@commitlint/config-conventional": "13.2.0",
-    "@edonec/generator": "^1.2.2",
+    "@edonec/generator": "1.2.2",
     "@tailwindcss/forms": "0.4.0",
-    "@testing-library/jest-dom": "^5.16.2",
-    "@testing-library/react": "^12.1.4",
-    "@testing-library/react-hooks": "^7.0.2",
-    "@testing-library/user-event": "^13.5.0",
-    "esbuild": "^0.14.27",
-    "esbuild-jest": "^0.5.0",
+    "@testing-library/jest-dom": "5.16.2",
+    "@testing-library/react": "12.1.4",
+    "@testing-library/react-hooks": "7.0.2",
+    "@testing-library/user-event": "13.5.0",
+    "esbuild": "0.14.27",
+    "esbuild-jest": "0.5.0",
+    "eslint": "^8.12.0",
     "husky": "7.0.4",
     "lint-staged": "11.2.6",
     "standard-version": "9.3.2",
     "tailwindcss": "3.0.22",
-    "turbo": "^1.1.6"
+    "turbo": "1.1.6"
   },
   "packageManager": "yarn@1.22.17",
   "dependencies": {
-    "craco": "^0.0.3"
+    "craco": "0.0.3"
   }
 }

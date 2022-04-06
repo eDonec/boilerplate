@@ -15,10 +15,11 @@ module.exports = {
     "newline-after-var": "warn",
     "newline-before-return": "warn",
     "max-lines": ["warn", 165],
+    "no-underscore-dangle": "off",
     "no-var": "error",
     "no-console": "warn",
     "@typescript-eslint/explicit-module-boundary-types": "off",
-
+    "no-param-reassign": "off",
     //#region  //*=========== Unused Import ===========
     "@typescript-eslint/no-unused-vars": "off",
     "unused-imports/no-unused-imports": "warn",
@@ -56,6 +57,8 @@ module.exports = {
           // zustand store
           ["^store", "^_redux"],
           // Other imports
+          ["^types"],
+          // other that didnt fit in
           ["^"],
           // relative paths up until 3 level
           [
@@ -68,9 +71,6 @@ module.exports = {
             "^\\.\\./\\.\\./\\.\\./?$",
             "^\\.\\./\\.\\./\\.\\.(?!/?$)",
           ],
-          ["^types"],
-          // other that didnt fit in
-          ["^"],
         ],
       },
     ],

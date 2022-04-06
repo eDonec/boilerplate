@@ -23,5 +23,6 @@ module.exports = {
       "warn",
       { props: "never", children: "never" },
     ],
+    "import/no-duplicates": "warn",
   },
 };

@@ -13,7 +13,7 @@ const SelectOptions: React.FC<IProps> = ({ options, onChange }) => (
       "absolute mt-1 w-48",
       "rounded border",
       "duration-300 ",
-      " dark:bg-dark bg-white",
+      " bg-white dark:bg-gray-700",
     ])}
   >
     {options.map((option, index) => (

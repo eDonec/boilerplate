@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
 
+import DarkModeProvider from "core-ui/DarkModeProvider";
 import "locales";
 
 import "styles/globals.css";
@@ -18,7 +19,9 @@ ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter basename="/dashboard">
       <Provider store={store}>
-        <AppRouter />
+        <DarkModeProvider>
+          <AppRouter />
+        </DarkModeProvider>
       </Provider>
     </BrowserRouter>
   </React.StrictMode>,

@@ -1,0 +1,52 @@
+{
+  "info": {
+    "_postman_id": "ced2b50d-8e46-4cfa-80ec-d061753de6fc",
+    "name": "Boilerplate",
+    "schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Auth",
+      "item": [],
+      "id": "5586f4f7-1b2d-4d56-b01d-5e9964e5eb29"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": {
+      "token": "{{token}}"
+    }
+  },
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "id": "722f1492-4d14-4944-a96b-05ba1a2e088a",
+        "type": "text/javascript",
+        "exec": [""]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "id": "72e035e7-6791-4655-b108-0abb60712762",
+        "type": "text/javascript",
+        "exec": [""]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "id": "35e8da83-dc22-4ded-926b-733ba23d67a4",
+      "key": "token",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "id": "27b7733b-c105-4ec5-bd29-50df82acd8ce",
+      "key": "baseUrl",
+      "value": "http://localhost:/api/v1",
+      "type": "string"
+    }
+  ]
+}

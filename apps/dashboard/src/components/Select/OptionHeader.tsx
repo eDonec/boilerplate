@@ -23,7 +23,7 @@ const OptionHeader: React.FC<IProps> = ({
       "cursor-pointer",
       "items-center justify-between",
       "rounded border",
-      "dark:bg-black dark:text-gray-200",
+      "dark:border-gray-500 dark:bg-gray-700 dark:text-gray-200",
     ])}
     onClick={toggleOpenSelectOptions}
   >

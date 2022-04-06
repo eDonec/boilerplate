@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "@reduxjs/toolkit": "^1.8.0",
+    "@reduxjs/toolkit": "1.8.0",
     "core-hooks": "*",
     "core-next-components": "*",
     "core-ui": "*",
@@ -8,7 +8,7 @@
     "next": "12.1.0",
     "react": "17.0.2",
     "react-dom": "17.0.2",
-    "react-redux": "^7.2.6"
+    "react-redux": "7.2.6"
   },
   "devDependencies": {
     "@svgr/webpack": "6.2.1",
@@ -23,7 +23,9 @@
     "postcss": "8.4.6",
     "prettier": "2.5.1",
     "prettier-plugin-tailwindcss": "0.1.7",
-    "typescript": "4.6.2"
+    "typescript": "4.6.2",
+    "i18next": "20.1.0",
+    "react-i18next": "11.8.12"
   },
   "name": "client",
   "private": true,

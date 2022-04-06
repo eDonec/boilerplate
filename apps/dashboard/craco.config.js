@@ -3,9 +3,8 @@
 const path = require("path");
 const { getLoader, loaderByName } = require("@craco/craco");
 
-const modules = ["core-hooks", "core-ui", "core-utils"];
+const modules = ["core-hooks", "core-ui", "core-utils", "forms"];
 const packages = [];
-
 packages.push(
   ...modules.map((module) => path.join(__dirname, "../../packages", module))
 );

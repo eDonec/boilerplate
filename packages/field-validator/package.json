@@ -1,0 +1,14 @@
+{
+  "name": "field-validator",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "test": "jest --coverage",
+    "lint": "eslint --fix --max-warnings=0"
+  },
+  "dependencies": {
+    "custom-error": "*",
+    "date-fns": "2.22.1"
+  },
+  "devDependencies": {}
+}

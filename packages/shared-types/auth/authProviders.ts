@@ -1,0 +1,7 @@
+export enum AUTH_PROVIDERS {
+  "CLASSIC" = "CLASSIC",
+  "FACEBOOK" = "FACEBOOK",
+  "TWITTER" = "TWITTER",
+  "LINKEDIN" = "LINKEDIN",
+  "APP" = "APP",
+}
