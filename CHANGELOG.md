@@ -2,6 +2,28 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.6](https://gitlab.com/eDonec/tools/boilerplate/compare/v0.0.5...v0.0.6) (2022-04-06)
+
+
+### Features
+
+* add dark mode support cross apps through a DarkModeProvider ([fa0938f](https://gitlab.com/eDonec/tools/boilerplate/commit/fa0938fac3138466d7d76d4dd8f059136f8444ed))
+* create form package and start with input form ([1701f87](https://gitlab.com/eDonec/tools/boilerplate/commit/1701f87bf335e1540cfd9ed407199b792ff1872d))
+* **dashboard:** add a translation option ([c0a2867](https://gitlab.com/eDonec/tools/boilerplate/commit/c0a2867f878e6c2244fd8ccb2bee08b9cd2bf045))
+* **server-auth:** add check authorization to classic sign-in ([b625ba1](https://gitlab.com/eDonec/tools/boilerplate/commit/b625ba186dfccb41460ae275f6081d0117ef0f99))
+* **server-auth:** add check authorization to classic sign-in ([75f06b8](https://gitlab.com/eDonec/tools/boilerplate/commit/75f06b81c46c99ee79f13e4bda27f169903ee000))
+* **server-auth:** add database seeder as well as default role for new sign-ups of public ([d566f0f](https://gitlab.com/eDonec/tools/boilerplate/commit/d566f0f0ed91487c97f66efedd101ddbfaacdc8b))
+* **server-auth:** add meta attributes to access ([6cd1107](https://gitlab.com/eDonec/tools/boilerplate/commit/6cd11072b7204d754d4a0ddf9be33afca84372f2))
+
+
+### Bug Fixes
+
+* **server-auth:** change access attribute in Role schema to be array of access ([bbff180](https://gitlab.com/eDonec/tools/boilerplate/commit/bbff1803437932de2bdaec0ca28d440fe5b9ca9e))
+* **server-auth:** fix error stack in authz validation ([78e840a](https://gitlab.com/eDonec/tools/boilerplate/commit/78e840a11f3c6850ea3515e31d31de0364977923))
+* **server-auth:** remove AuthZ Validator export from authN file ([80d70e1](https://gitlab.com/eDonec/tools/boilerplate/commit/80d70e1f019f501a5c90caa5fd59e1f8d7419b8c))
+* **server-auth:** remove trailing slash in sign-in classic route ([d85b748](https://gitlab.com/eDonec/tools/boilerplate/commit/d85b748b0e269e9b3d7299d9282ad3839b2c9385))
+* **server-auth:** update authZValidator import ([38629b6](https://gitlab.com/eDonec/tools/boilerplate/commit/38629b60669112cc62011057a9661fe1c7ff09ad))
+
 ### [0.0.5](https://gitlab.com/eDonec/tools/boilerplate/compare/v0.0.4...v0.0.5) (2022-03-28)
 
 
