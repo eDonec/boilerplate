@@ -15,7 +15,7 @@ router.post(
   authNController.signUpClassic
 );
 router.post(
-  `${BASE_ROUTE}/sign-in/classic/`,
+  `${BASE_ROUTE}/sign-in/classic`,
   authNValidators.signInClassicValidator,
   asyncAuthNValidators.signInClassicValidator,
   asyncAuthNValidators.checkBanned,
