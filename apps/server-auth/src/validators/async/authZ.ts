@@ -26,7 +26,7 @@ export const checkAuthRole: IAuthServerMiddleware = async (req, res, next) => {
 
   if (!currentAuth.role.equals(dbRole.id)) {
     res.status(statusCodes.Unauthorized).send({
-      message: "User not authorized",
+      message: "User not authorized ",
       stack: "Authorization denied for user",
     });
 
