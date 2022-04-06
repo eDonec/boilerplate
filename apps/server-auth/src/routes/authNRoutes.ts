@@ -2,6 +2,7 @@ import * as authNController from "controllers/authNController";
 import { Router } from "express";
 import { AUTH_PROVIDERS } from "shared-types";
 import * as asyncAuthNValidators from "validators/async/authN";
+import * as asyncAuthZValidators from "validators/async/authZ";
 import * as authNValidators from "validators/authN";
 
 const router = Router();
@@ -22,7 +23,7 @@ router.post(
   asyncAuthNValidators.checkAuthProvider(AUTH_PROVIDERS.CLASSIC),
   asyncAuthNValidators.checkSuspension,
   asyncAuthNValidators.checkPassword,
-  asyncAuthNValidators.checkAuthRole,
+  asyncAuthZValidators.checkAuthRole,
   authNController.signInClassic
 );
 router.get(
