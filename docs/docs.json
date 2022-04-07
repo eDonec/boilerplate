@@ -187,23 +187,23 @@
   ],
   "variable": [
     {
-      "id": "3a5a7cb9-59c9-4f4d-8dd7-57ec5844a096",
+      "id": "9d1adf45-f3bd-483f-aa4e-406bf07ef0cf",
       "key": "baseUrl",
       "value": "http://localhost:3000/api/v1",
       "type": "string"
     },
     {
-      "id": "70625886-6c1f-44b2-927c-8b1d064549f6",
+      "id": "3d582e6e-aaf8-48e6-908e-5de6231b9171",
       "key": "accessToken",
       "value": ""
     },
     {
-      "id": "fa95d3de-e391-4b7e-8a01-d268b71c91e1",
+      "id": "5ea184fc-f368-4d54-9470-676d58f358f1",
       "key": "refreshToken",
       "value": ""
     },
     {
-      "id": "b57348e6-3bc9-440f-9c53-aec56a6abe93",
+      "id": "4af5867e-368f-4237-bcba-09598df293ab",
       "key": "token",
       "value": ""
     }
