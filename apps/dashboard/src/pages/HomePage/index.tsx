@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next";
 import { useLocation } from "react-router-dom";
 
 import { Button, useDarkMode } from "core-ui";
+import CheckBox from "forms/CheckBox";
 import Input from "forms/Input";
 
 import LanguageSelector from "components/LanguageSelector";
@@ -16,6 +17,7 @@ const HomePage = () => {
   const count = useAppSelector((state) => state.counter.count);
   const { isLoading, dispatch, classicDispatch } = useLoadingDispatch();
   const { t } = useTranslation();
+
   const increment = () => {
     classicDispatch(incrementCounter());
   };
@@ -56,6 +58,11 @@ const HomePage = () => {
             placeholder="placeholder"
             label="Input for test"
           />
+          <CheckBox
+            name="check"
+            label="check box for test"
+            defaultChecked
+          ></CheckBox>
           <Button type="submit" light>
             submit
           </Button>
