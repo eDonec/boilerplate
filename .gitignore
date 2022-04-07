@@ -1,10 +1,10 @@
 node_modules
 .history
 .env
-.turbo
 yarn-error.log
 coverage
 dist
 !generators/*/.env
 tsconfig.tsbuildinfo
 !.env
+**/turbo*

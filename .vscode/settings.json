@@ -26,13 +26,14 @@
   "typescript.referencesCodeLens.enabled": true,
   "appService.zipIgnorePattern": [".vscode{,/**}"],
   "appService.deploySubpath": "",
-  "files.exclude": {
+  "f@iles.exclude": {
     "**/coverage": true,
     "**/.eslintrc.js": true,
     "**/Docker*": true,
     "**/docker*": true,
     "**/tsconfig.json": true,
     "**/Makefile*": true,
+    "readme-assets": true,
     "**/*.config*": true,
     "**/*next*": true,
     "**/.git": true,

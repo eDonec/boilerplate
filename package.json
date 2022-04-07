@@ -5,7 +5,7 @@
   "scripts": {
     "prepare": "husky install",
     "start": "turbo run start --parallel",
-    "build": "turbo run build",
+    "build": "turbo run build --token=tym4TfVTD5qGG7s9MudjhmCwQ9g20BV2",
     "release": "standard-version -- --release-as minor",
     "lint": "turbo run lint",
     "format": "turbo run format",
