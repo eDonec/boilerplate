@@ -240,9 +240,9 @@ export default class FieldValidator {
     return this;
   }
 
-  isPasswordMatch(val: string) {
+  isPasswordMatch(password: string) {
     if (!this.isStringType(this.fieldToTest)) return this;
-    if (this.fieldToTest !== val)
+    if (this.fieldToTest !== password)
       this.error = {
         message: "Validation error!",
         fields: [
