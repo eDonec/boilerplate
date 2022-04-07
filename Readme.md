@@ -44,25 +44,29 @@ A boilerplate for microsirves nodejs architecture
 
   - [:space_invader: Tech Stack](#space_invader-tech-stack)
 
-  - [:dart: Features](#dart-features)
+  - [:dart: Features](#dart-features-so-far)
 
   - [:key: Environment Variables](#key-environment-variables)
 
-- [:hammer_and_wrench: Getting Started](#toolbox-getting-started)
+  - [:key: Environment Variables Per Project](#key-environment-variables-per-project)
+
+- [:hammer_and_wrench: Getting Started](#hammer_and_wrench-getting-started)
 
   - [:bangbang: Prerequisites](#bangbang-prerequisites)
 
   - [:gear: Installation](#gear-installation)
 
-  - [:microscope: Running Tests](#test_tube-running-tests)
+  - [:microscope: Running Global Tests](#microscope-running-global-tests)
 
-  - [:running: Run Locally](#running-run-locally)
+  - [:microscope: Running Project Tests](#microscope-running-project-tests)
+
+  - [:gear: Run Locally](#gear-run-locally)
 
   - [:triangular_flag_on_post: Deployment](#triangular_flag_on_post-deployment)
 
   - [:eyes: Usage](#eyes-usage)
 
-  - [:earth_africa: Roadmap](#compass-roadmap)
+  - [:earth_africa: Roadmap](#earth_africa-roadmap)
 
 - [:warning: License](#warning-license)
 
@@ -194,9 +198,7 @@ To run this project, you will need to add the following environment variables to
 This project uses Yarn as package manager
 
 ```bash
-
 npm install --global yarn
-
 ```
 
 <!-- Installation -->
@@ -206,9 +208,7 @@ npm install --global yarn
 Install project with yarn
 
 ```bash
-
 yarn
-
 ```
 
 <!-- Installation -->
@@ -218,9 +218,7 @@ yarn
 Install project with yarn
 
 ```bash
-
 yarn workspace <project-name> add [-D] <dependency>
-
 ```
 
 <!-- Running Tests -->
@@ -230,9 +228,7 @@ yarn workspace <project-name> add [-D] <dependency>
 To run tests, run the following command
 
 ```bash
-
 yarn test
-
 ```
 
 ### :microscope: Running project Tests
@@ -240,14 +236,12 @@ yarn test
 To run tests, run the following command
 
 ```bash
-
 yarn workspace <project> test -w
-
 ```
 
 <!-- Run Locally -->
 
-### :running: Run Locally
+### :gear: Run Locally
 
 Clone the project
 
@@ -258,9 +252,7 @@ Install dependencies
 Start the server
 
 ```bash
-
 yarn start
-
 ```
 
 <!-- Deployment -->
