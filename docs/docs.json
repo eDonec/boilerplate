@@ -80,7 +80,25 @@
                 }
               }
             },
-            "url": "{{baseUrl}}/auth/n/sign-in/classic"
+            "url": {
+              "raw": "{{baseUrl}}/auth/n/sign-in/classic",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "auth",
+                "n",
+                "sign-in",
+                "classic"
+              ],
+              "query": [
+                {
+                  "key": "role",
+                  "value": "PUBLIC",
+                  "disabled": true
+                }
+              ]
+            }
           },
           "response": []
         },
@@ -183,19 +201,24 @@
   ],
   "variable": [
     {
-      "id": "bdb7bb54-40bb-4edd-b53d-dca4511cb3b9",
+      "id": "8b29f229-aaa6-47df-9640-fc8911f2d0ed",
       "key": "baseUrl",
       "value": "http://localhost:3000/api/v1",
       "type": "string"
     },
     {
-      "id": "fe46c60f-25fe-4002-92fa-6a594fee099e",
+      "id": "fdff9889-7616-4484-ae7e-bdfd725c7c2d",
       "key": "accessToken",
       "value": ""
     },
     {
-      "id": "c63cd46e-ea3b-49ba-aa37-f9019b32bf3c",
+      "id": "4be20f45-737d-48ae-9c39-7635c586bef2",
       "key": "refreshToken",
+      "value": ""
+    },
+    {
+      "id": "afba73d7-5889-4779-9e70-6dbea4e6d309",
+      "key": "token",
       "value": ""
     }
   ]
