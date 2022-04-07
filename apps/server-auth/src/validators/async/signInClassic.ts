@@ -18,7 +18,7 @@ export const signInClassicValidator: IMiddleware = async (req, res, next) => {
           $or: [{ email }, { userName }],
         }
       : { email }
-  );
+  ).populate("role");
 
   if (authUsersByUserNameOrEmail == null) {
     res.status(statusCodes.Unauthorized).send({

@@ -14,7 +14,7 @@ export const findAndValidateAuthClientByRefreshToken: IMiddleware = async (
   };
   const authUsersByRefreshToken = await Auth.findById(
     refreshToken.decodedToken.payload.authId
-  );
+  ).populate("role");
 
   try {
     if (!authUsersByRefreshToken)
