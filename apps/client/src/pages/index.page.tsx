@@ -13,13 +13,6 @@ import { useAppSelector, useLoadingDispatch } from "hooks/reduxHooks";
 import { decrementCounter, incrementCounter } from "_redux/slices/counter";
 import { setCounterAsync } from "_redux/slices/counter/thunk";
 
-/**
- * SVGR Support
- * Caveat: No React Props Type.
- *
- * You can override the next-env if the type is important to you
- * @see https://stackoverflow.com/questions/68103844/how-to-override-next-js-svg-module-declaration
- */
 import Vercel from "~/svg/Vercel.svg";
 
 export default function HomePage() {
@@ -93,9 +86,7 @@ export default function HomePage() {
             </div>
             <footer className="absolute bottom-2 text-gray-700">
               © {new Date().getFullYear()} By{" "}
-              <UnstyledLink href="https://theodorusclarence.com?ref=tsnextstarter">
-                Theodorus Clarence
-              </UnstyledLink>
+              <UnstyledLink href="https://edonec.com">eDonec</UnstyledLink>
             </footer>
           </div>
         </section>
