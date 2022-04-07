@@ -1,4 +1,4 @@
-import { FormProvider, useForm } from "react-hook-form";
+import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { useLocation } from "react-router-dom";
 
@@ -33,8 +33,9 @@ const HomePage = () => {
   const methods = useForm({
     defaultValues: { start: "" },
   });
-  // eslint-disable-next-line no-console
-  const onSubmit = console.log;
+  const onSubmit: SubmitHandler<{ start: string }> = (value) =>
+    // eslint-disable-next-line no-console
+    console.log(value);
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-center dark:text-gray-200">
@@ -49,13 +50,9 @@ const HomePage = () => {
       <FormProvider {...methods}>
         <form onSubmit={methods.handleSubmit(onSubmit)}>
           <Input
-            validate={[
-              { rule: "exists" },
-              { rule: "isEmpty" },
-              { rule: "isEmail" },
-            ]}
+            validate={[{ rule: "isEmpty" }]}
             name="start"
-            type="textarea"
+            type="text"
             placeholder="placeholder"
             label="Input for test"
           />

@@ -82,7 +82,8 @@ const Input = forwardRef<HTMLInputElement, RawInputProps>(
                   "dark:border-gray-600 dark:bg-gray-600 dark:text-gray-400",
                   error && "border-red-500 bg-red-100 text-red-900",
                   error &&
-                    "dark:border-red-400 dark:bg-red-200 dark:text-red-900"
+                    "dark:border-red-400 dark:bg-red-200 dark:text-red-900",
+                  isPassword && "cursor-pointer"
                 )}
                 onClick={isPassword ? handletoggleShowPassword : undefined}
               >
