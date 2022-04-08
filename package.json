@@ -1,7 +1,7 @@
 {
   "name": "example-monorepo",
   "private": true,
-  "version": "0.0.6",
+  "version": "0.0.7",
   "scripts": {
     "prepare": "husky install",
     "start": "turbo run start --parallel",

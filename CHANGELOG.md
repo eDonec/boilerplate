@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.7](https://gitlab.com/eDonec/tools/boilerplate/compare/v0.0.6...v0.0.7) (2022-04-08)
+
+
+### Features
+
+* add remote cache support through custom server and S3 bucket ([64d1cf0](https://gitlab.com/eDonec/tools/boilerplate/commit/64d1cf091b4b2dd9b8f5008780ce90562209ca5b))
+* update react to version 18! ([74cacd1](https://gitlab.com/eDonec/tools/boilerplate/commit/74cacd183b61392d0ebfee009f8422d3420b7987))
+
+
+### Bug Fixes
+
+* **server-auth:** currentAuth populate role before putting in res.locals ([56eb401](https://gitlab.com/eDonec/tools/boilerplate/commit/56eb4016d725958dde033630bc7ef748bc3fb7fd))
+
 ### [0.0.6](https://gitlab.com/eDonec/tools/boilerplate/compare/v0.0.5...v0.0.6) (2022-04-06)
 
 
