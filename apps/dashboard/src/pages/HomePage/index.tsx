@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import { useLocation } from "react-router-dom";
 
 import { Button, useDarkMode } from "core-ui";
-import CheckBox from "forms/CheckBox";
+import Checkbox from "forms/Checkbox";
 import Input from "forms/Input";
 
 import LanguageSelector from "components/LanguageSelector";
@@ -58,11 +58,13 @@ const HomePage = () => {
             placeholder="placeholder"
             label="Input for test"
           />
-          <CheckBox
+          <Checkbox
             name="check"
+            className="bg-dak"
             label="check box for test"
             defaultChecked
-          ></CheckBox>
+          ></Checkbox>
+
           <Button type="submit" light>
             submit
           </Button>
