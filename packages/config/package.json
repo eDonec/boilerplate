@@ -12,7 +12,7 @@
     "eslint/eslint-cra.js"
   ],
   "devDependencies": {
-    "@testing-library/jest-dom": "^5.16.4",
+    "@testing-library/jest-dom": "5.16.4",
     "@typescript-eslint/eslint-plugin": "5.16.0",
     "@typescript-eslint/parser": "5.16.0",
     "eslint-config-airbnb": "19.0.4",
@@ -28,6 +28,6 @@
     "eslint-plugin-simple-import-sort": "7.0.0",
     "eslint-plugin-testing-library": "5.1.0",
     "eslint-plugin-unused-imports": "2.0.0",
-    "react": "17.0.2"
+    "react": "18.0.0"
   }
 }

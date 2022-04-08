@@ -13,8 +13,6 @@ import { useAppSelector, useLoadingDispatch } from "hooks/reduxHooks";
 import { decrementCounter, incrementCounter } from "_redux/slices/counter";
 import { setCounterAsync } from "_redux/slices/counter/thunk";
 
-import Vercel from "~/svg/Vercel.svg";
-
 export default function HomePage() {
   const count = useAppSelector((state) => state.counter.count);
   const { isLoading, dispatch, classicDispatch } = useLoadingDispatch();
@@ -45,7 +43,6 @@ export default function HomePage() {
             className="
           layout flex min-h-screen flex-col items-center justify-center  bg-white text-center"
           >
-            <Vercel className="text-5xl" />
             <div className="flex gap-2">
               <Button onClick={() => changeLanguage("fr")}>Fr</Button>
               <Button onClick={() => changeLanguage("en")}>En</Button>

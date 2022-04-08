@@ -14,7 +14,10 @@ export type RawInputProps = {
   React.ComponentPropsWithRef<"textarea">;
 
 const Input = forwardRef<HTMLInputElement, RawInputProps>(
-  ({ label, error, name, leftIcon, rightIcon, type, ...rest }, ref) => {
+  (
+    { label, error, name, leftIcon, rightIcon, type, className, ...rest },
+    ref
+  ) => {
     const isPassword = type === "password";
     const [isPasswordShown, setIsPasswordShown] = useState(false);
     const handletoggleShowPassword = (): void => {
@@ -47,7 +50,8 @@ const Input = forwardRef<HTMLInputElement, RawInputProps>(
                   "dark:border-gray-600 dark:bg-gray-600 dark:text-gray-400",
                   error && "border-red-500 bg-red-100 text-red-900",
                   error &&
-                    "dark:border-red-400 dark:bg-red-200 dark:text-red-900"
+                    "dark:border-red-400 dark:bg-red-200 dark:text-red-900",
+                  className
                 )}
               >
                 {leftIcon}

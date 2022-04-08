@@ -6,10 +6,9 @@ import {
   useDarkModeContext,
 } from "./useDarkMode";
 
-const DarkModeProvider: React.FC<{ className?: string }> = ({
-  className,
-  children,
-}) => {
+const DarkModeProvider: React.FC<
+  React.PropsWithChildren<{ className?: string }>
+> = ({ className, children }) => {
   const { value } = useDarkModeContext();
 
   return (
@@ -21,7 +20,9 @@ const DarkModeProvider: React.FC<{ className?: string }> = ({
 
 export default DarkModeProvider;
 
-const DarkModeWrapper: React.FC<{ className?: string }> = ({
+const DarkModeWrapper: React.FC<
+  React.PropsWithChildren<{ className?: string }>
+> = ({
   className = "dark:bg-dark bg-gray-50 transition-all duration-700",
   children,
 }) => {

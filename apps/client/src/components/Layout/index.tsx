@@ -1,6 +1,8 @@
 import * as React from "react";
 
-const Layout: React.FC = ({ children }) => {
+import ReactChildrenProps from "shared-types/ReactChildren";
+
+const Layout: React.FC<ReactChildrenProps> = ({ children }) => {
   // Put Header or Footer Here
   return <>{children}</>;
 };

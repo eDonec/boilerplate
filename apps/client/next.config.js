@@ -1,3 +1,4 @@
+const path = require("path");
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const withTM = require("next-transpile-modules")([
   "core-ui",
@@ -7,7 +8,8 @@ const withTM = require("next-transpile-modules")([
 ]);
 
 /** @type {import('next').NextConfig} */
-module.exports = withTM({
+const nextConfig = {
+  outputFileTracing: true,
   eslint: {
     dirs: ["src"],
   },
@@ -28,7 +30,10 @@ module.exports = withTM({
 
   reactStrictMode: true,
   pageExtensions: ["page.tsx"],
-
+  experimental: {
+    outputStandalone: true,
+    outputFileTracingRoot: path.join(__dirname, "../../"),
+  },
   // Uncoment to add domain whitelist
   // images: {
   //   domains: [
@@ -54,4 +59,5 @@ module.exports = withTM({
 
     return config;
   },
-});
+};
+module.exports = withTM(nextConfig);
