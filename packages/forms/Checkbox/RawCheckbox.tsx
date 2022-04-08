@@ -14,13 +14,11 @@ const Checkbox = forwardRef<HTMLInputElement, RawCheckboxProps>(
       <div className="flex h-5 items-center">
         <input
           className={clsx(
-            "focus:ring-3 h-4 w-4",
-            "focus:ring-primary-500",
-            "rounded border ",
+            "focus:ring-3  focus:ring-primary-500",
+            "h-4 w-4",
+            " rounded border ",
             "border-gray-300",
-            "dark:border-gray-600",
-            "dark:bg-gray-700",
-            "dark:focus:ring-primary-500",
+            "dark:focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700",
             className
           )}
           type="checkbox"
@@ -35,8 +33,7 @@ const Checkbox = forwardRef<HTMLInputElement, RawCheckboxProps>(
               htmlFor={name}
               className={clsx(
                 "font-medium text-gray-900 dark:text-gray-300",
-                "hover:text-gray-600 ",
-                "dark:hover:text-gray-400 ",
+                "hover:text-gray-600 dark:hover:text-gray-400 ",
                 "cursor-pointer",
                 error && "text-red-600 dark:text-red-500"
               )}
