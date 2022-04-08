@@ -8,8 +8,7 @@
     "@types/react": "18.0.0",
     "@types/react-dom": "18.0.0",
     "tsconfig": "*",
-    "config": "*",
-    "typescript": "4.5.3"
+    "config": "*"
   },
   "dependencies": {
     "core-utils": "*",

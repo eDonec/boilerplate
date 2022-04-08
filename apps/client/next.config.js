@@ -10,6 +10,7 @@ const withTM = require("next-transpile-modules")([
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   outputFileTracing: true,
+  distDir: "build",
   eslint: {
     dirs: ["src"],
   },
