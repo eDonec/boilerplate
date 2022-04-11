@@ -44,6 +44,8 @@ A boilerplate for microsirves nodejs architecture
 
   - [:space_invader: Tech Stack](#space_invader-tech-stack)
 
+  - [:space_invader: Available Mciroservices](#space_invader-available-microservices)
+
   - [:dart: Features](#dart-features-so-far)
 
   - [:key: Environment Variables](#key-environment-variables)
@@ -152,6 +154,62 @@ A boilerplate for microsirves nodejs architecture
 
 <!-- Features -->
 
+### :space_invader: Available Microservices
+
+<details>
+
+<summary>Front end</summary>
+
+<ul>
+
+<li><a  href="apps/client/README.md">Client</a></li>
+
+<li><a  href="apps/dashboard/README.md">Dashboard</a></li>
+
+</ul>
+
+</details>
+
+<details>
+
+<summary>Back end</summary>
+
+<ul>
+
+<li><a  href="apps/server/README.md">server</a></li>
+
+<li><a  href="apps/server-auth/README.md">server-auth</a></li>
+
+<li><a  href="apps/proxy/README.md">proxy</a></li>
+
+</ul>
+
+</details>
+
+<details>
+
+<summary>Packages</summary>
+
+<ul>
+
+<li><a  href="packages/config/README.md">config</a></li>
+<li><a  href="packages/core-hooks/README.md">core-hooks</a></li>
+<li><a  href="packages/core-next-components/README.md">core-next-components</a></li>
+<li><a  href="packages/core-ui/README.md">core-ui</a></li>
+<li><a  href="packages/core-utils/README.md">core-utils</a></li>
+<li><a  href="packages/custom-error/README.md">custom-error</a></li>
+<li><a  href="packages/field-validator/README.md">field-validator</a></li>
+<li><a  href="packages/forms/README.md">forms</a></li>
+<li><a  href="packages/shared-types/README.md">shared-types</a></li>
+<li><a  href="packages/token/README.md">token</a></li>
+<li><a  href="packages/tsconfig/README.md">tsconfig</a></li>
+
+</ul>
+
+</details>
+
+<!-- Features -->
+
 ### :dart: Features (so far)
 
 - Authentication
@@ -236,7 +294,7 @@ yarn test
 To run tests, run the following command
 
 ```bash
-yarn workspace <project> test -w
+yarn workspace <project> test -watch
 ```
 
 <!-- Run Locally -->
