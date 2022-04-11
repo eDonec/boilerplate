@@ -7,13 +7,11 @@ export type AuthType = {
   email?: string;
   userName?: string;
   password?: string;
-  authProvider: [AUTH_PROVIDERS];
-  providerId?: [
-    {
-      provider: AUTH_PROVIDERS;
-      id: string;
-    }
-  ];
+  authProvider: AUTH_PROVIDERS[];
+  providerId?: {
+    provider: AUTH_PROVIDERS;
+    id: string;
+  }[];
   sessions: string[];
   role: RoleType;
   customAccessList: ACCESS[];
@@ -29,3 +27,5 @@ export type AuthType = {
 
 export interface AuthDocument extends AuthType, Document<string> {}
 export type AuthModel = Model<AuthDocument>;
+
+// TODO: LEAN DOCUMENT LOOKUP

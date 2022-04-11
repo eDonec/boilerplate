@@ -30,7 +30,7 @@ export default class FieldValidator {
     this.fieldName = fieldName;
   }
 
-  isStringType(
+  private isStringType(
     field: string | number | Date | undefined = this.fieldToTest
   ): field is string {
     if (typeof field === "string") return true;
@@ -49,7 +49,7 @@ export default class FieldValidator {
     return false;
   }
 
-  isDateType(
+  private isDateType(
     field: string | number | Date | undefined = this.fieldToTest
   ): field is Date {
     if (field instanceof Date) return true;
@@ -67,7 +67,7 @@ export default class FieldValidator {
     return false;
   }
 
-  isNumberType(
+  private isNumberType(
     field: string | number | Date | undefined = this.fieldToTest
   ): field is number {
     if (typeof field === "number") return true;
