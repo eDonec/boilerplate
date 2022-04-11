@@ -7,6 +7,8 @@ module.exports = {
   /** Without additional '/' on the end, e.g. https://edonec.com */
   siteUrl: "https://edonec.com",
   generateRobotsTxt: true,
+  sourceDir: "./build",
+  generateRobotsTxt: true,
   robotsTxtOptions: {
     policies: [{ userAgent: "*", allow: "/" }],
   },
