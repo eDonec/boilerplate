@@ -1,0 +1,13 @@
+{
+  "name": "server-sdk",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "lint": "eslint --fix",
+    "test": "jest --coverage --passWithNoTests"
+  },
+  "dependencies": {
+    "axios": "^0.26.1",
+    "auth": "*"
+  }
+}

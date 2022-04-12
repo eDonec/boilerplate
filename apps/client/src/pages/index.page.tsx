@@ -1,7 +1,10 @@
+import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 
+import AuthSDK from "auth-sdk";
 import { ButtonLink, SEO, UnstyledLink } from "core-next-components";
 import Button from "core-ui/Button";
+import { Input } from "forms";
 
 // !STARTERCONF -> Select !STARTERCONF and CMD + SHIFT + F
 // Before you begin editing, follow all comments with `STARTERCONF`,
@@ -12,6 +15,16 @@ import { useAppSelector, useLoadingDispatch } from "hooks/reduxHooks";
 
 import { decrementCounter, incrementCounter } from "_redux/slices/counter";
 import { setCounterAsync } from "_redux/slices/counter/thunk";
+
+const authSDK = new AuthSDK();
+
+type SignUpFormValues = {
+  email: string;
+  password: string;
+  userName?: string;
+};
+
+type SignInFormValues = Pick<SignUpFormValues, "password" | "email">;
 
 export default function HomePage() {
   const count = useAppSelector((state) => state.counter.count);
@@ -34,6 +47,16 @@ export default function HomePage() {
     router.push(router.pathname, router.asPath, { locale });
   };
 
+  const signUpFormMethods = useForm<SignUpFormValues>();
+  const signInFormMethods = useForm<SignInFormValues>();
+
+  const onSubmitSignUp: SubmitHandler<SignUpFormValues> = (values) => {
+    authSDK.signUpClassic(values);
+  };
+  const onSubmitSignIn: SubmitHandler<SignInFormValues> = (values) => {
+    authSDK.signInClassic(values);
+  };
+
   return (
     <>
       <SEO />
@@ -41,17 +64,43 @@ export default function HomePage() {
         <section className=" bg-primary-50 ">
           <div
             className="
-          layout flex min-h-screen flex-col items-center justify-center  bg-white text-center"
+          layout flex min-h-screen flex-col items-center justify-center bg-white text-center"
           >
             <div className="flex gap-2">
               <Button onClick={() => changeLanguage("fr")}>Fr</Button>
               <Button onClick={() => changeLanguage("en")}>En</Button>
             </div>
 
-            <p>{t("signin")}</p>
+            <div className="flex gap-5">
+              <FormProvider {...signUpFormMethods}>
+                <form onSubmit={signUpFormMethods.handleSubmit(onSubmitSignUp)}>
+                  <h6>Sign up form</h6>
+                  <Input name="email" type="email" placeholder="email" />
+                  <Input name="userName" type="text" placeholder="userName" />
+                  <Input
+                    name="password"
+                    type="password"
+                    placeholder="password"
+                  />
+                  <Button type="submit">Submit</Button>
+                </form>
+              </FormProvider>
+              <FormProvider {...signInFormMethods}>
+                <form onSubmit={signInFormMethods.handleSubmit(onSubmitSignIn)}>
+                  <h6>{t("signin")}</h6>
+                  <Input name="email" type="email" placeholder="email" />
+                  <Input
+                    name="password"
+                    type="password"
+                    placeholder="password"
+                  />
+                  <Button type="submit">Submit</Button>
+                </form>
+              </FormProvider>
+            </div>
 
             <h1 className="mt-4">
-              Next.js + Tailwind CSS + TypeScript + Redux Tookit
+              Next.js + Tailwind CSS + TypeScript + Redux Toolkit
             </h1>
             <p className="mt-2 text-sm text-gray-800">
               A starter for Next.js, Tailwind CSS, and TypeScript with Absolute

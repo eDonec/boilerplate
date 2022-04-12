@@ -15,8 +15,8 @@
     "test": "turbo run test"
   },
   "workspaces": [
-    "apps/*",
-    "packages/*"
+    "apps/**",
+    "packages/**"
   ],
   "lint-staged": {
     "*.config.js": [

@@ -5,6 +5,10 @@ const withTM = require("next-transpile-modules")([
   "core-utils",
   "core-hooks",
   "core-next-components",
+  "forms",
+  "field-validator",
+  "auth-sdk",
+  "server-sdk",
 ]);
 
 /** @type {import('next').NextConfig} */

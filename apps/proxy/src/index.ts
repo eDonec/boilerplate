@@ -12,22 +12,22 @@ const port = process.env.PORT || 3000;
 
 app.use(
   "/api/v1/auth*",
-  createProxyMiddleware({ target: "http://localhost:4001/", ws: true })
+  createProxyMiddleware({ target: "http://127.0.0.1:4001/", ws: true })
 );
 
 app.use(
   "/dashboard*",
-  createProxyMiddleware({ target: "http://localhost:3001/", ws: true })
+  createProxyMiddleware({ target: "http://127.0.0.1:3001/", ws: true })
 );
 
 app.use(
   "/api/v1*",
-  createProxyMiddleware({ target: "http://localhost:4000/", ws: true })
+  createProxyMiddleware({ target: "http://127.0.0.1:4000/", ws: true })
 );
 
 app.use(
   "/*",
-  createProxyMiddleware({ target: "http://localhost:4200/", ws: true })
+  createProxyMiddleware({ target: "http://127.0.0.1:4200/", ws: true })
 );
 
 app.listen(port, () => {

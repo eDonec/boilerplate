@@ -178,7 +178,7 @@ A boilerplate for microsirves nodejs architecture
 
 <li><a  href="apps/server/README.md">server</a></li>
 
-<li><a  href="apps/server-auth/README.md">server-auth</a></li>
+<li><a  href="apps/auth/README.md">auth</a></li>
 
 <li><a  href="apps/proxy/README.md">proxy</a></li>
 

@@ -9,6 +9,8 @@ const modules = [
   "core-utils",
   "forms",
   "field-validator",
+  "SDK/auth-sdk",
+  "SDK/server-sdk",
 ];
 const packages = [];
 packages.push(

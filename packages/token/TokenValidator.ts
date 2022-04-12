@@ -2,8 +2,17 @@
 import { decode, Secret, verify } from "jsonwebtoken";
 import "dotenv/config";
 
+if (!process.env.ACCESS_TOKEN_SECRET_KEY)
+  throw new Error(
+    "access Token secret key is not set please set it up in .env before using this app"
+  );
+
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export interface IDecodedToken<T = any> {
+export interface IDecodedToken<
+  T = {
+    authId: string;
+  }
+> {
   iss: string;
   aud: string | string[];
   sid: string;
@@ -18,8 +27,6 @@ export default class TokenValidator<T = string | object | Buffer> {
   protected TOKEN_SECRET_KEY: string | Secret;
 
   constructor(token: string, isRefreshToken = false, secret?: Secret) {
-    checkEnvVars();
-
     this.TOKEN_SECRET_KEY = getTokenSecretKey(isRefreshToken, secret);
 
     if (!token)
@@ -33,7 +40,7 @@ export default class TokenValidator<T = string | object | Buffer> {
   }
 
   public desirializeToken(token?: string) {
-    this.decodedToken = decode(token || this.token) as IDecodedToken;
+    this.decodedToken = decode(token || this.token) as IDecodedToken<T>;
 
     return this.decodedToken;
   }
@@ -59,15 +66,8 @@ export default class TokenValidator<T = string | object | Buffer> {
     }
   }
 }
-const checkEnvVars = () => {
-  if (!process.env.ACCESS_TOKEN_SECRET_KEY)
-    throw new Error(
-      "access Token secret key is not set please set it up in .env before using this app"
-    );
-};
 
 export const getTokenSecretKey = (isRefreshToken = false, secret?: Secret) => {
-  checkEnvVars();
   if (isRefreshToken) return process.env.REFRESH_TOKEN_SECRET_KEY!;
 
   return secret || process.env.ACCESS_TOKEN_SECRET_KEY!;
