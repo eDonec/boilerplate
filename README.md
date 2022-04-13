@@ -64,6 +64,8 @@ A Boilerplate for Microservices NodeJS Architecture
 
   - [:gear: Run Locally](#gear-run-locally)
 
+  - [:inbox_tray: Adding Package to app](#inbox_tray-adding-package-to-app)
+
   - [:triangular_flag_on_post: Deployment](#triangular_flag_on_post-deployment)
 
   - [:eyes: Usage](#eyes-usage)
@@ -322,11 +324,11 @@ Start the server
 yarn start
 ```
 
-<!-- Add Package to app -->
+<!-- Adding Package to app -->
 
-### :inbox_tray: Add Package to app
+### :inbox_tray: Adding Package to app
 
-To add a package to an app, please follow **[this guide](/readme-assets/add-package.md)**.
+To add a package to an app, please follow <a href='readme-assets/add-package.md'>**this guide**</a>.
 
 <!-- Deployment -->
 
