@@ -6,7 +6,7 @@
 
 <p>
 
-A boilerplate for microsirves nodejs architecture
+A Boilerplate for Microservices NodeJS Architecture
 
 </p>
 
@@ -176,9 +176,11 @@ A boilerplate for microsirves nodejs architecture
 
 <ul>
 
-<li><a  href="apps/server/README.md">server</a></li>
-
-<li><a  href="apps/auth/README.md">auth</a></li>
+<li> APIs
+  <ul>
+    <li><a  href="apps/APIs/auth/README.md">auth</a></li>
+  </ul>
+</li>
 
 <li><a  href="apps/proxy/README.md">proxy</a></li>
 
@@ -192,6 +194,7 @@ A boilerplate for microsirves nodejs architecture
 
 <ul>
 
+<li><a  href="packages/config/README.md">api-types</a></li>
 <li><a  href="packages/config/README.md">config</a></li>
 <li><a  href="packages/core-hooks/README.md">core-hooks</a></li>
 <li><a  href="packages/core-next-components/README.md">core-next-components</a></li>
@@ -200,6 +203,12 @@ A boilerplate for microsirves nodejs architecture
 <li><a  href="packages/custom-error/README.md">custom-error</a></li>
 <li><a  href="packages/field-validator/README.md">field-validator</a></li>
 <li><a  href="packages/forms/README.md">forms</a></li>
+<li> SDK
+  <ul>
+    <li><a href='packages/SDK/server-sdk/README.md' >server-sdk</a></li>
+    <li><a href='packages/SDK/auth-sdk/README.md' >auth-sdk</a></li>
+  </ul>
+</li>
 <li><a  href="packages/shared-types/README.md">shared-types</a></li>
 <li><a  href="packages/token/README.md">token</a></li>
 <li><a  href="packages/tsconfig/README.md">tsconfig</a></li>
@@ -312,6 +321,12 @@ Start the server
 ```bash
 yarn start
 ```
+
+<!-- Add Package to app -->
+
+### :inbox_tray: Add Package to app
+
+To add a package to an app, please follow **[this guide](/readme-assets/add-package.md)**.
 
 <!-- Deployment -->
 
