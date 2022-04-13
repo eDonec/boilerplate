@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Request, Response } from "express";
-import { AuthDocument } from "models/Auth/types";
 import { IMiddleware } from "shared-types";
+
+import { AuthDocument } from "./models/Auth";
 
 type IAuthServerMiddleware<
   R = Request,

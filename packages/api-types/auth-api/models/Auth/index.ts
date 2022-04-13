@@ -1,6 +1,7 @@
-import { RoleType } from "models/Role/types";
 import { Document, LeanDocument, Model } from "mongoose";
 import { ACCESS, ACCESS_TYPE, AUTH_PROVIDERS } from "shared-types";
+
+import { RoleType } from "../Role";
 
 export type AuthType = {
   authType: ACCESS_TYPE;
@@ -24,10 +25,6 @@ export type AuthType = {
   numberOfUnsuccessfulTrials: number;
   lastTrialSince: Date;
 };
-
 export type AuthDocument = AuthType & Document<string>;
-
 export type LeanAuthDocument = LeanDocument<AuthDocument>;
 export type AuthModel = Model<AuthDocument>;
-
-// TODO: LEAN DOCUMENT LOOKUP

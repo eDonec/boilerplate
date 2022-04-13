@@ -1,3 +1,5 @@
+import { ISignInClassicBody } from "api-types/auth-api/authNRoutes";
+import IAuthServerMiddleware from "api-types/auth-api/IAuthServerMiddleware";
 import { compareSync } from "bcrypt";
 import add from "date-fns/add";
 import isAfter from "date-fns/isAfter";
@@ -7,11 +9,8 @@ import { AUTH_PROVIDERS, IMiddleware } from "shared-types";
 
 import { statusCodes } from "constants/statusCodes";
 
-import { ISignUpClassicBody } from "types/authNRoutes";
-import IAuthServerMiddleware from "types/IAuthServerMiddleware";
-
 export const signInClassicValidator: IMiddleware = async (req, res, next) => {
-  const { email, userName }: ISignUpClassicBody = req.body;
+  const { email, userName }: ISignInClassicBody = req.body;
   const authUsersByUserNameOrEmail = await Auth.findOne(
     userName
       ? {
@@ -33,7 +32,7 @@ export const signInClassicValidator: IMiddleware = async (req, res, next) => {
   next();
 };
 export const checkSuspension: IAuthServerMiddleware = async (
-  req,
+  _req,
   res,
   next
 ) => {
@@ -56,7 +55,7 @@ export const checkSuspension: IAuthServerMiddleware = async (
   next();
 };
 
-export const checkBanned: IAuthServerMiddleware = async (req, res, next) => {
+export const checkBanned: IAuthServerMiddleware = async (_req, res, next) => {
   const { currentAuth } = res.locals;
 
   if (currentAuth.isBanned) {
@@ -72,7 +71,7 @@ export const checkBanned: IAuthServerMiddleware = async (req, res, next) => {
 
 export const checkAuthProvider: (
   authProvide: AUTH_PROVIDERS
-) => IAuthServerMiddleware = (authProvider) => (req, res, next) => {
+) => IAuthServerMiddleware = (authProvider) => (_req, res, next) => {
   const { currentAuth } = res.locals;
 
   if (!currentAuth.authProvider.includes(authProvider)) {

@@ -1,4 +1,5 @@
-import { Schema, Types } from "mongoose";
+import { AuthDocument, AuthModel } from "api-types/auth-api/models/Auth";
+import { model, Schema, Types } from "mongoose";
 import {
   ACCESS_TYPE,
   AUTH_PROVIDERS,
@@ -8,9 +9,7 @@ import {
 
 import { hashPassword } from "helpers/hashPassword";
 
-import { AuthDocument } from "./types";
-
-const AuthClient = new Schema<AuthDocument>({
+const schema = new Schema<AuthDocument>({
   email: String,
   userName: String,
   authType: {
@@ -96,14 +95,4 @@ const AuthClient = new Schema<AuthDocument>({
   lastTrialSince: Date,
 });
 
-export interface Itransform {
-  __v: number;
-  password: string;
-  refreshTokens: string;
-  notificationToken: string;
-  isBanned: boolean;
-  emailActivationToken: string;
-  sessions: string[];
-}
-
-export default AuthClient;
+export default model<AuthDocument, AuthModel>("Auth", schema);

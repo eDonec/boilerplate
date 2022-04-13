@@ -1,5 +1,8 @@
-import { RoleType } from "auth/src/models/Role/types";
-import { ISignUpClassicBody } from "auth/src/types/authNRoutes";
+import {
+  ISignInClassicBody,
+  ISignUpClassicBody,
+} from "api-types/auth-api/authNRoutes";
+import { RoleType } from "api-types/auth-api/models/Role";
 import ServerSDK from "server-sdk";
 import { ACCESS } from "shared-types";
 
@@ -26,7 +29,7 @@ export default class AuthSDK extends ServerSDK {
     return data;
   }
 
-  public async signInClassic(body: ISignUpClassicBody, role?: string) {
+  public async signInClassic(body: ISignInClassicBody, role?: string) {
     const { data } = await this.api.post<AuthResponse>(
       "/n/sign-in/classic",
       body,

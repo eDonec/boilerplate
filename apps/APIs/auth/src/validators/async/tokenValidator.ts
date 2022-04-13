@@ -5,7 +5,7 @@ import TokenValidator from "token/TokenValidator";
 import { statusCodes } from "constants/statusCodes";
 
 export const findAndValidateAuthClientByRefreshToken: IMiddleware = async (
-  req,
+  _req,
   res,
   next
 ) => {

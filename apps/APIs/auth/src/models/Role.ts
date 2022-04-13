@@ -1,9 +1,8 @@
-import { Schema } from "mongoose";
+import { RoleType } from "api-types/auth-api/models/Role";
+import { model, Schema } from "mongoose";
 import { PRIVILEGE } from "shared-types";
 
-import { RoleType } from "./types";
-
-const Role = new Schema<RoleType>({
+const schema = new Schema<RoleType>({
   name: { type: String, required: true, unique: true },
   access: [
     {
@@ -26,4 +25,4 @@ const Role = new Schema<RoleType>({
   ],
 });
 
-export default Role;
+export default model<RoleType>("Role", schema);

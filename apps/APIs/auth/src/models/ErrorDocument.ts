@@ -1,31 +1,7 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { Document, model, Schema } from "mongoose";
+import { IErrorDocument } from "api-types/auth-api/models/ErrorDocument";
+import { model, Schema } from "mongoose";
 
-export interface IErrorDocument extends Document {
-  error: {
-    message: string;
-    errorName: string;
-    stack: string;
-  };
-  request: {
-    path: string;
-    headers: any;
-    cookies: any;
-    query: any;
-    params: any;
-    body: any;
-    code: string;
-    protocol: string;
-    route: any;
-    xhr: string;
-    ip: string;
-    language: string;
-    method: string;
-    hostname: string;
-  };
-}
-
-const errorDocument = new Schema(
+const errorDocument = new Schema<IErrorDocument>(
   {
     error: {
       message: { type: String, required: false },

@@ -18,9 +18,9 @@ connect(process.env.DATABASE_URI, databaseConfig)
     console.log(`Connected to database`);
     console.log(`Seeding Started...`);
     await Role.init();
-    const roles = await Role.create(seedRoles);
+    await Role.create(seedRoles);
 
-    console.log(`Seeded ${roles.length} roles`);
+    console.log(`Seeded ${seedRoles.length} roles`);
 
     console.log(`Seeding Completed...`);
     process.exit(0);

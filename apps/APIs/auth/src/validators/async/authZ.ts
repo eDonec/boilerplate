@@ -1,8 +1,7 @@
+import IAuthServerMiddleware from "api-types/auth-api/IAuthServerMiddleware";
 import Role from "models/Role";
 
 import { statusCodes } from "constants/statusCodes";
-
-import IAuthServerMiddleware from "types/IAuthServerMiddleware";
 
 export const checkAuthRole: IAuthServerMiddleware = async (req, res, next) => {
   const { role } = req.query;

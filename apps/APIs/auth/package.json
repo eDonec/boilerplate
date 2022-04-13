@@ -25,7 +25,8 @@
     "nanoid": "3.3.1",
     "shared-types": "*",
     "field-validator": "*",
-    "token": "*"
+    "token": "*",
+    "api-types": "*"
   },
   "devDependencies": {
     "@types/bcrypt": "5.0.0",

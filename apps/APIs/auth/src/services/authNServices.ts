@@ -1,5 +1,6 @@
+import { ISignUpClassicBody } from "api-types/auth-api/authNRoutes";
+import { AuthDocument } from "api-types/auth-api/models/Auth";
 import Auth from "models/Auth";
-import { AuthDocument } from "models/Auth/types";
 import Role from "models/Role";
 import { nanoid } from "nanoid";
 import { ACCESS_TYPE, AUTH_PROVIDERS } from "shared-types";
@@ -8,8 +9,6 @@ import TokenGenerator from "token/TokenGenerator";
 import { PUBLIC_ROLE } from "constants/defaultRoles";
 
 import { constructRoleArray } from "helpers/constructRoleArray";
-
-import { ISignUpClassicBody } from "types/authNRoutes";
 
 export const signUpClassic = async ({
   email,

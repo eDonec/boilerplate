@@ -1,3 +1,7 @@
+import {
+  ISignInClassicBody,
+  ISignUpClassicBody,
+} from "api-types/auth-api/authNRoutes";
 import CustomInputError from "custom-error/customInputError";
 import { Request } from "express";
 import FieldValidator from "field-validator";
@@ -5,8 +9,6 @@ import { IMiddleware } from "shared-types";
 import TokenValidator from "token/TokenValidator";
 
 import { statusCodes } from "constants/statusCodes";
-
-import { ISignUpClassicBody } from "types/authNRoutes";
 
 export const signUpClassicValidator: IMiddleware = (req, res, next) => {
   const { email, password, userName }: ISignUpClassicBody = req.body;
@@ -38,7 +40,7 @@ export const signUpClassicValidator: IMiddleware = (req, res, next) => {
 };
 
 export const signInClassicValidator: IMiddleware = (req, res, next) => {
-  const { email, password, userName }: ISignUpClassicBody = req.body;
+  const { email, password, userName }: ISignInClassicBody = req.body;
   const validators = new FieldValidator({ email, password, userName });
 
   validators.validate.email.exists().isString();

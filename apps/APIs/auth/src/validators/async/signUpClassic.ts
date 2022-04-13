@@ -1,9 +1,8 @@
+import { ISignUpClassicBody } from "api-types/auth-api/authNRoutes";
 import Auth from "models/Auth";
 import { IMiddleware } from "shared-types";
 
 import { statusCodes } from "constants/statusCodes";
-
-import { ISignUpClassicBody } from "types/authNRoutes";
 
 export const signUpClassicValidator: IMiddleware = async (req, res, next) => {
   const { email, userName }: ISignUpClassicBody = req.body;

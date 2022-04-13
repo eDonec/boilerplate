@@ -1,6 +1,10 @@
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 
+import {
+  ISignInClassicBody,
+  ISignUpClassicBody,
+} from "api-types/auth-api/authNRoutes";
 import AuthSDK from "auth-sdk";
 import { ButtonLink, SEO, UnstyledLink } from "core-next-components";
 import Button from "core-ui/Button";
@@ -17,14 +21,6 @@ import { decrementCounter, incrementCounter } from "_redux/slices/counter";
 import { setCounterAsync } from "_redux/slices/counter/thunk";
 
 const authSDK = new AuthSDK();
-
-type SignUpFormValues = {
-  email: string;
-  password: string;
-  userName?: string;
-};
-
-type SignInFormValues = Pick<SignUpFormValues, "password" | "email">;
 
 export default function HomePage() {
   const count = useAppSelector((state) => state.counter.count);
@@ -47,13 +43,13 @@ export default function HomePage() {
     router.push(router.pathname, router.asPath, { locale });
   };
 
-  const signUpFormMethods = useForm<SignUpFormValues>();
-  const signInFormMethods = useForm<SignInFormValues>();
+  const signUpFormMethods = useForm<ISignUpClassicBody>();
+  const signInFormMethods = useForm<ISignInClassicBody>();
 
-  const onSubmitSignUp: SubmitHandler<SignUpFormValues> = (values) => {
+  const onSubmitSignUp: SubmitHandler<ISignUpClassicBody> = (values) => {
     authSDK.signUpClassic(values);
   };
-  const onSubmitSignIn: SubmitHandler<SignInFormValues> = (values) => {
+  const onSubmitSignIn: SubmitHandler<ISignInClassicBody> = (values) => {
     authSDK.signInClassic(values);
   };
 

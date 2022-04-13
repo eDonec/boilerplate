@@ -8,8 +8,9 @@
   },
   "dependencies": {
     "axios": "^0.26.1",
-    "auth": "*",
+    "react": "^18.0.0",
+    "server-sdk": "*",
     "shared-types": "*",
-    "server-sdk": "*"
+    "api-types": "*"
   }
 }

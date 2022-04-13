@@ -1,14 +1,13 @@
+import IAuthServerMiddleware from "api-types/auth-api/IAuthServerMiddleware";
+import { AuthDocument } from "api-types/auth-api/models/Auth";
 import { errorLogger } from "errors/errorLogger";
 import { Request, Response } from "express";
-import { AuthDocument } from "models/Auth/types";
 import * as authNServices from "services/authNServices";
 import { IMiddleware } from "shared-types";
 import TokenGenerator from "token/TokenGenerator";
 import TokenValidator from "token/TokenValidator";
 
 import { statusCodes } from "constants/statusCodes";
-
-import IAuthServerMiddleware from "types/IAuthServerMiddleware";
 
 export const signUpClassic: IMiddleware = async (req, res) => {
   try {
