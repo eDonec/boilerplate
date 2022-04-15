@@ -1,10 +1,22 @@
 import { clsx } from "core-utils";
 
-const Shevron: React.FC<{ isUp: boolean }> = ({ isUp }) => (
-  <div className={clsx(["mx-3 border-l pl-2", "cursor-pointer "])}>
+const Shevron: React.FC<{ isUp: boolean; error?: string }> = ({
+  isUp,
+  error,
+}) => (
+  <div
+    className={clsx([
+      "mx-3 border-l pl-2",
+      "cursor-pointer ",
+      error && "border-l-red-600 dark:border-l-red-500",
+    ])}
+  >
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      className="stroke-gray-400 dark:stroke-gray-200"
+      className={clsx([
+        "stroke-gray-400 dark:stroke-gray-200",
+        error && "stroke-red-600 dark:stroke-red-500",
+      ])}
       width={20}
       height={20}
       viewBox="0 0 24 24"

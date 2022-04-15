@@ -5,6 +5,7 @@ import { useLocation } from "react-router-dom";
 import { Button, useDarkMode } from "core-ui";
 import Checkbox from "forms/Checkbox";
 import Input from "forms/Input";
+import Select from "forms/Select";
 
 import LanguageSelector from "components/LanguageSelector";
 
@@ -64,7 +65,14 @@ const HomePage = () => {
             label="check box for test"
             defaultChecked
           ></Checkbox>
-
+          <Select
+            validate={[{ rule: "exists" }]}
+            name="selction"
+            options={[
+              { label: "English", value: "en" },
+              { label: "Français", value: "fr" },
+            ]}
+          />
           <Button type="submit" light>
             submit
           </Button>

@@ -1,6 +1,5 @@
+import { ISelectOption } from "forms/Select/types";
 import { changeLanguage } from "i18next";
-
-import { ISelectOption } from "components/Select";
 
 export const handleLanguageChange = (selection: ISelectOption) => {
   changeLanguage(selection.value);

@@ -1,6 +1,5 @@
+import Select from "forms/Select/RawSelect";
 import i18next from "i18next";
-
-import Select from "components/Select";
 
 import { handleLanguageChange, LanguageList } from "./useLanguageSelector";
 
