@@ -1,14 +1,12 @@
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 
-import {
-  ISignInClassicBody,
-  ISignUpClassicBody,
-} from "api-types/auth-api/authNRoutes";
 import AuthSDK from "auth-sdk";
+import { AuthSDKTypes } from "auth-sdk/types";
 import { ButtonLink, SEO, UnstyledLink } from "core-next-components";
 import Button from "core-ui/Button";
 import { Input } from "forms";
+import ApiSDK from "server-sdk";
 
 // !STARTERCONF -> Select !STARTERCONF and CMD + SHIFT + F
 // Before you begin editing, follow all comments with `STARTERCONF`,
@@ -20,7 +18,8 @@ import { useAppSelector, useLoadingDispatch } from "hooks/reduxHooks";
 import { decrementCounter, incrementCounter } from "_redux/slices/counter";
 import { setCounterAsync } from "_redux/slices/counter/thunk";
 
-const authSDK = new AuthSDK();
+const api = new ApiSDK();
+const authSDK = new AuthSDK(api);
 
 export default function HomePage() {
   const count = useAppSelector((state) => state.counter.count);
@@ -43,14 +42,18 @@ export default function HomePage() {
     router.push(router.pathname, router.asPath, { locale });
   };
 
-  const signUpFormMethods = useForm<ISignUpClassicBody>();
-  const signInFormMethods = useForm<ISignInClassicBody>();
+  const signUpFormMethods = useForm<AuthSDKTypes["SignUpClassicBodyType"]>();
+  const signInFormMethods = useForm<AuthSDKTypes["SignInClassicBodyType"]>();
 
-  const onSubmitSignUp: SubmitHandler<ISignUpClassicBody> = (values) => {
-    authSDK.signUpClassic(values);
+  const onSubmitSignUp: SubmitHandler<AuthSDKTypes["SignUpClassicBodyType"]> = (
+    body
+  ) => {
+    authSDK.signUpClassic({ body });
   };
-  const onSubmitSignIn: SubmitHandler<ISignInClassicBody> = (values) => {
-    authSDK.signInClassic(values);
+  const onSubmitSignIn: SubmitHandler<AuthSDKTypes["SignInClassicBodyType"]> = (
+    body
+  ) => {
+    authSDK.signInClassic({ body });
   };
 
   return (
@@ -94,6 +97,9 @@ export default function HomePage() {
                 </form>
               </FormProvider>
             </div>
+            <Button type="button" onClick={() => authSDK.logout()}>
+              logout
+            </Button>
 
             <h1 className="mt-4">
               Next.js + Tailwind CSS + TypeScript + Redux Toolkit

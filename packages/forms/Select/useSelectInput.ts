@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import { ISelectOption } from ".";
+import { ISelectOption } from "./types";
 
 export interface IProps {
   onChange: (value: ISelectOption) => void;

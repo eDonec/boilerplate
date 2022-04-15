@@ -4,5 +4,6 @@ export enum AUTH_PROVIDERS {
   "GOOGLE" = "GOOGLE",
   "TWITTER" = "TWITTER",
   "LINKEDIN" = "LINKEDIN",
+  "APPLE" = "APPLE",
   "APP" = "APP",
 }

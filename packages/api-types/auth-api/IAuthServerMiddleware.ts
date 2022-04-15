@@ -6,9 +6,16 @@ import { AuthDocument } from "./models/Auth";
 
 type IAuthServerMiddleware<
   R = Request,
-  Locals = { currentAuth: AuthDocument },
-  Body = any,
-  B = any
-> = IMiddleware<R, Response<Body, Locals>, B>;
+  Body = unknown,
+  Locals = unknown,
+  B = void
+> = IMiddleware<
+  R,
+  Response<
+    Body | { message: string; stack: string | undefined },
+    Locals & { currentAuth: AuthDocument }
+  >,
+  B
+>;
 
 export default IAuthServerMiddleware;

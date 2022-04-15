@@ -1,8 +1,7 @@
 import Auth from "models/Auth";
 import { IMiddleware } from "shared-types";
+import StatusCodes from "shared-types/StatusCodes";
 import TokenValidator from "token/TokenValidator";
-
-import { statusCodes } from "constants/statusCodes";
 
 export const findAndValidateAuthClientByRefreshToken: IMiddleware = async (
   _req,
@@ -29,7 +28,7 @@ export const findAndValidateAuthClientByRefreshToken: IMiddleware = async (
     next();
   } catch (error) {
     if (error instanceof Error)
-      res.status(statusCodes.Unauthorized).send({
+      res.status(StatusCodes.Unauthorized).send({
         message: error.message,
         stack: error.stack,
       });

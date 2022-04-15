@@ -9,6 +9,7 @@ const withTM = require("next-transpile-modules")([
   "field-validator",
   "auth-sdk",
   "server-sdk",
+  "shared-types",
 ]);
 
 /** @type {import('next').NextConfig} */
@@ -17,15 +18,6 @@ const nextConfig = {
   distDir: "build",
   eslint: {
     dirs: ["src"],
-  },
-  webpackDevMiddleware: (config) => {
-    // Solve compiling problem via vagrant
-    config.watchOptions = {
-      poll: 1000, // Check for changes every second
-      aggregateTimeout: 300, // delay before rebuilding
-    };
-
-    return config;
   },
   i18n: {
     locales: ["en", "fr"],
@@ -45,24 +37,5 @@ const nextConfig = {
   //     'res.cloudinary.com',
   //   ],
   // },
-
-  // SVGR
-  webpack(config) {
-    config.module.rules.push({
-      test: /\.svg$/i,
-      issuer: /\.[jt]sx?$/,
-      use: [
-        {
-          loader: "@svgr/webpack",
-          options: {
-            typescript: true,
-            icon: true,
-          },
-        },
-      ],
-    });
-
-    return config;
-  },
 };
 module.exports = withTM(nextConfig);

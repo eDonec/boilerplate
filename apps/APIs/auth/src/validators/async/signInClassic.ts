@@ -1,4 +1,4 @@
-import { ISignInClassicBody } from "api-types/auth-api/authNRoutes";
+import { ResponseTypes } from "api-types/auth-api/authNRoutes";
 import IAuthServerMiddleware from "api-types/auth-api/IAuthServerMiddleware";
 import { compareSync } from "bcrypt";
 import add from "date-fns/add";
@@ -6,11 +6,13 @@ import isAfter from "date-fns/isAfter";
 import Auth from "models/Auth";
 import * as authNServices from "services/authNServices";
 import { AUTH_PROVIDERS, IMiddleware } from "shared-types";
-
-import { statusCodes } from "constants/statusCodes";
+import StatusCodes from "shared-types/StatusCodes";
 
 export const signInClassicValidator: IMiddleware = async (req, res, next) => {
-  const { email, userName }: ISignInClassicBody = req.body;
+  const {
+    email,
+    userName,
+  }: ResponseTypes["/n/sign-in/classic"]["POST"]["body"] = req.body;
   const authUsersByUserNameOrEmail = await Auth.findOne(
     userName
       ? {
@@ -20,7 +22,7 @@ export const signInClassicValidator: IMiddleware = async (req, res, next) => {
   ).populate("role");
 
   if (authUsersByUserNameOrEmail == null) {
-    res.status(statusCodes.Unauthorized).send({
+    res.status(StatusCodes.Unauthorized).send({
       message: "No user was found with these credentials",
       stack: "authentication validator auth",
       fields: ["email", "userName"],
@@ -40,7 +42,7 @@ export const checkSuspension: IAuthServerMiddleware = async (
 
   if (currentAuth.isSuspended) {
     if (currentAuth.suspentionLiftTime > new Date()) {
-      res.status(statusCodes.Unauthorized).send({
+      res.status(StatusCodes.Unauthorized).send({
         message: `User is suspended untill ${
           currentAuth.suspentionLiftTime
         } for ${currentAuth.suspentionReason || "an unknown reason"}`,
@@ -59,7 +61,7 @@ export const checkBanned: IAuthServerMiddleware = async (_req, res, next) => {
   const { currentAuth } = res.locals;
 
   if (currentAuth.isBanned) {
-    res.status(statusCodes.Unauthorized).send({
+    res.status(StatusCodes.Unauthorized).send({
       message: "User is banned",
       stack: "authentication validator auth",
     });
@@ -75,8 +77,10 @@ export const checkAuthProvider: (
   const { currentAuth } = res.locals;
 
   if (!currentAuth.authProvider.includes(authProvider)) {
-    res.status(statusCodes.Unauthorized).send({
-      message: `User has never signed up with classic method`,
+    res.status(StatusCodes.Unauthorized).send({
+      message: `User has never signed up with classic method you can use ${currentAuth.authProvider.join(
+        " or "
+      )} to login to your account`,
       stack: "authentication validator auth",
     });
 
@@ -89,7 +93,7 @@ export const checkPassword: IAuthServerMiddleware = async (req, res, next) => {
   const { password } = req.body;
 
   if (currentAuth.password && !compareSync(password, currentAuth.password)) {
-    res.status(statusCodes.Unauthorized).send({
+    res.status(StatusCodes.Unauthorized).send({
       message: `Password incorrect`,
       stack: "authentication validator auth",
     });

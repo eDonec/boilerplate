@@ -8,6 +8,8 @@
   },
   "dependencies": {
     "axios": "^0.26.1",
-    "auth": "*"
+    "auth": "*",
+    "shared-types": "*",
+    "api-types": "*"
   }
 }

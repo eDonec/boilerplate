@@ -4,4 +4,5 @@ export * from "./auth/IToken";
 export * from "./IMiddleware";
 export * from "./IPaginatedResult";
 export * from "./IWithDBDocument";
+export { default as StatusCodes } from "./StatusCodes";
 export * from "./utils";
