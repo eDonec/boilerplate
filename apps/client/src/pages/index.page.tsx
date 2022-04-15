@@ -1,8 +1,7 @@
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 
-import AuthSDK from "auth-sdk";
-import { AuthSDKTypes } from "auth-sdk/types";
+import AuthSDK, { AuthSDKTypes } from "auth-sdk";
 import { ButtonLink, SEO, UnstyledLink } from "core-next-components";
 import Button from "core-ui/Button";
 import { Input } from "forms";
