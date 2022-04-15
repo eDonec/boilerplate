@@ -43,6 +43,7 @@
     "**/next-sitemap.js": true,
     "**/*.d.ts": true,
     "**/.git": true,
+    "nginx": true,
     "**/.turbo": true,
     "**/.svn": true,
     "**/.hg": true,

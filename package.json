@@ -15,8 +15,11 @@
     "test": "turbo run test"
   },
   "workspaces": [
-    "apps/**",
-    "packages/**"
+    "apps/*",
+    "apps/APIs/*",
+    "packages/*",
+    "packages/SDK/*",
+    "packages/api-types/*"
   ],
   "lint-staged": {
     "*.config.js": [

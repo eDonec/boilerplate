@@ -9,3 +9,4 @@ tsconfig.tsbuildinfo
 !.env
 **/turbo*
 out
+graph*

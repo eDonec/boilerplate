@@ -334,7 +334,15 @@ To add a package to an app, please follow <a href='readme-assets/add-package.md'
 
 ### :triangular_flag_on_post: Deployment
 
-Work in progress...
+#### Docker build of all images
+
+for now..
+
+```bash
+make all
+
+make compose
+```
 
 <!-- Usage -->
 

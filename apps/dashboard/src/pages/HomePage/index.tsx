@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next";
 import { useLocation } from "react-router-dom";
 
 import { Button, useDarkMode } from "core-ui";
+import clsx from "core-utils/clsx";
 import Checkbox from "forms/Checkbox";
 import Input from "forms/Input";
 
@@ -44,10 +45,42 @@ const HomePage = () => {
       <LanguageSelector />
       <h1 className="mb-4">CRA + Tailwind CSS + TypeScript + Redux Tookit</h1>
       <p className="mt-2 text-sm text-gray-700 dark:text-gray-200">
-        <a href="/">Go to client</a>
+        <a
+          className={clsx(
+            "inline-flex items-center rounded px-4 py-2 font-semibold",
+            "focus-visible:ring-primary-500 focus:outline-none focus-visible:ring",
+            "shadow-sm",
+            "transition-colors duration-75",
+            "disabled:cursor-not-allowed",
+            "bg-primary-700 text-white",
+            "border-primary-600 border",
+            "hover:bg-primary-600 hover:text-white",
+            "active:bg-primary-500",
+            "disabled:bg-primary-400 disabled:hover:bg-primary-400"
+          )}
+          href="/"
+        >
+          Go to client {process.env.REACT_APP_HELLO || "hello World"}
+        </a>
       </p>
       <p className="mt-2 text-sm text-gray-700 dark:text-gray-200">
-        <a href="/api/v1">Go to API</a>
+        <a
+          className={clsx(
+            "inline-flex items-center rounded px-4 py-2 font-semibold",
+            "focus-visible:ring-primary-500 focus:outline-none focus-visible:ring",
+            "shadow-sm",
+            "transition-colors duration-75",
+            "disabled:cursor-not-allowed",
+            "bg-primary-700 text-white",
+            "border-primary-600 border",
+            "hover:bg-primary-600 hover:text-white",
+            "active:bg-primary-500",
+            "disabled:bg-primary-400 disabled:hover:bg-primary-400"
+          )}
+          href="/api/v1"
+        >
+          Go to API
+        </a>
       </p>
       <FormProvider {...methods}>
         <form onSubmit={methods.handleSubmit(onSubmit)}>

@@ -2,37 +2,31 @@ import CustomInputError, { ICustomError } from "custom-error/customInputError";
 
 import FieldValidator from "./FieldValidator";
 
-export default class Validator {
-  fields: string[] = [];
+export default class Validator<
+  T extends Record<string, string | number | Date | undefined> = Record<
+    string,
+    string | number | Date | undefined
+  >
+> {
+  fields: (keyof T)[] = [];
 
-  validate: { [key: string]: FieldValidator } = {};
+  validate: { [key in keyof T]: FieldValidator };
 
-  constructor(strings: Record<string, string | number | Date | undefined>) {
-    if (!Object.keys(strings).length)
+  constructor(objectToValidate: T) {
+    if (!Object.keys(objectToValidate).length)
       throw new Error("At least one field should be passed");
 
-    const typeErrors: { fieldName: string; message: string }[] = [];
+    const { typeErrors, fields, validate } =
+      extractFieldValidatorsFromObject(objectToValidate);
 
-    Object.keys(strings).forEach((key) => {
-      if (
-        strings[key] &&
-        typeof strings[key] !== "string" &&
-        typeof strings[key] !== "number" &&
-        !(strings[key] instanceof Date)
-      )
-        typeErrors.push({
-          fieldName: key,
-          message: `${key} must be a string, number or Date`,
-        });
-
-      this.validate[key] = new FieldValidator(strings[key], key);
-      this.fields.push(key);
-    });
     if (typeErrors.length)
       throw new CustomInputError({
         message: "All fields must be strings, numbers or Dates",
         fields: typeErrors,
       });
+
+    this.fields = fields;
+    this.validate = validate;
   }
 
   resolveErrors() {
@@ -60,3 +54,35 @@ export default class Validator {
     }
   }
 }
+
+const extractFieldValidatorsFromObject = <
+  T extends Record<string, string | number | Date | undefined>
+>(
+  objectToValidate: T
+) => {
+  const typeErrors: { fieldName: string; message: string }[] = [];
+  const validate = {} as { [key in keyof T]: FieldValidator };
+  const fields = [] as (keyof T)[];
+
+  (Object.keys(objectToValidate) as (keyof T)[]).forEach((key) => {
+    if (
+      objectToValidate[key] &&
+      typeof objectToValidate[key] !== "string" &&
+      typeof objectToValidate[key] !== "number" &&
+      !(objectToValidate[key] instanceof Date)
+    )
+      typeErrors.push({
+        fieldName: key as string,
+        message: `${key} must be a string, number or Date`,
+      });
+    validate[key] = new FieldValidator(objectToValidate[key], key as string);
+
+    fields.push(key);
+  });
+
+  return {
+    validate,
+    fields,
+    typeErrors,
+  };
+};

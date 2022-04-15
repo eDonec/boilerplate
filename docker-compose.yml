@@ -1,18 +1,61 @@
 version: "3.9"
 services:
-  front:
-    build:
-      context: ./apps/front
-      dockerfile: Dockerfile
-    command:
-      - node
-      - server.js
-    ports:
-      - "3005:3005"
-    volumes:
-      - ./apps/front/.next/standalone:/app
-      - /app/node_modules
+  client:
+    image: client
+    command: node server.js
+    restart: always
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      - NEXT_TELEMETRY_DISABLED=1
+      - REACT_APP_HELLO="I am a variable"
+    networks:
+      - main-network
+
+  dashboard:
+    image: dashboard
+    restart: always
     environment:
       - NODE_ENV=production
       - PORT=3005
-      - ENV NEXT_TELEMETRY_DISABLED=1
+      - NEXT_TELEMETRY_DISABLED=1
+      - REACT_APP_HELLO="I am a variable"
+    networks:
+      - main-network
+
+  imgproxy:
+    image: darthsim/imgproxy:latest
+    restart: always
+    environment:
+      IMGPROXY_USE_S3: true
+      IMGPROXY_S3_REGION: eu-west-3
+      STORAGE_PROVIDER: S3
+      STORAGE_PATH: edonec-turborepo-cache
+      AWS_ACCESS_KEY_ID: AKIARU2MX2BV4F7KRTMF
+      AWS_SECRET_ACCESS_KEY: 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
+      IMGPROXY_BIND: :3031
+      IMGPROXY_CACHE_CONTROL_PASSTHROUGH: "true"
+      IMGPROXY_SET_CANONICAL_HEADER: "true"
+      IMGPROXY_USE_ETAG: "true"
+      IMGPROXY_JPEG_PROGRESSIVE: "true"
+      IMGPROXY_JPEG_TRELLIS_QUANT: "true"
+      IMGPROXY_JPEG_OVERSHOOT_DERINGING: "true"
+      IMGPROXY_ENABLE_WEBP_DETECTION: "true"
+      IMGPROXY_ENFORCE_WEBP: "true"
+    networks:
+      - main-network
+  proxy-balancer:
+    restart: always
+    image: proxy-balancer
+    depends_on:
+      - front
+      - dashboard
+      - imgproxy
+    ports:
+      - 3005:80
+    networks:
+      - main-network
+
+networks:
+  main-network:
+    driver: bridge
