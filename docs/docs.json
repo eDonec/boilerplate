@@ -82,15 +82,8 @@
             },
             "url": {
               "raw": "{{baseUrl}}/auth/n/sign-in/classic",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "auth",
-                "n",
-                "sign-in",
-                "classic"
-              ],
+              "host": ["{{baseUrl}}"],
+              "path": ["auth", "n", "sign-in", "classic"],
               "query": [
                 {
                   "key": "role",

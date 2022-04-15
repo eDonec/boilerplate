@@ -1,7 +1,7 @@
 import { clsx } from "core-utils";
 
-import { ISelectOption } from ".";
 import Option from "./Option";
+import { ISelectOption } from "./types";
 
 interface IProps {
   options: ISelectOption[];
