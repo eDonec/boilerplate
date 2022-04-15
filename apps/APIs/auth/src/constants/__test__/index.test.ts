@@ -1,5 +1,5 @@
-import { statusCodes } from "constants/statusCodes";
+import StatusCodes from "shared-types/StatusCodes";
 
 it("should be a status codes", () => {
-  expect(statusCodes).toBe(statusCodes);
+  expect(StatusCodes).toBe(StatusCodes);
 });

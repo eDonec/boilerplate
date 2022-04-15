@@ -1,9 +1,17 @@
+import { ResponseTypes } from "api-types/auth-api/authNRoutes";
 import IAuthServerMiddleware from "api-types/auth-api/IAuthServerMiddleware";
+import { Request } from "express";
 import Role from "models/Role";
+import StatusCodes from "shared-types/StatusCodes";
 
-import { statusCodes } from "constants/statusCodes";
-
-export const checkAuthRole: IAuthServerMiddleware = async (req, res, next) => {
+export const checkAuthRole: IAuthServerMiddleware<
+  Request<
+    unknown,
+    unknown,
+    ResponseTypes["/n/sign-in/classic"]["POST"]["body"],
+    ResponseTypes["/n/sign-in/classic"]["POST"]["query"]
+  >
+> = async (req, res, next) => {
   const { role } = req.query;
 
   if (!role) {
@@ -15,7 +23,7 @@ export const checkAuthRole: IAuthServerMiddleware = async (req, res, next) => {
   const { currentAuth } = res.locals;
 
   if (!dbRole) {
-    res.status(statusCodes["Not Found"]).send({
+    res.status(StatusCodes["Not Found"]).send({
       message: "Role not found",
       stack: "Role not found in authorization check",
     });
@@ -23,8 +31,8 @@ export const checkAuthRole: IAuthServerMiddleware = async (req, res, next) => {
     return;
   }
 
-  if (!(currentAuth.role.name === dbRole.name)) {
-    res.status(statusCodes.Unauthorized).send({
+  if (currentAuth.role.name !== dbRole.name) {
+    res.status(StatusCodes.Unauthorized).send({
       message: "User not authorized ",
       stack: "Authorization denied for user",
     });

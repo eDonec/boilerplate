@@ -1,8 +1,11 @@
 import { Request } from "express";
 import ErrorDocument from "models/ErrorDocument";
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const errorLogger = async (req: Request, err: Error | any) =>
+export const errorLogger = async (
+  req: Request<unknown, unknown, unknown, unknown>,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  err: Error | any
+) =>
   ErrorDocument.create({
     error: { errorName: err.name, message: err?.message, stack: err?.stack },
     request: {

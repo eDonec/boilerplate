@@ -1,51 +1,84 @@
-import {
-  ISignInClassicBody,
-  ISignUpClassicBody,
-} from "api-types/auth-api/authNRoutes";
-import { RoleType } from "api-types/auth-api/models/Role";
-import ServerSDK from "server-sdk";
-import { ACCESS } from "shared-types";
+import { ResponseTypes } from "api-types/auth-api/authNRoutes";
+import ServerSDK from "server-sdk/sdk";
+import ServerSDKTypes from "server-sdk/types";
+import { IToken } from "shared-types";
 
-type AuthResponse = {
-  authID: string;
-  token: {
-    accessToken: string;
-    refreshToken: string;
-  };
-  role: RoleType;
-  access: ACCESS[];
-};
+const baseUrl = "/v1/auth";
 
 export default class AuthSDK extends ServerSDK {
-  constructor(accessToken?: string, refreshToken?: string) {
-    super("/v1/auth", accessToken, refreshToken);
-  }
+  public async signUpClassic({
+    body,
+  }: {
+    body: ResponseTypes["/n/classic"]["POST"]["body"];
+    query?: never;
+    params?: never;
+  }) {
+    const { data } = await this.api.post<
+      ResponseTypes["/n/classic"]["POST"]["response"]
+    >(`${baseUrl}/n/classic`, body);
 
-  public async signUpClassic(body: ISignUpClassicBody) {
-    const { data } = await this.api.post<AuthResponse>("/n/classic", body);
-
-    this.handleAuthResponse(data);
+    this.handleAuthResponse(data.token);
 
     return data;
   }
 
-  public async signInClassic(body: ISignInClassicBody, role?: string) {
-    const { data } = await this.api.post<AuthResponse>(
-      "/n/sign-in/classic",
-      body,
-      { params: { role } }
-    );
+  public async signInClassic({
+    body,
+    query,
+  }: {
+    body: ResponseTypes["/n/sign-in/classic"]["POST"]["body"];
+    query?: ResponseTypes["/n/sign-in/classic"]["POST"]["query"];
+    params?: never;
+  }) {
+    const { data } = await this.api.post<
+      ResponseTypes["/n/sign-in/classic"]["POST"]["response"]
+    >(`${baseUrl}/n/sign-in/classic`, body, { params: query });
 
-    this.handleAuthResponse(data);
+    this.handleAuthResponse(data.token);
+
+    return data;
+  }
+
+  public async appleSignIn({
+    body,
+  }: {
+    body: ResponseTypes["/n/apple"]["POST"]["body"];
+    query?: never;
+    params?: never;
+  }) {
+    const { data } = await this.api.post<
+      ResponseTypes["/n/apple"]["POST"]["response"]
+    >(`${baseUrl}/n/apple`, body);
+
+    this.handleAuthResponse(data.token);
+
+    return data;
+  }
+
+  public async facebookSignIn({
+    body,
+  }: {
+    body: ResponseTypes["/n/facebook"]["POST"]["body"];
+    query?: never;
+    params?: never;
+  }) {
+    const { data } = await this.api.post<
+      ResponseTypes["/n/facebook"]["POST"]["response"]
+    >(`${baseUrl}/n/facebook`, body);
+
+    this.handleAuthResponse(data.token);
 
     return data;
   }
 
   public async logout() {
     if (!this.refreshToken) throw new Error("No refresh token");
-    await this.api.get("/n/logout", {
-      headers: { Authorization: `Bearer ${this.refreshToken}` },
-    });
+    await this.api.get<ResponseTypes["/n/logout"]["GET"]["response"]>(
+      `${baseUrl}/n/logout`,
+      {
+        headers: { Authorization: `Bearer ${this.refreshToken}` },
+      }
+    );
 
     this.setBearerToken(null);
     this.refreshToken = null;
@@ -55,8 +88,10 @@ export default class AuthSDK extends ServerSDK {
     return !!this.refreshToken;
   }
 
-  private handleAuthResponse(authResponse: AuthResponse) {
-    this.setBearerToken(authResponse.token.accessToken);
-    this.refreshToken = authResponse.token.refreshToken;
+  private handleAuthResponse(token: IToken) {
+    this.setBearerToken(token.accessToken);
+    this.refreshToken = token.refreshToken;
   }
 }
+
+export type AuthSDKTypes = ServerSDKTypes<AuthSDK>;

@@ -16,6 +16,16 @@ router.post(
   authNController.signUpClassic
 );
 router.post(
+  `${BASE_ROUTE}/facebook`,
+  authNValidators.signInFacebookValidator,
+  authNController.facebookSignIn
+);
+router.post(
+  `${BASE_ROUTE}/apple`,
+  authNValidators.signInAppleValidator,
+  authNController.appleSignIn
+);
+router.post(
   `${BASE_ROUTE}/sign-in/classic`,
   authNValidators.signInClassicValidator,
   asyncAuthNValidators.signInClassicValidator,

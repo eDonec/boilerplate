@@ -1,14 +1,15 @@
-import { statusCodes } from "auth/src/constants/statusCodes";
+import { ResponseTypes } from "api-types/auth-api/authNRoutes";
 import axios, { AxiosInstance } from "axios";
+import StatusCodes from "shared-types/StatusCodes";
 
-export default abstract class ServerSDK {
-  protected refreshToken: string | null = null;
+export default class ApiSDK {
+  public refreshToken: string | null = null;
 
-  protected api: AxiosInstance;
+  public api: AxiosInstance;
 
-  constructor(apiPrefix: string, accessToken?: string, refreshToken?: string) {
+  constructor(accessToken?: string, refreshToken?: string) {
     this.api = axios.create({
-      baseURL: `/api${apiPrefix}`,
+      baseURL: `/api`,
     });
 
     if (accessToken) this.setBearerToken(accessToken);
@@ -20,7 +21,7 @@ export default abstract class ServerSDK {
         const request = error.config;
 
         if (
-          error.response?.status === statusCodes.Unauthorized &&
+          error.response?.status === StatusCodes.Unauthorized &&
           error.response.data.message === "Token invalid or expired" &&
           !request._retry
         ) {
@@ -39,14 +40,16 @@ export default abstract class ServerSDK {
 
   private async refreshUserToken() {
     if (!this.refreshToken) throw new Error("No refresh token");
-    const { data } = await this.api.get<string>("/n/refresh-token", {
+    const { data } = await this.api.get<
+      ResponseTypes["/n/refresh-token"]["GET"]["response"]
+    >("/n/refresh-token", {
       headers: { Authorization: `Bearer ${this.refreshToken}` },
     });
 
     this.setBearerToken(data);
   }
 
-  protected setBearerToken(token: string | null) {
+  public setBearerToken(token: string | null) {
     if (token)
       this.api.defaults.headers.common.Authorization = `Bearer ${token}`;
     else delete this.api.defaults.headers.common.Authorization;

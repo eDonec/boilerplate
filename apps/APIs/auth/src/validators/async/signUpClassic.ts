@@ -1,15 +1,15 @@
-import { ISignUpClassicBody } from "api-types/auth-api/authNRoutes";
+import { ResponseTypes } from "api-types/auth-api/authNRoutes";
 import Auth from "models/Auth";
 import { IMiddleware } from "shared-types";
-
-import { statusCodes } from "constants/statusCodes";
+import StatusCodes from "shared-types/StatusCodes";
 
 export const signUpClassicValidator: IMiddleware = async (req, res, next) => {
-  const { email, userName }: ISignUpClassicBody = req.body;
-  const authUsersByEmail = await Auth.find({ email });
+  const { email, userName }: ResponseTypes["/n/classic"]["POST"]["body"] =
+    req.body;
+  const authUsersByEmail = await Auth.findOne({ email });
 
-  if (authUsersByEmail.length) {
-    res.status(statusCodes.Unauthorized).send({
+  if (authUsersByEmail) {
+    res.status(StatusCodes.Unauthorized).send({
       message: "Email already in use!",
       stack: "authentication validator auth",
       fields: ["email"],
@@ -19,10 +19,10 @@ export const signUpClassicValidator: IMiddleware = async (req, res, next) => {
   }
   if (!userName) return next();
 
-  const authUsersByUserName = await Auth.find({ userName });
+  const authUsersByUserName = await Auth.findOne({ userName });
 
-  if (authUsersByUserName.length) {
-    res.status(statusCodes.Unauthorized).send({
+  if (authUsersByUserName) {
+    res.status(StatusCodes.Unauthorized).send({
       message: "Email already in use!",
       stack: "authentication validator auth",
       fields: ["userName"],
