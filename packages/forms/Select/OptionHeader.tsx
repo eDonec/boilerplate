@@ -5,7 +5,7 @@ import { ISelectOption } from "./types";
 
 export interface IProps {
   initialValue?: ISelectOption;
-  unsetLabel?: string;
+  placeholder?: string;
   value?: ISelectOption;
   toggleOpenSelectOptions: () => void;
   isOpen: boolean;
@@ -13,7 +13,7 @@ export interface IProps {
 }
 export const OptionHeader: React.FC<IProps> = ({
   initialValue,
-  unsetLabel,
+  placeholder,
   value,
   toggleOpenSelectOptions,
   isOpen,
@@ -33,7 +33,7 @@ export const OptionHeader: React.FC<IProps> = ({
     onClick={toggleOpenSelectOptions}
   >
     <p className="py-3 pl-3 text-sm leading-3 tracking-normal">
-      {value?.label || initialValue?.label || unsetLabel}
+      {value?.label || initialValue?.label || placeholder}
     </p>
 
     <Shevron isUp={isOpen} error={error} />
