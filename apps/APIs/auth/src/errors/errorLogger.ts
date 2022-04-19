@@ -1,8 +1,8 @@
-import { Request } from "express";
 import ErrorDocument from "models/ErrorDocument";
 
-export const errorLogger = async (
-  req: Request<unknown, unknown, unknown, unknown>,
+export const errorLogger = (
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  req: any,
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   err: Error | any
 ) =>
