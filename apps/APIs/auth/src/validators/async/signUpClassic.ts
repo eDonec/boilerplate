@@ -1,10 +1,10 @@
-import { ResponseTypes } from "auth-types/routes/authNRoutes";
+import { RouteTypes } from "auth-types/routes/authNRoutes";
 import Auth from "models/Auth";
 import { IMiddleware } from "shared-types";
 import StatusCodes from "shared-types/StatusCodes";
 
 export const signUpClassicValidator: IMiddleware = async (req, res, next) => {
-  const { email, userName }: ResponseTypes["/n/classic"]["POST"]["body"] =
+  const { email, userName }: RouteTypes["/n/classic"]["POST"]["body"] =
     req.body;
   const authUsersByEmail = await Auth.findOne({ email });
 

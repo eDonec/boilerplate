@@ -5,7 +5,7 @@ import {
   AuthResponse,
   AuthResponseRoutes,
   FacebookUserProfileResponse,
-  ResponseTypes,
+  RouteTypes,
 } from "auth-types/routes/authNRoutes";
 import axios from "axios";
 import Auth from "models/Auth";
@@ -22,8 +22,8 @@ export const signUpClassic = async ({
   email,
   password,
   userName,
-}: ResponseTypes["/n/classic"]["POST"]["body"]): Promise<
-  ResponseTypes["/n/classic"]["POST"]["response"]
+}: RouteTypes["/n/classic"]["POST"]["body"]): Promise<
+  RouteTypes["/n/classic"]["POST"]["response"]
 > => {
   const publicRole = await Role.findOne({ name: PUBLIC_ROLE.name });
 
@@ -45,7 +45,7 @@ export const signUpClassic = async ({
 
 export const signInClassic = async (
   authClient: AuthDocument
-): Promise<ResponseTypes["/n/sign-in/classic"]["POST"]["response"]> =>
+): Promise<RouteTypes["/n/sign-in/classic"]["POST"]["response"]> =>
   generateAuthResponse(authClient);
 
 export const suspendClient = (
@@ -93,7 +93,7 @@ const createNewSession = async (authClient: AuthDocument) => {
 
 const generateAuthResponse = async (
   authClient: AuthDocument
-): Promise<ResponseTypes[AuthResponseRoutes]["POST"]["response"]> => {
+): Promise<RouteTypes[AuthResponseRoutes]["POST"]["response"]> => {
   const { accessToken, refreshToken } = await createNewSession(authClient);
 
   return {
@@ -156,8 +156,8 @@ const generateThirdPartyAuth = async ({
 
 export const appleSignIn = async ({
   token,
-}: ResponseTypes["/n/apple"]["POST"]["body"]): Promise<
-  ResponseTypes["/n/apple"]["POST"]["response"]
+}: RouteTypes["/n/apple"]["POST"]["body"]): Promise<
+  RouteTypes["/n/apple"]["POST"]["response"]
 > => {
   const { email, sub } = await verifyIdToken(token);
 
@@ -170,7 +170,7 @@ export const appleSignIn = async ({
 
 export const facebookSignIn = async (
   token: string
-): Promise<ResponseTypes["/n/facebook"]["POST"]["response"]> => {
+): Promise<RouteTypes["/n/facebook"]["POST"]["response"]> => {
   const {
     data: { email, id },
   } = await axios.get<FacebookUserProfileResponse>(

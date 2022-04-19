@@ -1,4 +1,4 @@
-import { ResponseTypes } from "auth-types/routes/authNRoutes";
+import { RouteTypes } from "auth-types/routes/authNRoutes";
 import axios, { AxiosInstance } from "axios";
 import StatusCodes from "shared-types/StatusCodes";
 
@@ -41,7 +41,7 @@ export default class ApiSDK {
   private async refreshUserToken() {
     if (!this.refreshToken) throw new Error("No refresh token");
     const { data } = await this.api.get<
-      ResponseTypes["/n/refresh-token"]["GET"]["response"]
+      RouteTypes["/n/refresh-token"]["GET"]["response"]
     >("/n/refresh-token", {
       headers: { Authorization: `Bearer ${this.refreshToken}` },
     });

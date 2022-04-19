@@ -1,5 +1,5 @@
 import IAuthServerMiddleware from "auth-types/IAuthServerMiddleware";
-import { ResponseTypes } from "auth-types/routes/authNRoutes";
+import { RouteTypes } from "auth-types/routes/authNRoutes";
 import { Request } from "express";
 import Role from "models/Role";
 import StatusCodes from "shared-types/StatusCodes";
@@ -8,8 +8,8 @@ export const checkAuthRole: IAuthServerMiddleware<
   Request<
     unknown,
     unknown,
-    ResponseTypes["/n/sign-in/classic"]["POST"]["body"],
-    ResponseTypes["/n/sign-in/classic"]["POST"]["query"]
+    RouteTypes["/n/sign-in/classic"]["POST"]["body"],
+    RouteTypes["/n/sign-in/classic"]["POST"]["query"]
   >
 > = async (req, res, next) => {
   const { role } = req.query;

@@ -1,5 +1,5 @@
 import IAuthServerMiddleware from "auth-types/IAuthServerMiddleware";
-import { ResponseTypes } from "auth-types/routes/authNRoutes";
+import { RouteTypes } from "auth-types/routes/authNRoutes";
 import { compareSync } from "bcrypt";
 import add from "date-fns/add";
 import isAfter from "date-fns/isAfter";
@@ -9,10 +9,8 @@ import { AUTH_PROVIDERS, IMiddleware } from "shared-types";
 import StatusCodes from "shared-types/StatusCodes";
 
 export const signInClassicValidator: IMiddleware = async (req, res, next) => {
-  const {
-    email,
-    userName,
-  }: ResponseTypes["/n/sign-in/classic"]["POST"]["body"] = req.body;
+  const { email, userName }: RouteTypes["/n/sign-in/classic"]["POST"]["body"] =
+    req.body;
   const authUsersByUserNameOrEmail = await Auth.findOne(
     userName
       ? {

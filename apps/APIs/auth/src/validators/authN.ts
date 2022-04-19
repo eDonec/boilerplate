@@ -1,4 +1,4 @@
-import { ResponseTypes } from "auth-types/routes/authNRoutes";
+import { RouteTypes } from "auth-types/routes/authNRoutes";
 import CustomInputError from "custom-error/customInputError";
 import { Request } from "express";
 import FieldValidator from "field-validator";
@@ -7,7 +7,7 @@ import StatusCodes from "shared-types/StatusCodes";
 import TokenValidator from "token/TokenValidator";
 
 export const signUpClassicValidator: IMiddleware<
-  Request<unknown, unknown, ResponseTypes["/n/classic"]["POST"]["body"]>
+  Request<unknown, unknown, RouteTypes["/n/classic"]["POST"]["body"]>
 > = (req, res, next) => {
   const { email, password, userName } = req.body;
   const validators = new FieldValidator({ email, password, userName });
@@ -38,7 +38,7 @@ export const signUpClassicValidator: IMiddleware<
 };
 
 export const signInClassicValidator: IMiddleware<
-  Request<unknown, unknown, ResponseTypes["/n/sign-in/classic"]["POST"]["body"]>
+  Request<unknown, unknown, RouteTypes["/n/sign-in/classic"]["POST"]["body"]>
 > = (req, res, next) => {
   const { email, password, userName } = req.body;
   const validators = new FieldValidator({ email, password, userName });
@@ -67,7 +67,7 @@ export const signInClassicValidator: IMiddleware<
   return next();
 };
 export const signInAppleValidator: IMiddleware<
-  Request<unknown, unknown, ResponseTypes["/n/apple"]["POST"]["body"]>
+  Request<unknown, unknown, RouteTypes["/n/apple"]["POST"]["body"]>
 > = (req, res, next) => {
   const { familyName, givenName, token } = req.body;
   const validators = new FieldValidator({ familyName, givenName, token });
@@ -96,7 +96,7 @@ export const signInAppleValidator: IMiddleware<
   return next();
 };
 export const signInFacebookValidator: IMiddleware<
-  Request<unknown, unknown, ResponseTypes["/n/facebook"]["POST"]["body"]>
+  Request<unknown, unknown, RouteTypes["/n/facebook"]["POST"]["body"]>
 > = (req, res, next) => {
   const { token } = req.body;
   const validators = new FieldValidator({ token });

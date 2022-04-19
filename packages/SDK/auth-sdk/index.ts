@@ -1,4 +1,4 @@
-import { ResponseTypes } from "auth-types/routes/authNRoutes";
+import { RouteTypes } from "auth-types/routes/authNRoutes";
 import ServerSDK from "server-sdk/sdk";
 import ServerSDKTypes from "server-sdk/types";
 import { IToken } from "shared-types";
@@ -9,12 +9,12 @@ export default class AuthSDK extends ServerSDK {
   public async signUpClassic({
     body,
   }: {
-    body: ResponseTypes["/n/classic"]["POST"]["body"];
+    body: RouteTypes["/n/classic"]["POST"]["body"];
     query?: never;
     params?: never;
   }) {
     const { data } = await this.api.post<
-      ResponseTypes["/n/classic"]["POST"]["response"]
+      RouteTypes["/n/classic"]["POST"]["response"]
     >(`${baseUrl}/n/classic`, body);
 
     this.handleAuthResponse(data.token);
@@ -26,12 +26,12 @@ export default class AuthSDK extends ServerSDK {
     body,
     query,
   }: {
-    body: ResponseTypes["/n/sign-in/classic"]["POST"]["body"];
-    query?: ResponseTypes["/n/sign-in/classic"]["POST"]["query"];
+    body: RouteTypes["/n/sign-in/classic"]["POST"]["body"];
+    query?: RouteTypes["/n/sign-in/classic"]["POST"]["query"];
     params?: never;
   }) {
     const { data } = await this.api.post<
-      ResponseTypes["/n/sign-in/classic"]["POST"]["response"]
+      RouteTypes["/n/sign-in/classic"]["POST"]["response"]
     >(`${baseUrl}/n/sign-in/classic`, body, { params: query });
 
     this.handleAuthResponse(data.token);
@@ -42,12 +42,12 @@ export default class AuthSDK extends ServerSDK {
   public async appleSignIn({
     body,
   }: {
-    body: ResponseTypes["/n/apple"]["POST"]["body"];
+    body: RouteTypes["/n/apple"]["POST"]["body"];
     query?: never;
     params?: never;
   }) {
     const { data } = await this.api.post<
-      ResponseTypes["/n/apple"]["POST"]["response"]
+      RouteTypes["/n/apple"]["POST"]["response"]
     >(`${baseUrl}/n/apple`, body);
 
     this.handleAuthResponse(data.token);
@@ -58,12 +58,12 @@ export default class AuthSDK extends ServerSDK {
   public async facebookSignIn({
     body,
   }: {
-    body: ResponseTypes["/n/facebook"]["POST"]["body"];
+    body: RouteTypes["/n/facebook"]["POST"]["body"];
     query?: never;
     params?: never;
   }) {
     const { data } = await this.api.post<
-      ResponseTypes["/n/facebook"]["POST"]["response"]
+      RouteTypes["/n/facebook"]["POST"]["response"]
     >(`${baseUrl}/n/facebook`, body);
 
     this.handleAuthResponse(data.token);
@@ -73,7 +73,7 @@ export default class AuthSDK extends ServerSDK {
 
   public async logout() {
     if (!this.refreshToken) throw new Error("No refresh token");
-    await this.api.get<ResponseTypes["/n/logout"]["GET"]["response"]>(
+    await this.api.get<RouteTypes["/n/logout"]["GET"]["response"]>(
       `${baseUrl}/n/logout`,
       {
         headers: { Authorization: `Bearer ${this.refreshToken}` },

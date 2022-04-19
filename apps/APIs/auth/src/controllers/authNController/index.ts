@@ -1,5 +1,5 @@
 import IAuthServerMiddleware from "auth-types/IAuthServerMiddleware";
-import { ResponseTypes } from "auth-types/routes/authNRoutes";
+import { RouteTypes } from "auth-types/routes/authNRoutes";
 import { errorLogger } from "errors/errorLogger";
 import { Request, Response } from "express";
 import * as authNServices from "services/authNServices";
@@ -8,7 +8,7 @@ import TokenGenerator from "token/TokenGenerator";
 import TokenValidator from "token/TokenValidator";
 
 export const signUpClassic: IMiddleware<
-  Request<unknown, unknown, ResponseTypes["/n/classic"]["POST"]["body"]>
+  Request<unknown, unknown, RouteTypes["/n/classic"]["POST"]["body"]>
 > = async (req, res) => {
   try {
     const authResult = await authNServices.signUpClassic(req.body);
@@ -25,7 +25,7 @@ export const signUpClassic: IMiddleware<
 
 export const signInClassic: IAuthServerMiddleware<
   Request,
-  ResponseTypes["/n/sign-in/classic"]["POST"]["response"]
+  RouteTypes["/n/sign-in/classic"]["POST"]["response"]
 > = async (req, res) => {
   const { currentAuth } = res.locals;
 
@@ -44,7 +44,7 @@ export const signInClassic: IAuthServerMiddleware<
 
 export const refreshAccessToken: IAuthServerMiddleware<
   Request,
-  ResponseTypes["/n/refresh-token"]["GET"]["response"],
+  RouteTypes["/n/refresh-token"]["GET"]["response"],
   {
     refreshToken: TokenValidator<{ authId: string }>;
   }
@@ -73,7 +73,7 @@ export const refreshAccessToken: IAuthServerMiddleware<
 
 export const logoutAuthClientFromSession: IAuthServerMiddleware<
   Request,
-  ResponseTypes["/n/logout"]["GET"]["response"],
+  RouteTypes["/n/logout"]["GET"]["response"],
   {
     refreshToken: TokenValidator<{ authId: string }>;
   }
@@ -97,9 +97,9 @@ export const logoutAuthClientFromSession: IAuthServerMiddleware<
 };
 
 export const facebookSignIn: IMiddleware<
-  Request<unknown, unknown, ResponseTypes["/n/facebook"]["POST"]["body"]>,
+  Request<unknown, unknown, RouteTypes["/n/facebook"]["POST"]["body"]>,
   Response<
-    | ResponseTypes["/n/facebook"]["POST"]["response"]
+    | RouteTypes["/n/facebook"]["POST"]["response"]
     | { message: string; stack?: string }
   >
 > = async (req, res) => {
@@ -116,9 +116,9 @@ export const facebookSignIn: IMiddleware<
   }
 };
 export const appleSignIn: IMiddleware<
-  Request<unknown, unknown, ResponseTypes["/n/apple"]["POST"]["body"]>,
+  Request<unknown, unknown, RouteTypes["/n/apple"]["POST"]["body"]>,
   Response<
-    | ResponseTypes["/n/apple"]["POST"]["response"]
+    | RouteTypes["/n/apple"]["POST"]["response"]
     | { message: string; stack?: string }
   >
 > = async (req, res) => {
