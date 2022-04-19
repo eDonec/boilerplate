@@ -1,13 +1,20 @@
+/* eslint-disable max-lines */
 import { RouteTypes } from "auth-types/routes/authN";
 import CustomInputError from "custom-error/customInputError";
-import { Request } from "express";
+import { Request, Response } from "express";
 import FieldValidator from "field-validator";
 import { IMiddleware } from "shared-types";
 import StatusCodes from "shared-types/StatusCodes";
 import TokenValidator from "token/TokenValidator";
 
 export const signUpClassicValidator: IMiddleware<
-  Request<unknown, unknown, RouteTypes["/n/classic"]["POST"]["body"]>
+  Request<unknown, unknown, RouteTypes["/n/classic"]["POST"]["body"]>,
+  Response<{
+    message: string;
+    stack?: string;
+    fields?: CustomInputError["fields"];
+    name?: string;
+  }>
 > = (req, res, next) => {
   const { email, password, userName } = req.body;
   const validators = new FieldValidator({ email, password, userName });
@@ -18,27 +25,32 @@ export const signUpClassicValidator: IMiddleware<
 
   try {
     validators.resolveErrors();
+
+    return next();
   } catch (error) {
     if (error instanceof CustomInputError)
       res.status(StatusCodes.Unauthorized).send({
         message: error.message,
-        stack: "authentication validator auth",
+        stack: error.stack,
         fields: error.fields,
         name: error.name,
       });
     else
-      res
-        .status(StatusCodes["Internal Server Error"])
-        .send({ stack: ` ${__dirname} signUpClassicValidator line 26` });
-
-    return;
+      res.status(StatusCodes["Internal Server Error"]).send({
+        stack: error instanceof Error ? error.stack : "unknown",
+        message: error instanceof Error ? error.message : "unknown",
+      });
   }
-
-  return next();
 };
 
 export const signInClassicValidator: IMiddleware<
-  Request<unknown, unknown, RouteTypes["/n/sign-in/classic"]["POST"]["body"]>
+  Request<unknown, unknown, RouteTypes["/n/sign-in/classic"]["POST"]["body"]>,
+  Response<{
+    message: string;
+    stack?: string;
+    fields?: CustomInputError["fields"];
+    name?: string;
+  }>
 > = (req, res, next) => {
   const { email, password, userName } = req.body;
   const validators = new FieldValidator({ email, password, userName });
@@ -48,26 +60,31 @@ export const signInClassicValidator: IMiddleware<
   if (userName) validators.validate.userName.isString();
   try {
     validators.resolveErrors();
+
+    return next();
   } catch (error) {
     if (error instanceof CustomInputError)
       res.status(StatusCodes.Unauthorized).send({
         message: error.message,
-        stack: "authentication validator auth",
+        stack: error.stack,
         fields: error.fields,
         name: error.name,
       });
     else
-      res
-        .status(StatusCodes["Internal Server Error"])
-        .send({ stack: ` ${__dirname} signInClassicValidator line 26` });
-
-    return;
+      res.status(StatusCodes["Internal Server Error"]).send({
+        stack: error instanceof Error ? error.stack : "unknown",
+        message: error instanceof Error ? error.message : "unknown",
+      });
   }
-
-  return next();
 };
 export const signInAppleValidator: IMiddleware<
-  Request<unknown, unknown, RouteTypes["/n/apple"]["POST"]["body"]>
+  Request<unknown, unknown, RouteTypes["/n/apple"]["POST"]["body"]>,
+  Response<{
+    message: string;
+    stack?: string;
+    fields?: CustomInputError["fields"];
+    name?: string;
+  }>
 > = (req, res, next) => {
   const { familyName, givenName, token } = req.body;
   const validators = new FieldValidator({ familyName, givenName, token });
@@ -77,26 +94,31 @@ export const signInAppleValidator: IMiddleware<
   validators.validate.familyName.exists().isString();
   try {
     validators.resolveErrors();
+
+    return next();
   } catch (error) {
     if (error instanceof CustomInputError)
       res.status(StatusCodes.Unauthorized).send({
         message: error.message,
-        stack: "authentication validator auth",
+        stack: error.stack,
         fields: error.fields,
         name: error.name,
       });
     else
-      res
-        .status(StatusCodes["Internal Server Error"])
-        .send({ stack: ` ${__dirname} signInClassicValidator line 26` });
-
-    return;
+      res.status(StatusCodes["Internal Server Error"]).send({
+        stack: error instanceof Error ? error.stack : "unknown",
+        message: error instanceof Error ? error.message : "unknown",
+      });
   }
-
-  return next();
 };
 export const signInFacebookValidator: IMiddleware<
-  Request<unknown, unknown, RouteTypes["/n/facebook"]["POST"]["body"]>
+  Request<unknown, unknown, RouteTypes["/n/facebook"]["POST"]["body"]>,
+  Response<{
+    message: string;
+    stack?: string;
+    fields?: CustomInputError["fields"];
+    name?: string;
+  }>
 > = (req, res, next) => {
   const { token } = req.body;
   const validators = new FieldValidator({ token });
@@ -104,23 +126,22 @@ export const signInFacebookValidator: IMiddleware<
   validators.validate.token.exists().isString();
   try {
     validators.resolveErrors();
+
+    return next();
   } catch (error) {
     if (error instanceof CustomInputError)
       res.status(StatusCodes.Unauthorized).send({
         message: error.message,
-        stack: "authentication validator auth",
+        stack: error.stack,
         fields: error.fields,
         name: error.name,
       });
     else
-      res
-        .status(StatusCodes["Internal Server Error"])
-        .send({ stack: ` ${__dirname} signInClassicValidator line 26` });
-
-    return;
+      res.status(StatusCodes["Internal Server Error"]).send({
+        stack: error instanceof Error ? error.stack : "unknown",
+        message: error instanceof Error ? error.message : "unknown",
+      });
   }
-
-  return next();
 };
 
 export const tokenValidator =
