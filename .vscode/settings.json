@@ -36,7 +36,6 @@
     "**/docker*": true,
     "**/tsconfig.json": true,
     "**/Makefile*": true,
-    "readme-assets": true,
     "**/*.config*": true,
     "generators": true,
     ".vscode": true,
