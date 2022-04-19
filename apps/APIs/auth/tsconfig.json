@@ -2,8 +2,11 @@
   "extends": "tsconfig/server.json",
 
   "compilerOptions": {
+    "outDir": "build",
+    "module": "CommonJS",
+    "sourceMap": false,
+    "isolatedModules": true,
     "rootDir": "src",
-    "outDir": "dist",
     "baseUrl": "./src"
   },
   "include": ["src"],

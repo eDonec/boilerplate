@@ -196,24 +196,40 @@ A Boilerplate for Microservices NodeJS Architecture
 
 <ul>
 
-<li><a  href="packages/config/README.md">api-types</a></li>
-<li><a  href="packages/config/README.md">config</a></li>
-<li><a  href="packages/core-hooks/README.md">core-hooks</a></li>
-<li><a  href="packages/core-next-components/README.md">core-next-components</a></li>
-<li><a  href="packages/core-ui/README.md">core-ui</a></li>
-<li><a  href="packages/core-utils/README.md">core-utils</a></li>
-<li><a  href="packages/custom-error/README.md">custom-error</a></li>
-<li><a  href="packages/field-validator/README.md">field-validator</a></li>
-<li><a  href="packages/forms/README.md">forms</a></li>
-<li> SDK
+<li> node
   <ul>
-    <li><a href='packages/SDK/server-sdk/README.md' >server-sdk</a></li>
-    <li><a href='packages/SDK/auth-sdk/README.md' >auth-sdk</a></li>
+    <li><a  href="packages/node/config/README.md">api-types</a></li>
+    <li><a  href="packages/node/core-utils/README.md">core-utils</a></li>
+    <li><a  href="packages/node/custom-error/README.md">custom-error</a></li>
+    <li><a  href="packages/node/field-validator/README.md">field-validator</a></li>
+    <li><a  href="packages/node/token/README.md">token</a></li>
+    <li><a  href="packages/node/shared-types/README.md">shared-types</a></li>
   </ul>
 </li>
-<li><a  href="packages/shared-types/README.md">shared-types</a></li>
-<li><a  href="packages/token/README.md">token</a></li>
-<li><a  href="packages/tsconfig/README.md">tsconfig</a></li>
+<li> browser
+  <ul>
+    <li><a  href="packages/browser/core-hooks/README.md">core-hooks</a></li>
+    <li><a  href="packages/browser/core-next-components/README.md">core-next-components</a></li>
+    <li><a  href="packages/browser/core-ui/README.md">core-ui</a></li>
+    <li><a  href="packages/browser/forms/README.md">forms</a></li>
+  </ul>
+</li>
+<li> SDK/node
+    <ul>
+      <li><a href='packages/SDK/node/server-sdk/README.md' >server-sdk</a></li>
+      <li><a href='packages/SDK/node/auth-sdk/README.md' >auth-sdk</a></li>
+    </ul>
+<li> SDK/browser
+    <ul>
+      <li><a href='packages/SDK/browser/.gitkeep' >.gitkeep</a></li>
+    </ul>
+</li>
+<li> config
+  <ul>
+    <li><a  href="packages/config/config/README.md">config</a></li>
+    <li><a  href="packages/config/tsconfig/README.md">tsconfig</a></li>
+  </ul>
+</li>
 
 </ul>
 

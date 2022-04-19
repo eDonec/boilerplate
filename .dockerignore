@@ -47,3 +47,4 @@ commitlint.config.js
 .prettierrc.js
 .vscode
 .husky
+__test__

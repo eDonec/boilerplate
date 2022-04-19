@@ -1,8 +1,8 @@
 const path = require("path");
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const withTM = require("next-transpile-modules")([
-  "core-ui",
   "core-utils",
+  "core-ui",
   "core-hooks",
   "core-next-components",
   "forms",

@@ -10,3 +10,5 @@ tsconfig.tsbuildinfo
 **/turbo*
 out
 graph*
+build
+.DS_Store

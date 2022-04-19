@@ -1,0 +1,20 @@
+{
+  "name": "custom-error",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./build/cjs/index.js",
+  "module": "./build/esm/index.js",
+  "types": "./build/esm/index.d.ts",
+  "files": [
+    "/build"
+  ],
+  "scripts": {
+    "build": "yarn build:esm && yarn build:cjs",
+    "build:esm": "tsc -p tsconfig.prod.json --module ES2022 --outDir build/esm",
+    "build:cjs": "tsc -p tsconfig.prod.json --module commonjs --outDir build/cjs",
+    "test": "jest --coverage --passWithNoTests",
+    "lint": "eslint --fix"
+  },
+  "dependencies": {},
+  "devDependencies": {}
+}

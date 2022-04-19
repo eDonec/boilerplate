@@ -4,13 +4,13 @@ const path = require("path");
 const { getLoader, loaderByName } = require("@craco/craco");
 
 const modules = [
-  "core-hooks",
-  "core-ui",
-  "core-utils",
-  "forms",
-  "field-validator",
-  "SDK/auth-sdk",
-  "SDK/server-sdk",
+  "browser/core-hooks",
+  "browser/core-ui",
+  "browser/core-utils",
+  "browser/forms",
+  "node/field-validator",
+  "SDK/node/auth-sdk",
+  "SDK/node/server-sdk",
 ];
 const packages = [];
 packages.push(

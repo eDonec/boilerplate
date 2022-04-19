@@ -6,20 +6,22 @@
     "prepare": "husky install",
     "start": "turbo run start --parallel",
     "build": "turbo run build --token=tym4TfVTD5qGG7s9MudjhmCwQ9g20BV2",
-    "release": "standard-version -- --release-as minor",
+    "release": "standard-version -- --release-as minor && yarn postcommit",
     "lint": "turbo run lint",
     "format": "turbo run format",
     "seed": "turbo run seed",
     "postcommit": "git push --follow-tags origin master",
-    "postbuild": "turbo run postbuild",
     "test": "turbo run test"
   },
   "workspaces": [
     "apps/*",
     "apps/APIs/*",
-    "packages/*",
-    "packages/SDK/*",
-    "packages/api-types/*"
+    "packages/browser/*",
+    "packages/config/*",
+    "packages/node/*",
+    "packages/SDK/browser/*",
+    "packages/SDK/node/*",
+    "packages/node/api-types/*"
   ],
   "lint-staged": {
     "*.config.js": [
@@ -40,7 +42,7 @@
   "devDependencies": {
     "@commitlint/cli": "13.2.1",
     "@commitlint/config-conventional": "13.2.0",
-    "@craco/craco": "^6.4.3",
+    "@craco/craco": "6.4.3",
     "@edonec/generator": "1.2.2",
     "@tailwindcss/forms": "0.4.0",
     "@testing-library/jest-dom": "5.16.4",
@@ -49,7 +51,7 @@
     "@testing-library/user-event": "13.5.0",
     "esbuild": "0.14.27",
     "esbuild-jest": "0.5.0",
-    "eslint": "^8.12.0",
+    "eslint": "8.12.0",
     "husky": "7.0.4",
     "lint-staged": "11.2.6",
     "standard-version": "9.3.2",
