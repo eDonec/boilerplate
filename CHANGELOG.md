@@ -2,6 +2,30 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.8](https://gitlab.com/eDonec/tools/boilerplate/compare/v0.0.7...v0.0.8) (2022-04-19)
+
+
+### Features
+
+* **app:** refactor all packages to be either in browser or in node ([7d1d755](https://gitlab.com/eDonec/tools/boilerplate/commit/7d1d75591853ca83ec7b2e9787d5333369f0284b))
+* **apps:** dockerize both client and dashboard apps an create a compose file for them ([8c9563e](https://gitlab.com/eDonec/tools/boilerplate/commit/8c9563e65a72105fe933ceb24512104146a4d5e3))
+* **dockerizer:** standard dockerfile for next app ([a0c18bd](https://gitlab.com/eDonec/tools/boilerplate/commit/a0c18bdb20b1a68e05081b08135461a409a899b4))
+* **forms/checkbox:** add checkbox form to forms ([88d6824](https://gitlab.com/eDonec/tools/boilerplate/commit/88d68248bb72eb874800168ffd932d58bc6dec07))
+* **forms/Select:** add docs for select input docs ([28d685b](https://gitlab.com/eDonec/tools/boilerplate/commit/28d685bb21014961b4e1e48e415c0a1330314a9c))
+* **forms/Select:** Create Select input and RawSelect input ([b511a7b](https://gitlab.com/eDonec/tools/boilerplate/commit/b511a7b53e7f6a905e52da9294b440c77821df9d))
+* server sdk types && third party auth account merge ([e6c4e54](https://gitlab.com/eDonec/tools/boilerplate/commit/e6c4e5472ca01e38cff507be1a77918161a746ec))
+* server sdks ([911e914](https://gitlab.com/eDonec/tools/boilerplate/commit/911e91424b78d6ca9cf260c96cc0ced4f9bcd25b))
+
+
+### Bug Fixes
+
+* **app:** standardize tsconfigs to have an output folder as build ([59ceba1](https://gitlab.com/eDonec/tools/boilerplate/commit/59ceba18e0a545def1cf09937964bd36087f5289))
+* **forms/checkbox:** fix checkbox style and  checkbox name ([bf2b60c](https://gitlab.com/eDonec/tools/boilerplate/commit/bf2b60c6ef46326dbba2f1919c7fe6336d5e146e))
+* **forms/checkbox:** fix clsx ([ccf2c70](https://gitlab.com/eDonec/tools/boilerplate/commit/ccf2c70be8e23d76733fb05c4426d5ce212a4b51))
+* **forms/checkbox:** remobe trailing spaces from classNames ([60e6899](https://gitlab.com/eDonec/tools/boilerplate/commit/60e6899b6fd269fce68c70e0b4e1325b7a2b7efc))
+* **main:** fix casing ([2ec1a0e](https://gitlab.com/eDonec/tools/boilerplate/commit/2ec1a0e181558d0e4ca5b040a2d188c025370d49))
+* type import ([eb63d6a](https://gitlab.com/eDonec/tools/boilerplate/commit/eb63d6a066bfcd044d6f0c7367cdffdff61626ca))
+
 ### [0.0.7](https://gitlab.com/eDonec/tools/boilerplate/compare/v0.0.6...v0.0.7) (2022-04-08)
 
 
