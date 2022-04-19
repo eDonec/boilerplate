@@ -1,4 +1,4 @@
-import { AuthDocument } from "api-types/auth-api/models/Auth";
+import { AuthDocument } from "auth-types/models/Auth";
 
 export const suspendClient = (
   authClient: AuthDocument,

@@ -1,4 +1,4 @@
-import { IErrorDocument } from "api-types/auth-api/models/ErrorDocument";
+import { IErrorDocument } from "auth-types/models/ErrorDocument";
 import { model, Schema } from "mongoose";
 
 const errorDocument = new Schema<IErrorDocument>(

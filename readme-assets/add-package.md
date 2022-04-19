@@ -18,7 +18,7 @@
 
 **Example**
 
-To add the `api-types` package to an app, add `"api-types" : "*"` to the dependencies object.
+To add the `shared-types` package to an app, add `"shared-types" : "*"` to the dependencies object.
 
 ```
 {
@@ -31,7 +31,7 @@ To add the `api-types` package to an app, add `"api-types" : "*"` to the depende
     "test": "jest --coverage"
   },
   "dependencies": {
-    "api-types": "*",    <== Add This
+    "shared-types": "*",    <== Add This
   }
 }
 ```
@@ -55,7 +55,7 @@ For **NextJS** and **CRA** apps, the following extra configuration need to be do
 
 **Example**
 
-To add the `api-types` package to a NextJS app, append `api-types` to the array.
+To add the `shared-types` package to a NextJS app, append `shared-types` to the array.
 
 ```
 const path = require("path");
@@ -65,7 +65,7 @@ const withTM = require("next-transpile-modules")([
  "core-utils",
  "core-hooks",
  "core-next-components",
- "api-types"    <== Add This
+ "shared-types"    <== Add This
 ]);
 
 ...
@@ -80,7 +80,7 @@ const withTM = require("next-transpile-modules")([
 
 **Example**
 
-To add the `api-types` (which resides in `packages/api-types`) package to a CRA app, append `api-types` to the array.
+To add the `shared-types` (which resides in `packages/shared-types`) package to a CRA app, append `shared-types` to the array.
 
 ```
 /* eslint-disable @typescript-eslint/no-var-requires */
@@ -92,7 +92,7 @@ const modules = [
   "core-hooks",
   "core-ui",
   "core-utils",
-  "api-types"    <== Add This
+  "shared-types"    <== Add This
 ];
 
 ...
@@ -110,7 +110,7 @@ const modules = [
   "core-hooks",
   "core-ui",
   "core-utils",
-  "api-types",
+  "shared-types",
   "SDK/auth-sdk"    <== Add This
 ];
 

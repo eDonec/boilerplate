@@ -1,4 +1,4 @@
-import { ResponseTypes } from "api-types/auth-api/authNRoutes";
+import { ResponseTypes } from "auth-types/routes/authNRoutes";
 import CustomInputError from "custom-error/customInputError";
 import { Request } from "express";
 import FieldValidator from "field-validator";

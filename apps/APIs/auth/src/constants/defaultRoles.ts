@@ -1,4 +1,4 @@
-import { RoleType } from "api-types/auth-api/models/Role";
+import { RoleType } from "auth-types/models/Role";
 import { FULL_ACCESS, PRIVILEGE } from "shared-types";
 
 export const GOD: RoleType = {

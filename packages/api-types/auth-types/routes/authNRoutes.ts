@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { ACCESS, IToken, RequireOnlyOne } from "shared-types";
 
-import { RoleType } from "./models/Role";
+import { RoleType } from "../models/Role";
 
 export interface ISignUpClassicBody {
   email: string;
@@ -60,6 +60,7 @@ export type ResponseTypes = {
       response: void;
     };
   };
+  //! GENERATOR-ANCHOR
 };
 
 // Using Pick to throw an error in case a route changes

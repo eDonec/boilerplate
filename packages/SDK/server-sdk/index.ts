@@ -1,4 +1,4 @@
-import { ResponseTypes } from "api-types/auth-api/authNRoutes";
+import { ResponseTypes } from "auth-types/routes/authNRoutes";
 import axios, { AxiosInstance } from "axios";
 import StatusCodes from "shared-types/StatusCodes";
 

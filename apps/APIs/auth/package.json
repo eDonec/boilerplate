@@ -12,7 +12,7 @@
     "lint": "eslint src --fix"
   },
   "dependencies": {
-    "api-types": "*",
+    "auth-types": "*",
     "apple-signin-auth": "^1.5.1",
     "axios": "^0.26.1",
     "bcrypt": "5.0.1",

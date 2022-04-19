@@ -1,4 +1,4 @@
-import { RoleType } from "api-types/auth-api/models/Role";
+import { RoleType } from "auth-types/models/Role";
 import { ACCESS } from "shared-types";
 
 export const constructRoleArray = (

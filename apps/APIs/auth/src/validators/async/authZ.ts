@@ -1,5 +1,5 @@
-import { ResponseTypes } from "api-types/auth-api/authNRoutes";
-import IAuthServerMiddleware from "api-types/auth-api/IAuthServerMiddleware";
+import IAuthServerMiddleware from "auth-types/IAuthServerMiddleware";
+import { ResponseTypes } from "auth-types/routes/authNRoutes";
 import { Request } from "express";
 import Role from "models/Role";
 import StatusCodes from "shared-types/StatusCodes";

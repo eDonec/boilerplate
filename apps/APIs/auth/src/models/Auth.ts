@@ -1,4 +1,4 @@
-import { AuthDocument, AuthModel } from "api-types/auth-api/models/Auth";
+import { AuthDocument, AuthModel } from "auth-types/models/Auth";
 import { model, Schema, Types } from "mongoose";
 import {
   ACCESS_TYPE,

@@ -1,4 +1,4 @@
-import { ResponseTypes } from "api-types/auth-api/authNRoutes";
+import { ResponseTypes } from "auth-types/routes/authNRoutes";
 import Auth from "models/Auth";
 import { IMiddleware } from "shared-types";
 import StatusCodes from "shared-types/StatusCodes";

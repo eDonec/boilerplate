@@ -13,7 +13,7 @@
     "auth-sdk": "*",
     "shared-types": "*",
     "forms": "*",
-    "api-types": "*"
+    "auth-types": "*"
   },
   "devDependencies": {
     "@svgr/webpack": "6.2.1",

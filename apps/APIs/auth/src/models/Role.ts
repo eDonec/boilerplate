@@ -1,4 +1,4 @@
-import { RoleType } from "api-types/auth-api/models/Role";
+import { RoleType } from "auth-types/models/Role";
 import { model, Schema } from "mongoose";
 import { PRIVILEGE } from "shared-types";
 

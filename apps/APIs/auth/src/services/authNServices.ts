@@ -1,12 +1,12 @@
 /* eslint-disable max-lines */
+import { verifyIdToken } from "apple-signin-auth";
+import { AuthDocument } from "auth-types/models/Auth";
 import {
   AuthResponse,
   AuthResponseRoutes,
   FacebookUserProfileResponse,
   ResponseTypes,
-} from "api-types/auth-api/authNRoutes";
-import { AuthDocument } from "api-types/auth-api/models/Auth";
-import { verifyIdToken } from "apple-signin-auth";
+} from "auth-types/routes/authNRoutes";
 import axios from "axios";
 import Auth from "models/Auth";
 import Role from "models/Role";

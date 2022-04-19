@@ -1,4 +1,4 @@
-import { ResponseTypes } from "api-types/auth-api/authNRoutes";
+import { ResponseTypes } from "auth-types/routes/authNRoutes";
 import ServerSDK from "server-sdk/sdk";
 import ServerSDKTypes from "server-sdk/types";
 import { IToken } from "shared-types";
