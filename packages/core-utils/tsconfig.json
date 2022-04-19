@@ -3,7 +3,7 @@
 
   "compilerOptions": {
     "rootDir": ".",
-    "outDir": "dist"
+    "outDir": "build"
   },
   "include": ["."],
   "exclude": ["node_modules", ".turbo", "coverage", "dist"]
