@@ -11,7 +11,8 @@ import { TRule } from "field-validator/types";
 import { validateForm } from "../helpers/validateForm";
 import RawSelect, { RawSelectProps } from "../Select/RawSelect";
 
-export interface SelectProps extends Omit<RawSelectProps, "onChange"> {
+export interface SelectProps
+  extends Omit<RawSelectProps, "onChange" | "value" | "error"> {
   validate?: TRule[];
   name: string;
 }
@@ -43,3 +44,4 @@ const Select: React.FC<SelectProps> = ({ validate, ...props }) => {
 };
 
 export default Select;
+export * from "./types";

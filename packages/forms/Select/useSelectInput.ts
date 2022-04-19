@@ -8,7 +8,7 @@ export interface IProps {
   value?: ISelectOption;
 }
 
-export const useSelect = ({ onChange, initialValue, value }: IProps) => {
+export const useSelectInput = ({ onChange, initialValue, value }: IProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const toggleOpenSelectOptions = () => setIsOpen((prev) => !prev);
   const handleSelectionChange = (changedValue: ISelectOption) => {
