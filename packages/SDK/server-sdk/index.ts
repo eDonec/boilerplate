@@ -1,4 +1,4 @@
-import { RouteTypes } from "auth-types/routes/authNRoutes";
+import { RouteTypes } from "auth-types/routes/authN";
 import axios, { AxiosInstance } from "axios";
 import StatusCodes from "shared-types/StatusCodes";
 

@@ -1,5 +1,5 @@
 import IAuthServerMiddleware from "auth-types/IAuthServerMiddleware";
-import { RouteTypes } from "auth-types/routes/authNRoutes";
+import { RouteTypes } from "auth-types/routes/authN";
 import { Request } from "express";
 import Role from "models/Role";
 import StatusCodes from "shared-types/StatusCodes";

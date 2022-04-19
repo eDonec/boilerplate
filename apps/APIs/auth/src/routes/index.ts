@@ -1,9 +1,9 @@
 import { Router } from "express";
 
-import authNRoutes from "./authN";
+import authN from "./authN";
 
 const router = Router();
 
-router.use(authNRoutes);
+router.use(authN);
 
 export default router;

@@ -1,5 +1,5 @@
 import IAuthServerMiddleware from "auth-types/IAuthServerMiddleware";
-import { RouteTypes } from "auth-types/routes/authNRoutes";
+import { RouteTypes } from "auth-types/routes/authN";
 import { compareSync } from "bcrypt";
 import add from "date-fns/add";
 import isAfter from "date-fns/isAfter";

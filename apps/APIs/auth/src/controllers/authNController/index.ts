@@ -1,5 +1,5 @@
 import IAuthServerMiddleware from "auth-types/IAuthServerMiddleware";
-import { RouteTypes } from "auth-types/routes/authNRoutes";
+import { RouteTypes } from "auth-types/routes/authN";
 import { errorLogger } from "errors/errorLogger";
 import { Request, Response } from "express";
 import * as authNServices from "services/authNServices";

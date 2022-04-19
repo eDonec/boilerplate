@@ -6,7 +6,7 @@ import {
   AuthResponseRoutes,
   FacebookUserProfileResponse,
   RouteTypes,
-} from "auth-types/routes/authNRoutes";
+} from "auth-types/routes/authN";
 import axios from "axios";
 import Auth from "models/Auth";
 import Role from "models/Role";
