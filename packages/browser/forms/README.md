@@ -157,7 +157,7 @@ export default HomePage;
 
 ### Types
 
-`TRule` : refer to <a href='../field-validator/README.md'>**this guide**</a>.
+`TRule` : refer to <a href='../../node/field-validator/README.md'>**this guide**</a>.
 
 <!-- Screenshots -->
 
@@ -165,13 +165,13 @@ export default HomePage;
 
 <div  align="center">
 
-<img  src="../../readme-assets/select.gif"  alt="screenshot" />
+<img  src="../../../readme-assets/select.gif"  alt="screenshot" />
 
 </div>
 
 ## :hammer_and_wrench: Getting Started
 
-To add a package to an app, please follow <a href='../../readme-assets/add-package.md'>**this guide**</a>.
+To add a package to an app, please follow <a href='../../../readme-assets/add-package.md'>**this guide**</a>.
 
 <!--  Running project Tests -->
 
