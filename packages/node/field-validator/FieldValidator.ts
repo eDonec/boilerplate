@@ -17,6 +17,15 @@ export default class FieldValidator {
 
   private fieldName: string;
 
+  fieldHasMultipleValidators = false;
+
+  oneOfValidatorsIsClean = false;
+
+  multipleValidatorsError?: {
+    message: string;
+    fields: { fieldName: string; message: string }[];
+  } = undefined;
+
   error?: {
     message: string;
     fields: { fieldName: string; message: string }[];
@@ -72,8 +81,6 @@ export default class FieldValidator {
   ): field is number {
     if (typeof field === "number") return true;
     if (!Number.isNaN(Number(field))) {
-      this.fieldToTest = Number(field);
-
       return true;
     }
     this.error = {
@@ -88,6 +95,25 @@ export default class FieldValidator {
     };
 
     return false;
+  }
+
+  or() {
+    this.fieldHasMultipleValidators = true;
+    if (this.error) {
+      // TODO: Check for reference transfer
+      this.multipleValidatorsError = {
+        message: "One of the validators failed",
+        fields: [
+          ...(this.multipleValidatorsError?.fields || []),
+          this.error.fields[0],
+        ],
+      };
+      this.error = undefined;
+    } else {
+      this.oneOfValidatorsIsClean = true;
+    }
+
+    return this;
   }
 
   isEmail() {
@@ -291,16 +317,16 @@ export default class FieldValidator {
     return this;
   }
 
-  isAfterDate(date: Date) {
+  isBeforDate(maxDate: Date) {
     if (!this.isDateType(this.fieldToTest)) return this;
-    if (!isAfter(date, this.fieldToTest))
+    if (!isAfter(maxDate, this.fieldToTest))
       this.error = {
         message: "Validation error!",
         fields: [
           ...(this.error?.fields || []),
           {
             fieldName: this.fieldName,
-            message: `${this.fieldName} should be after ${date}`,
+            message: `${this.fieldName} should be after ${maxDate}`,
           },
         ],
       };
@@ -308,17 +334,17 @@ export default class FieldValidator {
     return this;
   }
 
-  isBeforDate(date: Date) {
+  isAfterDate(minDate: Date) {
     if (!this.isDateType(this.fieldToTest)) return this;
 
-    if (!isBefore(date, this.fieldToTest))
+    if (!isBefore(minDate, this.fieldToTest))
       this.error = {
         message: "Validation error!",
         fields: [
           ...(this.error?.fields || []),
           {
             fieldName: this.fieldName,
-            message: `${this.fieldName} should be before ${date} `,
+            message: `${this.fieldName} should be before ${minDate} `,
           },
         ],
       };
@@ -328,7 +354,9 @@ export default class FieldValidator {
 
   isNumber() {
     if (!this.isNumberType(this.fieldToTest)) return this;
-    if (Number.isNaN(this.fieldToTest))
+    const fieldToTest = Number(this.fieldToTest);
+
+    if (Number.isNaN(fieldToTest))
       this.error = {
         message: "Validation error!",
         fields: [
@@ -343,9 +371,11 @@ export default class FieldValidator {
     return this;
   }
 
-  isBiggerThanNumber(max: number) {
+  isLessThanNumber(max: number) {
     if (!this.isNumberType(this.fieldToTest)) return this;
-    if (this.fieldToTest > max)
+    const fieldToTest = Number(this.fieldToTest);
+
+    if (fieldToTest > max)
       this.error = {
         message: "Validation error!",
         fields: [
@@ -360,9 +390,11 @@ export default class FieldValidator {
     return this;
   }
 
-  isLessThanNumber(min: number) {
+  isBiggerThanNumber(min: number) {
     if (!this.isNumberType(this.fieldToTest)) return this;
-    if (this.fieldToTest < min)
+    const fieldToTest = Number(this.fieldToTest);
+
+    if (fieldToTest < min)
       this.error = {
         message: "Validation error!",
         fields: [
@@ -379,7 +411,9 @@ export default class FieldValidator {
 
   isBetween({ min, max }: { min: number; max: number }) {
     if (!this.isNumberType(this.fieldToTest)) return this;
-    if (!(this.fieldToTest > min && this.fieldToTest < max)) {
+    const fieldToTest = Number(this.fieldToTest);
+
+    if (!(fieldToTest > min && fieldToTest < max)) {
       this.error = {
         message: "Validation error!",
         fields: [
