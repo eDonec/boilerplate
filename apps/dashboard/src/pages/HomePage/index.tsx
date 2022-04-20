@@ -5,7 +5,9 @@ import { useLocation } from "react-router-dom";
 import { Button, useDarkMode } from "core-ui";
 import clsx from "core-utils/clsx";
 import Checkbox from "forms/Checkbox";
+import FilePicker from "forms/FilePicker";
 import Input from "forms/Input";
+import RadioButton from "forms/RadioButton";
 import Select from "forms/Select";
 
 import LanguageSelector from "components/LanguageSelector";
@@ -92,6 +94,14 @@ const HomePage = () => {
             placeholder="placeholder"
             label="Input for test"
           />
+          <RadioButton
+            name="radio"
+            values={[
+              { value: "f", label: "Female" },
+              { value: "m", label: "Male" },
+            ]}
+            className="bg-radio"
+          ></RadioButton>
           <Checkbox
             name="check"
             className="bg-dak"
@@ -99,13 +109,18 @@ const HomePage = () => {
             defaultChecked
           ></Checkbox>
           <Select
+            name="select"
             validate={[{ rule: "exists" }]}
-            name="selction"
             options={[
               { label: "English", value: "en" },
               { label: "Français", value: "fr" },
             ]}
           />
+          <FilePicker
+            name="image"
+            label="Click to select image"
+            accept=".jpeg,.jpg,.png,.docx,.pptx,.pdf,.xlsx"
+          ></FilePicker>
           <Button type="submit" light>
             submit
           </Button>
