@@ -9,9 +9,10 @@
     "/build"
   ],
   "scripts": {
-    "build": "yarn build:esm && yarn build:cjs",
-    "build:esm": "tsc --module ES2022 --outDir build/esm",
-    "build:cjs": "tsc --module commonjs --outDir build/cjs",
+    "build": "yarn clean && yarn build:esm && yarn build:cjs",
+    "clean": "rimraf build",
+    "build:esm": "tsc -p tsconfig.prod.json --module ES2022 --outDir build/esm",
+    "build:cjs": "tsc -p tsconfig.prod.json --module commonjs --outDir build/cjs",
     "test": "jest --coverage",
     "lint": "eslint --fix"
   }

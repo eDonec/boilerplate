@@ -28,7 +28,8 @@
   },
   "scripts": {
     "start": "craco start",
-    "build": "craco build",
+    "clean": "rimraf build",
+    "build": "yarn clean && craco build",
     "test": "craco test --watchAll=false --coverage",
     "eject": "craco eject",
     "lint": "eslint src --fix"

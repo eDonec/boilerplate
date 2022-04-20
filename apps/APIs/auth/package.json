@@ -7,9 +7,9 @@
   "scripts": {
     "start": "nodemon src/index.ts",
     "start:prod": "node build/index.js",
-    "clean": "rm -rf ./build",
+    "clean": "rimraf build",
     "prebuild": "tsc --noEmit",
-    "build": "node esbuild.config.js",
+    "build": "yarn clean && node esbuild.config.js",
     "test": "jest --coverage",
     "seed": "ts-node src/seed/index.ts",
     "lint": "eslint src --fix"

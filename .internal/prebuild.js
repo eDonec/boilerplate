@@ -1,4 +1,7 @@
+/* eslint-disable max-lines-per-function */
 /* eslint-disable no-console */
+// requiring path and fs modules
+const { count } = require("console");
 const fs = require("fs");
 const path = require("path");
 const mainPackage = require("../package.json");
@@ -29,10 +32,13 @@ const nodeAppNames = fs
   })
   .filter((dirent) => dirent.isDirectory())
   .map((dirent) => dirent.name);
-
-const nodeAppBuildPaths = nodeAppNames.map((nodeAppName) => {
-  return path.join(nodeAppsPath, nodeAppName, "build");
+const nodeAppSourcePaths = nodeAppNames.map((nodeAppName) => {
+  return path.join(nodeAppsPath, nodeAppName, "src");
 });
+const nodeAppBuildPaths = nodeAppSourcePaths.map((nodeApp) =>
+  path.join(nodeApp, "../build")
+);
+
 const internalNodePackageFolders = workspaces
   .filter(
     (workspace) =>
@@ -79,30 +85,34 @@ const internalNodePackageNames = internalNodePackages.flatMap(
 
 const packagesBuildPaths = internalNodePackages.map((internalNodePackage) =>
   internalNodePackage.packages.map((packageName) => {
-    return path.join(internalNodePackage.rootDir, packageName, "build");
+    return path.join(internalNodePackage.rootDir, packageName, "build/esm");
   })
 );
 
 const packagesBuildPathsFlat = packagesBuildPaths.flat();
 
-const packagesBuildPathsFlatUnique = packagesBuildPathsFlat.filter(
-  (path, index, self) => index === self.findIndex((t) => t === path)
-);
+const packagesBuildPathsFlatUnique = packagesBuildPathsFlat
+  .filter((path, index, self) => index === self.findIndex((t) => t === path))
+  .map((p) => p.substring(p.indexOf("packages") + "packages".length));
 
 const allBuildPaths = [...nodeAppBuildPaths, ...packagesBuildPathsFlatUnique];
 
-console.log(internalNodePackageNames, allBuildPaths);
+const packageAndPathObject = internalNodePackageNames.map((packageName) => ({
+  packageName,
+  path: packagesBuildPathsFlatUnique.find((o) => o.includes(packageName)),
+}));
 
-// TODO: clean up the requires in those folders
-allBuildPaths.forEach((buildPath) => {
-  fs.readdir(buildPath, { withFileTypes: true }, (err, files) => {
+console.log(packageAndPathObject);
+nodeAppSourcePaths.forEach((sourcePath) => {
+  fs.readdir(sourcePath, { withFileTypes: true }, (err, files) => {
     if (err) {
       console.log(`Unable to scan directory: ${err}`);
       return;
     }
-    sortImportsInFolder(files, buildPath, 0);
+    sortImportsInFolder(files, sourcePath, 0);
   });
 });
+
 const sortImportsInFolder = (fileOrFolder, _path, depth) => {
   if (!Array.isArray(fileOrFolder) && !fileOrFolder.isDirectory()) {
     sortImportsInFile(fileOrFolder, _path, depth);
@@ -122,29 +132,41 @@ const sortImportsInFolder = (fileOrFolder, _path, depth) => {
       sortImportsInFolder(files, _path, depth + 1);
     });
   }
-  console.log("module resolved for following path: ", _path);
+  // console.log("module resolved for following path: ", _path);
 };
-const depthToString = (depth) => {
-  if (depth === 0) return '"./';
-  let res = '"';
-  for (let index = 0; index < depth; index++) {
-    res = `${res}../`;
-  }
-  return res;
-};
+
 const sortImportsInFile = (file, _path, depth) => {
-  const _depth = depthToString(depth);
+  if (!_path.match(/\.t(s|x)$/) || _path.includes("__")) return;
+  const _depth = resolveDepthRelativeToApp(_path);
   fs.readFile(_path, (err, data) => {
     if (err) throw err;
     let _data = data.toString();
-    internalNodePackageNames.forEach((route) => {
+    packageAndPathObject.forEach((route) => {
       _data = _data.replace(
-        new RegExp(`"(${route}(?=[/|])(?!\/build))`, "g"),
-        `"${route}/build/cjs`
+        new RegExp(`"(${route.packageName}(?=[/|])(?!\/build))`, "g"),
+        `"${depth}${route.path}`
       );
     });
     fs.writeFile(_path, _data, (error) => {
       if (error) console.log(error);
     });
   });
+};
+
+const resolveDepthRelativeToApp = (filePath) => {
+  // trim string before apps
+  const trimmedFilePath = filePath.substring(filePath.indexOf("apps"));
+  // count number pf slashes in trimmed path
+  const depth = trimmedFilePath.split("/").length - 1;
+  // const newPath = path.join(filePath, depthToString(depth + 1), "packages");
+  return depthToString(depth + 1);
+};
+
+const depthToString = (depth) => {
+  if (depth === 0) return "./";
+  let res = "";
+  for (let index = 0; index < depth; index++) {
+    res = `${res}../`;
+  }
+  return res;
 };
