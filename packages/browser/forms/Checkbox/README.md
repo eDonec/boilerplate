@@ -4,7 +4,7 @@
 
 ### RawCheckbox
 
-<!-- RawSelect-Import -->
+<!-- RawCheckBox-Import -->
 
 #### Import
 
@@ -86,7 +86,7 @@ const HomePage = () => {
 export default HomePage;
 ```
 
-<!--  Select-Props -->
+<!-- checkBox-Props -->
 
 ##### Props
 
