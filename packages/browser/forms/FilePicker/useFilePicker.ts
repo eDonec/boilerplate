@@ -53,7 +53,6 @@ export const useFilePicker = ({
   useEffect(() => {
     onChange?.(files[0]);
   }, [files, onChange]);
-
   const { getRootProps, getInputProps, isDragActive, isDragReject } =
     useDropzone({
       onDrop,

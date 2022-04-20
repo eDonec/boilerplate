@@ -1,15 +1,14 @@
 import {
   Controller,
   FieldError,
-  get,
   useFormContext,
   useFormState,
 } from "react-hook-form";
 
+import get from "core-utils/get";
 import { TRule } from "field-validator/types";
 
-import { IComponentProps } from "./RawFilePicker";
-import { RawFilePicker } from "..";
+import RawFilePicker, { IComponentProps } from "./RawFilePicker";
 import { validateForm } from "../helpers/validateForm";
 
 export interface IProps
@@ -23,7 +22,9 @@ const FilePicker: React.FC<IProps> = ({
   ...filePickerProps
 }) => {
   const { control } = useFormContext();
+
   const { errors } = useFormState();
+
   const error = get(errors, name) as FieldError | undefined;
 
   return (

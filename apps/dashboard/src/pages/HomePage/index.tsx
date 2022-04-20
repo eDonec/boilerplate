@@ -120,6 +120,7 @@ const HomePage = () => {
             name="image"
             label="Click to select image"
             accept=".jpeg,.jpg,.png,.docx,.pptx,.pdf,.xlsx"
+            maxFiles={10}
           ></FilePicker>
           <Button type="submit" light>
             submit
