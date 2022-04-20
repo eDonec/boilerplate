@@ -35,7 +35,20 @@ export default class Validator<
 
     this.fields.forEach((field) => {
       if (!this.validate) return;
-      if (this.validate[field].error)
+      if (this.validate[field].fieldHasMultipleValidators) {
+        if (
+          !this.validate[field].oneOfValidatorsIsClean &&
+          this.validate[field].error
+        ) {
+          errors.push(
+            (this.validate[field].multipleValidatorsError ||
+              this.validate[field].error) as {
+              fields: CustomInputError["fields"];
+              message: string;
+            }
+          );
+        }
+      } else if (this.validate[field].error)
         errors.push(
           this.validate[field].error as {
             fields: CustomInputError["fields"];
