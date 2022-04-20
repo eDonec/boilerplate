@@ -144,7 +144,7 @@ const sortImportsInFile = (file, _path, depth) => {
     packageAndPathObject.forEach((route) => {
       _data = _data.replace(
         new RegExp(`"(${route.packageName}(?=[/|])(?!\/build))`, "g"),
-        `"${depth}${route.path}`
+        `"${_depth}${route.path}`
       );
     });
     fs.writeFile(_path, _data, (error) => {
@@ -159,7 +159,8 @@ const resolveDepthRelativeToApp = (filePath) => {
   // count number pf slashes in trimmed path
   const depth = trimmedFilePath.split("/").length - 1;
   // const newPath = path.join(filePath, depthToString(depth + 1), "packages");
-  return depthToString(depth + 1);
+  const depthRoute = depthToString(depth);
+  return `${depthRoute.substring(0, depthRoute.length - 2)}/packages`;
 };
 
 const depthToString = (depth) => {
