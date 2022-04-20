@@ -9,7 +9,8 @@
     "/build"
   ],
   "scripts": {
-    "build": "yarn build:esm && yarn build:cjs",
+    "build": "yarn clean && yarn build:esm && yarn build:cjs",
+    "clean": "rimraf build",
     "build:esm": "tsc -p tsconfig.prod.json --module ES2022 --outDir build/esm",
     "build:cjs": "tsc -p tsconfig.prod.json --module commonjs --outDir build/cjs",
     "lint": "eslint --fix",
@@ -17,7 +18,6 @@
   },
   "dependencies": {
     "axios": "0.26.1",
-    "auth": "*",
     "shared-types": "*",
     "auth-types": "*"
   }

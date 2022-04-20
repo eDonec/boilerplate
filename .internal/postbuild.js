@@ -36,28 +36,50 @@ for (const folder of internalNodePackageFolders) {
 }
 const overlappingNodePackageFolders = _overlappingNodePackageFolders
   .filter((o) => o !== "")
-  .map((o) => o.replace(/\/$/g, ""));
+  .map((o) => o.replace(/[\/\\]$/g, ""));
+
+const internalNodePackages = internalNodePackageFolders.map((folder) => ({
+  rootDir: folder,
+  packages: fs
+    .readdirSync(folder, {
+      withFileTypes: true,
+    })
+    .filter((dirent) => dirent.isDirectory())
+    .map((dirent) => dirent.name)
+    .filter(
+      (packageName) =>
+        ![...overlappingNodePackageFolders, "node_modules"].includes(
+          packageName
+        )
+    ),
+}));
+
+console.log(
+  internalNodePackageFolders,
+  internalNodePackages,
+  overlappingNodePackageFolders
+);
+
+const packagesBuildPaths = internalNodePackages.map((internalNodePackage) =>
+  internalNodePackage.packages.map((packageName) => {
+    return path.join(internalNodePackage.rootDir, packageName, "build");
+  })
+);
+
+const packagesBuildPathsFlat = packagesBuildPaths.flat();
+
+const packagesBuildPathsFlatUnique = packagesBuildPathsFlat.filter(
+  (path, index, self) => index === self.findIndex((t) => t === path)
+);
 
 // TODO: return all the paths for the builds in the wrorkspace
+
+console.log(packagesBuildPathsFlatUnique);
+
 // TODO: clean up the requires in those folders
 // TODO: lookup the apps/APIs and do the same
 // TODO: and there ya go
-const internalNodePackages = internalNodePackageFolders
-  .map((folder) =>
-    fs
-      .readdirSync(folder, {
-        withFileTypes: true,
-      })
-      .filter((dirent) => dirent.isDirectory())
-      .map((dirent) => dirent.name)
-  )
-  .flat(1)
-  .filter(
-    (packageName) =>
-      ![...overlappingNodePackageFolders, "node_modules"].includes(packageName)
-  );
 
-console.log(internalNodePackages, overlappingNodePackageFolders);
 // fs.readdir(buildPath, { withFileTypes: true }, (err, files) => {
 //   if (err) {
 //     console.log(`Unable to scan directory: ${err}`);
