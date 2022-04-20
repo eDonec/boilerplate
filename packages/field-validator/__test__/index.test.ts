@@ -20,7 +20,27 @@ const stringsToTest = {
   validNumber: 12,
   validDate: new Date(),
 };
+
 let validators: Validator;
+
+describe("should work with undefined values", () => {
+  it("should work", () => {
+    const valuesUndefined = {
+      email: "hey@yo.com",
+      password: "password",
+      userName: undefined,
+    };
+
+    validators = new Validator(valuesUndefined);
+
+    validators.validate.email.exists().isString().isEmail();
+    validators.validate.password.exists().isString().minLength(8);
+    if (valuesUndefined.userName)
+      validators.validate.userName.isString().minLength(6);
+
+    expect(() => validators.resolveErrors()).not.toThrow("Validation error!");
+  });
+});
 
 describe("string Validators to initialize", () => {
   beforeEach(() => {
