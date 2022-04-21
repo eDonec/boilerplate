@@ -19,6 +19,9 @@
     "seed": {
       "cache": false
     },
+    "clean": {
+      "outputs": []
+    },
     "test": {
       "dependsOn": ["^build"],
       "outputs": ["coverage/**"],

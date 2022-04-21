@@ -1,6 +1,9 @@
 {
   "extends": "./tsconfig.json",
-
+  "compilerOptions": {
+    "composite": true,
+    "declaration": true
+  },
   "exclude": [
     "build",
     "coverage",

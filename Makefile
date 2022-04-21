@@ -20,3 +20,6 @@ auth:
 compose:
 	docker compose up --build --force-recreate
 
+image=auth
+update-image:
+	docker compose up --no-deps -d $(image) --build --force-recreate

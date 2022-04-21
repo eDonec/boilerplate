@@ -49,6 +49,7 @@ COPY --from=installer /app/ .
 COPY --from=pruner /app/out/full/ .
 COPY .gitignore .gitignore
 ENV NODE_ENV production
+COPY  .internal ./.internal
 RUN yarn build --filter=${MICROSERVICE_RELATIVE_PATH}
 
 # ADD your runner image here which will be the last image in the chain

@@ -2,6 +2,7 @@ const esbuild = require("esbuild");
 
 // Automatically exclude all node_modules from the bundled version
 const { nodeExternalsPlugin } = require("esbuild-node-externals");
+
 const define = {};
 
 for (const k in process.env) {
@@ -14,7 +15,6 @@ for (const k in process.env) {
   )
     define[`process.env.${k}`] = JSON.stringify(process.env[k]);
 }
-
 esbuild
   .build({
     entryPoints: ["./src/index.ts"],

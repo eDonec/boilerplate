@@ -29,7 +29,8 @@ const SEO: React.FC<ISEOProps> = ({
   image = "https://image.freepik.com/photos-gratuite/bagages-jaunes-plat-copie-espace_23-2148786124.jpg",
   date,
 }) => {
-  const router = useRouter();
+  // TODO : FIX ROUTER ISSUE
+  const router = useRouter() || {};
 
   return (
     <Head>

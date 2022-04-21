@@ -6,9 +6,9 @@ const { getLoader, loaderByName } = require("@craco/craco");
 const modules = [
   "browser/core-hooks",
   "browser/core-ui",
-  "browser/core-utils",
   "browser/forms",
   "node/field-validator",
+  "node/core-utils",
   "SDK/node/auth-sdk",
   "SDK/node/server-sdk",
 ];

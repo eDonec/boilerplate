@@ -21,6 +21,12 @@ const databaseConfig: ConnectOptions = {
 if (!process.env.DATABASE_URI)
   throw new Error("Missing .env key : DATABASE_URI");
 
+try {
+  import("./seed");
+} catch (error) {
+  console.log("Seeding is not available");
+}
+
 app.use("/api/v1/auth", router);
 app.use("/api/v1/auth*", (_req, res) => {
   res.send(clsx(["Hello"], "World", { "!": true }));

@@ -5,7 +5,7 @@
     "core-next-components": "*",
     "core-ui": "*",
     "core-utils": "*",
-    "next": "12.1.4",
+    "next": "12.1.5",
     "react": "18.0.0",
     "react-dom": "18.0.0",
     "react-hook-form": "7.29.0",
@@ -34,7 +34,8 @@
   "name": "client",
   "private": true,
   "scripts": {
-    "build": "next build",
+    "clean": "rimraf build",
+    "build": "yarn clean && next build",
     "format": "prettier -w .",
     "format:check": "prettier -c .",
     "lint": "next lint",
