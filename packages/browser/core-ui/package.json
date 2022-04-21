@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "core-utils": "*",
+    "shared-types": "*",
     "react": "18.0.0",
     "react-dom": "18.0.0"
   },
