@@ -1,5 +1,5 @@
 import { RoleType } from "auth-types/models/Role";
-import { FULL_ACCESS, PRIVILEGE } from "shared-types";
+import { FULL_ACCESS } from "shared-types";
 
 export const GOD: RoleType = {
   name: "GOD",
@@ -10,7 +10,7 @@ export const PUBLIC_ROLE: RoleType = {
   name: "PUBLIC",
   access: [
     { ressource: "PUBLIC", privileges: FULL_ACCESS },
-    { ressource: "USER", privileges: [PRIVILEGE.READ, PRIVILEGE.WRITE] },
+    { ressource: "USER", privileges: FULL_ACCESS },
   ],
 };
 

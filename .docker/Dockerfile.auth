@@ -51,7 +51,7 @@ ENV NODE_ENV production
 RUN yarn build --filter="./packages/**"
 
 # Create an image for the build
-FROM package-builder AS builder
+FROM package-builder AS runner
 
 ARG MICROSERVICE_NAME="auth"
 
@@ -62,10 +62,3 @@ COPY --from=package-builder /app .
 RUN yarn build --filter=${MICROSERVICE_NAME}
 
 # ADD your runner image here which will be the last image in the chain
-
-# Production image, copy all the files and run next
-FROM node:alpine AS runner
-ARG MICROSERVICE_APP_PATH="/app/apps/APIs/auth"
-WORKDIR /app
-
-COPY --from=builder /app .

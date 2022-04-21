@@ -17,12 +17,13 @@ connect(process.env.DATABASE_URI, databaseConfig)
   .then(async () => {
     console.log(`Connected to database`);
     console.log(`Seeding Started...`);
-    await Role.init();
-    await Role.create(seedRoles);
-
-    console.log(`Seeded ${seedRoles.length} roles`);
-
-    console.log(`Seeding Completed...`);
-    process.exit(0);
+    try {
+      await Role.init();
+      await Role.create(seedRoles);
+      console.log(`Seeded ${seedRoles.length} roles`);
+      console.log(`Seeding Completed...`);
+    } catch (error) {
+      console.log("seeding unavailable");
+    }
   })
   .catch(console.error);

@@ -40,7 +40,7 @@ services:
     command: yarn workspace auth start:prod
     environment:
       - PORT=3000
-      - DATABASE_URI=mongodb://database:27017/auth
+      - DATABASE_URI=mongodb://database:27017/auth?authSource=admin
       - ACCESS_TOKEN_SECRET_KEY=%!L+shP~,3g+f:fk
       - REFRESH_TOKEN_SECRET_KEY=7xet#7GaCdDU{t}s
       - DATABASE_USER=root
