@@ -3,8 +3,18 @@
 
   "compilerOptions": {
     "rootDir": ".",
-    "outDir": "dist"
+    "outDir": "build",
+    "sourceMap": false
   },
-  "include": ["**/*.ts"],
-  "exclude": ["node_modules", ".turbo", "coverage", "dist"]
+  "include": ["."],
+  "exclude": [
+    "build",
+    "node_modules",
+    ".turbo",
+    "coverage",
+    "dist",
+    "*.config.js",
+    "tsconfig.*",
+    "__test__"
+  ]
 }

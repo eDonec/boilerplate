@@ -29,13 +29,12 @@
   "files.exclude": {
     "**/coverage": true,
     "**/.eslintrc.js": true,
-    ".docker": true,
+    ".sdocker": true,
     "turbo.json": true,
     "CHANGELOG.md": true,
-    "**/Docker*": true,
-    "**/docker*": true,
     "**/tsconfig.json": true,
     "**/Makefile*": true,
+    "readme-assets": true,
     "**/*.config*": true,
     "generators": true,
     ".vscode": true,
@@ -77,7 +76,7 @@
     "apps/proxy": true
   },
   "explorerExclude.backup": null,
-  "typescript.tsdk": "node_modules\\typescript\\lib",
+  "typescript.tsdk": "node_modules/typescript/lib",
   "jest.jestCommandLine": "yarn test",
   "eslint.alwaysShowStatus": true
 }

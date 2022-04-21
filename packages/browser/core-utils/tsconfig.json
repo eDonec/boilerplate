@@ -1,0 +1,21 @@
+{
+  "extends": "tsconfig/server.json",
+
+  "compilerOptions": {
+    "rootDir": ".",
+    "module": "CommonJS",
+    "outDir": "build",
+    "sourceMap": false
+  },
+  "include": ["."],
+  "exclude": [
+    "build",
+    "node_modules",
+    ".turbo",
+    "coverage",
+    "dist",
+    "*.config.js",
+    "tsconfig.*",
+    "__test__"
+  ]
+}

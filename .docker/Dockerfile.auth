@@ -1,0 +1,65 @@
+# Create a base image with turbo as global binary
+FROM node:alpine AS turbobase
+RUN apk update
+WORKDIR /app
+RUN yarn global add turbo
+
+
+# Create an image with the necessary files
+FROM alpine AS copier
+WORKDIR /app
+COPY ./.git ./.git
+COPY ./apps ./apps
+COPY ./.turbo ./.turbo
+COPY ./packages ./packages
+COPY ./turbo.json ./turbo.json
+COPY ./package.json ./package.json
+COPY ./yarn.lock ./yarn.lock
+
+
+
+# Create an image with the pruned microservice
+FROM turbobase AS pruner
+
+ARG MICROSERVICE_NAME="auth"
+
+WORKDIR /app
+COPY --from=copier /app .
+RUN turbo prune --scope=${MICROSERVICE_NAME} --docker
+
+
+# Create an image with the installed dependacies
+FROM node:alpine AS installer
+RUN apk update
+WORKDIR /app
+COPY --from=pruner /app/out/json/ .
+COPY --from=pruner /app/out/yarn.lock ./yarn.lock
+RUN yarn install
+
+# Create an image for the build
+FROM node:alpine AS builder
+
+ARG MICROSERVICE_NAME="auth"
+
+RUN apk update
+WORKDIR /app
+COPY --from=pruner /app/.git ./.git
+COPY --from=pruner /app/.turbo ./.turbo
+COPY --from=installer /app/ .
+COPY --from=pruner /app/out/full/ .
+COPY .gitignore .gitignore
+ENV NODE_ENV production
+RUN yarn build --filter=${MICROSERVICE_NAME}
+
+# ADD your runner image here which will be the last image in the chain
+
+# Production image, copy all the files and run next
+FROM node:alpine AS runner
+ARG MICROSERVICE_APP_PATH="/app/apps/APIs/auth"
+WORKDIR /app
+
+COPY --from=builder /app .
+COPY --from=builder ${MICROSERVICE_APP_PATH}/build ${MICROSERVICE_APP_PATH}
+
+
+

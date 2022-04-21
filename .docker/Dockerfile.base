@@ -29,7 +29,7 @@ RUN apk update
 WORKDIR /app
 COPY --from=pruner /app/out/json/ .
 COPY --from=pruner /app/out/yarn.lock ./yarn.lock
-RUN yarn install
+RUN yarn install --frozen-lockfile
 
 FROM node:alpine AS builder
 

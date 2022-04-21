@@ -1,0 +1,17 @@
+{
+  "extends": "./tsconfig.json",
+
+  "exclude": [
+    "build",
+    "coverage",
+    "node_modules",
+    ".turbo",
+    "coverage",
+    "dist",
+    "**/__test__",
+    "**/__mocks__",
+    "*.config.js",
+    ".env",
+    "src/**/*.test.ts"
+  ]
+}

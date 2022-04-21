@@ -3,8 +3,9 @@ import { json } from "body-parser";
 import clsx from "core-utils/clsx";
 import express from "express";
 import { connect, ConnectOptions } from "mongoose";
-import router from "routes";
 import "dotenv/config";
+
+import router from "./routes";
 
 const app = express();
 

@@ -89,16 +89,17 @@ const path = require("path");
 const { getLoader, loaderByName } = require("@craco/craco");
 
 const modules = [
-  "core-hooks",
-  "core-ui",
-  "core-utils",
-  "shared-types"    <== Add This
+ "browser/core-ui",
+ "browser/core-utils",
+ "browser/core-hooks",
+ "browser/core-next-components",
+ "node/shared-types"    <== Add This
 ];
 
 ...
 ```
 
-To add the `auth-sdk` (which resides in `packages/SDK/auth-sdk`) package to a CRA app, append `SDK/auth-sdk` to the array.
+To add the `auth-sdk` (which resides in `packages/SDK/node/auth-sdk`) package to a CRA app, append `SDK/node/auth-sdk` to the array.
 
 ```
 /* eslint-disable @typescript-eslint/no-var-requires */
@@ -107,11 +108,12 @@ const path = require("path");
 const { getLoader, loaderByName } = require("@craco/craco");
 
 const modules = [
-  "core-hooks",
-  "core-ui",
-  "core-utils",
-  "shared-types",
-  "SDK/auth-sdk"    <== Add This
+  "browser/core-ui",
+  "browser/core-utils",
+  "browser/core-hooks",
+  "browser/core-next-components",
+  "node/shared-types",
+  "SDK/node/auth-sdk"    <== Add This
 ];
 
 ...

@@ -1,6 +1,7 @@
 all:
-	make dash &\
-	make client &\
+	make dash &&\
+	make client &&\
+	make auth &&\
 	make proxy-balancer
 
 
@@ -10,8 +11,12 @@ dash:
 client:
 	docker build -f .docker/Dockerfile.client -t client .
 
+proxy-balancer:
+	docker build -f .docker/Dockerfile.proxy-balancer -t proxy-balancer .
+
+auth:
+	docker build -f .docker/Dockerfile.auth -t auth .
+
 compose:
 	docker compose up --build --force-recreate
 
-proxy-balancer:
-	docker build -f .docker/Dockerfile.proxy-balancer -t proxy-balancer .
