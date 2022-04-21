@@ -5,7 +5,13 @@ const { nodeExternalsPlugin } = require("esbuild-node-externals");
 const define = {};
 
 for (const k in process.env) {
-  if (!(k.startsWith("ProgramFiles") || k.startsWith("CommonProgramFiles")))
+  if (
+    !(
+      k.startsWith("ProgramFiles") ||
+      k.startsWith("CommonProgramFiles") ||
+      k.includes(" ")
+    )
+  )
     define[`process.env.${k}`] = JSON.stringify(process.env[k]);
 }
 
