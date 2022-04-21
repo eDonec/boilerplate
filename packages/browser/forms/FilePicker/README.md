@@ -88,7 +88,7 @@ import FilePicker from "forms/FilePicker";
 #### Example Usage
 
 ```typescript
-import Checkbox from "forms/CheckBox";
+import FilePicker from "forms/FilePicker";
 
 const HomePage = () => {
   return (
