@@ -4,6 +4,7 @@
   "version": "0.0.8",
   "scripts": {
     "prepare": "husky install",
+    "clean": "turbo run clean",
     "start": "turbo run start --parallel",
     "build": "turbo run build --token=tym4TfVTD5qGG7s9MudjhmCwQ9g20BV2",
     "postbuild": "node ./.internal/postbuild.js",
@@ -28,7 +29,7 @@
     "*.config.js": [
       "prettier -w"
     ],
-    "apps/!(proxy)/**/!(*.config|*rc|next-sitemap).{js,jsx,ts,tsx,}": [
+    "apps/!(proxy)/!(scripts)/!(*.config|*rc|next-sitemap).{js,jsx,ts,tsx,}": [
       "eslint --fix --max-warnings=0",
       "prettier -w"
     ],

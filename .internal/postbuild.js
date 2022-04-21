@@ -3,36 +3,8 @@ const fs = require("fs");
 const path = require("path");
 const mainPackage = require("../package.json");
 
-// TODO: Change the logic to be like following:
-// TODO: 1. build the packages
-// TODO: 2. sort the imports in the packages
-// TODO: 3. swap the imports in the apps to be relative to build/esm
-// TODO: 4. end the prebuild script
-// TODO: 5. build the apps
-// TODO: 6. start the postbuild script
-// TODO: 7. revert the changes in the apps
-// TODO: 8. clean everything
-
 const workspaces = mainPackage.workspaces;
 
-const nodeAppsPath = path
-  .join(
-    __dirname,
-    "../",
-    workspaces.find((workspace) => workspace.includes("APIs"))
-  )
-  .replace("*", "");
-
-const nodeAppNames = fs
-  .readdirSync(nodeAppsPath, {
-    withFileTypes: true,
-  })
-  .filter((dirent) => dirent.isDirectory())
-  .map((dirent) => dirent.name);
-
-const nodeAppBuildPaths = nodeAppNames.map((nodeAppName) => {
-  return path.join(nodeAppsPath, nodeAppName, "build");
-});
 const internalNodePackageFolders = workspaces
   .filter(
     (workspace) =>
@@ -57,21 +29,29 @@ const overlappingNodePackageFolders = _overlappingNodePackageFolders
   .filter((o) => o !== "")
   .map((o) => o.replace(/[\/\\]$/g, ""));
 
-const internalNodePackages = internalNodePackageFolders.map((folder) => ({
-  rootDir: folder,
-  packages: fs
-    .readdirSync(folder, {
-      withFileTypes: true,
-    })
-    .filter((dirent) => dirent.isDirectory())
-    .map((dirent) => dirent.name)
-    .filter(
-      (packageName) =>
-        ![...overlappingNodePackageFolders, "node_modules"].includes(
-          packageName
-        )
-    ),
-}));
+const internalNodePackages = internalNodePackageFolders
+  .map((folder) => {
+    try {
+      return {
+        rootDir: folder,
+        packages: fs
+          .readdirSync(folder, {
+            withFileTypes: true,
+          })
+          .filter((dirent) => dirent.isDirectory())
+          .map((dirent) => dirent.name)
+          .filter(
+            (packageName) =>
+              ![...overlappingNodePackageFolders, "node_modules"].includes(
+                packageName
+              )
+          ),
+      };
+    } catch (error) {
+      console.log(`path ${folder} not found! continuing...`);
+    }
+  })
+  .filter((o) => o !== undefined);
 
 const internalNodePackageNames = internalNodePackages.flatMap(
   (packages) => packages.packages
@@ -89,9 +69,7 @@ const packagesBuildPathsFlatUnique = packagesBuildPathsFlat.filter(
   (path, index, self) => index === self.findIndex((t) => t === path)
 );
 
-const allBuildPaths = [...nodeAppBuildPaths, ...packagesBuildPathsFlatUnique];
-
-console.log(internalNodePackageNames, allBuildPaths);
+const allBuildPaths = [...packagesBuildPathsFlatUnique];
 
 // TODO: clean up the requires in those folders
 allBuildPaths.forEach((buildPath) => {
@@ -122,7 +100,6 @@ const sortImportsInFolder = (fileOrFolder, _path, depth) => {
       sortImportsInFolder(files, _path, depth + 1);
     });
   }
-  console.log("module resolved for following path: ", _path);
 };
 const depthToString = (depth) => {
   if (depth === 0) return '"./';
@@ -148,3 +125,5 @@ const sortImportsInFile = (file, _path, depth) => {
     });
   });
 };
+
+console.log("Module imports sorted for packages!");

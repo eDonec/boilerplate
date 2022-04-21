@@ -1,27 +1,17 @@
 /* eslint-disable max-lines-per-function */
 /* eslint-disable no-console */
 // requiring path and fs modules
-const { count } = require("console");
 const fs = require("fs");
 const path = require("path");
-const mainPackage = require("../package.json");
-
-// TODO: Change the logic to be like following:
-// TODO: 1. build the packages
-// TODO: 2. sort the imports in the packages
-// TODO: 3. swap the imports in the apps to be relative to build/esm
-// TODO: 4. end the prebuild script
-// TODO: 5. build the apps
-// TODO: 6. start the postbuild script
-// TODO: 7. revert the changes in the apps
-// TODO: 8. clean everything
+const mainPackage = require("../../../../package.json");
+const rootDirReturns = "../../../../";
 
 const workspaces = mainPackage.workspaces;
 
 const nodeAppsPath = path
   .join(
     __dirname,
-    "../",
+    rootDirReturns,
     workspaces.find((workspace) => workspace.includes("APIs"))
   )
   .replace("*", "");
@@ -46,7 +36,9 @@ const internalNodePackageFolders = workspaces
       !workspace.includes("browser") &&
       !workspace.includes("config")
   )
-  .map((workspace) => path.join(__dirname, "../", workspace).replace("*", ""));
+  .map((workspace) =>
+    path.join(__dirname, rootDirReturns, workspace).replace("*", "")
+  );
 
 const _overlappingNodePackageFolders = [];
 
@@ -63,21 +55,29 @@ const overlappingNodePackageFolders = _overlappingNodePackageFolders
   .filter((o) => o !== "")
   .map((o) => o.replace(/[\/\\]$/g, ""));
 
-const internalNodePackages = internalNodePackageFolders.map((folder) => ({
-  rootDir: folder,
-  packages: fs
-    .readdirSync(folder, {
-      withFileTypes: true,
-    })
-    .filter((dirent) => dirent.isDirectory())
-    .map((dirent) => dirent.name)
-    .filter(
-      (packageName) =>
-        ![...overlappingNodePackageFolders, "node_modules"].includes(
-          packageName
-        )
-    ),
-}));
+const internalNodePackages = internalNodePackageFolders
+  .map((folder) => {
+    try {
+      return {
+        rootDir: folder,
+        packages: fs
+          .readdirSync(folder, {
+            withFileTypes: true,
+          })
+          .filter((dirent) => dirent.isDirectory())
+          .map((dirent) => dirent.name)
+          .filter(
+            (packageName) =>
+              ![...overlappingNodePackageFolders, "node_modules"].includes(
+                packageName
+              )
+          ),
+      };
+    } catch (error) {
+      console.log(`path ${folder} not found! continuing...`);
+    }
+  })
+  .filter((o) => o !== undefined);
 
 const internalNodePackageNames = internalNodePackages.flatMap(
   (packages) => packages.packages
@@ -101,8 +101,6 @@ const packageAndPathObject = internalNodePackageNames.map((packageName) => ({
   packageName,
   path: packagesBuildPathsFlatUnique.find((o) => o.includes(packageName)),
 }));
-
-console.log(packageAndPathObject);
 nodeAppSourcePaths.forEach((sourcePath) => {
   fs.readdir(sourcePath, { withFileTypes: true }, (err, files) => {
     if (err) {
@@ -134,23 +132,30 @@ const sortImportsInFolder = (fileOrFolder, _path, depth) => {
   }
   // console.log("module resolved for following path: ", _path);
 };
-
+const reversionJson = path.join(__dirname, "reversion.json");
+const reversions = [];
 const sortImportsInFile = (file, _path, depth) => {
   if (!_path.match(/\.t(s|x)$/) || _path.includes("__")) return;
   const _depth = resolveDepthRelativeToApp(_path);
-  fs.readFile(_path, (err, data) => {
-    if (err) throw err;
-    let _data = data.toString();
-    packageAndPathObject.forEach((route) => {
-      _data = _data.replace(
-        new RegExp(`"(${route.packageName}(?=[/|])(?!\/build))`, "g"),
-        `"${_depth}${route.path}`
-      );
+  const data = fs.readFileSync(_path);
+  let _data = data.toString();
+  const reversion = {
+    filePath: _path,
+    edits: [],
+  };
+  for (const route of packageAndPathObject) {
+    _data = _data.replace(
+      new RegExp(`"(${route.packageName}(?=[/|"])(?!\/build))`, "g"),
+      `"${_depth}${route.path}`
+    );
+    reversion.edits.push({
+      insertedLine: `"${_depth}${route.path}`,
+      removedLine: `"${route.packageName}`,
     });
-    fs.writeFile(_path, _data, (error) => {
-      if (error) console.log(error);
-    });
-  });
+  }
+  reversions.push(reversion);
+  fs.writeFileSync(_path, _data);
+  fs.writeFileSync(reversionJson, JSON.stringify(reversions));
 };
 
 const resolveDepthRelativeToApp = (filePath) => {
@@ -160,11 +165,11 @@ const resolveDepthRelativeToApp = (filePath) => {
   const depth = trimmedFilePath.split("/").length - 1;
   // const newPath = path.join(filePath, depthToString(depth + 1), "packages");
   const depthRoute = depthToString(depth);
-  return `${depthRoute.substring(0, depthRoute.length - 2)}/packages`;
+  return `${depthRoute}packages`;
 };
 
 const depthToString = (depth) => {
-  if (depth === 0) return "./";
+  if (depth === 0) return "../";
   let res = "";
   for (let index = 0; index < depth; index++) {
     res = `${res}../`;

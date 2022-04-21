@@ -8,8 +8,9 @@
     "start": "nodemon src/index.ts",
     "start:prod": "node build/index.js",
     "clean": "rimraf build",
-    "prebuild": "tsc --noEmit",
-    "build": "yarn clean && node esbuild.config.js",
+    "prebuild": "yarn clean && tsc --noEmit && node ./scripts/prebuild.js",
+    "build": "node esbuild.config.js",
+    "postbuild": "node ./scripts/postbuild.js",
     "test": "jest --coverage",
     "seed": "ts-node src/seed/index.ts",
     "lint": "eslint src --fix"
@@ -42,9 +43,7 @@
     "config": "*",
     "esbuild": "^0.14.36",
     "esbuild-node-externals": "^1.4.1",
-    "glob": "^8.0.1",
     "nodemon": "2.0.15",
-    "ts-loader": "^9.2.8",
     "ts-node": "10.7.0",
     "tsconfig": "*"
   }

@@ -48,3 +48,4 @@ commitlint.config.js
 .vscode
 .husky
 __test__
+__mock__

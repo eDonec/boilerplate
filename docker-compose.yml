@@ -1,5 +1,13 @@
 version: "3.9"
 services:
+  database:
+    image: mongo
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: AKIARU2MX2BV4F7KRTMF
+    networks:
+      - main-network
   client:
     image: client
     command: node server.js
@@ -11,6 +19,8 @@ services:
       - REACT_APP_HELLO="I am a variable"
     networks:
       - main-network
+    depends_on:
+      - database
 
   dashboard:
     image: dashboard
@@ -22,12 +32,14 @@ services:
       - REACT_APP_HELLO="I am a variable"
     networks:
       - main-network
+    depends_on:
+      - database
   auth:
     image: auth
     restart: always
-    command: node index.js
+    command: yarn workspace auth start:prod
     environment:
-      - PORT=80
+      - PORT=3000
       - DATABASE_URI=mongodb://database:27017/auth
       - ACCESS_TOKEN_SECRET_KEY=%!L+shP~,3g+f:fk
       - REFRESH_TOKEN_SECRET_KEY=7xet#7GaCdDU{t}s
@@ -38,15 +50,9 @@ services:
       - NUMBER_OF_AUTH_TRIALS=5
     networks:
       - main-network
+    depends_on:
+      - database
 
-  database:
-    image: mongo
-    restart: always
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: AKIARU2MX2BV4F7KRTMF
-    networks:
-      - main-network
   imgproxy:
     image: darthsim/imgproxy:latest
     restart: always
@@ -57,7 +63,7 @@ services:
       STORAGE_PATH: edonec-turborepo-cache
       AWS_ACCESS_KEY_ID: AKIARU2MX2BV4F7KRTMF
       AWS_SECRET_ACCESS_KEY: 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
-      IMGPROXY_BIND: :3031
+      IMGPROXY_BIND: :3000
       IMGPROXY_CACHE_CONTROL_PASSTHROUGH: "true"
       IMGPROXY_SET_CANONICAL_HEADER: "true"
       IMGPROXY_USE_ETAG: "true"
@@ -74,6 +80,8 @@ services:
     depends_on:
       - front
       - dashboard
+      - auth
+      - database
       - imgproxy
     ports:
       - 3005:80

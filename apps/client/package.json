@@ -5,7 +5,7 @@
     "core-next-components": "*",
     "core-ui": "*",
     "core-utils": "*",
-    "next": "12.1.4",
+    "next": "12.1.5",
     "react": "18.0.0",
     "react-dom": "18.0.0",
     "react-hook-form": "7.29.0",
