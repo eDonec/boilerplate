@@ -85,7 +85,7 @@ To add a package to an app, please follow <a href='../../../readme-assets/add-pa
 To run tests, run the following command
 
 ```bash
-yarn workspace forms test -watch
+yarn workspace core-ui test -watch
 ```
 
 <!-- Getting Started -->
