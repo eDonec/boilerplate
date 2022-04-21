@@ -17,34 +17,32 @@ import Modal from "core-ui/Modal";
 #### Example Usage
 
 ```typescript
-import ReactChildrenProps from "shared-types/ReactChildren";
+import { useState } from "react";
 
-export interface ModalProps extends ReactChildrenProps {
-  isOpen: boolean;
-  handleClose: () => void;
-}
-export const Modal: React.FC<ModalProps> = ({
-  isOpen,
-  handleClose,
-  children,
-}) => (
-  <div>
-    <div className={`fixed inset-36 ${isOpen ? "" : "pointer-events-none"}`}>
-      <div onClick={handleClose} />
-      <div
-        className={` "pointer-events-none": !isOpen } 
-        ${isOpen ? "opacity-100" : "  opacity-0"}
-         relative mx-auto w-full max-w-3xl rounded-lg border-0 bg-white shadow-lg  `}
-      >
-        <div className="my-4 mx-3  p-5 text-lg leading-relaxed">{children}</div>
-        <button type="button" onClick={handleClose}>
-          Close
-        </button>
-      </div>
+import { Button } from "core-ui";
+import Modal from "core-ui/Modal";
+
+const HomePage = () => {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <div>
+      <Button onClick={() => setOpen(true)}>Toggle modal</Button>
+      <Modal isOpen={open} handleClose={() => setOpen(false)}>
+        <p>
+          Never gonna give you up Never gonna let you down Never gonna run
+          around and desert you Never gonna make you cry Never gonna say goodbye
+          Never gonna tell a lie and hurt you Never gonna give you up Never
+          gonna let you down Never gonna run around and desert you Never gonna
+          make you cry Never gonna say goodbye Never gonna tell a lie and hurt
+          you
+        </p>
+      </Modal>
     </div>
-  </div>
-);
-export default Modal;
+  );
+};
+
+export default HomePage;
 ```
 
 <!-- RawSelect-API -->
