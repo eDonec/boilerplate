@@ -144,12 +144,13 @@ const sortImportsInFile = (file, _path, depth) => {
     edits: [],
   };
   for (const route of packageAndPathObject) {
+    const lineToInsert = `"${_depth}${route.path}`.replace(/\\/g, "/");
     _data = _data.replace(
       new RegExp(`"(${route.packageName}(?=[/|"])(?!\/build))`, "g"),
-      `"${_depth}${route.path}`
+      lineToInsert
     );
     reversion.edits.push({
-      insertedLine: `"${_depth}${route.path}`,
+      insertedLine: lineToInsert,
       removedLine: `"${route.packageName}`,
     });
   }
@@ -157,14 +158,16 @@ const sortImportsInFile = (file, _path, depth) => {
   fs.writeFileSync(_path, _data);
   fs.writeFileSync(reversionJson, JSON.stringify(reversions));
 };
-
+const os = require("os");
 const resolveDepthRelativeToApp = (filePath) => {
   // trim string before apps
   const trimmedFilePath = filePath.substring(filePath.indexOf("apps"));
   // count number pf slashes in trimmed path
-  const depth = trimmedFilePath.split("/").length - 1;
+  const depth =
+    trimmedFilePath.split(os.platform() === "win32" ? "\\" : "/").length - 1;
   // const newPath = path.join(filePath, depthToString(depth + 1), "packages");
   const depthRoute = depthToString(depth);
+  console.log({ filePath, depthRoute, depth });
   return `${depthRoute}packages`;
 };
 
