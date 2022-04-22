@@ -1,16 +1,18 @@
 import IAuthServerMiddleware from "auth-types/IAuthServerMiddleware";
-import { RouteTypes } from "auth-types/routes/authN";
+import { AuthNRouteTypes } from "auth-types/routes/authN";
 import { compareSync } from "bcrypt";
 import add from "date-fns/add";
 import isAfter from "date-fns/isAfter";
 import Auth from "models/Auth";
-import * as authNServices from "services/authNServices";
+import * as authNServices from "services/authN";
 import { AUTH_PROVIDERS, IMiddleware } from "shared-types";
 import StatusCodes from "shared-types/StatusCodes";
 
 export const signInClassicValidator: IMiddleware = async (req, res, next) => {
-  const { email, userName }: RouteTypes["/n/sign-in/classic"]["POST"]["body"] =
-    req.body;
+  const {
+    email,
+    userName,
+  }: AuthNRouteTypes["/n/sign-in/classic"]["POST"]["body"] = req.body;
   const authUsersByUserNameOrEmail = await Auth.findOne(
     userName
       ? {

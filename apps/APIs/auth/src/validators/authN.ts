@@ -1,5 +1,5 @@
 /* eslint-disable max-lines */
-import { RouteTypes } from "auth-types/routes/authN";
+import { AuthNRouteTypes } from "auth-types/routes/authN";
 import CustomInputError from "custom-error/customInputError";
 import { Request, Response } from "express";
 import FieldValidator from "field-validator";
@@ -8,7 +8,7 @@ import StatusCodes from "shared-types/StatusCodes";
 import TokenValidator from "token/TokenValidator";
 
 export const signUpClassicValidator: IMiddleware<
-  Request<unknown, unknown, RouteTypes["/n/classic"]["POST"]["body"]>,
+  Request<unknown, unknown, AuthNRouteTypes["/n/classic"]["POST"]["body"]>,
   Response<{
     message: string;
     stack?: string;
@@ -44,7 +44,11 @@ export const signUpClassicValidator: IMiddleware<
 };
 
 export const signInClassicValidator: IMiddleware<
-  Request<unknown, unknown, RouteTypes["/n/sign-in/classic"]["POST"]["body"]>,
+  Request<
+    unknown,
+    unknown,
+    AuthNRouteTypes["/n/sign-in/classic"]["POST"]["body"]
+  >,
   Response<{
     message: string;
     stack?: string;
@@ -78,7 +82,7 @@ export const signInClassicValidator: IMiddleware<
   }
 };
 export const signInAppleValidator: IMiddleware<
-  Request<unknown, unknown, RouteTypes["/n/apple"]["POST"]["body"]>,
+  Request<unknown, unknown, AuthNRouteTypes["/n/apple"]["POST"]["body"]>,
   Response<{
     message: string;
     stack?: string;
@@ -112,7 +116,7 @@ export const signInAppleValidator: IMiddleware<
   }
 };
 export const signInFacebookValidator: IMiddleware<
-  Request<unknown, unknown, RouteTypes["/n/facebook"]["POST"]["body"]>,
+  Request<unknown, unknown, AuthNRouteTypes["/n/facebook"]["POST"]["body"]>,
   Response<{
     message: string;
     stack?: string;

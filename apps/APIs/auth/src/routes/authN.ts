@@ -1,4 +1,4 @@
-import * as authNController from "controllers/authNController";
+import * as authNController from "controllers/authN";
 import { Router } from "express";
 import { AUTH_PROVIDERS } from "shared-types";
 import * as asyncAuthNValidators from "validators/async/authN";
