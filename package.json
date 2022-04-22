@@ -4,8 +4,10 @@
   "version": "0.0.8",
   "scripts": {
     "prepare": "husky install",
+    "clean": "turbo run clean",
     "start": "turbo run start --parallel",
     "build": "turbo run build --token=tym4TfVTD5qGG7s9MudjhmCwQ9g20BV2",
+    "postbuild": "node ./.internal/postbuild.js",
     "release": "standard-version -- --release-as minor && yarn postcommit",
     "lint": "turbo run lint",
     "format": "turbo run format",
@@ -27,11 +29,11 @@
     "*.config.js": [
       "prettier -w"
     ],
-    "apps/!(proxy)/**/!(*.config|*rc|next-sitemap).{js,jsx,ts,tsx,}": [
+    "apps/!(proxy)/**/!(*.config|*rc|next-sitemap|postbuild|prebuild).{js,jsx,ts,tsx,}": [
       "eslint --fix --max-warnings=0",
       "prettier -w"
     ],
-    "packages/!(config)/**/!(*.config|*rc|next-sitemap).{js,jsx,ts,tsx,}": [
+    "packages/!(config)/**/!(*.config|*rc|next-sitemap|postbuild).{js,jsx,ts,tsx,}": [
       "eslint --fix --max-warnings=0",
       "prettier -w"
     ],
@@ -54,6 +56,7 @@
     "eslint": "8.12.0",
     "husky": "7.0.4",
     "lint-staged": "11.2.6",
+    "rimraf": "^3.0.2",
     "standard-version": "9.3.2",
     "tailwindcss": "3.0.22",
     "turbo": "1.2.1",
