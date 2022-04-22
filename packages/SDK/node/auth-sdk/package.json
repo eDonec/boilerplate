@@ -14,7 +14,7 @@
     "build:esm": "tsc -p tsconfig.prod.json --module ES2022 --outDir build/esm",
     "build:cjs": "tsc -p tsconfig.prod.json --module commonjs --outDir build/cjs",
     "lint": "eslint --fix",
-    "test": "jest --coverage"
+    "test": "jest --coverage --passWithNoTests"
   },
   "dependencies": {
     "axios": "0.26.1",
