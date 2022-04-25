@@ -2,7 +2,7 @@
 
 <!-- Table of Contents -->
 
-# :notebook_with_decorative_cover: Table of Contents
+## :notebook_with_decorative_cover: Table of Contents
 
 - [:book: All Apps](#all-apps)
 - [:memo: NextJS Apps](#nextjs-apps)
@@ -16,11 +16,11 @@
 2. Add the package name to the `dependencies` object with a `*` (asterisk) as a version.
 3. Run `yarn` at the root level.
 
-**Example**
+### Example
 
 To add the `shared-types` package to an app, add `"shared-types" : "*"` to the dependencies object.
 
-```
+```json
 {
   "name": "my-app",
   "version": "0.0.0",
@@ -38,7 +38,7 @@ To add the `shared-types` package to an app, add `"shared-types" : "*"` to the d
 
 Then run `yarn` at the root level.
 
-```
+```bash
 yarn
 ```
 
@@ -57,7 +57,7 @@ For **NextJS** and **CRA** apps, the following extra configuration need to be do
 
 To add the `shared-types` package to a NextJS app, append `shared-types` to the array.
 
-```
+```js
 const path = require("path");
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const withTM = require("next-transpile-modules")([
@@ -82,7 +82,7 @@ const withTM = require("next-transpile-modules")([
 
 To add the `shared-types` (which resides in `packages/shared-types`) package to a CRA app, append `shared-types` to the array.
 
-```
+```js
 /* eslint-disable @typescript-eslint/no-var-requires */
 
 const path = require("path");
@@ -101,7 +101,7 @@ const modules = [
 
 To add the `auth-sdk` (which resides in `packages/SDK/node/auth-sdk`) package to a CRA app, append `SDK/node/auth-sdk` to the array.
 
-```
+```js
 /* eslint-disable @typescript-eslint/no-var-requires */
 
 const path = require("path");

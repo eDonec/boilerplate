@@ -1,5 +1,22 @@
 # Server auth
 
+## Table of content
+
+- [Server auth](#server-auth)
+  - [Table of content](#table-of-content)
+  - [Schemas](#schemas)
+    - [Role](#role)
+    - [Access](#access)
+      - [FULL_ACCESS constant](#full_access-constant)
+      - [Role ressource access' meta](#role-ressource-access-meta)
+    - [Auth](#auth)
+  - [Default roles](#default-roles)
+    - [God](#god)
+    - [Public](#public)
+  - [Types](#types)
+    - [IAuthServerMiddleware](#iauthservermiddleware)
+      - [Defenition](#defenition)
+
 ## Schemas
 
 ### Role
