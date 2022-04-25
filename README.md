@@ -34,30 +34,30 @@ A Boilerplate for Microservices NodeJS Architecture
 
 <!-- Table of Contents -->
 
-# :notebook_with_decorative_cover: Table of Contents
+## :notebook_with_decorative_cover: Table of Contents
 
 - [:notebook_with_decorative_cover: Table of Contents](#notebook_with_decorative_cover-table-of-contents)
-  - [:star2: About the Project](#star2-about-the-project)
-    - [:camera: Screenshots](#camera-screenshots)
-    - [:space_invader: Tech Stack](#space_invader-tech-stack)
-    - [:space_invader: Available Microservices](#space_invader-available-microservices)
-    - [:dart: Features (so far)](#dart-features-so-far)
-    - [:key: Environment Variables](#key-environment-variables)
-    - [:key: Environment Variables per project](#key-environment-variables-per-project)
-      - [CRA](#cra)
-      - [express](#express)
-  - [:hammer_and_wrench: Getting Started](#hammer_and_wrench-getting-started)
-    - [:bangbang: Prerequisites](#bangbang-prerequisites)
-    - [:gear: Installation](#gear-installation)
-    - [:gear: Adding dependency to a project](#gear-adding-dependency-to-a-project)
-    - [:microscope: Running global Tests](#microscope-running-global-tests)
-    - [:microscope: Running project Tests](#microscope-running-project-tests)
-    - [:gear: Run Locally](#gear-run-locally)
-    - [:inbox_tray: Adding Package to app](#inbox_tray-adding-package-to-app)
-    - [:triangular_flag_on_post: Deployment and build](#triangular_flag_on_post-deployment-and-build)
-  - [:eyes: Usage](#eyes-usage)
-  - [:earth_africa: Roadmap](#earth_africa-roadmap)
-  - [:warning: License](#warning-license)
+- [:star2: About the Project](#star2-about-the-project)
+  - [:camera: Screenshots](#camera-screenshots)
+  - [:space_invader: Tech Stack](#space_invader-tech-stack)
+  - [:space_invader: Available Microservices](#space_invader-available-microservices)
+  - [:dart: Features (so far)](#dart-features-so-far)
+  - [:key: Environment Variables](#key-environment-variables)
+  - [:key: Environment Variables per project](#key-environment-variables-per-project)
+    - [CRA](#cra)
+    - [express](#express)
+- [:hammer_and_wrench: Getting Started](#hammer_and_wrench-getting-started)
+  - [:bangbang: Prerequisites](#bangbang-prerequisites)
+  - [:gear: Installation](#gear-installation)
+  - [:gear: Adding dependency to a project](#gear-adding-dependency-to-a-project)
+  - [:microscope: Running global Tests](#microscope-running-global-tests)
+  - [:microscope: Running project Tests](#microscope-running-project-tests)
+  - [:gear: Run Locally](#gear-run-locally)
+  - [:inbox_tray: Adding Package to app](#inbox_tray-adding-package-to-app)
+  - [:triangular_flag_on_post: Deployment and build](#triangular_flag_on_post-deployment-and-build)
+- [:eyes: Usage](#eyes-usage)
+- [:earth_africa: Roadmap](#earth_africa-roadmap)
+- [:warning: License](#warning-license)
   <!-- About the Project -->
 
 ## :star2: About the Project
