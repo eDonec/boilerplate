@@ -19,8 +19,15 @@ connect(process.env.DATABASE_URI, databaseConfig)
     console.log(`Seeding Started...`);
     try {
       await Role.init();
-      await Role.create(seedRoles);
-      console.log(`Seeded ${seedRoles.length} roles`);
+      const promises = seedRoles.map((role) =>
+        Role.findOneAndUpdate({ name: role.name }, role, {
+          upsert: true,
+          new: true,
+        })
+      );
+
+      await Promise.all(promises);
+      console.log(`Seeded and updated ${seedRoles.length} roles`);
       console.log(`Seeding Completed...`);
     } catch (error) {
       console.log("seeding unavailable");
