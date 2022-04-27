@@ -24,6 +24,8 @@ cache:
     - node_modules/
 
 .base-rules:
+  before_script:
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
   rules:
     - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
       when: always
@@ -38,9 +40,6 @@ cache:
     - when: manual
       allow_failure: true
 
-before_script:
-  stage: [build]
-  - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
 
 build auth:
   stage: build
