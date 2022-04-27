@@ -1,9 +1,3 @@
-FROM node:alpine AS turbobase
-RUN apk update
-# Set working directory
-WORKDIR /app
-RUN yarn global add turbo
-
 FROM alpine AS copier
 WORKDIR /app
 COPY ./.git ./.git
@@ -14,7 +8,7 @@ COPY ./turbo.json ./turbo.json
 COPY ./package.json ./package.json
 COPY ./yarn.lock ./yarn.lock
 
-FROM turbobase AS pruner
+FROM nader2560/turborepo-base AS pruner
 
 ARG MICROSERVICE_NAME="client"
 
@@ -30,6 +24,7 @@ WORKDIR /app
 COPY --from=pruner /app/out/json/ .
 COPY --from=pruner /app/out/yarn.lock ./yarn.lock
 RUN yarn install --frozen-lockfile
+COPY  .internal ./.internal
 
 FROM node:alpine AS builder
 
@@ -44,7 +39,7 @@ COPY --from=installer /app/ .
 COPY --from=pruner /app/out/full/ .
 COPY .gitignore .gitignore
 ENV NODE_ENV production
-COPY  .internal ./.internal
+COPY --from=installer /app/.internal ./.internal
 RUN yarn build --filter=${MICROSERVICE_RELATIVE_PATH}
 
 # ADD your runner image here which will be the last image in the chain

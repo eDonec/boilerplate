@@ -6,6 +6,14 @@
       "outputs": ["build/**", ".next/**", "dist/**"],
       "cache": true
     },
+    "build:cjs": {
+      "outputs": ["build/**", ".next/**", "dist/**"],
+      "cache": true
+    },
+    "build:esm": {
+      "outputs": ["build/**", ".next/**", "dist/**"],
+      "cache": true
+    },
     "lint": {
       "outputs": []
     },

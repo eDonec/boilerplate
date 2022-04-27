@@ -5,9 +5,9 @@
   "dependencies": {
     "core-ui": "*",
     "core-utils": "*",
-    "next": "12.1.4",
-    "react": "18.0.0",
-    "react-dom": "18.0.0"
+    "next": "12.1.5",
+    "react": "18.1.0",
+    "react-dom": "18.1.0"
   },
   "scripts": {
     "test": "jest --coverage",

@@ -30,7 +30,7 @@ const SEO: React.FC<ISEOProps> = ({
   date,
 }) => {
   // TODO : FIX ROUTER ISSUE
-  const router = useRouter() || {};
+  const router = useRouter();
 
   return (
     <Head>

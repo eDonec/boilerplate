@@ -21,5 +21,5 @@ compose:
 	docker compose up --build --force-recreate
 
 image=auth
-update-image:
+update:
 	docker compose up --no-deps -d $(image) --build --force-recreate
