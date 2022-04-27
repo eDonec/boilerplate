@@ -19,6 +19,10 @@ variables:
   RULES_CHANGES_PATH: "**/*"
   DOCKERFILE: "./.docker/**"
 
+cache:
+  paths:
+    - node_modules/
+
 .base-rules:
   rules:
     - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
