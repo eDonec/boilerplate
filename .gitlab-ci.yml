@@ -46,7 +46,7 @@ build auth:
   services:
     - docker:dind
   script:
-    - docker build --from-cache $AUTH_CONTAINER_RELEASE_IMAGE  -f .docker/Dockerfile.auth -t $AUTH_CONTAINER_RELEASE_IMAGE .
+    - docker build --cache-from $AUTH_CONTAINER_RELEASE_IMAGE  -f .docker/Dockerfile.auth -t $AUTH_CONTAINER_RELEASE_IMAGE .
     - docker push $AUTH_CONTAINER_RELEASE_IMAGE
 
 build dashboard:
@@ -59,7 +59,7 @@ build dashboard:
   services:
     - docker:dind
   script:
-    - docker build --from-cache $DASHBOARD_CONTAINER_RELEASE_IMAGE -f .docker/Dockerfile.dashboard -t $DASHBOARD_CONTAINER_RELEASE_IMAGE .
+    - docker build --cache-from $DASHBOARD_CONTAINER_RELEASE_IMAGE -f .docker/Dockerfile.dashboard -t $DASHBOARD_CONTAINER_RELEASE_IMAGE .
     - docker push $DASHBOARD_CONTAINER_RELEASE_IMAGE
 
 build client:
@@ -72,7 +72,7 @@ build client:
   services:
     - docker:dind
   script:
-    - docker build --from-cache $CLIENT_CONTAINER_RELEASE_IMAGE -f .docker/Dockerfile.client -t $CLIENT_CONTAINER_RELEASE_IMAGE .
+    - docker build --cache-from $CLIENT_CONTAINER_RELEASE_IMAGE -f .docker/Dockerfile.client -t $CLIENT_CONTAINER_RELEASE_IMAGE .
     - docker push $CLIENT_CONTAINER_RELEASE_IMAGE
 
 build proxy_balancer:
@@ -85,7 +85,7 @@ build proxy_balancer:
   services:
     - docker:dind
   script:
-    - docker build --from-cache --from-cache $PROXY_BALANCER_CONTAINER_RELEASE_IMAGE -f .docker/Dockerfile.proxy-balancer -t $PROXY_BALANCER_CONTAINER_RELEASE_IMAGE .
+    - docker build --cache-from $PROXY_BALANCER_CONTAINER_RELEASE_IMAGE -f .docker/Dockerfile.proxy-balancer -t $PROXY_BALANCER_CONTAINER_RELEASE_IMAGE .
     - docker push $PROXY_BALANCER_CONTAINER_RELEASE_IMAGE
 
 install dependencies:
