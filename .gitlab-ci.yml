@@ -102,7 +102,7 @@ install dependencies:
   script:
     - yarn install --frozen-lockfile
   artifacts:
-    path:
+    paths:
       - node_modules
 
 test app:
@@ -112,3 +112,5 @@ test app:
     - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
       when: always
   image: node:18-alpine
+  script:
+    - yarn test
