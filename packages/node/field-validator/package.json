@@ -18,6 +18,7 @@
   },
   "dependencies": {
     "custom-error": "*",
+    "core-utils": "*",
     "date-fns": "2.28.0"
   },
   "devDependencies": {}

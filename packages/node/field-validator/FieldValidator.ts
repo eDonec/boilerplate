@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable max-lines */
 import isAfter from "date-fns/isAfter";
 import isBefore from "date-fns/isBefore";
@@ -13,7 +14,7 @@ import {
 } from "./regex";
 
 export default class FieldValidator {
-  private fieldToTest?: string | number | Date;
+  private fieldToTest?: any;
 
   private fieldName: string;
 
@@ -23,7 +24,7 @@ export default class FieldValidator {
 
   multipleValidatorsError?: {
     message: string;
-    fields: { fieldName: string; message: string }[];
+    fields: any;
   } = undefined;
 
   error?: {
@@ -31,10 +32,7 @@ export default class FieldValidator {
     fields: { fieldName: string; message: string }[];
   } = undefined;
 
-  constructor(
-    fieldToTest: string | number | Date | undefined,
-    fieldName: string
-  ) {
+  constructor(fieldToTest: any, fieldName: string) {
     this.fieldToTest = fieldToTest;
     this.fieldName = fieldName;
   }
@@ -424,6 +422,27 @@ export default class FieldValidator {
           },
         ],
       };
+    }
+
+    return this;
+  }
+
+  isArrayContain() {
+    if (Array.isArray(this.fieldToTest)) {
+      this.fieldToTest.forEach((item) => {
+        if (!this.isStringType(item)) {
+          this.error = {
+            message: "Validation error!",
+            fields: [
+              ...(this.error?.fields || []),
+              {
+                fieldName: this.fieldName,
+                message: `${this.fieldName} should be array of string`,
+              },
+            ],
+          };
+        }
+      });
     }
 
     return this;

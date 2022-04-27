@@ -1,32 +1,22 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { get } from "core-utils";
 import CustomInputError, { ICustomError } from "custom-error/customInputError";
 
 import FieldValidator from "./FieldValidator";
 
-export default class Validator<
-  T extends Record<string, string | number | Date | undefined> = Record<
-    string,
-    string | number | Date | undefined
-  >
-> {
-  fields: (keyof T)[] = [];
+export default class Validator<T = any> {
+  fields: string[] = [];
 
-  validate: { [key in keyof T]: FieldValidator };
+  validate: { [key in keyof T]: any };
 
   constructor(objectToValidate: T) {
     if (!Object.keys(objectToValidate).length)
       throw new Error("At least one field should be passed");
 
-    const { typeErrors, fields, validate } =
-      extractFieldValidatorsFromObject(objectToValidate);
-
-    if (typeErrors.length)
-      throw new CustomInputError({
-        message: "All fields must be strings, numbers or Dates",
-        fields: typeErrors,
-      });
-
-    this.fields = fields;
-    this.validate = validate;
+    this.validate = extractFieldValidatorsFromObject({
+      input: objectToValidate,
+      fields: this.fields,
+    });
   }
 
   resolveErrors() {
@@ -35,22 +25,21 @@ export default class Validator<
 
     this.fields.forEach((field) => {
       if (!this.validate) return;
-      if (this.validate[field].fieldHasMultipleValidators) {
-        if (
-          !this.validate[field].oneOfValidatorsIsClean &&
-          this.validate[field].error
-        ) {
+
+      const currentField = get(this.validate, field);
+
+      if (currentField.fieldHasMultipleValidators) {
+        if (!currentField.oneOfValidatorsIsClean && currentField.error) {
           errors.push(
-            (this.validate[field].multipleValidatorsError ||
-              this.validate[field].error) as {
+            (currentField.multipleValidatorsError || currentField.error) as {
               fields: CustomInputError["fields"];
               message: string;
             }
           );
         }
-      } else if (this.validate[field].error)
+      } else if (currentField.error)
         errors.push(
-          this.validate[field].error as {
+          currentField.error as {
             fields: CustomInputError["fields"];
             message: string;
           }
@@ -68,34 +57,44 @@ export default class Validator<
   }
 }
 
-const extractFieldValidatorsFromObject = <
-  T extends Record<string, string | number | Date | undefined>
->(
-  objectToValidate: T
-) => {
-  const typeErrors: { fieldName: string; message: string }[] = [];
-  const validate = {} as { [key in keyof T]: FieldValidator };
-  const fields = [] as (keyof T)[];
+export const extractFieldValidatorsFromObject = <T = any>({
+  input,
+  key = "",
+  fields = [],
+}: {
+  input: T;
+  key?: string;
+  fields?: string[];
+}): any => {
+  const output: any = {};
 
-  (Object.keys(objectToValidate) as (keyof T)[]).forEach((key) => {
-    if (
-      objectToValidate[key] &&
-      typeof objectToValidate[key] !== "string" &&
-      typeof objectToValidate[key] !== "number" &&
-      !(objectToValidate[key] instanceof Date)
-    )
-      typeErrors.push({
-        fieldName: key as string,
-        message: `${key} must be a string, number or Date`,
-      });
-    validate[key] = new FieldValidator(objectToValidate[key], key as string);
-
+  if (
+    typeof input === "string" ||
+    typeof input === "number" ||
+    input instanceof Date
+  ) {
     fields.push(key);
-  });
 
-  return {
-    validate,
-    fields,
-    typeErrors,
-  };
+    return new FieldValidator(input, key);
+  }
+  if (input instanceof Array) {
+    return input.map((el, i) =>
+      extractFieldValidatorsFromObject({
+        input: el,
+        key: `${key ? `${key}.` : ""}${i}`,
+        fields,
+      })
+    );
+  }
+
+  if (typeof input === "object")
+    Object.entries(input).forEach(([objectKey, value]) => {
+      output[objectKey] = extractFieldValidatorsFromObject({
+        input: value,
+        key: `${key ? `${key}.` : ""}${objectKey}`,
+        fields,
+      });
+    });
+
+  return output;
 };

@@ -21,7 +21,36 @@ const stringsToTest = {
   validNumber: 12,
   validDate: new Date(),
 };
+
 let validators: Validator;
+
+describe("should be valid for complex objects", () => {
+  it("should accept an array of objects", () => {
+    const arrayType = {
+      test2: ["a", "b", "c"],
+      simple: {
+        st1: "string1",
+        st2: "string2",
+      },
+      test: [
+        {
+          name: {
+            firstName: 1,
+          },
+          age: "3",
+        },
+      ],
+    };
+
+    const complexValidators = new Validator(arrayType);
+
+    complexValidators.validate.test[0].name.firstName.isString();
+    complexValidators.validate.simple.st1.isNumber();
+    expect(() => complexValidators.resolveErrors()).toThrow(
+      "Validation error!"
+    );
+  });
+});
 
 describe("Test Or validation", () => {
   it("should work on number and string", () => {
