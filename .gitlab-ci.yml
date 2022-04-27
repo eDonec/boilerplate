@@ -112,4 +112,5 @@ test app:
       when: always
   image: node:18-alpine
   script:
+    - yarn install --frozen-lockfile
     - yarn test
