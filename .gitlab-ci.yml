@@ -5,16 +5,12 @@ stages:
 
 variables:
   AUTH_CONTAINER_IMAGE: $CI_REGISTRY_IMAGE/auth
-  AUTH_CONTAINER_TEST_IMAGE: $AUTH_CONTAINER_IMAGE:$CI_COMMIT_REF_SLUG
   AUTH_CONTAINER_RELEASE_IMAGE: $AUTH_CONTAINER_IMAGE:latest
   CLIENT_CONTAINER_IMAGE: $CI_REGISTRY_IMAGE/client
-  CLIENT_CONTAINER_TEST_IMAGE: $CLIENT_CONTAINER_IMAGE:$CI_COMMIT_REF_SLUG
   CLIENT_CONTAINER_RELEASE_IMAGE: $CLIENT_CONTAINER_IMAGE:latest
   DASHBOARD_CONTAINER_IMAGE: $CI_REGISTRY_IMAGE/dashboard
-  DASHBOARD_CONTAINER_TEST_IMAGE: $DASHBOARD_CONTAINER_IMAGE:$CI_COMMIT_REF_SLUG
   DASHBOARD_CONTAINER_RELEASE_IMAGE: $DASHBOARD_CONTAINER_IMAGE:latest
   PROXY_BALANCER_CONTAINER_IMAGE: $CI_REGISTRY_IMAGE/proxy-balancer
-  PROXY_BALANCER_CONTAINER_TEST_IMAGE: $PROXY_BALANCER_CONTAINER_IMAGE:$CI_COMMIT_REF_SLUG
   PROXY_BALANCER_CONTAINER_RELEASE_IMAGE: $PROXY_BALANCER_CONTAINER_IMAGE:latest
   RULES_CHANGES_PATH: "**/*"
   DOCKERFILE: "./.docker/**"
@@ -50,7 +46,7 @@ build auth:
   services:
     - docker:dind
   script:
-    - docker build -f .docker/Dockerfile.auth -t $AUTH_CONTAINER_RELEASE_IMAGE .
+    - docker build --from-cache $AUTH_CONTAINER_RELEASE_IMAGE  -f .docker/Dockerfile.auth -t $AUTH_CONTAINER_RELEASE_IMAGE .
     - docker push $AUTH_CONTAINER_RELEASE_IMAGE
 
 build dashboard:
@@ -63,8 +59,8 @@ build dashboard:
   services:
     - docker:dind
   script:
-    - docker build -f .docker/Dockerfile.dashboard -t $DASHBOARD_CONTAINER_RELEASE_IMAGE .
-    - docker push $AUTH_CONTAINER_RELEASE_IMAGE
+    - docker build --from-cache $DASHBOARD_CONTAINER_RELEASE_IMAGE -f .docker/Dockerfile.dashboard -t $DASHBOARD_CONTAINER_RELEASE_IMAGE .
+    - docker push $DASHBOARD_CONTAINER_RELEASE_IMAGE
 
 build client:
   stage: build
@@ -76,8 +72,8 @@ build client:
   services:
     - docker:dind
   script:
-    - docker build -f .docker/Dockerfile.client -t $CLIENT_CONTAINER_RELEASE_IMAGE .
-    - docker push $AUTH_CONTAINER_RELEASE_IMAGE
+    - docker build --from-cache $CLIENT_CONTAINER_RELEASE_IMAGE -f .docker/Dockerfile.client -t $CLIENT_CONTAINER_RELEASE_IMAGE .
+    - docker push $CLIENT_CONTAINER_RELEASE_IMAGE
 
 build proxy_balancer:
   stage: build
@@ -89,7 +85,7 @@ build proxy_balancer:
   services:
     - docker:dind
   script:
-    - docker build -f .docker/Dockerfile.proxy-balancer -t $PROXY_BALANCER_CONTAINER_RELEASE_IMAGE .
+    - docker build --from-cache --from-cache $PROXY_BALANCER_CONTAINER_RELEASE_IMAGE -f .docker/Dockerfile.proxy-balancer -t $PROXY_BALANCER_CONTAINER_RELEASE_IMAGE .
     - docker push $PROXY_BALANCER_CONTAINER_RELEASE_IMAGE
 
 install dependencies:
