@@ -1,6 +1,17 @@
 ## FilePicker
 
-<!-- RawFilePicker -->
+- [FilePicker](#filepicker)
+  - [RawFilePicker](#rawfilepicker)
+    - [Import](#import)
+    - [Example Usage](#example-usage)
+      - [Props](#props)
+  - [Props: Dropzone](#props-dropzone)
+  - [FilePicker](#filepicker-1)
+    - [Import](#import-1)
+    - [Example Usage](#example-usage-1)
+      - [Props](#props-1)
+    - [Screenshots](#screenshots)
+    <!-- RawFilePicker -->
 
 ### RawFilePicker
 
@@ -9,46 +20,24 @@
 #### Import
 
 ```typescript
-import RawFilePickerfrom "./RawFilePicker";
+import { RawFilePicker } from "forms";
 ```
 
 #### Example Usage
 
 ```typescript
-export interface IProps
-  extends Omit<IComponentProps, "error" | "onChange" | "value"> {
-  name: string;
-  validate?: TRule[];
-}
-const FilePicker: React.FC<IProps> = ({
-  name,
-  validate,
-  ...filePickerProps
-}) => {
-  const { control } = useFormContext();
+import { RawFilePicker } from "forms";
 
-  const { errors } = useFormState();
+const FilePicker = () => (
+  <RawFilePicker
+    name="image"
+    label="Click to select file"
+    accept=".jpeg,.jpg,.docx,.pdf"
+    maxFiles={2}
+  ></RawFilePicker>;
+);
 
-  const error = get(errors, name) as FieldError | undefined;
-
-  return (
-    <Controller
-      rules={{ validate: validateForm(name, validate || []) }}
-      name={name}
-      control={control}
-      render={({ field: { onChange, value, ref } }) => (
-        <RawFilePicker
-          name={name}
-          {...filePickerProps}
-          ref={ref}
-          value={value}
-          onChange={onChange}
-          error={error?.message}
-        />
-      )}
-    ></Controller>
-  );
-};
+export default FilePicker;
 ```
 
 ##### Props
@@ -122,29 +111,6 @@ export default HomePage;
 
 #### Screenshots
 
-<img  src="../../../../readme-assets/file-picker.png"  alt="screenshot" />
+<img  src="../../../../readme-assets/file-picker.gif"  alt="screenshot" />
 
 </div>
-
-### Delete the uploaded file
-
-#### Example Usage
-
-```typescript
-const deleteFile = (index: number) => {
-  setFiles((prev) => prev.filter((_file, i) => index !== i));
-};
-```
-
-```typescript
-  <span
-    className="absolute top-[-12px] right-[-12px]"
-    tabIndex={index}
-    role="button"
-    onClick={(event) =>
-    handlePictureClick(event, index, deleteFile)}
-     onKeyDown={(event) => handlePictureClick(event, index, deleteFile)}
-  />
-
-};
-```
