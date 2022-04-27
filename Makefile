@@ -5,7 +5,7 @@ all:
 	make proxy-balancer
 
 
-dash:
+dashboard:
 	docker build -f .docker/Dockerfile.dashboard -t dashboard .
 
 client:

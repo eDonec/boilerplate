@@ -30,7 +30,7 @@ services:
       context: ./.docker
       dockerfile: Dockerfile.compose.dashboard
       args:
-        - NEXT_PUBLIC_HELLO="I am a variable"
+        - REACT_APP_HELLO="I am a variable"
     restart: always
     environment:
       - NODE_ENV=production

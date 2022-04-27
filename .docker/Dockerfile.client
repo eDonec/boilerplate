@@ -33,8 +33,6 @@ COPY  .internal ./.internal
 # Create an image for the build
 FROM node:alpine AS builder
 
-ARG MICROSERVICE_RELATIVE_PATH="./apps/client"
-
 RUN apk update
 WORKDIR /app
 COPY --from=pruner /app/.git ./.git

@@ -30,6 +30,7 @@ COPY  .internal ./.internal
 
 # Create an image for the build
 FROM node:alpine AS builder
+ARG MICROSERVICE_NAME="dashboard"
 
 RUN apk update
 WORKDIR /app
@@ -40,3 +41,5 @@ COPY --from=pruner /app/out/full/ .
 COPY .gitignore .gitignore
 ENV NODE_ENV production
 COPY --from=installer /app/.internal ./.internal
+COPY ./nginx ./nginx/.
+COPY ./apps/${MICROSERVICE_NAME}/nginx/default.conf ./nginx/conf.d/default.conf
