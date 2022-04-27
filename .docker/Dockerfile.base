@@ -18,7 +18,7 @@ RUN turbo prune --scope=${MICROSERVICE_NAME} --docker
 
 
 # Add lockfile and package.json's of isolated subworkspace
-FROM node:alpine AS installer
+FROM node:18-alpine AS installer
 RUN apk update
 WORKDIR /app
 COPY --from=pruner /app/out/json/ .
@@ -26,7 +26,7 @@ COPY --from=pruner /app/out/yarn.lock ./yarn.lock
 RUN yarn install --frozen-lockfile
 COPY  .internal ./.internal
 
-FROM node:alpine AS builder
+FROM node:18-alpine AS builder
 
 ARG MICROSERVICE_RELATIVE_PATH="./apps/client"
 

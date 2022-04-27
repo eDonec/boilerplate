@@ -22,7 +22,7 @@ RUN turbo prune --scope=${MICROSERVICE_NAME} --docker
 
 
 # Create an image with the installed dependacies
-FROM node:alpine AS installer
+FROM node:18-alpine AS installer
 RUN apk update
 WORKDIR /app
 COPY --from=pruner /app/out/json/ .
@@ -31,7 +31,7 @@ RUN yarn install
 COPY  .internal ./.internal
 
 # Create an image for the build
-FROM node:alpine AS package-builder
+FROM node:18-alpine AS package-builder
 
 RUN apk update
 WORKDIR /app

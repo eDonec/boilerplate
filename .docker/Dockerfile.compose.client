@@ -8,7 +8,7 @@ RUN yarn build --filter=${MICROSERVICE_NAME}
 # ADD your runner image here which will be the last image in the chain
 
 # Production image, copy all the files and run next
-FROM node:alpine AS runner
+FROM node:18-alpine AS runner
 WORKDIR /app
 ARG MCIROSERVICE_NAME="client"
 

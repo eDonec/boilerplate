@@ -9,7 +9,7 @@ RUN yarn build --filter=${MICROSERVICE_NAME}
 # ADD your runner image here which will be the last image in the chain
 
 # Production image, copy all the files in the nginx image
-FROM nginx:alpine AS runner
+FROM nginx:1.21.6-alpine AS runner
 
 ARG MICROSERVICE_NAME="dashboard"
 

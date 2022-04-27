@@ -1,0 +1,114 @@
+stages:
+  - build
+  - install
+  - test
+
+variables:
+  AUTH_CONTAINER_IMAGE: $CI_REGISTRY_IMAGE-AUTH
+  AUTH_CONTAINER_TEST_IMAGE: $AUTH_CONTAINER_IMAGE:$CI_COMMIT_REF_SLUG
+  AUTH_CONTAINER_RELEASE_IMAGE: $AUTH_CONTAINER_IMAGE:latest
+  CLIENT_CONTAINER_IMAGE: $CI_REGISTRY_IMAGE-CLIENT
+  CLIENT_CONTAINER_TEST_IMAGE: $CLIENT_CONTAINER_IMAGE:$CI_COMMIT_REF_SLUG
+  CLIENT_CONTAINER_RELEASE_IMAGE: $CLIENT_CONTAINER_IMAGE:latest
+  DASHBOARD_CONTAINER_IMAGE: $CI_REGISTRY_IMAGE-DASHBOARD
+  DASHBOARD_CONTAINER_TEST_IMAGE: $DASHBOARD_CONTAINER_IMAGE:$CI_COMMIT_REF_SLUG
+  DASHBOARD_CONTAINER_RELEASE_IMAGE: $DASHBOARD_CONTAINER_IMAGE:latest
+  PROXY_BALANCER_CONTAINER_IMAGE: $CI_REGISTRY_IMAGE-PROXY_BALANCER
+  PROXY_BALANCER_CONTAINER_TEST_IMAGE: $PROXY_BALANCER_CONTAINER_IMAGE:$CI_COMMIT_REF_SLUG
+  PROXY_BALANCER_CONTAINER_RELEASE_IMAGE: $PROXY_BALANCER_CONTAINER_IMAGE:latest
+  RULES_CHANGES_PATH: "**/*"
+  DOCKERFILE: "./.docker/**"
+
+.base-rules:
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+      when: always
+    - if: '$CI_PIPELINE_SOURCE == "push"'
+      when: never
+    - if: $CI_COMMIT_TAG
+      when: never
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+      changes:
+        - $RULES_CHANGES_PATH
+        - $DOCKERFILE
+    - when: manual
+      allow_failure: true
+
+before_script:
+  - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+
+build auth:
+  stage: build
+  extends: .base-rules
+  variables:
+    RULES_CHANGES_PATH: "./apps/auth"
+    DOCKERFILE: "Dockerfile.auth"
+  image: docker
+  services:
+    - docker:dind
+  script:
+    - docker build -f .docker/Dockerfile.auth -t $AUTH_CONTAINER_RELEASE_IMAGE .
+    - docker push $AUTH_CONTAINER_RELEASE_IMAGE
+
+build dashboard:
+  stage: build
+  extends: .base-rules
+  variables:
+    RULES_CHANGES_PATH: "./apps/dashboard"
+    DOCKERFILE: "Dockerfile.dashboard"
+  image: docker
+  services:
+    - docker:dind
+  script:
+    - docker build -f .docker/Dockerfile.dashboard -t $DASHBOARD_CONTAINER_RELEASE_IMAGE .
+    - docker push $AUTH_CONTAINER_RELEASE_IMAGE
+
+build client:
+  stage: build
+  extends: .base-rules
+  variables:
+    RULES_CHANGES_PATH: "./apps/client"
+    DOCKERFILE: "Dockerfile.client"
+  image: docker
+  services:
+    - docker:dind
+  script:
+    - docker build -f .docker/Dockerfile.client -t $CLIENT_CONTAINER_RELEASE_IMAGE .
+    - docker push $AUTH_CONTAINER_RELEASE_IMAGE
+
+build proxy_balancer:
+  stage: build
+  extends: .base-rules
+  variables:
+    RULES_CHANGES_PATH: "./proxy_balancer.conf"
+    DOCKERFILE: "Dockerfile.proxy_balancer"
+  image: docker
+  services:
+    - docker:dind
+  script:
+    - docker build -f .docker/Dockerfile.proxy-balancer -t $PROXY_BALANCER_CONTAINER_RELEASE_IMAGE .
+    - docker push $PROXY_BALANCER_CONTAINER_RELEASE_IMAGE
+
+install dependencies:
+  stage: install
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+      when: always
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+      changes:
+        - "**/package.json"
+        - package.json
+  image: node:18-alpine
+  script:
+    - yarn install --frozen-lockfile
+  artifacts:
+    path:
+      - node_modules
+
+test app:
+  stage: test
+  needs: [install]
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+      when: always
+  image: node:18-alpine

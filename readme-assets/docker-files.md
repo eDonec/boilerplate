@@ -68,7 +68,7 @@ RUN turbo prune --scope=${MICROSERVICE_NAME} --docker
 
 
 # Create an image with the installed dependacies
-FROM node:alpine AS installer
+FROM node:18-alpine AS installer
 RUN apk update
 WORKDIR /app
 COPY --from=pruner /app/out/json/ .
@@ -82,11 +82,11 @@ For each image we will use multy layers in order to optimize Docker caching for 
 
 #### Turbo base image
 
-We first startup with extending the `node:alpine` image. We then simply install turbo globally.
+We first startup with extending the `node:18-alpine` image. We then simply install turbo globally.
 
 ```dockerfile
 # Create a base image with turbo as global binary
-FROM node:alpine AS turbobase
+FROM node:18-alpine AS turbobase
 RUN apk update
 WORKDIR /app
 RUN yarn global add turbo
@@ -168,7 +168,7 @@ Using that information we then only need to copy the json folder as well as tha 
 
 ```dockerfile
 # Create an image with the installed dependacies
-FROM node:alpine AS installer
+FROM node:18-alpine AS installer
 RUN apk update
 WORKDIR /app
 COPY --from=pruner /app/out/json/ .
@@ -195,7 +195,7 @@ Then we simply use the turbo build command with the filter option to build the p
 
 ```dockerfile
 # Create an image for the build
-FROM node:alpine AS package-builder
+FROM node:18-alpine AS package-builder
 
 RUN apk update
 WORKDIR /app
@@ -258,7 +258,7 @@ RUN turbo prune --scope=${MICROSERVICE_NAME} --docker
 
 
 # Create an image with the installed dependacies
-FROM node:alpine AS installer
+FROM node:18-alpine AS installer
 RUN apk update
 WORKDIR /app
 COPY --from=pruner /app/out/json/ .
@@ -267,7 +267,7 @@ RUN yarn install
 COPY  .internal ./.internal
 
 # Create an image for the build
-FROM node:alpine AS package-builder
+FROM node:18-alpine AS package-builder
 
 RUN apk update
 WORKDIR /app
@@ -368,7 +368,7 @@ Using the same starting point as mentioned above. We will add a small layer to i
 ```dockerfile
 
 # Create an image for the build
-FROM node:alpine AS builder
+FROM node:18-alpine AS builder
 
 RUN apk update
 WORKDIR /app
@@ -405,7 +405,7 @@ Finally a runner image that will copy the files from the builder layer.
 Again the argument `MCIROSERVICE_NAME` needs to change to the actual application name within the project.
 
 ```dockerfile
-FROM node:alpine AS runner
+FROM node:18-alpine AS runner
 WORKDIR /app
 ARG MCIROSERVICE_NAME="client"
 
@@ -456,7 +456,7 @@ RUN turbo prune --scope=${MICROSERVICE_NAME} --docker
 
 
 # Create an image with the installed dependacies
-FROM node:alpine AS installer
+FROM node:18-alpine AS installer
 RUN apk update
 WORKDIR /app
 COPY --from=pruner /app/out/json/ .
@@ -465,7 +465,7 @@ RUN yarn install
 COPY  .internal ./.internal
 
 # Create an image for the build
-FROM node:alpine AS builder
+FROM node:18-alpine AS builder
 
 RUN apk update
 WORKDIR /app
@@ -491,7 +491,7 @@ RUN yarn build --filter=${MICROSERVICE_NAME}
 # ADD your runner image here which will be the last image in the chain
 
 # Production image, copy all the files and run next
-FROM node:alpine AS runner
+FROM node:18-alpine AS runner
 WORKDIR /app
 ARG MCIROSERVICE_NAME="client"
 
@@ -560,7 +560,7 @@ Bear in mind that we **MUST** include in the final build the nginx configuration
 And as always change the argument `MCIROSERVICE_NAME` to the actual application name within the project.
 
 ```dockerfile
-FROM node:alpine AS builder
+FROM node:18-alpine AS builder
 ARG MICROSERVICE_NAME="dashboard"
 
 RUN apk update
@@ -596,7 +596,7 @@ Hence the build output for the SPA create react apps is only an HTML file with a
 
 ```dockerfile
 
-FROM nginx:alpine AS runner
+FROM nginx:1.21.6-alpine AS runner
 
 ARG MICROSERVICE_NAME="dashboard"
 
@@ -641,7 +641,7 @@ dashboard:
 ### TL&DR Proxy balancer dockerfile
 
 ```dockerfile
-FROM nginx:alpine
+FROM nginx:1.21.6-alpine
 
 COPY ./nginx /etc/nginx/.
 COPY ./proxy-balancer.conf /etc/nginx/conf.d/default.conf
