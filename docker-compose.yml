@@ -22,8 +22,6 @@ services:
     restart: always
     networks:
       - main-network
-    depends_on:
-      - database
 
   dashboard:
     build:
@@ -35,11 +33,9 @@ services:
     environment:
       - NODE_ENV=production
       - PORT=3005
-      - REACT_APP_HELLO="I am a variable"
     networks:
       - main-network
-    depends_on:
-      - database
+
   auth:
     image: auth
     restart: always

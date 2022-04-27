@@ -15,13 +15,27 @@
     - [The package builder image](#the-package-builder-image)
     - [The last image (The runner image)](#the-last-image-the-runner-image)
     - [TL&DR the final express image](#tldr-the-final-express-image)
+    - [The docker compose configuration](#the-docker-compose-configuration)
+      - [Conventions for express apps](#conventions-for-express-apps)
+    - [The docker-compose.yml for express apps](#the-docker-composeyml-for-express-apps)
   - [Next Js](#next-js)
     - [Next js Env Problem](#next-js-env-problem)
     - [Next js Env Solution](#next-js-env-solution)
     - [The installer / collector image](#the-installer--collector-image)
     - [TL&DR Next js dockerfile](#tldr-next-js-dockerfile)
     - [TL&DR Next Js dockerfile.compose](#tldr-next-js-dockerfilecompose)
+    - [The docker compose configuration Next js](#the-docker-compose-configuration-next-js)
+      - [Conventions for next js apps](#conventions-for-next-js-apps)
+    - [The docker-compose.yml for next js apps](#the-docker-composeyml-for-next-js-apps)
   - [CRA Apps](#cra-apps)
+    - [The docker compose configuration CRA](#the-docker-compose-configuration-cra)
+      - [Conventions for CRA apps](#conventions-for-cra-apps)
+    - [The docker-compose.yml for CRA apps](#the-docker-composeyml-for-cra-apps)
+  - [Proxy balancer](#proxy-balancer)
+    - [TL&DR Proxy balancer dockerfile](#tldr-proxy-balancer-dockerfile)
+    - [proxy-balancer.conf](#proxy-balancerconf)
+    - [proxy-balancer.conf example](#proxy-balancerconf-example)
+  - [Docker compose file](#docker-compose-file)
 
 ## The base configuration
 
@@ -167,6 +181,8 @@ COPY  .internal ./.internal
 
 ## Express Js
 
+**MUST** read before reading this section: [prebuild and postbild docs](prebuild-postbuild.md)
+
 As per the [prebuild and postbild docs](prebuild-postbuild.md), One of the main things that we need to do prior to building the image is to build the independant packages.
 
 After setting up the base image (as described above) we move on the builder image
@@ -275,6 +291,38 @@ COPY --from=package-builder /app .
 
 RUN yarn build --filter=${MICROSERVICE_NAME}
 
+```
+
+### The docker compose configuration
+
+#### Conventions for express apps
+
+- We **MUST** use the same name for the microservice as the package name.
+- We **SHOULD** use the same name for the microservice as the folder name.
+- We **MUST** use the same name for the microservice as the dockerfile extention name.
+- We **SHOULD** use the port 3000 in the environment variables.
+
+### The docker-compose.yml for express apps
+
+```yml
+auth:
+  image: auth
+  restart: always
+  command: yarn workspace auth start:prod
+  environment:
+    - PORT=3000
+    - DATABASE_URI=mongodb://database:27017/auth?authSource=admin
+    - ACCESS_TOKEN_SECRET_KEY=%!L+shP~,3g+f:fk
+    - REFRESH_TOKEN_SECRET_KEY=7xet#7GaCdDU{t}s
+    - DATABASE_USER=username
+    - DATABASE_PASSWORD=dbpassword
+    - TOKEN_EXPIRES_IN=10s
+    - REFRESH_TOKEN_EXPIRES_IN=60d
+    - NUMBER_OF_AUTH_TRIALS=5
+  networks:
+    - main-network
+  depends_on:
+    - auth-database
 ```
 
 ## Next Js
@@ -469,6 +517,38 @@ COPY --from=builder /app/apps/${MCIROSERVICE_NAME}/public ./public
 
 ```
 
+### The docker compose configuration Next js
+
+#### Conventions for next js apps
+
+- We **MUST** use the same name for the microservice as the package name.
+- We **SHOULD** use the same name for the microservice as the folder name.
+- We **MUST** use the same name for the microservice as the dockerfile extention name.
+- We **MUST** use the `Dockerfile.compose.<microservicename>` as the name structur for the build process.
+- We **SHOULD** use the port 3000 in the environment variables.
+- Env variables are case sensitive.
+- Public Env variables (i.e. variables that start with `NEXT_PUBLIC_`) **MUST** be passed as arguments in the build context.
+- The rest (as in run time variables) can still be passed in the environment section.
+
+### The docker-compose.yml for next js apps
+
+```yml
+client:
+  build:
+    context: ./.docker
+    dockerfile: Dockerfile.compose.client
+    args:
+      - NEXT_PUBLIC_HELLO="I am a variable"
+  environment:
+    - NODE_ENV=production
+    - PORT=3000
+    - NEXT_TELEMETRY_DISABLED=1
+  command: node server.js
+  restart: always
+  networks:
+    - main-network
+```
+
 ## CRA Apps
 
 Following the same logic as for the Next apps.
@@ -525,3 +605,185 @@ COPY --from=builder /app/nginx /etc/nginx/.
 COPY --from=builder /app/apps/dashboard/build /usr/share/nginx/html/dashboard
 
 ```
+
+### The docker compose configuration CRA
+
+#### Conventions for CRA apps
+
+- We **MUST** use the same name for the microservice as the package name.
+- We **SHOULD** use the same name for the microservice as the folder name.
+- We **MUST** use the same name for the microservice as the dockerfile extention name.
+- We **MUST** use the `Dockerfile.compose.<microservicename>` as the name structur for the build process.
+- We **SHOULD** use the port 3000 in the environment variables.
+- Env variables are case sensitive.
+- Public Env variables (i.e. variables that start with `REACT_APP_`) **MUST** be passed as arguments in the build context.
+- The rest (as in run time variables) can still be passed in the environment section.
+
+### The docker-compose.yml for CRA apps
+
+```yml
+dashboard:
+  build:
+    context: ./.docker
+    dockerfile: Dockerfile.compose.dashboard
+    args:
+      - REACT_APP_HELLO="I am a variable"
+  restart: always
+  environment:
+    - NODE_ENV=production
+    - PORT=3005
+  networks:
+    - main-network
+```
+
+## Proxy balancer
+
+### TL&DR Proxy balancer dockerfile
+
+```dockerfile
+FROM nginx:alpine
+
+COPY ./nginx /etc/nginx/.
+COPY ./proxy-balancer.conf /etc/nginx/conf.d/default.conf
+```
+
+### proxy-balancer.conf
+
+Based on the names of the microservices we need to create a config file for the proxy balancer that will handle all the revers proxies and serve our app under one domain.
+
+each service in the `docker-compose.yml` file **MUST** be represented with an upstrem declaration with its exposed port in the config file.
+
+```conf
+upstream auth {
+    server auth:3000;
+}
+```
+
+It then needs to be defined according to its base route inside the server config.
+
+The value for the proxy_pass is the name of the upstream declared above.
+
+The location is the base route of the service.
+
+```conf
+    location /api/v1/auth {
+        proxy_pass http://auth;
+        proxy_redirect off;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Host $server_name;
+    }
+```
+
+All apps **SHOULD NOT** be proxied and referenced inside the proxy balancer.
+**Only** the apps that are exposed to the public **MUST** be proxied.
+The final output listens to port 80 and the default server is the proxy balancer.
+
+### proxy-balancer.conf example
+
+```conf
+upstream client {
+    server client:3000;
+}
+
+upstream auth {
+    server auth:3000;
+}
+
+server {
+    listen 80;
+    client_max_body_size 240M;
+
+    location / {
+        proxy_pass http://client;
+        proxy_redirect off;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Host $server_name;
+    }
+
+    location /api/v1/auth {
+        proxy_pass http://auth;
+        proxy_redirect off;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Host $server_name;
+    }
+
+    include h5bp/tls/policy_balanced.conf;
+    # Custom error pages
+    include h5bp/errors/custom_errors.conf;
+
+    # Include the basic h5bp config set
+    include h5bp/basic.conf;
+
+}
+```
+
+## Docker compose file
+
+This file will contain all the apps that were previously built inside Docker containers.
+Its job will be to start the apps and to stop them.
+It will also be responsible for the orchestration of the apps.
+It will also be responsible for the deployment of the apps.
+
+A few services are to be included by default in the docker-compose file such as the database, the proxy balancer, the image compressor server and the main network.
+
+And then images are added at will to the docker-compose file.
+
+All of that together gives (with no added images):
+
+```yml
+version: "3.9"
+services:
+  database:
+    image: mongo
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: AKIARU2MX2BV4F7KRTMF
+    networks:
+      - main-network
+  imgproxy:
+    image: darthsim/imgproxy:latest
+    restart: always
+    environment:
+      - IMGPROXY_USE_S3=true
+      - IMGPROXY_S3_REGION=eu-west-3
+      - STORAGE_PROVIDER=S3
+      - STORAGE_PATH=edonec-turborepo-cache
+      - AWS_ACCESS_KEY_ID=AKIARU2MX2BV4F7KRTMF
+      - AWS_SECRET_ACCESS_KEY=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
+      - IMGPROXY_BIND=:3000
+      - IMGPROXY_CACHE_CONTROL_PASSTHROUGH=true
+      - IMGPROXY_SET_CANONICAL_HEADER=true
+      - IMGPROXY_USE_ETAG=true
+      - IMGPROXY_JPEG_PROGRESSIVE=true
+      - IMGPROXY_JPEG_TRELLIS_QUANT=true
+      - IMGPROXY_JPEG_OVERSHOOT_DERINGING=true
+      - IMGPROXY_ENABLE_WEBP_DETECTION=true
+      - IMGPROXY_ENFORCE_WEBP=true
+    networks:
+      - main-network
+  proxy-balancer:
+    restart: always
+    image: proxy-balancer
+    depends_on:
+      - client
+      - dashboard
+      - auth
+      - database
+      - imgproxy
+    ports:
+      - 3005:80
+    networks:
+      - main-network
+networks:
+  main-network:
+    driver: bridge
+```
+
+**To add an image please refer to its corresponding type mentioned above**

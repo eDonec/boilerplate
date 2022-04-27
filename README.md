@@ -334,7 +334,7 @@ To add a package to an app, please follow <a href='readme-assets/add-package.md'
 
 ### :triangular_flag_on_post: Deployment and build
 
-Follow this [guide](readme-assets/prebuild-postbuild.md) to build all express projects.
+Follow this [guide](readme-assets/docker-files.md) to build all apps in projects.
 
 <!-- Usage -->
 
