@@ -107,7 +107,7 @@ install dependencies:
 
 test app:
   stage: test
-  needs: [install]
+  needs: [install dependencies]
   rules:
     - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
       when: always
