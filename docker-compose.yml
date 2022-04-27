@@ -8,6 +8,41 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: AKIARU2MX2BV4F7KRTMF
     networks:
       - main-network
+  imgproxy:
+    image: darthsim/imgproxy:latest
+    restart: always
+    environment:
+      - IMGPROXY_USE_S3=true
+      - IMGPROXY_S3_REGION=eu-west-3
+      - STORAGE_PROVIDER=S3
+      - STORAGE_PATH=edonec-turborepo-cache
+      - AWS_ACCESS_KEY_ID=AKIARU2MX2BV4F7KRTMF
+      - AWS_SECRET_ACCESS_KEY=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
+      - IMGPROXY_BIND=:3000
+      - IMGPROXY_CACHE_CONTROL_PASSTHROUGH=true
+      - IMGPROXY_SET_CANONICAL_HEADER=true
+      - IMGPROXY_USE_ETAG=true
+      - IMGPROXY_JPEG_PROGRESSIVE=true
+      - IMGPROXY_JPEG_TRELLIS_QUANT=true
+      - IMGPROXY_JPEG_OVERSHOOT_DERINGING=true
+      - IMGPROXY_ENABLE_WEBP_DETECTION=true
+      - IMGPROXY_ENFORCE_WEBP=true
+    networks:
+      - main-network
+  proxy-balancer:
+    restart: always
+    image: proxy-balancer
+    depends_on:
+      - client
+      - dashboard
+      - auth
+      - database
+      - imgproxy
+    ports:
+      - 3005:80
+    networks:
+      - main-network
+
   client:
     build:
       context: ./.docker
@@ -54,41 +89,6 @@ services:
       - main-network
     depends_on:
       - database
-
-  imgproxy:
-    image: darthsim/imgproxy:latest
-    restart: always
-    environment:
-      - IMGPROXY_USE_S3=true
-      - IMGPROXY_S3_REGION=eu-west-3
-      - STORAGE_PROVIDER=S3
-      - STORAGE_PATH=edonec-turborepo-cache
-      - AWS_ACCESS_KEY_ID=AKIARU2MX2BV4F7KRTMF
-      - AWS_SECRET_ACCESS_KEY=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
-      - IMGPROXY_BIND=:3000
-      - IMGPROXY_CACHE_CONTROL_PASSTHROUGH=true
-      - IMGPROXY_SET_CANONICAL_HEADER=true
-      - IMGPROXY_USE_ETAG=true
-      - IMGPROXY_JPEG_PROGRESSIVE=true
-      - IMGPROXY_JPEG_TRELLIS_QUANT=true
-      - IMGPROXY_JPEG_OVERSHOOT_DERINGING=true
-      - IMGPROXY_ENABLE_WEBP_DETECTION=true
-      - IMGPROXY_ENFORCE_WEBP=true
-    networks:
-      - main-network
-  proxy-balancer:
-    restart: always
-    image: proxy-balancer
-    depends_on:
-      - client
-      - dashboard
-      - auth
-      - database
-      - imgproxy
-    ports:
-      - 3005:80
-    networks:
-      - main-network
 
 networks:
   main-network:

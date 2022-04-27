@@ -10,6 +10,11 @@ A Boilerplate for Microservices NodeJS Architecture
 
 </p>
 
+<h3>Note</h3>
+<p style="max-width:400px; text-align: left;" >      The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL
+      NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED",  "MAY", and
+      "OPTIONAL" in this document are to be interpreted as described in
+      <a href="https://datatracker.ietf.org/doc/html/rfc2119">RFC 2119</a>.</p>
 <!-- Links to be added -->
 
 <!-- <h4>
