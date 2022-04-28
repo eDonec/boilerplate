@@ -1,17 +1,16 @@
 stages:
+  - build-test-packages
+  - test-packages
+  - build-test-apps
+  - test-apps
   - build
-  - install
-  - test
+  - build-balancer
 
 variables:
-  AUTH_CONTAINER_IMAGE: $CI_REGISTRY_IMAGE/auth
-  AUTH_CONTAINER_RELEASE_IMAGE: $AUTH_CONTAINER_IMAGE:latest
-  CLIENT_CONTAINER_IMAGE: $CI_REGISTRY_IMAGE/client
-  CLIENT_CONTAINER_RELEASE_IMAGE: $CLIENT_CONTAINER_IMAGE:latest
-  DASHBOARD_CONTAINER_IMAGE: $CI_REGISTRY_IMAGE/dashboard
-  DASHBOARD_CONTAINER_RELEASE_IMAGE: $DASHBOARD_CONTAINER_IMAGE:latest
-  PROXY_BALANCER_CONTAINER_IMAGE: $CI_REGISTRY_IMAGE/proxy-balancer
-  PROXY_BALANCER_CONTAINER_RELEASE_IMAGE: $PROXY_BALANCER_CONTAINER_IMAGE:latest
+  APP_NAME: auth
+  CONTAINER_RELEASE_IMAGE: $CI_REGISTRY_IMAGE/$APP_NAME:latest
+  CONTAINER_TEST_IMAGE: $CI_REGISTRY_IMAGE/$APP_NAME:test
+  DOCKERFILE_PATH: ./.docker/Dockerfile.$APP_NAME
   RULES_CHANGES_PATH: "**/*"
   DOCKERFILE: "./.docker/**"
 
@@ -19,7 +18,9 @@ cache:
   paths:
     - node_modules/
 
-.base-rules:
+.build-test-packages-script:
+  stage: build-test-packages
+  image: docker:dind
   before_script:
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
   rules:
@@ -32,85 +33,162 @@ cache:
     - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
       changes:
         - $RULES_CHANGES_PATH
-        - $DOCKERFILE
+        - ./.docker/Dockerfile.test.base
     - when: manual
+      # TODO: REMOVE THIS
       allow_failure: true
-
-build auth:
-  stage: build
-  extends: .base-rules
-  variables:
-    RULES_CHANGES_PATH: "./apps/auth"
-    DOCKERFILE: "Dockerfile.auth"
-  image: docker
+  script:
+    - docker build  -f ./.docker/Dockerfile.test.base -t $CONTAINER_TEST_IMAGE --build-arg MICROSERVICE_NAME=$APP_NAME .
+    - docker push $CONTAINER_TEST_IMAGE
   services:
     - docker:dind
-  script:
-    - docker build --cache-from $AUTH_CONTAINER_RELEASE_IMAGE  -f .docker/Dockerfile.auth -t $AUTH_CONTAINER_RELEASE_IMAGE .
-    - docker push $AUTH_CONTAINER_RELEASE_IMAGE
 
-build dashboard:
-  stage: build
-  extends: .base-rules
-  variables:
-    RULES_CHANGES_PATH: "./apps/dashboard"
-    DOCKERFILE: "Dockerfile.dashboard"
-  image: docker
-  services:
-    - docker:dind
-  script:
-    - docker build --cache-from $DASHBOARD_CONTAINER_RELEASE_IMAGE -f .docker/Dockerfile.dashboard -t $DASHBOARD_CONTAINER_RELEASE_IMAGE .
-    - docker push $DASHBOARD_CONTAINER_RELEASE_IMAGE
+# .test-packages-script:
+#   stage: test-packages
+#   image: $CONTAINER_TEST_IMAGE
+#   script:
+#     - yarn test --filter=$APP_NAME
+#   image: $CONTAINER_TEST_IMAGE
 
-build client:
-  stage: build
-  extends: .base-rules
-  variables:
-    RULES_CHANGES_PATH: "./apps/client"
-    DOCKERFILE: "Dockerfile.client"
-  image: docker
-  services:
-    - docker:dind
-  script:
-    - docker build --cache-from $CLIENT_CONTAINER_RELEASE_IMAGE -f .docker/Dockerfile.client -t $CLIENT_CONTAINER_RELEASE_IMAGE .
-    - docker push $CLIENT_CONTAINER_RELEASE_IMAGE
 
-build proxy_balancer:
-  stage: build
-  extends: .base-rules
-  variables:
-    RULES_CHANGES_PATH: "./proxy_balancer.conf"
-    DOCKERFILE: "Dockerfile.proxy_balancer"
-  image: docker
-  services:
-    - docker:dind
-  script:
-    - docker build --cache-from $PROXY_BALANCER_CONTAINER_RELEASE_IMAGE -f .docker/Dockerfile.proxy-balancer -t $PROXY_BALANCER_CONTAINER_RELEASE_IMAGE .
-    - docker push $PROXY_BALANCER_CONTAINER_RELEASE_IMAGE
 
-install dependencies:
-  stage: install
+.build-test-apps-script:
+  stage: build-test-apps
+  extends:
+    - .build-test-packages-script
   rules:
     - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
       when: always
+    - if: '$CI_PIPELINE_SOURCE == "push"'
+      when: never
+    - if: $CI_COMMIT_TAG
+      when: never
     - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
       changes:
-        - "**/package.json"
-        - package.json
-  image: node:18-alpine
-  script:
-    - yarn install --frozen-lockfile
-  artifacts:
-    paths:
-      - node_modules
+        - $RULES_CHANGES_PATH
+        - ./packages/**/*
+        - ./.docker/Dockerfile.$APP_NAME
+    - when: manual
+      # TODO: REMOVE THIS
+      allow_failure: true
 
-test app:
-  stage: test
-  needs: [install dependencies]
+.test-apps-script:
+  stage: test-apps
+  image: $CONTAINER_TEST_IMAGE
+  script:
+    - yarn test --filter=$APP_NAME
+  image: $CONTAINER_TEST_IMAGE
+
+
+build test auth:
+  extends: .build-test-apps-script
+  variables:
+    APP_NAME: auth
+    RULES_CHANGES_PATH: "./apps/APIs/auth"
+
+test auth:
+  extends: .test-apps-script
+  needs: [build test auth]
+  variables:
+    APP_NAME: auth
+    RULES_CHANGES_PATH: "./apps/APIs/auth"
+
+build test client:
+  extends: .build-test-apps-script
+  variables:
+    APP_NAME: client
+    RULES_CHANGES_PATH: "./apps/client"
+
+test client:
+  extends: .test-apps-script
+  needs: [build test client]
+  variables:
+    APP_NAME: client
+    RULES_CHANGES_PATH: "./apps/client"
+
+build test dashboard:
+  extends: .build-test-apps-script
+  variables:
+    APP_NAME: dashboard
+    RULES_CHANGES_PATH: "./apps/dashboard"
+
+test dashboard:
+  extends: .test-apps-script
+  needs: [build test dashboard]
+  variables:
+    APP_NAME: dashboard
+    RULES_CHANGES_PATH: "./apps/dashboard"
+
+
+.build-scripts:
+  stage: build
+  before_script:
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+    - docker pull "$CONTAINER_RELEASE_IMAGE"
   rules:
     - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
       when: always
-  image: node:18-alpine
+    - if: '$CI_PIPELINE_SOURCE == "push"'
+      when: never
+    - if: $CI_COMMIT_TAG
+      when: never
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+      changes:
+        - $RULES_CHANGES_PATH
+        - ./.docker/$APP_NAME
+    - when: manual
+      # TODO: REMOVE THIS
+      allow_failure: true
   script:
-    - yarn install --frozen-lockfile
-    - yarn test
+    - docker build --cache-from $CONTAINER_RELEASE_IMAGE  -f $DOCKERFILE_PATH -t $CONTAINER_RELEASE_IMAGE .
+    - docker push $CONTAINER_RELEASE_IMAGE
+  services:
+    - docker:dind
+  image: docker
+
+build auth:
+  extends: .build-scripts
+  needs: [test auth]
+  variables:
+    APP_NAME: auth
+    RULES_CHANGES_PATH: "./apps/APIs/auth"
+    DOCKERFILE: "Dockerfile.auth"
+
+build dashboard:
+  extends: .build-scripts
+  needs: [test dashboard]
+  variables:
+    APP_NAME: dashboard
+    RULES_CHANGES_PATH: "./apps/dashboard"
+    DOCKERFILE: "Dockerfile.dashboard"
+
+build client:
+  extends: .build-scripts
+  needs: [test client]
+  variables:
+    APP_NAME: client
+    RULES_CHANGES_PATH: "./apps/client"
+    DOCKERFILE: "Dockerfile.client"
+
+build proxy_balancer:
+  stage: build-balancer
+  extends: .build-scripts
+  variables:
+    APP_NAME: proxy-balancer
+    RULES_CHANGES_PATH: "./proxy-balancer.conf"
+
+
+
+
+# build test auth-sdk:
+#   extends: .build-test-packages-script
+#   variables:
+#     APP_NAME: auth-sdk
+#     RULES_CHANGES_PATH: "./packages/SDK/node/auth-sdk"
+
+# test auth-sdk:
+#   extends: .test-packages-script
+#   needs: [build test auth-sdk]
+#   variables:
+#     APP_NAME: auth-sdk
+#     RULES_CHANGES_PATH: "./packages/SDK/node/auth-sdk"
