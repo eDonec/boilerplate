@@ -1,12 +1,14 @@
 stages:
-  - build-test
-  - test
+  - build-test-packages
+  - test-packages
+  - build-test-apps
+  - test-apps
   - build
 
 variables:
   APP_NAME: auth
   CONTAINER_RELEASE_IMAGE: $CI_REGISTRY_IMAGE/$APP_NAME:latest
-  CONTAINER_TEST_IMAGE: $CI_REGISTRY_IMAGE/$APP_NAME-test:$CI_COMMIT_REF_SLUG
+  CONTAINER_TEST_IMAGE: $CI_REGISTRY_IMAGE/$APP_NAME:test
   DOCKERFILE_PATH: ./.docker/Dockerfile.$APP_NAME
   RULES_CHANGES_PATH: "**/*"
   DOCKERFILE: "./.docker/**"
@@ -15,9 +17,264 @@ cache:
   paths:
     - node_modules/
 
-.build-test-scripts:
+
+
+
+.build-test-packages-script:
+  stage: build-test-packages
+  image: docker:dind
   before_script:
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+      when: always
+    - if: '$CI_PIPELINE_SOURCE == "push"'
+      when: never
+    - if: $CI_COMMIT_TAG
+      when: never
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+      changes:
+        - $RULES_CHANGES_PATH
+        - ./.docker/Dockerfile.test.base
+    - when: manual
+      # TODO: REMOVE THIS
+      allow_failure: true
+  script:
+    - docker build  -f ./.docker/Dockerfile.test.base -t $CONTAINER_TEST_IMAGE --build-arg MICROSERVICE_NAME=$APP_NAME .
+    - docker push $CONTAINER_TEST_IMAGE
+  services:
+    - docker:dind
+
+.test-packages-script:
+  stage: test-packages
+  image: $CONTAINER_TEST_IMAGE
+  script:
+    - yarn test --filter=$APP_NAME
+  image: $CONTAINER_TEST_IMAGE
+
+build test core-hooks:
+  extends: .build-test-apps-script
+  variables:
+    APP_NAME: core-hooks
+    RULES_CHANGES_PATH: "./packages/browser/core-hooks"
+
+
+test core-hooks:
+  extends: .test-apps-script
+  needs: [build test core-hooks]
+  variables:
+    APP_NAME: core-hooks
+    RULES_CHANGES_PATH: "./packages/browser/core-hooks"
+
+build test core-next-components:
+  extends: .build-test-apps-script
+  variables:
+    APP_NAME: core-next-components
+    RULES_CHANGES_PATH: "./packages/browser/core-next-components"
+
+
+test core-next-components:
+  extends: .test-apps-script
+  needs: [build test core-next-components]
+  variables:
+    APP_NAME: core-next-components
+    RULES_CHANGES_PATH: "./packages/browser/core-next-components"
+
+build test core-ui:
+  extends: .build-test-apps-script
+  variables:
+    APP_NAME: core-ui
+    RULES_CHANGES_PATH: "./packages/browser/core-ui"
+
+
+test core-ui:
+  extends: .test-apps-script
+  needs: [build test core-ui]
+  variables:
+    APP_NAME: core-ui
+    RULES_CHANGES_PATH: "./packages/browser/core-ui"
+
+
+build test forms:
+  extends: .build-test-apps-script
+  variables:
+    APP_NAME: forms
+    RULES_CHANGES_PATH: "./packages/browser/forms"
+
+test forms:
+  extends: .test-apps-script
+  needs: [build test forms]
+  variables:
+    APP_NAME: forms
+    RULES_CHANGES_PATH: "./packages/browser/forms"
+
+
+build test core-utils:
+  extends: .build-test-apps-script
+  variables:
+    APP_NAME: core-utils
+    RULES_CHANGES_PATH: "./packages/node/core-utils"
+
+test core-utils:
+  extends: .test-apps-script
+  needs: [build test core-utils]
+  variables:
+    APP_NAME: core-utils
+    RULES_CHANGES_PATH: "./packages/node/core-utils"
+
+build test custom-error:
+  extends: .build-test-apps-script
+  variables:
+    APP_NAME: custom-error
+    RULES_CHANGES_PATH: "./packages/node/custom-error"
+
+test custom-error:
+  extends: .test-apps-script
+  needs: [build test custom-error]
+  variables:
+    APP_NAME: custom-error
+    RULES_CHANGES_PATH: "./packages/node/custom-error"
+
+build test field-validator:
+  extends: .build-test-apps-script
+  variables:
+    APP_NAME: field-validator
+    RULES_CHANGES_PATH: "./packages/node/field-validator"
+
+test field-validator:
+  extends: .test-apps-script
+  needs: [build test field-validator]
+  variables:
+    APP_NAME: field-validator
+    RULES_CHANGES_PATH: "./packages/node/field-validator"
+
+build test shared-types:
+  extends: .build-test-apps-script
+  variables:
+    APP_NAME: shared-types
+    RULES_CHANGES_PATH: "./packages/node/shared-types"
+
+test shared-types:
+  extends: .test-apps-script
+  needs: [build test shared-types]
+  variables:
+    APP_NAME: shared-types
+    RULES_CHANGES_PATH: "./packages/node/shared-types"
+
+build test token:
+  extends: .build-test-apps-script
+  variables:
+    APP_NAME: token
+    RULES_CHANGES_PATH: "./packages/node/token"
+
+test token:
+  extends: .test-apps-script
+  needs: [build test token]
+  variables:
+    APP_NAME: token
+    RULES_CHANGES_PATH: "./packages/node/token"
+
+build test server-sdk:
+  extends: .build-test-apps-script
+  variables:
+    APP_NAME: server-sdk
+    RULES_CHANGES_PATH: "./packages/SDK/node/server-sdk"
+
+test server-sdk:
+  extends: .test-apps-script
+  needs: [build test server-sdk]
+  variables:
+    APP_NAME: server-sdk
+    RULES_CHANGES_PATH: "./packages/SDK/node/server-sdk"
+
+build test auth-sdk:
+  extends: .build-test-apps-script
+  variables:
+    APP_NAME: auth-sdk
+    RULES_CHANGES_PATH: "./packages/SDK/node/auth-sdk"
+
+test auth-sdk:
+  extends: .test-apps-script
+  needs: [build test auth-sdk]
+  variables:
+    APP_NAME: auth-sdk
+    RULES_CHANGES_PATH: "./packages/SDK/node/auth-sdk"
+
+
+
+
+.build-test-apps-script:
+  stage: build-test-apps
+  extends:
+    - .build-test-packages-script
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+      when: always
+    - if: '$CI_PIPELINE_SOURCE == "push"'
+      when: never
+    - if: $CI_COMMIT_TAG
+      when: never
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+      changes:
+        - $RULES_CHANGES_PATH
+        - ./packages/**/*
+        - ./.docker/Dockerfile.$APP_NAME
+    - when: manual
+      # TODO: REMOVE THIS
+      allow_failure: true
+
+.test-apps-script:
+  stage: test-apps
+  image: $CONTAINER_TEST_IMAGE
+  script:
+    - yarn test --filter=$APP_NAME
+  image: $CONTAINER_TEST_IMAGE
+
+
+build test auth:
+  extends: .build-test-apps-script
+  variables:
+    APP_NAME: auth
+    RULES_CHANGES_PATH: "./apps/APIs/auth"
+
+test auth:
+  extends: .test-apps-script
+  needs: [build test auth]
+  variables:
+    APP_NAME: auth
+    RULES_CHANGES_PATH: "./apps/APIs/auth"
+
+build test client:
+  extends: .build-test-apps-script
+  variables:
+    APP_NAME: client
+    RULES_CHANGES_PATH: "./apps/client"
+
+test client:
+  extends: .test-apps-script
+  needs: [build test client]
+  variables:
+    APP_NAME: client
+    RULES_CHANGES_PATH: "./apps/client"
+
+build test dashboard:
+  extends: .build-test-apps-script
+  variables:
+    APP_NAME: dashboard
+    RULES_CHANGES_PATH: "./apps/dashboard"
+
+test dashboard:
+  extends: .test-apps-script
+  needs: [build test dashboard]
+  variables:
+    APP_NAME: dashboard
+    RULES_CHANGES_PATH: "./apps/dashboard"
+
+
+.build-scripts:
+  before_script:
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+    - docker pull "$CONTAINER_RELEASE_IMAGE"
   rules:
     - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
       when: always
@@ -33,99 +290,43 @@ cache:
       # TODO: REMOVE THIS
       allow_failure: true
   script:
-    - docker build  -f ./.docker/Dockerfile.test.base -t $CONTAINER_TEST_IMAGE --build-arg MICROSERVICE_NAME=$APP_NAME .
-    - docker push $CONTAINER_TEST_IMAGE
+    - docker build --cache-from $CONTAINER_RELEASE_IMAGE  -f $DOCKERFILE_PATH -t $CONTAINER_RELEASE_IMAGE .
+    - docker push $CONTAINER_RELEASE_IMAGE
   services:
     - docker:dind
+  image: docker
 
-build test auth:
-  stage: build-test
-  extends: .build-test-scripts
+build auth:
+  stage: build
+  extends: .build-scripts
+  needs: [test auth]
   variables:
     APP_NAME: auth
     RULES_CHANGES_PATH: "./apps/APIs/auth"
     DOCKERFILE: "Dockerfile.auth"
-  image: docker:dind
 
-
-.test-scripts:
-  image: $CONTAINER_TEST_IMAGE
-  script:
-    - yarn test --filter=$APP_NAME
-
-
-test auth:
-  stage: test
-  extends: .test-scripts
-  needs: [build test auth]
+build dashboard:
+  stage: build
+  needs: [test dashboard]
+  extends: .build-scripts
   variables:
-    APP_NAME: auth
-    RULES_CHANGES_PATH: "./apps/APIs/auth"
-    DOCKERFILE: "Dockerfile.auth"
-  image: $CONTAINER_TEST_IMAGE
-# .build-scripts:
-#   before_script:
-#     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
-#     - docker pull "$CONTAINER_RELEASE_IMAGE"
-#   rules:
-#     - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
-#       when: always
-#     - if: '$CI_PIPELINE_SOURCE == "push"'
-#       when: never
-#     - if: $CI_COMMIT_TAG
-#       when: never
-#     - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
-#       changes:
-#         - $RULES_CHANGES_PATH
-#         - ./.docker/$DOCKERFILE
-#         - ./packages/**/*
-#     - when: manual
-#       # TODO: REMOVE THIS
-#       allow_failure: true
-#   script:
-#     - docker build --cache-from $CONTAINER_RELEASE_IMAGE  -f $DOCKERFILE_PATH -t $CONTAINER_RELEASE_IMAGE .
-#     - docker push $CONTAINER_RELEASE_IMAGE
+    APP_NAME: dashboard
+    RULES_CHANGES_PATH: "./apps/dashboard"
+    DOCKERFILE: "Dockerfile.dashboard"
 
-# build auth:
-#   stage: build
-#   extends: .build-scripts
-#   variables:
-#     APP_NAME: auth
-#     RULES_CHANGES_PATH: "./apps/APIs/auth"
-#     DOCKERFILE: "Dockerfile.auth"
-#   image: docker
-#   services:
-#     - docker:dind
+build client:
+  stage: build
+  extends: .build-scripts
+  needs: [test client]
+  variables:
+    APP_NAME: client
+    RULES_CHANGES_PATH: "./apps/client"
+    DOCKERFILE: "Dockerfile.client"
 
-# build dashboard:
-#   stage: build
-#   extends: .build-scripts
-#   variables:
-#     APP_NAME: dashboard
-#     RULES_CHANGES_PATH: "./apps/dashboard"
-#     DOCKERFILE: "Dockerfile.dashboard"
-#   image: docker
-#   services:
-#     - docker:dind
-
-# build client:
-#   stage: build
-#   extends: .build-scripts
-#   variables:
-#     APP_NAME: client
-#     RULES_CHANGES_PATH: "./apps/client"
-#     DOCKERFILE: "Dockerfile.client"
-#   image: docker
-#   services:
-#     - docker:dind
-
-# build proxy_balancer:
-#   stage: build
-#   extends: .build-scripts
-#   variables:
-#     APP_NAME: proxy-balancer
-#     RULES_CHANGES_PATH: "./proxy-balancer.conf"
-#     DOCKERFILE: "Dockerfile.proxy-balancer"
-#   image: docker
-#   services:
-#     - docker:dind
+build proxy_balancer:
+  stage: build
+  extends: .build-scripts
+  variables:
+    APP_NAME: proxy-balancer
+    RULES_CHANGES_PATH: "./proxy-balancer.conf"
+    DOCKERFILE: "Dockerfile.proxy-balancer"
