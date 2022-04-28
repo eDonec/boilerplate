@@ -4,14 +4,10 @@ stages:
   - test
 
 variables:
-  AUTH_CONTAINER_IMAGE: $CI_REGISTRY_IMAGE/auth
-  AUTH_CONTAINER_RELEASE_IMAGE: $AUTH_CONTAINER_IMAGE:latest
-  CLIENT_CONTAINER_IMAGE: $CI_REGISTRY_IMAGE/client
-  CLIENT_CONTAINER_RELEASE_IMAGE: $CLIENT_CONTAINER_IMAGE:latest
-  DASHBOARD_CONTAINER_IMAGE: $CI_REGISTRY_IMAGE/dashboard
-  DASHBOARD_CONTAINER_RELEASE_IMAGE: $DASHBOARD_CONTAINER_IMAGE:latest
-  PROXY_BALANCER_CONTAINER_IMAGE: $CI_REGISTRY_IMAGE/proxy-balancer
-  PROXY_BALANCER_CONTAINER_RELEASE_IMAGE: $PROXY_BALANCER_CONTAINER_IMAGE:latest
+  APP_NAME: auth
+  CONTAINER_RELEASE_IMAGE: $CI_REGISTRY_IMAGE/$APP_NAME:$CI_COMMIT_REF_SLUG
+  CONTAINER_TEST_IMAGE: $CI_REGISTRY_IMAGE/$APP_NAME:latest
+  DOCKERFILE_PATH: ./.docker/Dockerfile.$APP_NAME
   RULES_CHANGES_PATH: "**/*"
   DOCKERFILE: "./.docker/**"
 
@@ -32,61 +28,57 @@ cache:
     - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
       changes:
         - $RULES_CHANGES_PATH
-        - $DOCKERFILE
+        - ./.docker/$DOCKERFILE
     - when: manual
+      # TODO: REMOVE THIS
       allow_failure: true
+  script:
+    - docker build --cache-from $CONTAINER_RELEASE_IMAGE  -f $DOCKERFILE_PATH -t $CONTAINER_RELEASE_IMAGE .
+    - docker push $CONTAINER_RELEASE_IMAGE
 
 build auth:
   stage: build
   extends: .base-rules
   variables:
+    APP_NAME: auth
     RULES_CHANGES_PATH: "./apps/auth"
     DOCKERFILE: "Dockerfile.auth"
   image: docker
   services:
     - docker:dind
-  script:
-    - docker build --cache-from $AUTH_CONTAINER_RELEASE_IMAGE  -f .docker/Dockerfile.auth -t $AUTH_CONTAINER_RELEASE_IMAGE .
-    - docker push $AUTH_CONTAINER_RELEASE_IMAGE
 
 build dashboard:
   stage: build
   extends: .base-rules
   variables:
+    APP_NAME: dashboard
     RULES_CHANGES_PATH: "./apps/dashboard"
     DOCKERFILE: "Dockerfile.dashboard"
   image: docker
   services:
     - docker:dind
-  script:
-    - docker build --cache-from $DASHBOARD_CONTAINER_RELEASE_IMAGE -f .docker/Dockerfile.dashboard -t $DASHBOARD_CONTAINER_RELEASE_IMAGE .
-    - docker push $DASHBOARD_CONTAINER_RELEASE_IMAGE
 
 build client:
   stage: build
   extends: .base-rules
   variables:
+    APP_NAME: client
     RULES_CHANGES_PATH: "./apps/client"
     DOCKERFILE: "Dockerfile.client"
   image: docker
   services:
     - docker:dind
-  script:
-    - docker build --cache-from $CLIENT_CONTAINER_RELEASE_IMAGE -f .docker/Dockerfile.client -t $CLIENT_CONTAINER_RELEASE_IMAGE .
-    - docker push $CLIENT_CONTAINER_RELEASE_IMAGE
 
 build proxy_balancer:
   stage: build
   extends: .base-rules
   variables:
-    RULES_CHANGES_PATH: "./proxy_balancer.conf"
-    DOCKERFILE: "Dockerfile.proxy_balancer"
+    APP_NAME: proxy-balancer
+    RULES_CHANGES_PATH: "./proxy-balancer.conf"
+    DOCKERFILE: "Dockerfile.proxy-balancer"
   image: docker
   services:
     - docker:dind
-  script:
-    - docker build --cache-from $PROXY_BALANCER_CONTAINER_RELEASE_IMAGE -f .docker/Dockerfile.proxy-balancer -t $PROXY_BALANCER_CONTAINER_RELEASE_IMAGE .
-    - docker push $PROXY_BALANCER_CONTAINER_RELEASE_IMAGE
 
 install dependencies:
   stage: install
