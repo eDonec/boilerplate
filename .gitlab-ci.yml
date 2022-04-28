@@ -53,42 +53,42 @@ cache:
   image: $CONTAINER_TEST_IMAGE
 
 build test core-hooks:
-  extends: .build-test-apps-script
+  extends: .build-test-packages-script
   variables:
     APP_NAME: core-hooks
     RULES_CHANGES_PATH: "./packages/browser/core-hooks"
 
 
 test core-hooks:
-  extends: .test-apps-script
+  extends: .test-packages-script
   needs: [build test core-hooks]
   variables:
     APP_NAME: core-hooks
     RULES_CHANGES_PATH: "./packages/browser/core-hooks"
 
 build test core-next-components:
-  extends: .build-test-apps-script
+  extends: .build-test-packages-script
   variables:
     APP_NAME: core-next-components
     RULES_CHANGES_PATH: "./packages/browser/core-next-components"
 
 
 test core-next-components:
-  extends: .test-apps-script
+  extends: .test-packages-script
   needs: [build test core-next-components]
   variables:
     APP_NAME: core-next-components
     RULES_CHANGES_PATH: "./packages/browser/core-next-components"
 
 build test core-ui:
-  extends: .build-test-apps-script
+  extends: .build-test-packages-script
   variables:
     APP_NAME: core-ui
     RULES_CHANGES_PATH: "./packages/browser/core-ui"
 
 
 test core-ui:
-  extends: .test-apps-script
+  extends: .test-packages-script
   needs: [build test core-ui]
   variables:
     APP_NAME: core-ui
@@ -96,13 +96,13 @@ test core-ui:
 
 
 build test forms:
-  extends: .build-test-apps-script
+  extends: .build-test-packages-script
   variables:
     APP_NAME: forms
     RULES_CHANGES_PATH: "./packages/browser/forms"
 
 test forms:
-  extends: .test-apps-script
+  extends: .test-packages-script
   needs: [build test forms]
   variables:
     APP_NAME: forms
@@ -110,91 +110,91 @@ test forms:
 
 
 build test core-utils:
-  extends: .build-test-apps-script
+  extends: .build-test-packages-script
   variables:
     APP_NAME: core-utils
     RULES_CHANGES_PATH: "./packages/node/core-utils"
 
 test core-utils:
-  extends: .test-apps-script
+  extends: .test-packages-script
   needs: [build test core-utils]
   variables:
     APP_NAME: core-utils
     RULES_CHANGES_PATH: "./packages/node/core-utils"
 
 build test custom-error:
-  extends: .build-test-apps-script
+  extends: .build-test-packages-script
   variables:
     APP_NAME: custom-error
     RULES_CHANGES_PATH: "./packages/node/custom-error"
 
 test custom-error:
-  extends: .test-apps-script
+  extends: .test-packages-script
   needs: [build test custom-error]
   variables:
     APP_NAME: custom-error
     RULES_CHANGES_PATH: "./packages/node/custom-error"
 
 build test field-validator:
-  extends: .build-test-apps-script
+  extends: .build-test-packages-script
   variables:
     APP_NAME: field-validator
     RULES_CHANGES_PATH: "./packages/node/field-validator"
 
 test field-validator:
-  extends: .test-apps-script
+  extends: .test-packages-script
   needs: [build test field-validator]
   variables:
     APP_NAME: field-validator
     RULES_CHANGES_PATH: "./packages/node/field-validator"
 
 build test shared-types:
-  extends: .build-test-apps-script
+  extends: .build-test-packages-script
   variables:
     APP_NAME: shared-types
     RULES_CHANGES_PATH: "./packages/node/shared-types"
 
 test shared-types:
-  extends: .test-apps-script
+  extends: .test-packages-script
   needs: [build test shared-types]
   variables:
     APP_NAME: shared-types
     RULES_CHANGES_PATH: "./packages/node/shared-types"
 
 build test token:
-  extends: .build-test-apps-script
+  extends: .build-test-packages-script
   variables:
     APP_NAME: token
     RULES_CHANGES_PATH: "./packages/node/token"
 
 test token:
-  extends: .test-apps-script
+  extends: .test-packages-script
   needs: [build test token]
   variables:
     APP_NAME: token
     RULES_CHANGES_PATH: "./packages/node/token"
 
 build test server-sdk:
-  extends: .build-test-apps-script
+  extends: .build-test-packages-script
   variables:
     APP_NAME: server-sdk
     RULES_CHANGES_PATH: "./packages/SDK/node/server-sdk"
 
 test server-sdk:
-  extends: .test-apps-script
+  extends: .test-packages-script
   needs: [build test server-sdk]
   variables:
     APP_NAME: server-sdk
     RULES_CHANGES_PATH: "./packages/SDK/node/server-sdk"
 
 build test auth-sdk:
-  extends: .build-test-apps-script
+  extends: .build-test-packages-script
   variables:
     APP_NAME: auth-sdk
     RULES_CHANGES_PATH: "./packages/SDK/node/auth-sdk"
 
 test auth-sdk:
-  extends: .test-apps-script
+  extends: .test-packages-script
   needs: [build test auth-sdk]
   variables:
     APP_NAME: auth-sdk
