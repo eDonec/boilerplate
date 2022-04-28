@@ -1,13 +1,12 @@
 import { useState } from "react";
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const useAlertDialog = <T extends Array<any>>(
+const useAlertDialog = <T extends Array<unknown>>(
   onSubmit: (...args: T) => void
 ): [
   {
     isOpen: boolean;
     handleClose: () => void;
-    onSubmit: (...args: T) => void;
+    onSubmit: () => void;
   },
   (...args: T) => void
 ] => {

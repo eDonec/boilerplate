@@ -10,18 +10,15 @@ export interface ModalProps extends ReactChildrenProps {
   handleClose: () => void;
 }
 
-export interface DialogAlertProps {
+export interface DialogAlertProps extends Omit<ModalProps, "children"> {
   title: string;
   message: string;
   confirmMessage: string;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  onSubmit: (...args: any) => void;
+  onSubmit: () => void;
   cancelMessage: string;
 }
 
-export const AlertDialog: React.FC<
-  DialogAlertProps & Omit<ModalProps, "children">
-> = ({
+export const AlertDialog: React.FC<DialogAlertProps> = ({
   title,
   message,
   confirmMessage,

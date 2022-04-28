@@ -88,18 +88,7 @@ const HomePage = () => {
           Go to API
         </a>
       </p>
-      <AlertDialog
-        title="title"
-        message="  Never gonna give you up Never gonna let you down Never gonna run
-        around and desert you Never gonna make you cry Never gonna say goodbye
-        Never gonna tell a lie and hurt you Never gonna give you up Never
-        gonna let you down Never gonna run around and desert you Never gonna
-        make you cry Never gonna say goodbye Never gonna tell a lie and hurt
-        you"
-        confirmMessage="Confirmer"
-        cancelMessage="Annuler"
-        {...submitModalProps}
-      />
+
       <FormProvider {...methods}>
         <form onSubmit={methods.handleSubmit(handleSubmit)}>
           <Input
@@ -139,6 +128,13 @@ const HomePage = () => {
           <Button type="submit" light>
             submit
           </Button>
+          <AlertDialog
+            title="title"
+            message="Etes-vous sur de vouloir continuer?"
+            confirmMessage="Confirmer"
+            cancelMessage="Annuler"
+            {...submitModalProps}
+          />
         </form>
       </FormProvider>
       <Button onClick={toggleDarkMode} light>
