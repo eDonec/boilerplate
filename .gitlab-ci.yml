@@ -18,7 +18,6 @@ cache:
 .build-test-scripts:
   before_script:
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
-    - docker pull "$CONTAINER_TEST_IMAGE"
   rules:
     - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
       when: always
@@ -34,7 +33,7 @@ cache:
       # TODO: REMOVE THIS
       allow_failure: true
   script:
-    - docker build --cache-from $CONTAINER_TEST_IMAGE  -f ./.docker/Dockerfile.test.base -t $CONTAINER_TEST_IMAGE --build-arg MICROSERVICE_NAME=$APP_NAME .
+    - docker build  -f ./.docker/Dockerfile.test.base -t $CONTAINER_TEST_IMAGE --build-arg MICROSERVICE_NAME=$APP_NAME .
     - docker push $CONTAINER_TEST_IMAGE
 
 build test auth:
