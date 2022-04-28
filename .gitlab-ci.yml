@@ -54,7 +54,7 @@ build test auth:
     DOCKERFILE: "Dockerfile.auth"
   image: node:18-alpine
 
-build test auth:
+test auth:
   stage: test
   extends: .test-scripts
   needs: [build test auth]
@@ -63,7 +63,6 @@ build test auth:
     RULES_CHANGES_PATH: "./apps/APIs/auth"
     DOCKERFILE: "Dockerfile.auth"
   image: $CONTAINER_TEST_IMAGE
-
 # .build-scripts:
 #   before_script:
 #     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
