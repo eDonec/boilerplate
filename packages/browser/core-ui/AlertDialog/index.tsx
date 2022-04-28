@@ -1,8 +1,8 @@
 /* eslint-disable react/no-children-prop */
 
-import clsx from "core-utils/clsx";
 import ReactChildrenProps from "shared-types/ReactChildren";
 
+import Button from "../Button";
 import Modal from "../Modal";
 
 export interface ModalProps extends ReactChildrenProps {
@@ -34,26 +34,12 @@ export const AlertDialog: React.FC<DialogAlertProps> = ({
         {message}
       </p>
       <div className="flex gap-2">
-        <button
-          className={clsx([
-            "relative inline-flex items-center rounded px-4 py-2 font-semibold",
-            "rounded bg-gray-200 py-2 px-4 font-sans text-base text-gray-600 ",
-          ])}
-          type="button"
-          onClick={handleClose}
-        >
+        <Button type="button" onClick={handleClose}>
           {cancelMessage}
-        </button>
-        <button
-          className={clsx([
-            "inline-flex items-center rounded px-4 py-2 font-semibold",
-            "rounded bg-red-100 py-2 px-4 font-sans text-base text-red-600 hover:bg-red-200",
-          ])}
-          type="button"
-          onClick={onSubmit}
-        >
+        </Button>
+        <Button type="button" onClick={onSubmit}>
           {confirmMessage}
-        </button>
+        </Button>
       </div>
     </Modal>
   </div>
