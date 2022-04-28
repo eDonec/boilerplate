@@ -4,6 +4,7 @@ stages:
   - build-test-apps
   - test-apps
   - build
+  - build-balancer
 
 variables:
   APP_NAME: auth
@@ -17,188 +18,6 @@ cache:
   paths:
     - node_modules/
 
-
-
-
-.build-test-packages-script:
-  stage: build-test-packages
-  image: docker:dind
-  before_script:
-    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
-  rules:
-    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
-      when: always
-    - if: '$CI_PIPELINE_SOURCE == "push"'
-      when: never
-    - if: $CI_COMMIT_TAG
-      when: never
-    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
-      changes:
-        - $RULES_CHANGES_PATH
-        - ./.docker/Dockerfile.test.base
-    - when: manual
-      # TODO: REMOVE THIS
-      allow_failure: true
-  script:
-    - docker build  -f ./.docker/Dockerfile.test.base -t $CONTAINER_TEST_IMAGE --build-arg MICROSERVICE_NAME=$APP_NAME .
-    - docker push $CONTAINER_TEST_IMAGE
-  services:
-    - docker:dind
-
-.test-packages-script:
-  stage: test-packages
-  image: $CONTAINER_TEST_IMAGE
-  script:
-    - yarn test --filter=$APP_NAME
-  image: $CONTAINER_TEST_IMAGE
-
-build test core-hooks:
-  extends: .build-test-packages-script
-  variables:
-    APP_NAME: core-hooks
-    RULES_CHANGES_PATH: "./packages/browser/core-hooks"
-
-
-test core-hooks:
-  extends: .test-packages-script
-  needs: [build test core-hooks]
-  variables:
-    APP_NAME: core-hooks
-    RULES_CHANGES_PATH: "./packages/browser/core-hooks"
-
-build test core-next-components:
-  extends: .build-test-packages-script
-  variables:
-    APP_NAME: core-next-components
-    RULES_CHANGES_PATH: "./packages/browser/core-next-components"
-
-
-test core-next-components:
-  extends: .test-packages-script
-  needs: [build test core-next-components]
-  variables:
-    APP_NAME: core-next-components
-    RULES_CHANGES_PATH: "./packages/browser/core-next-components"
-
-build test core-ui:
-  extends: .build-test-packages-script
-  variables:
-    APP_NAME: core-ui
-    RULES_CHANGES_PATH: "./packages/browser/core-ui"
-
-
-test core-ui:
-  extends: .test-packages-script
-  needs: [build test core-ui]
-  variables:
-    APP_NAME: core-ui
-    RULES_CHANGES_PATH: "./packages/browser/core-ui"
-
-
-build test forms:
-  extends: .build-test-packages-script
-  variables:
-    APP_NAME: forms
-    RULES_CHANGES_PATH: "./packages/browser/forms"
-
-test forms:
-  extends: .test-packages-script
-  needs: [build test forms]
-  variables:
-    APP_NAME: forms
-    RULES_CHANGES_PATH: "./packages/browser/forms"
-
-
-build test core-utils:
-  extends: .build-test-packages-script
-  variables:
-    APP_NAME: core-utils
-    RULES_CHANGES_PATH: "./packages/node/core-utils"
-
-test core-utils:
-  extends: .test-packages-script
-  needs: [build test core-utils]
-  variables:
-    APP_NAME: core-utils
-    RULES_CHANGES_PATH: "./packages/node/core-utils"
-
-build test custom-error:
-  extends: .build-test-packages-script
-  variables:
-    APP_NAME: custom-error
-    RULES_CHANGES_PATH: "./packages/node/custom-error"
-
-test custom-error:
-  extends: .test-packages-script
-  needs: [build test custom-error]
-  variables:
-    APP_NAME: custom-error
-    RULES_CHANGES_PATH: "./packages/node/custom-error"
-
-build test field-validator:
-  extends: .build-test-packages-script
-  variables:
-    APP_NAME: field-validator
-    RULES_CHANGES_PATH: "./packages/node/field-validator"
-
-test field-validator:
-  extends: .test-packages-script
-  needs: [build test field-validator]
-  variables:
-    APP_NAME: field-validator
-    RULES_CHANGES_PATH: "./packages/node/field-validator"
-
-build test shared-types:
-  extends: .build-test-packages-script
-  variables:
-    APP_NAME: shared-types
-    RULES_CHANGES_PATH: "./packages/node/shared-types"
-
-test shared-types:
-  extends: .test-packages-script
-  needs: [build test shared-types]
-  variables:
-    APP_NAME: shared-types
-    RULES_CHANGES_PATH: "./packages/node/shared-types"
-
-build test token:
-  extends: .build-test-packages-script
-  variables:
-    APP_NAME: token
-    RULES_CHANGES_PATH: "./packages/node/token"
-
-test token:
-  extends: .test-packages-script
-  needs: [build test token]
-  variables:
-    APP_NAME: token
-    RULES_CHANGES_PATH: "./packages/node/token"
-
-build test server-sdk:
-  extends: .build-test-packages-script
-  variables:
-    APP_NAME: server-sdk
-    RULES_CHANGES_PATH: "./packages/SDK/node/server-sdk"
-
-test server-sdk:
-  extends: .test-packages-script
-  needs: [build test server-sdk]
-  variables:
-    APP_NAME: server-sdk
-    RULES_CHANGES_PATH: "./packages/SDK/node/server-sdk"
-
-build test auth-sdk:
-  extends: .build-test-packages-script
-  variables:
-    APP_NAME: auth-sdk
-    RULES_CHANGES_PATH: "./packages/SDK/node/auth-sdk"
-
-test auth-sdk:
-  extends: .test-packages-script
-  needs: [build test auth-sdk]
-  variables:
-    APP_NAME: auth-sdk
-    RULES_CHANGES_PATH: "./packages/SDK/node/auth-sdk"
 
 
 
@@ -272,6 +91,7 @@ test dashboard:
 
 
 .build-scripts:
+  stage: build
   before_script:
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
     - docker pull "$CONTAINER_RELEASE_IMAGE"
@@ -285,7 +105,7 @@ test dashboard:
     - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
       changes:
         - $RULES_CHANGES_PATH
-        - ./.docker/$DOCKERFILE
+        - ./.docker/$APP_NAME
     - when: manual
       # TODO: REMOVE THIS
       allow_failure: true
@@ -297,7 +117,6 @@ test dashboard:
   image: docker
 
 build auth:
-  stage: build
   extends: .build-scripts
   needs: [test auth]
   variables:
@@ -306,16 +125,14 @@ build auth:
     DOCKERFILE: "Dockerfile.auth"
 
 build dashboard:
-  stage: build
-  needs: [test dashboard]
   extends: .build-scripts
+  needs: [test dashboard]
   variables:
     APP_NAME: dashboard
     RULES_CHANGES_PATH: "./apps/dashboard"
     DOCKERFILE: "Dockerfile.dashboard"
 
 build client:
-  stage: build
   extends: .build-scripts
   needs: [test client]
   variables:
@@ -324,9 +141,58 @@ build client:
     DOCKERFILE: "Dockerfile.client"
 
 build proxy_balancer:
-  stage: build
+  stage: build-balancer
   extends: .build-scripts
   variables:
     APP_NAME: proxy-balancer
     RULES_CHANGES_PATH: "./proxy-balancer.conf"
-    DOCKERFILE: "Dockerfile.proxy-balancer"
+
+
+
+
+
+# .build-test-packages-script:
+#   stage: build-test-packages
+#   image: docker:dind
+#   before_script:
+#     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+#   rules:
+#     - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+#       when: always
+#     - if: '$CI_PIPELINE_SOURCE == "push"'
+#       when: never
+#     - if: $CI_COMMIT_TAG
+#       when: never
+#     - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+#       changes:
+#         - $RULES_CHANGES_PATH
+#         - ./.docker/Dockerfile.test.base
+#     - when: manual
+#       # TODO: REMOVE THIS
+#       allow_failure: true
+#   script:
+#     - docker build  -f ./.docker/Dockerfile.test.base -t $CONTAINER_TEST_IMAGE --build-arg MICROSERVICE_NAME=$APP_NAME .
+#     - docker push $CONTAINER_TEST_IMAGE
+#   services:
+#     - docker:dind
+
+# .test-packages-script:
+#   stage: test-packages
+#   image: $CONTAINER_TEST_IMAGE
+#   script:
+#     - yarn test --filter=$APP_NAME
+#   image: $CONTAINER_TEST_IMAGE
+
+
+# build test auth-sdk:
+#   extends: .build-test-packages-script
+#   variables:
+#     APP_NAME: auth-sdk
+#     RULES_CHANGES_PATH: "./packages/SDK/node/auth-sdk"
+
+# test auth-sdk:
+#   extends: .test-packages-script
+#   needs: [build test auth-sdk]
+#   variables:
+#     APP_NAME: auth-sdk
+#     RULES_CHANGES_PATH: "./packages/SDK/node/auth-sdk"
