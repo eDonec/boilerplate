@@ -37,11 +37,6 @@ cache:
     - docker build --cache-from $CONTAINER_TEST_IMAGE  -f ./.docker/Dockerfile.test.base -t $CONTAINER_TEST_IMAGE --build-arg MICROSERVICE_NAME=$APP_NAME .
     - docker push $CONTAINER_TEST_IMAGE
 
-.test-scripts:
-  image: $CONTAINER_TEST_IMAGE
-  script:
-    - yarn test --filter=$APP_NAME
-
 build test auth:
   stage: build-test
   extends: .build-test-scripts
@@ -50,6 +45,12 @@ build test auth:
     RULES_CHANGES_PATH: "./apps/APIs/auth"
     DOCKERFILE: "Dockerfile.auth"
   image: docker:dind
+
+.test-scripts:
+  image: $CONTAINER_TEST_IMAGE
+  script:
+    - yarn test --filter=$APP_NAME
+
 
 test auth:
   stage: test
