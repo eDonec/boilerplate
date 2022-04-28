@@ -1,6 +1,4 @@
 stages:
-  - build-test
-  - test
   - build
 
 variables:
@@ -15,9 +13,10 @@ cache:
   paths:
     - node_modules/
 
-.build-test-scripts:
+.build-scripts:
   before_script:
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+    - docker pull "$CONTAINER_RELEASE_IMAGE"
   rules:
     - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
       when: always
@@ -33,33 +32,20 @@ cache:
       # TODO: REMOVE THIS
       allow_failure: true
   script:
-    - docker build  -f ./.docker/Dockerfile.test.base -t $CONTAINER_TEST_IMAGE --build-arg MICROSERVICE_NAME=$APP_NAME .
-    - docker push $CONTAINER_TEST_IMAGE
+    - docker build --cache-from $CONTAINER_RELEASE_IMAGE  -f $DOCKERFILE_PATH -t $CONTAINER_RELEASE_IMAGE .
+    - docker push $CONTAINER_RELEASE_IMAGE
 
-build test auth:
-  stage: build-test
-  extends: .build-test-scripts
+build auth:
+  stage: build
+  extends: .build-scripts
   variables:
     APP_NAME: auth
-    RULES_CHANGES_PATH: "./apps/APIs/auth"
+    RULES_CHANGES_PATH: "./apps/auth"
     DOCKERFILE: "Dockerfile.auth"
-  image: docker:dind
+  image: docker
+  services:
+    - docker:dind
 
-.test-scripts:
-  image: $CONTAINER_TEST_IMAGE
-  script:
-    - yarn test --filter=$APP_NAME
-
-
-test auth:
-  stage: test
-  extends: .test-scripts
-  needs: [build test auth]
-  variables:
-    APP_NAME: auth
-    RULES_CHANGES_PATH: "./apps/APIs/auth"
-    DOCKERFILE: "Dockerfile.auth"
-  image: $CONTAINER_TEST_IMAGE
 # .build-scripts:
 #   before_script:
 #     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
