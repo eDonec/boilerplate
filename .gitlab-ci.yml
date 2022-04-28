@@ -38,9 +38,6 @@ cache:
     - docker push $CONTAINER_TEST_IMAGE
 
 .test-scripts:
-  before_script:
-    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
-    - docker pull "$CONTAINER_TEST_IMAGE"
   image: $CONTAINER_TEST_IMAGE
   script:
     - yarn test --filter=$APP_NAME
@@ -52,7 +49,7 @@ build test auth:
     APP_NAME: auth
     RULES_CHANGES_PATH: "./apps/APIs/auth"
     DOCKERFILE: "Dockerfile.auth"
-  image: node:18-alpine
+  image: docker:dind
 
 test auth:
   stage: test
