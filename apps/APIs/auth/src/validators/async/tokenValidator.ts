@@ -1,21 +1,18 @@
+import middlewareWithTryCatch from "errors/middlewareWithTryCatch";
 import Auth from "models/Auth";
 import { IMiddleware } from "shared-types";
 import StatusCodes from "shared-types/StatusCodes";
 import TokenValidator from "token/TokenValidator";
 
-export const findAndValidateAuthClientByRefreshToken: IMiddleware = async (
-  _req,
-  res,
-  next
-) => {
-  const { refreshToken } = res.locals as {
-    refreshToken: TokenValidator<{ authId: string }>;
-  };
-  const authUsersByRefreshToken = await Auth.findById(
-    refreshToken.decodedToken.payload.authId
-  ).populate("role");
+export const findAndValidateAuthClientByRefreshToken: IMiddleware =
+  middlewareWithTryCatch(async (_req, res, next) => {
+    const { refreshToken } = res.locals as {
+      refreshToken: TokenValidator<{ authId: string }>;
+    };
+    const authUsersByRefreshToken = await Auth.findById(
+      refreshToken.decodedToken.payload.authId
+    ).populate("role");
 
-  try {
     if (!authUsersByRefreshToken)
       throw new Error("User not found refresh token is invalid!");
     if (
@@ -26,11 +23,4 @@ export const findAndValidateAuthClientByRefreshToken: IMiddleware = async (
       );
     res.locals.currentAuth = authUsersByRefreshToken;
     next();
-  } catch (error) {
-    if (error instanceof Error)
-      res.status(StatusCodes.Unauthorized).send({
-        message: error.message,
-        stack: error.stack,
-      });
-  }
-};
+  }, StatusCodes.Unauthorized);
