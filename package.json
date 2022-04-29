@@ -67,6 +67,9 @@
     "turbo": "1.2.5",
     "typescript": "4.6.3"
   },
+  "engines": {
+    "node": "^18"
+  },
   "packageManager": "yarn@1.22.17",
   "dependencies": {}
 }

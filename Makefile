@@ -14,11 +14,17 @@ client:
 proxy-balancer:
 	docker build -f .docker/Dockerfile.proxy-balancer -t proxy-balancer .
 
+
+image=auth
 auth:
 	docker build -f .docker/Dockerfile.auth -t auth .
 
 compose:
 	docker compose up --build --force-recreate
+
+image=auth
+test:
+	docker build -f .docker/Dockerfile.test.base -t test-$(image) --build-arg MICROSERVICE_NAME=$(image) .
 
 image=auth
 update:
