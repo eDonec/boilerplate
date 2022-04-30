@@ -1,5 +1,5 @@
 name:
-  "Test auth On PR Creation / update"
+  "Test client On PR Creation / update"
 
   # pull_request_review:
   # types: [submitted]
@@ -7,8 +7,8 @@ on:
   pull_request:
     types: [opened, synchronize, edited]
     paths:
-      - "apps/APIs/auth/**"
-      - ".github/workflows/auth*.yaml"
+      - "apps/client/**"
+      - ".github/workflows/client*.yaml"
       - "packages/**"
 
 # this runs when a PR is opened and a the review is approved
@@ -59,4 +59,4 @@ jobs:
           steps.cache-node-modules.outputs.cache-hit != 'true'
 
       - name: Run tests
-        run: yarn test --filter=auth
+        run: yarn test --filter=client
