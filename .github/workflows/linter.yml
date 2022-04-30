@@ -18,8 +18,8 @@ on:
   push:
     branches: [master]
     # Remove the line above to run when pushing to master
-  pull_request:
-    branches: [master]
+  pull_request_review:
+    types: [submitted]
 
 ###############
 # Set the Job #

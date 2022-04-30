@@ -2,7 +2,7 @@
   "name": "config",
   "main": "index.js",
   "license": "MIT",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "files": [
     "jest/jest-next.js",
     "jest/jest-cra.js",
