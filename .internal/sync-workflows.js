@@ -8,7 +8,7 @@ const syncWorkflowsFromBase = (basePath, packages, workflowType) => {
   const baseWorkflows = fs.readFileSync(path.join(__dirname, basePath)).toString();
   packages.forEach(package => {
     console.log(package);
-    const workflowFile = `../.github/workflows/${package.packageName}.${workflowType}.yml`;
+    const workflowFile = `../.github/workflows/${package.packageName}-${workflowType}.yml`;
 
     const newWorkflow = baseWorkflows
       .replace(/{{packageName}}/g, package.packageName)

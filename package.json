@@ -17,7 +17,7 @@
     "seed": "turbo run seed",
     "postcommit": "git push --follow-tags origin master",
     "test": "turbo run test",
-    "sync:workflows": "node .internals/sync-workflows.js"
+    "sync:workflows": "node .internal/sync-workflows.js"
   },
   "workspaces": [
     "apps/*",
