@@ -8,7 +8,7 @@ on:
     types: [opened, synchronize]
     paths:
       - "apps/APIs/auth/**"
-      - ".github/workflows/auth.yaml"
+      - ".github/workflows/auth*.yaml"
       - "packages/**"
 
 # this runs when a PR is opened and a the review is approved
