@@ -8,7 +8,7 @@ on:
     types: [opened, synchronize, edited]
     paths:
       - "packages/SDK/node/auth-sdk/**"
-      - ".github/workflows/auth-sdk*.yaml"
+      - ".github/workflows/auth-sdk*"
 #      - "packages/**"
 
 # this runs when a PR is opened and a the review is approved
@@ -57,6 +57,9 @@ jobs:
         if: |
           steps.cache-yarn-cache.outputs.cache-hit != 'true' ||
           steps.cache-node-modules.outputs.cache-hit != 'true'
+
+      - name: Run lint
+        run: yarn lint --filter=auth-sdk
 
       - name: Run tests
         run: yarn test --filter=auth-sdk
