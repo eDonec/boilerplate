@@ -6,6 +6,7 @@ name:
 on:
   pull_request:
     types: [opened, synchronize, edited]
+  push:
     paths:
       - "apps/APIs/auth/**"
       - ".github/workflows/auth*.yaml"
