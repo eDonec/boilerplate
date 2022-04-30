@@ -1,5 +1,5 @@
 name:
-  "Test Auth On PR Creation / update"
+  "Test auth-sdk On PR Creation / update"
 
   # pull_request_review:
   # types: [submitted]
@@ -7,9 +7,9 @@ on:
   pull_request:
     types: [opened, synchronize, edited]
     paths:
-      - "apps/APIs/auth/**"
-      - ".github/workflows/auth*.yaml"
-      - "packages/**"
+      - "packages/SDK/node/auth-sdk/**"
+      - ".github/workflows/auth-sdk*.yaml"
+#      - "packages/**"
 
 # this runs when a PR is opened and a the review is approved
 # TODO: we need another one for when a PR is opened and unpdated
@@ -23,7 +23,7 @@ jobs:
     # if: github.event.review.state == 'approved'
     runs-on: ubuntu-latest
     steps:
-      - name: Clakflakjfheck out code
+      - name: Check out code
         uses: actions/checkout@v3
         with:
           fetch-depth: 2
@@ -59,4 +59,4 @@ jobs:
           steps.cache-node-modules.outputs.cache-hit != 'true'
 
       - name: Run tests
-        run: yarn test --filter=auth
+        run: yarn test --filter=auth-sdk
