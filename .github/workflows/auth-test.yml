@@ -4,14 +4,12 @@ name:
   # pull_request_review:
   # types: [submitted]
 on:
-  push
-  # pull_request:
-  #   types: [opened, synchronize, edited]
-  # push:
-  #   paths:
-  #     - "apps/APIs/auth/**"
-  #     - ".github/workflows/auth*.yaml"
-  #     - "packages/**"
+  pull_request:
+    types: [opened, synchronize, edited]
+    paths:
+      - "apps/APIs/auth/**"
+      - ".github/workflows/auth*.yaml"
+      - "packages/**"
 
 # this runs when a PR is opened and a the review is approved
 # TODO: we need another one for when a PR is opened and unpdated
@@ -22,7 +20,7 @@ on:
 
 jobs:
   test-auth:
-    if: github.event.review.state == 'approved'
+    # if: github.event.review.state == 'approved'
     runs-on: ubuntu-latest
     steps:
       - name: Check out code
