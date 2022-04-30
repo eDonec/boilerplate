@@ -4,8 +4,14 @@ name:
   # pull_request_review:
   # types: [submitted]
 on:
-  pull_request:
-    types: [opened, synchronize, edited]
+  push
+  # pull_request:
+  #   types: [opened, synchronize, edited]
+  # push:
+  #   paths:
+  #     - "apps/APIs/auth/**"
+  #     - ".github/workflows/auth*.yaml"
+  #     - "packages/**"
 
 # this runs when a PR is opened and a the review is approved
 # TODO: we need another one for when a PR is opened and unpdated
