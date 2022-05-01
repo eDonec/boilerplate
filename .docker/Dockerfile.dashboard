@@ -27,7 +27,7 @@ COPY --from=pruner /app/out/json/ .
 COPY --from=pruner /app/out/yarn.lock ./yarn.lock
 RUN yarn install
 COPY  .internal ./.internal
-COPY ./nginx ./nginx/.
+COPY nginx ./nginx/.
 
 # Create an image for the build
 FROM node:18-alpine AS builder
