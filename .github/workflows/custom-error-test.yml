@@ -8,7 +8,7 @@ on:
     types: [opened, synchronize, edited]
     paths:
       - "packages/node/custom-error/**"
-      - ".github/workflows/custom-error*.yaml"
+      - ".github/workflows/custom-error*"
 #      - "packages/**"
 
 # this runs when a PR is opened and a the review is approved
@@ -19,7 +19,7 @@ on:
 # Versionning needs to be done as well fo updated packages
 
 jobs:
-  test-auth:
+  lint-and-test-custom-error:
     # if: github.event.review.state == 'approved'
     runs-on: ubuntu-latest
     steps:
@@ -57,6 +57,9 @@ jobs:
         if: |
           steps.cache-yarn-cache.outputs.cache-hit != 'true' ||
           steps.cache-node-modules.outputs.cache-hit != 'true'
+
+      - name: Run lint
+        run: yarn lint --filter=custom-error
 
       - name: Run tests
         run: yarn test --filter=custom-error
