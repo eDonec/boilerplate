@@ -11,9 +11,9 @@ const syncWorkflowsFromBase = (basePath, packages, workflowType) => {
     const workflowFile = `../.github/workflows/${package.packageName}-${workflowType}.yml`;
 
     const newWorkflow = baseWorkflows
-      .replace(/{{packageName}}/g, package.packageName)
-      .replace(/{{packagePath}}/g, package.packagePath)
-      .replace(/{{isPackage}}/g, package.isApp ? '' : '#');
+      .replace(/\${{packageName}}/g, package.packageName)
+      .replace(/\${{packagePath}}/g, package.packagePath)
+      .replace(/\${{isPackage}}/g, package.isApp ? '' : '#');
     fs.writeFileSync(path.join(__dirname,workflowFile), newWorkflow);
   }
   )
