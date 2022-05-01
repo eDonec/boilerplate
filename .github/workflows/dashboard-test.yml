@@ -19,7 +19,7 @@ on:
 # Versionning needs to be done as well fo updated packages
 
 jobs:
-  lint and test dashboard:
+  lint-and-test-dashboard:
     # if: github.event.review.state == 'approved'
     runs-on: ubuntu-latest
     steps:
