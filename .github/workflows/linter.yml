@@ -52,4 +52,5 @@ jobs:
         env:
           VALIDATE_ALL_CODEBASE: false
           DEFAULT_BRANCH: master
+          FILTER_REGEX_INCLUDE: (.*src\/.*((tsx)|(ts)|(md)))
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
