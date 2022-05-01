@@ -108,3 +108,4 @@ const packagesWithTestScripts = allPackagesWithTestScripts.filter(package => !pa
 
 // Sync workflows for testing when PR is opened
 syncWorkflowsFromBase('../.github/base.test.yml', [...packagesWithTestScripts, ...appsWithTestScript], 'test')
+syncWorkflowsFromBase('../.github/base.build.yml', appsWithTestScript, 'build')

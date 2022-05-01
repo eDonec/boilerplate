@@ -19,7 +19,7 @@ on:
 # Versionning needs to be done as well fo updated packages
 
 jobs:
-  test-auth:
+  lint and test shared-types:
     # if: github.event.review.state == 'approved'
     runs-on: ubuntu-latest
     steps:
