@@ -1,5 +1,5 @@
 name:
-  "Test {{packageName}} On PR Creation / update"
+  "Test ${{packageName}} On PR Creation / update"
 
   # pull_request_review:
   # types: [submitted]
@@ -7,9 +7,9 @@ on:
   pull_request:
     types: [opened, synchronize, edited]
     paths:
-      - "{{packagePath}}"
-      - ".github/workflows/{{packageName}}*"
-{{isPackage}}      - "packages/**"
+      - "${{packagePath}}"
+      - ".github/workflows/${{packageName}}*"
+${{isPackage}}      - "packages/**"
 
 # this runs when a PR is opened and a the review is approved
 # TODO: we need another one for when a PR is opened and unpdated
@@ -19,7 +19,7 @@ on:
 # Versionning needs to be done as well fo updated packages
 
 jobs:
-  lint-and-test-{{packageName}}:
+  lint-and-test-${{packageName}}:
     # if: github.event.review.state == 'approved'
     runs-on: ubuntu-latest
     steps:
@@ -59,7 +59,7 @@ jobs:
           steps.cache-node-modules.outputs.cache-hit != 'true'
 
       - name: Run lint
-        run: yarn lint --filter={{packageName}}
+        run: yarn lint --filter=${{packageName}}
 
       - name: Run tests
-        run: yarn test --filter={{packageName}}
+        run: yarn test --filter=${{packageName}}

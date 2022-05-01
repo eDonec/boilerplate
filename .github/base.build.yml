@@ -1,22 +1,22 @@
-name: "build {{packageName}} On PR approve / merge to dev and master"
+name: "build ${{packageName}} On PR approve / merge to dev and master"
 
 on:
   pull_request_review:
     types: [submitted]
     paths:
-      - "{{packagePath}}"
-      - ".github/workflows/{{packageName}}*"
+      - "${{packagePath}}"
+      - ".github/workflows/${{packageName}}*"
       - "packages/**"
   push:
     branches: [master]
     paths:
-      - "{{packagePath}}"
-      - ".github/workflows/{{packageName}}*"
-      - ".docker/Dockerfile.{{packageName}}*"
+      - "${{packagePath}}"
+      - ".github/workflows/${{packageName}}*"
+      - ".docker/Dockerfile.${{packageName}}*"
       - "packages/**"
 
 jobs:
-  build-and-publish-head:
+  ${{packageName}}-build-and-publish-head:
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/develop' # Running this job only for develop branch
 
@@ -27,11 +27,11 @@ jobs:
         uses: VaultVulp/gp-docker-action@1.2.0
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }} # Provide GITHUB_TOKEN to login into the GitHub Packages
-          image-name: { { packageName } } # Provide Docker image name
-          dockerfile: .docker/Dockerfile.{{packageName}} # Provide Dockerfile path
+          image-name: ${{packageName}} # Provide Docker image name
+          dockerfile: .docker/Dockerfile.${{packageName}} # Provide Dockerfile path
           extract-git-tag: true # Provide flag to extract Docker image tag from git reference
 
-  build-and-publish-latest:
+  ${{packageName}}-build-and-publish-latest:
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/master' # Running this job only for master branch
 
@@ -42,10 +42,10 @@ jobs:
         uses: VaultVulp/gp-docker-action@1.2.0
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }} # Provide GITHUB_TOKEN to login into the GitHub Packages
-          image-name: { { packageName } } # Provide only Docker image name, tag will be automatically set to latest
-          dockerfile: .docker/Dockerfile.{{packageName}}
+          image-name: ${{packageName}} # Provide only Docker image name, tag will be automatically set to latest
+          dockerfile: .docker/Dockerfile.${{packageName}}
 
-  build-and-publish-tag:
+  ${{packageName}}-build-and-publish-tag:
     runs-on: ubuntu-latest
     if: (github.ref != 'refs/heads/master') && (github.ref != 'refs/heads/develop') && (github.event.review.state == 'approved') # Running this job only for master and develop branch
 
@@ -56,6 +56,6 @@ jobs:
         uses: VaultVulp/gp-docker-action@1.2.0
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }} # Provide GITHUB_TOKEN to login into the GitHub Packages
-          image-name: { { packageName } } # Provide only Docker image name
-          dockerfile: .docker/Dockerfile.{{packageName}}
+          image-name: ${{packageName}} # Provide only Docker image name
+          dockerfile: .docker/Dockerfile.${{packageName}}
           image-tag: ${{ github.ref }} # Provide Docker image tag
