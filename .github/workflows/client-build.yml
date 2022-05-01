@@ -6,6 +6,7 @@ on:
     paths:
       - "apps/client/**"
       - ".github/workflows/client*"
+      - ".docker/Dockerfile.client*"
       - "packages/**"
   push:
     branches: [master]
@@ -16,7 +17,7 @@ on:
       - "packages/**"
 
 jobs:
-  build-and-publish-head:
+  client-build-and-publish-head:
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/develop' # Running this job only for develop branch
 
@@ -31,7 +32,7 @@ jobs:
           dockerfile: .docker/Dockerfile.client # Provide Dockerfile path
           extract-git-tag: true # Provide flag to extract Docker image tag from git reference
 
-  build-and-publish-latest:
+  client-build-and-publish-latest:
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/master' # Running this job only for master branch
 
@@ -45,7 +46,7 @@ jobs:
           image-name: client # Provide only Docker image name, tag will be automatically set to latest
           dockerfile: .docker/Dockerfile.client
 
-  build-and-publish-tag:
+  client-build-and-publish-tag:
     runs-on: ubuntu-latest
     if: (github.ref != 'refs/heads/master') && (github.ref != 'refs/heads/develop') && (github.event.review.state == 'approved') # Running this job only for master and develop branch
 

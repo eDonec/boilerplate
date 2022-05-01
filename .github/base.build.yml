@@ -6,6 +6,7 @@ on:
     paths:
       - "${{packagePath}}"
       - ".github/workflows/${{packageName}}*"
+      - ".docker/Dockerfile.${{packageName}}*"
       - "packages/**"
   push:
     branches: [master]
