@@ -5,7 +5,7 @@ import add from "date-fns/add";
 import isAfter from "date-fns/isAfter";
 import middlewareWithTryCatch from "errors/middlewareWithTryCatch";
 import Auth from "models/Auth";
-import * as authNServices from "services/authN";
+import * as authZServices from "services/authZ";
 import { AUTH_PROVIDERS, IMiddleware } from "shared-types";
 import StatusCodes from "shared-types/StatusCodes";
 
@@ -110,7 +110,7 @@ export const checkPassword: IAuthServerMiddleware = middlewareWithTryCatch(
           currentAuth.numberOfUnsuccessfulTrials >
           Number(process.env.NUMBER_OF_AUTH_TRIALS)
         ) {
-          await authNServices.suspendClient(currentAuth, {
+          await authZServices.suspendClient(currentAuth, {
             suspentionLiftTime: add(new Date(), { minutes: 10 }),
             suspentionReason: "Too many unsuccessful trials",
           });

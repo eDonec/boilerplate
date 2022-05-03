@@ -51,6 +51,7 @@ A Boilerplate for Microservices NodeJS Architecture
   - [:key: Environment Variables per project](#key-environment-variables-per-project)
     - [CRA](#cra)
     - [express](#express)
+  - [Eventing](#eventing)
 - [:hammer_and_wrench: Getting Started](#hammer_and_wrench-getting-started)
   - [:bangbang: Prerequisites](#bangbang-prerequisites)
   - [:gear: Installation](#gear-installation)
@@ -228,6 +229,7 @@ A Boilerplate for Microservices NodeJS Architecture
 
 ### :dart: Features (so far)
 
+- Eventing with Apache Kafka
 - Authentication
 
   - Role management
@@ -263,6 +265,16 @@ To run this project, you will need to add the following environment variables to
 `KAFKA_BROKERS`
 `MICROSERVICE_NAME`
 
+### Eventing
+
+For eveventing this project uses the open source project [Apache Kafka](https://kafka.apache.org/)
+
+For the client we use the one made by [Confluent](https://www.confluent.io/) the co-authors of apache kafka [Apache Kafka Node.js client](https://kafka.js.org/docs/getting-started)
+
+For each microservice a package under the `packages/node/events` folder is created that exposes a Producer class and a Consumer class.
+
+Further details can be found at the [README.md](packages/node/events/README.md)
+
 <!-- Getting Started -->
 
 ## :hammer_and_wrench: Getting Started
@@ -271,7 +283,7 @@ To run this project, you will need to add the following environment variables to
 
 ### :bangbang: Prerequisites
 
-This project uses Yarn as package manager
+This project uses Yarn as package manager and docker for development.
 
 ```bash
 npm install --global yarn
@@ -324,6 +336,12 @@ Clone the project
 Go to the project directory
 
 Install dependencies
+
+Start the docker containers
+
+```bash
+make compose-dev
+```
 
 Start the server
 

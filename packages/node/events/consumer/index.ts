@@ -1,23 +1,25 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable no-console */
-import { Consumer, Kafka, KafkaConfig } from "kafkajs";
+import { Consumer as KafkaConsumer, Kafka, KafkaConfig } from "kafkajs";
 
-class KafkaConsumer<N extends { [eventName: string]: string }> {
+class Consumer<E extends { [eventName: string]: string }> {
   private kafka: Kafka;
 
-  private consumer: Consumer;
+  private consumer: KafkaConsumer;
+
+  private isInitialised = false;
 
   topic: string;
 
-  events: N;
+  events: E;
 
-  constructor(possibleEvents: N, topic: string, kafkaConfig?: KafkaConfig) {
+  constructor(possibleEvents: E, topic: string, kafkaConfig?: KafkaConfig) {
     if (!process.env.KAFKA_BROKERS)
       throw new Error("Missing .env key : KAFKA_BROKERS");
     if (!process.env.MICROSERVICE_NAME)
       throw new Error("Missing .env key : MICROSERVICE_NAME");
     this.events = possibleEvents;
-    console.log("initializing Kafka producer connection");
+    console.log("initializing Kafka consumer connection");
 
     this.topic = topic;
     this.kafka = new Kafka({
@@ -36,10 +38,28 @@ class KafkaConsumer<N extends { [eventName: string]: string }> {
     });
   }
 
-  async subscribe<T extends Record<string, unknown>>(
-    eventName: keyof N,
+  async subscribeToAll<T extends Record<string, unknown>>(
     onMessageReceived: (message: T) => void
   ) {
+    await this.init();
+    await this.consumer.subscribe({
+      topic: new RegExp(`${this.topic}`, "g"),
+      fromBeginning: true,
+    });
+
+    await this.consumer.run({
+      eachMessage: async ({ message }) => {
+        // TODO: update deserializer to follow the same algorithm as serializer
+        onMessageReceived(JSON.parse(message.value?.toString() || ""));
+      },
+    });
+  }
+
+  async subscribe<T extends Record<string, unknown>>(
+    eventName: keyof E,
+    onMessageReceived: (message: T, key?: string) => void
+  ) {
+    await this.init();
     if (!this.events[eventName])
       throw new Error(
         `Event ${eventName} is not defined in the possible events`
@@ -52,7 +72,11 @@ class KafkaConsumer<N extends { [eventName: string]: string }> {
 
     await this.consumer.run({
       eachMessage: async ({ message }) => {
-        onMessageReceived(JSON.parse(message.value?.toString() || ""));
+        // TODO: update deserializer to follow the same algorithm as serializer
+        onMessageReceived(
+          JSON.parse(message.value?.toString() || ""),
+          message.key?.toString()
+        );
       },
     });
 
@@ -60,11 +84,13 @@ class KafkaConsumer<N extends { [eventName: string]: string }> {
   }
 
   async init() {
+    if (this.isInitialised) return this;
     try {
       await this.consumer.connect();
       console.log(
-        "Kafka producer connected successfully you can now send messages"
+        "Kafka consumer connected successfully you can now send messages"
       );
+      this.isInitialised = true;
     } catch (error) {
       console.error("Error connecting to Kafka producer", error);
     }
@@ -73,4 +99,4 @@ class KafkaConsumer<N extends { [eventName: string]: string }> {
   }
 }
 
-export default KafkaConsumer;
+export default Consumer;

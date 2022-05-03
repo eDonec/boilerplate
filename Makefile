@@ -20,7 +20,7 @@ auth:
 	docker build -f .docker/Dockerfile.auth -t auth .
 
 compose:
-	docker compose up --build --force-recreate
+	docker compose up  --build --force-recreate -d --remove-orphans
 
 image=auth
 test:
@@ -31,4 +31,4 @@ update:
 	docker compose up --no-deps -d $(image) --build --force-recreate
 
 compose-dev:
-	docker compose  -f docker-compose.dev.yml up --build --force-recreate -d
+	docker compose  -f docker-compose.dev.yml up --build --force-recreate -d --remove-orphans

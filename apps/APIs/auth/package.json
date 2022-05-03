@@ -28,9 +28,9 @@
     "express": "4.18.0",
     "field-validator": "*",
     "jsonwebtoken": "8.5.1",
-    "kafkajs": "^1.16.0",
     "mongodb-memory-server": "8.5.1",
     "mongoose": "6.3.1",
+    "auth-events": "*",
     "nanoid": "3.3.3",
     "shared-types": "*",
     "token": "*"

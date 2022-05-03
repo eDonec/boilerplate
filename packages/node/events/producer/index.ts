@@ -1,23 +1,30 @@
 /* eslint-disable no-console */
-import { CompressionTypes, Kafka, KafkaConfig, Producer } from "kafkajs";
+import {
+  CompressionTypes,
+  Kafka,
+  KafkaConfig,
+  Producer as KafkaProducer,
+} from "kafkajs";
 
-class KafkaProducer<N extends { [eventName: string]: string }> {
+class Producer<E extends { [eventName: string]: string }> {
   private kafka: Kafka;
 
-  private producer: Producer;
+  private producer: KafkaProducer;
+
+  private isInitialised = false;
 
   private topic: string;
 
-  private events: N;
+  private events: E;
 
-  constructor(possibleEvents: N, kafkaConfig?: KafkaConfig) {
+  constructor(possibleEvents: E, kafkaConfig?: KafkaConfig) {
     if (!process.env.KAFKA_BROKERS)
       throw new Error("Missing .env key : KAFKA_BROKERS");
     if (!process.env.MICROSERVICE_NAME)
       throw new Error("Missing .env key : MICROSERVICE_NAME");
     this.events = possibleEvents;
     console.log("initializing Kafka producer connection");
-
+    // TODO : make updates to kafka config to user replicas, retries and leader managements
     this.topic = process.env.MICROSERVICE_NAME;
     this.kafka = new Kafka({
       ...(kafkaConfig || {}),
@@ -31,8 +38,9 @@ class KafkaProducer<N extends { [eventName: string]: string }> {
 
   async send<T extends Record<string, unknown>>(
     message: string | T,
-    eventName: keyof N
+    eventName: keyof E
   ) {
+    await this.init();
     if (!this.events[eventName])
       throw new Error(
         `Event ${eventName} is not defined in the possible events`
@@ -40,7 +48,8 @@ class KafkaProducer<N extends { [eventName: string]: string }> {
 
     const response = await this.producer.send({
       topic: `${this.topic}-${eventName}`,
-      messages: [{ value: JSON.stringify(message) }],
+      // TODO: update serializer to use a more efficient algorithm
+      messages: [{ value: JSON.stringify(message), key: eventName as string }],
       compression: CompressionTypes.GZIP,
     });
 
@@ -58,11 +67,13 @@ class KafkaProducer<N extends { [eventName: string]: string }> {
   }
 
   async init() {
+    if (this.isInitialised) return this;
     try {
       await this.producer.connect();
       console.log(
         "Kafka producer connected successfully you can now send messages"
       );
+      this.isInitialised = true;
     } catch (error) {
       console.error("Error connecting to Kafka producer", error);
     }
@@ -71,4 +82,4 @@ class KafkaProducer<N extends { [eventName: string]: string }> {
   }
 }
 
-export default KafkaProducer;
+export default Producer;
