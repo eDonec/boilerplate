@@ -260,6 +260,8 @@ To run this project, you will need to add the following environment variables to
 `TOKEN_EXPIRES_IN`
 `REFRESH_TOKEN_EXPIRES_IN`
 `NUMBER_OF_AUTH_TRIALS`
+`KAFKA_BROKERS`
+`MICROSERVICE_NAME`
 
 <!-- Getting Started -->
 

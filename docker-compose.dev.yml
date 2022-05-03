@@ -1,20 +1,68 @@
 version: "3.9"
 services:
-  front:
-    build:
-      context: ./apps/front
-      dockerfile: Dockerfile.dev
-    command:
-      - NODE_OPTIONS='--inspect'
-      - yarn
-      - start
-    ports:
-      - "3000:3000"
-      - "9229:9229"
-    volumes:
-      - ./apps/front:/usr/src/app
-      - /usr/src/app/node_modules
+  imgproxy:
+    image: darthsim/imgproxy:latest
+    restart: always
     environment:
-      - NODE_ENV=development
-      - DEBUG=true
-      - ENV NEXT_TELEMETRY_DISABLED=1
+      - IMGPROXY_USE_S3=true
+      - IMGPROXY_S3_REGION=eu-west-3
+      - STORAGE_PROVIDER=S3
+      - STORAGE_PATH=edonec-turborepo-cache
+      - AWS_ACCESS_KEY_ID=AKIARU2MX2BV4F7KRTMF
+      - AWS_SECRET_ACCESS_KEY=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
+      - IMGPROXY_BIND=:3000
+      - IMGPROXY_CACHE_CONTROL_PASSTHROUGH=true
+      - IMGPROXY_SET_CANONICAL_HEADER=true
+      - IMGPROXY_USE_ETAG=true
+      - IMGPROXY_JPEG_PROGRESSIVE=true
+      - IMGPROXY_JPEG_TRELLIS_QUANT=true
+      - IMGPROXY_JPEG_OVERSHOOT_DERINGING=true
+      - IMGPROXY_ENABLE_WEBP_DETECTION=true
+      - IMGPROXY_ENFORCE_WEBP=true
+    networks:
+      - main-network
+  proxy-balancer:
+    restart: always
+    build:
+      args:
+        - PROXY_BALANCER_PATH=./proxy-balancer-dev.conf
+      context: .
+      dockerfile: ./.docker/Dockerfile.proxy-balancer
+    depends_on:
+      - imgproxy
+    ports:
+      - 3005:80
+    networks:
+      - main-network
+  zookeeper:
+    image: confluentinc/cp-zookeeper:7.0.1
+    container_name: zookeeper
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+    networks:
+      - main-network
+
+  broker:
+    image: confluentinc/cp-kafka:7.0.1
+    container_name: broker
+    ports:
+      # To learn about configuring Kafka for access across networks see
+      # https://www.confluent.io/blog/kafka-client-cannot-connect-to-broker-on-aws-on-docker-etc/
+      - "9092:9092"
+    depends_on:
+      - zookeeper
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: "zookeeper:2181"
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_INTERNAL:PLAINTEXT
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092,PLAINTEXT_INTERNAL://broker:29092
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+    networks:
+      - main-network
+
+networks:
+  main-network:
+    driver: bridge
