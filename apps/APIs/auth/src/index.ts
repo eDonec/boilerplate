@@ -2,45 +2,26 @@
 import { json } from "body-parser";
 import clsx from "core-utils/clsx";
 import express from "express";
-import KafkaConsumer from "KafkaConsumer";
-import KafkaProducer from "KafkaProducer";
 import { connect, ConnectOptions } from "mongoose";
 import "dotenv/config";
 
 import router from "./routes";
 
-enum Events {
-  UserCreated = "UserCreated",
-  UserUpdated = "UserUpdated",
-  UserDeleted = "UserDeleted",
-}
-(async () => {
-  const consumer = await new KafkaConsumer(Events, "auth").init();
-
-  consumer.subscribe(
-    "UserCreated",
-    (message: { this: { is: string; test: string } }) => {
-      console.log(message);
-    }
-  );
-})();
-
-(async () => {
-  const producer = await new KafkaProducer(Events).init();
-
-  setInterval(() => {
-    producer.send({ this: { is: "a", test: "message" } }, "UserCreated");
-  }, 3000);
-  setInterval(() => {
-    producer.send(
-      { this: { is: "not", test: "string updated" } },
-      "UserUpdated"
-    );
-  }, 2500);
-})();
 const app = express();
 
 const port = process.env.PORT || 4000;
+
+// const producer = new AuthProducer();
+
+// setInterval(() => {
+//   producer.emit.UserCreated({ authId: "hello" });
+// }, 3000);
+
+// const consumer = new AuthConsumer();
+
+// consumer.subscribe.UserCreated((message) => {
+//   console.log(message);
+// });
 
 app.use(json());
 

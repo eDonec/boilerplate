@@ -27,7 +27,8 @@
     "packages/node/*",
     "packages/SDK/browser/*",
     "packages/SDK/node/*",
-    "packages/node/api-types/*"
+    "packages/node/api-types/*",
+    "packages/node/events/*"
   ],
   "lint-staged": {
     "*.config.js": [
