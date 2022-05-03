@@ -36,12 +36,6 @@ router.post(
   asyncAuthZValidators.checkAuthRole,
   authNController.signInClassic
 );
-router.get(
-  `${BASE_ROUTE}/refresh-token`,
-  authNValidators.tokenValidator(true),
-  asyncAuthNValidators.findAndValidateAuthClientByRefreshToken,
-  authNController.refreshAccessToken
-);
 
 router.get(
   `${BASE_ROUTE}/logout`,
