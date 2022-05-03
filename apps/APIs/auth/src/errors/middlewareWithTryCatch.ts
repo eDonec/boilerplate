@@ -8,10 +8,10 @@ const middlewareWithTryCatch = <T = IMiddleware>(
   failstatus?: StatusCodes
 ): T =>
   // @ts-expect-error
-  ((req, res, next) => {
+  (async (req, res, next) => {
     try {
       // @ts-expect-error
-      middleware(req, res, next);
+      await middleware(req, res, next);
     } catch (error) {
       if (error instanceof CustomInputError)
         res.status(StatusCodes.Unauthorized).send({
