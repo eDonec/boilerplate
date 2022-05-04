@@ -25,7 +25,7 @@ export interface IProps {
 
   label?: string;
 
-  onChange?: (files: IFileWithPreview) => void;
+  onChange: (files: IFileWithPreview) => void;
   error?: string;
   name: string;
 }

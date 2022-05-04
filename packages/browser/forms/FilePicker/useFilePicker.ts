@@ -9,7 +9,7 @@ export interface IFileWithPreview extends File {
 type FilePickerProps = {
   maxFiles: number;
   accept?: string | string[] | undefined;
-  onChange?: (files: IFileWithPreview) => void;
+  onChange: (files: IFileWithPreview) => void;
   errors?: (error: FileRejection[]) => void;
 };
 export const useFilePicker = ({

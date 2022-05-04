@@ -20,21 +20,26 @@
 #### Import
 
 ```typescript
-import { RawFilePicker } from "forms";
+import RawFilePicker from "forms/FilePicker/RawFilePicker";
 ```
 
 #### Example Usage
 
 ```typescript
-import { RawFilePicker } from "forms";
+import RawFilePicker from "forms/FilePicker/RawFilePicker";
+import { IFileWithPreview } from "forms/FilePicker/useFilePicker";
 
+const handleChange = (file: IFileWithPreview) => {
+  console.log(file);
+};
 const FilePicker = () => (
   <RawFilePicker
     name="image"
-    label="Click to select file"
-    accept=".jpeg,.jpg,.docx,.pdf"
-    maxFiles={2}
-  ></RawFilePicker>;
+    label="Click to select image"
+    accept=".jpeg,.jpg,.png,.docx,.pptx,.pdf,.xlsx"
+    maxFiles={10}
+    onChange={handleChange}
+  ></RawFilePicker>
 );
 
 export default FilePicker;
@@ -48,7 +53,7 @@ export default FilePicker;
 | label    | string                           | the form picker label.                       | False    |
 | error    | string                           | Shows an error message if truthy             | False    |
 | maxFiles | number                           | Maximum accepted number of files             | False    |
-| onChange | files: IFileWithPreview) => void | Fired when the files inside dropzone change. | False    |
+| onChange | files: IFileWithPreview) => void | Fired when the files inside dropzone change. | True     |
 | accept   | string, string[]                 | Set accepted file types                      | False    |
 | value    | string, string[]                 | the value of upload file                     | False    |
 
