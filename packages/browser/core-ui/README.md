@@ -8,12 +8,12 @@
 
 - [core-ui](#core-ui)
   - [:notebook_with_decorative_cover: Table of content](#notebook_with_decorative_cover-table-of-content)
-  - [List of available core-ui inputs](#list-of-available-core-ui-inputs)
+  - [List of available core-ui components](#list-of-available-core-ui-components)
   - [Installation](#installation)
 
-<!-- List of available core-ui inputs -->
+<!-- List of available core-ui components -->
 
-## List of available core-ui inputs
+## List of available core-ui components
 
 [Modal](Modal/README.md)
 [AlertDialog](AlertDialog/README.md)

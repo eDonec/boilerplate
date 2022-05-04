@@ -129,7 +129,7 @@ const HomePage = () => {
             submit
           </Button>
           <AlertDialog
-            title="title"
+            title="titre"
             message="Etes-vous sur de vouloir continuer?"
             confirmMessage="Confirmer"
             cancelMessage="Annuler"
@@ -143,14 +143,18 @@ const HomePage = () => {
       <h2 className="my-3">Redux Counter : {count}</h2>
       <div className="flex flex-col gap-2">
         <div className="flex gap-2">
-          <Button disabled={count === 0 || isLoading} onClick={decrement}>
+          <Button
+            primary
+            disabled={count === 0 || isLoading}
+            onClick={decrement}
+          >
             {t("user.activation")}
           </Button>
-          <Button disabled={isLoading} onClick={increment}>
+          <Button primary disabled={isLoading} onClick={increment}>
             {t("api.notFound")}
           </Button>
         </div>
-        <Button onClick={setAsync} isLoading={isLoading}>
+        <Button outline onClick={setAsync} isLoading={isLoading}>
           {t("api.updated")}
         </Button>
       </div>
