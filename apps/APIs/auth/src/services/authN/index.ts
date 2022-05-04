@@ -31,6 +31,7 @@ export const signUpClassic = async ({
   });
 
   await newAuthClient.save();
+
   producer.emit.UserCreated({
     email,
     userName: newAuthClient.userName,

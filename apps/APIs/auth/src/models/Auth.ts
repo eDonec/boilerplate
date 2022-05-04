@@ -1,5 +1,5 @@
 import { AuthDocument, AuthModel } from "auth-types/models/Auth";
-import { model, Schema, Types } from "mongoose";
+import { model, Schema } from "mongoose";
 import {
   ACCESS_TYPE,
   AUTH_PROVIDERS,
@@ -47,7 +47,7 @@ const schema = new Schema<AuthDocument>({
   },
   sessions: [String],
   role: {
-    type: Types.ObjectId,
+    type: String,
     ref: "Role",
   },
   customAccessList: {
