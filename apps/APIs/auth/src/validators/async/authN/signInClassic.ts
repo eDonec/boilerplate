@@ -15,6 +15,7 @@ export const signInClassicValidator: IMiddleware = middlewareWithTryCatch(
       email,
       userName,
     }: AuthNRouteTypes["/n/sign-in/classic"]["POST"]["body"] = req.body;
+
     const authUsersByUserNameOrEmail = await Auth.findOne(
       userName
         ? {

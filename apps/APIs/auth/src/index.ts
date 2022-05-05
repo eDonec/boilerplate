@@ -11,18 +11,6 @@ const app = express();
 
 const port = process.env.PORT || 4000;
 
-// const producer = new AuthProducer();
-
-// setInterval(() => {
-//   producer.emit.UserCreated({ authId: "hello" });
-// }, 3000);
-
-// const consumer = new AuthConsumer();
-
-// consumer.subscribe.UserCreated((message) => {
-//   console.log(message);
-// });
-
 app.use(json());
 
 const databaseConfig: ConnectOptions = {

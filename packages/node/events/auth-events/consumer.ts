@@ -13,7 +13,7 @@ class AuthConsumer {
 
   subscribe: Subscriber;
 
-  sucscribeToAll;
+  subscribeToAll;
 
   constructor() {
     this.consumer = new Consumer(AuthEvents, "auth");
@@ -32,7 +32,7 @@ class AuthConsumer {
       };
     }
     this.subscribe = sub as Subscriber;
-    this.sucscribeToAll = (
+    this.subscribeToAll = (
       onMessageReceived: (
         // TODO: Fix typing here to infer it from the AuthEventsPayload directly
         message:

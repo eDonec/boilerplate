@@ -3,7 +3,7 @@ import { Router } from "express";
 import { AUTH_PROVIDERS } from "shared-types";
 import * as asyncAuthNValidators from "validators/async/authN";
 import * as asyncAuthZValidators from "validators/async/authZ";
-import * as authNValidators from "validators/authN";
+import * as authNValidators from "validators/sync/authN";
 
 const router = Router();
 
