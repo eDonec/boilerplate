@@ -6,7 +6,9 @@ module.exports = {
   coverageDirectory: "../coverage",
   setupFilesAfterEnv: [
     ...defaultConfig.setupFilesAfterEnv,
-    "<rootDir>/../jest.setup.js",
+    "<rootDir>/__test__/setupFile.ts",
   ],
   transformIgnorePatterns: ["<rootDir>/node_modules/(?!mongodb-memory-server)"],
+  globalSetup: "<rootDir>/__test__/globalSetup.ts",
+  globalTeardown: "<rootDir>/__test__/globalTeardown.ts",
 };
