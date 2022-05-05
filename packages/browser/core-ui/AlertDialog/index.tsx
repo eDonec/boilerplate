@@ -1,12 +1,5 @@
-import ReactChildrenProps from "shared-types/ReactChildren";
-
 import Button from "../Button";
-import Modal from "../Modal";
-
-export interface ModalProps extends ReactChildrenProps {
-  isOpen: boolean;
-  handleClose: () => void;
-}
+import Modal, { ModalProps } from "../Modal";
 
 export interface DialogAlertProps extends Omit<ModalProps, "children"> {
   title: string;

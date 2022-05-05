@@ -13,6 +13,7 @@
     - [Example Usage](#example-usage)
     - [API](#api)
       - [Props](#props)
+      - [Hook explanation](#hook-explanation)
     - [Types](#types)
       - [:camera: Screenshots](#camera-screenshots)
   - [:hammer_and_wrench: Getting Started](#hammer_and_wrench-getting-started)
@@ -72,13 +73,47 @@ export default HomePage;
 
 #### Props
 
-| Name           | Type       | Description                                                                       | Required |
-| -------------- | ---------- | --------------------------------------------------------------------------------- | -------- |
-| title          | string     | An accessible name to be announced when the dialog is opened.                     | True     |
-| message        | string     | An accessible description to be announced when the dialog is opened.              | True     |
-| confirmMessage | string     | An accessible confirmation button when the dialog is opened.                      | True     |
-| cancelMessage  | string     | An accessible return button when the dialog is opened.                            | True     |
-| onSubmit       | function() | Set a submition to be invoked when the specified button of the dialog is pressed. | True     |
+| Name           | Type       | Description                                                                                                                               | Required |
+| -------------- | ---------- | ----------------------------------------------------------------------------------------------------------------------------------------- | -------- |
+| title          | string     | An accessible name to be announced when the dialog is opened.                                                                             | True     |
+| message        | string     | An accessible description to be announced when the dialog is opened.                                                                      | True     |
+| confirmMessage | string     | An accessible confirmation button when the dialog is opened.                                                                              | True     |
+| cancelMessage  | string     | An accessible return button when the dialog is opened.                                                                                    | True     |
+| isOpen         | boolean    | Open and close the Modal .                                                                                                                | True     |
+| handleClose    | function() | fired when the Modal is opening.                                                                                                          | True     |
+| onSubmit       | function() | it MUST a submit function that is retrieved from the useAlertDialog hook and that wraps the actual submit function that you need to call. | True     |
+
+#### Hook explanation
+
+useAlertDialog:
+
+First function
+
+```typescript
+ handleSubmit(submitionArgs:T)=>void
+```
+
+Open the modal and submit the arguments in it.
+
+Second function
+
+```typescript
+ handleSuccess()=>void
+```
+
+Which close the modal if the arguments were submited.
+
+We also added a new prop on modalProps:
+
+```typescript
+ onsubmit:handleSuccess,
+```
+
+Finally
+
+```typescript
+ return [modalProps, handleSubmit],
+```
 
 <!--  AlertDialogProps-Types -->
 
