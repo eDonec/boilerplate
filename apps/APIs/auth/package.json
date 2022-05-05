@@ -47,5 +47,10 @@
     "supertest": "^6.2.3",
     "ts-node": "10.7.0",
     "tsconfig": "*"
+  },
+  "config": {
+    "mongodbMemoryServer": {
+      "debug": "1"
+    }
   }
 }
