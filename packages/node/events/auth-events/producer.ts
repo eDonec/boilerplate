@@ -15,6 +15,7 @@ class AuthProducer {
 
   constructor() {
     this.producer = new Producer(AuthEvents);
+
     const emiter: EventSenders | Record<string, unknown> = {};
 
     for (let index = 0; index < events.length; index++) {

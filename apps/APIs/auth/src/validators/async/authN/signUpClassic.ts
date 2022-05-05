@@ -6,6 +6,7 @@ import StatusCodes from "shared-types/StatusCodes";
 export const signUpClassicValidator: IMiddleware = async (req, res, next) => {
   const { email, userName }: AuthNRouteTypes["/n/classic"]["POST"]["body"] =
     req.body;
+
   const authUsersByEmail = await Auth.findOne({ email });
 
   if (authUsersByEmail) {
