@@ -5,7 +5,6 @@ import express from "express";
 import { seed } from "seed/seed";
 import { StatusCodes } from "shared-types";
 import supertest from "supertest";
-import "dotenv/config";
 
 import authNRoutes from "..";
 
@@ -22,11 +21,41 @@ beforeEach(async () => {
 });
 
 describe("POST /n/classic", () => {
-  it("should throw validation error", async () => {
-    const response = await supertest(app)
-      .post("/n/classic")
-      .send({ email: "test@example.com", password: "password" });
+  describe("validation tests", () => {
+    it("should respond successfully to email and password", async () => {
+      const response = await supertest(app)
+        .post("/n/classic")
+        .send({ email: "test@example.com", password: "password" });
 
-    expect(response.status).toEqual(StatusCodes.Created);
+      expect(response.status).toEqual(StatusCodes.Created);
+    });
+    it("should throw a validation error if email is badly formatted", async () => {
+      const response = await supertest(app)
+        .post("/n/classic")
+        .send({ email: "testexample.com", password: "password" });
+
+      expect(response.status).toEqual(StatusCodes.Unauthorized);
+    });
+    it("should throw a validation error if password is badly formatted", async () => {
+      const response = await supertest(app)
+        .post("/n/classic")
+        .send({ email: "testexample.com", password: "123" });
+
+      expect(response.status).toEqual(StatusCodes.Unauthorized);
+    });
+    it("should throw a validation error if password field is absent", async () => {
+      const response = await supertest(app)
+        .post("/n/classic")
+        .send({ email: "testexample.com" });
+
+      expect(response.status).toEqual(StatusCodes.Unauthorized);
+    });
+    it("should throw a validation error if email field is absent", async () => {
+      const response = await supertest(app)
+        .post("/n/classic")
+        .send({ password: "password" });
+
+      expect(response.status).toEqual(StatusCodes.Unauthorized);
+    });
   });
 });
