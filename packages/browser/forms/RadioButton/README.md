@@ -1,18 +1,33 @@
-## RadioButton
+# RadioButton
 
 <!-- RawRadioButton -->
 
-### RawRadioButton
+## Table of content
+
+- [RadioButton](#radiobutton)
+  - [Table of content](#table-of-content)
+  - [RawRadioButton](#rawradiobutton)
+    - [Import](#import)
+    - [Example Usage](#example-usage)
+      - [Props](#props)
+  - [type IRadioButton](#type-iradiobutton)
+  - [RadioButton](#radiobutton-1)
+    - [Import](#import-1)
+    - [Example Usage](#example-usage-1)
+      - [Props](#props-1)
+  - [Types](#types)
+
+## RawRadioButton
 
 <!-- RawSelect-Import -->
 
-#### Import
+### Import
 
 ```typescript
 import Select from "forms/RadioButton/RawRadioButton";
 ```
 
-#### Example Usage
+### Example Usage
 
 ```typescript
 export interface RadioButtonProps extends RawRadioButtonProps {
@@ -36,7 +51,7 @@ const RadioButton: React.FC<RadioButtonProps> = ({ validate, ...props }) => {
 };
 ```
 
-##### Props
+#### Props
 
 | Name   | Type           | Description                      | Required |
 | ------ | -------------- | -------------------------------- | -------- |
@@ -44,18 +59,18 @@ const RadioButton: React.FC<RadioButtonProps> = ({ validate, ...props }) => {
 | values | IRadioButton[] | The list of the radio's value    | True     |
 | error  | string         | Shows an error message if truthy | False    |
 
-### type IRadioButton
+## type IRadioButton
 
 | Name  | Type   | Required |
 | ----- | ------ | -------- |
 | label | string | True     |
 | value | string | True     |
 
-### RadioButton
+## RadioButton
 
 <!-- RadioButton-import -->
 
-#### Import
+### Import
 
 ```typescript
 import RadioButton from "forms/RadioButton";
@@ -63,7 +78,7 @@ import RadioButton from "forms/RadioButton";
 
 <!--  RadioButton-Usage -->
 
-#### Example Usage
+### Example Usage
 
 ```typescript
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
@@ -96,7 +111,7 @@ export default HomePage;
 
 <!--  Select-Props -->
 
-##### Props
+#### Props
 
 | Name      | Type           | Description                   | Required |
 | --------- | -------------- | ----------------------------- | -------- |
@@ -104,6 +119,6 @@ export default HomePage;
 | values    | IRadioButton[] | The list of the radio's value | True     |
 | className | string         | Additional classnames         | False    |
 
-### Types
+## Types
 
-`TRule` : refer to <a href='../field-validator/README.md'>**this guide**</a>.
+`TRule` : refer to <a href='../../field-validator/README.md'>**this guide**</a>.

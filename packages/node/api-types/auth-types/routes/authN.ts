@@ -24,7 +24,7 @@ export interface AuthResponse {
 // TODO : Add to generator and docs
 // TODO : Use it :)
 //! TODO : code generation
-export type RouteTypes = {
+export type AuthNRouteTypes = {
   "/n/sign-in/classic": {
     POST: {
       body: ISignInClassicBody;
@@ -65,7 +65,7 @@ export type RouteTypes = {
 
 // Using Pick to throw an error in case a route changes
 export type AuthResponseRoutes = keyof Pick<
-  RouteTypes,
+  AuthNRouteTypes,
   "/n/apple" | "/n/classic" | "/n/facebook" | "/n/sign-in/classic"
 >;
 

@@ -10,6 +10,11 @@ A Boilerplate for Microservices NodeJS Architecture
 
 </p>
 
+<h3>Note</h3>
+<p style="max-width:400px; text-align: left;" >      The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL
+      NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED",  "MAY", and
+      "OPTIONAL" in this document are to be interpreted as described in
+      <a href="https://datatracker.ietf.org/doc/html/rfc2119">RFC 2119</a>.</p>
 <!-- Links to be added -->
 
 <!-- <h4>
@@ -34,47 +39,32 @@ A Boilerplate for Microservices NodeJS Architecture
 
 <!-- Table of Contents -->
 
-# :notebook_with_decorative_cover: Table of Contents
+## :notebook_with_decorative_cover: Table of Contents
 
 - [:notebook_with_decorative_cover: Table of Contents](#notebook_with_decorative_cover-table-of-contents)
-
-  - [:star2: About the Project](#star2-about-the-project)
-
+- [:star2: About the Project](#star2-about-the-project)
   - [:camera: Screenshots](#camera-screenshots)
-
   - [:space_invader: Tech Stack](#space_invader-tech-stack)
-
-  - [:space_invader: Available Mciroservices](#space_invader-available-microservices)
-
-  - [:dart: Features](#dart-features-so-far)
-
+  - [:space_invader: Available Microservices](#space_invader-available-microservices)
+  - [:dart: Features (so far)](#dart-features-so-far)
   - [:key: Environment Variables](#key-environment-variables)
-
-  - [:key: Environment Variables Per Project](#key-environment-variables-per-project)
-
+  - [:key: Environment Variables per project](#key-environment-variables-per-project)
+    - [CRA](#cra)
+    - [express](#express)
+  - [Eventing](#eventing)
 - [:hammer_and_wrench: Getting Started](#hammer_and_wrench-getting-started)
-
   - [:bangbang: Prerequisites](#bangbang-prerequisites)
-
   - [:gear: Installation](#gear-installation)
-
-  - [:microscope: Running Global Tests](#microscope-running-global-tests)
-
-  - [:microscope: Running Project Tests](#microscope-running-project-tests)
-
+  - [:gear: Adding dependency to a project](#gear-adding-dependency-to-a-project)
+  - [:microscope: Running global Tests](#microscope-running-global-tests)
+  - [:microscope: Running project Tests](#microscope-running-project-tests)
   - [:gear: Run Locally](#gear-run-locally)
-
   - [:inbox_tray: Adding Package to app](#inbox_tray-adding-package-to-app)
-
-  - [:triangular_flag_on_post: Deployment](#triangular_flag_on_post-deployment)
-
-  - [:eyes: Usage](#eyes-usage)
-
-  - [:earth_africa: Roadmap](#earth_africa-roadmap)
-
+  - [:triangular_flag_on_post: Deployment and build](#triangular_flag_on_post-deployment-and-build)
+- [:eyes: Usage](#eyes-usage)
+- [:earth_africa: Roadmap](#earth_africa-roadmap)
 - [:warning: License](#warning-license)
-
-<!-- About the Project -->
+  <!-- About the Project -->
 
 ## :star2: About the Project
 
@@ -239,6 +229,7 @@ A Boilerplate for Microservices NodeJS Architecture
 
 ### :dart: Features (so far)
 
+- Eventing with Apache Kafka
 - Authentication
 
   - Role management
@@ -271,6 +262,18 @@ To run this project, you will need to add the following environment variables to
 `TOKEN_EXPIRES_IN`
 `REFRESH_TOKEN_EXPIRES_IN`
 `NUMBER_OF_AUTH_TRIALS`
+`KAFKA_BROKERS`
+`MICROSERVICE_NAME`
+
+### Eventing
+
+For eveventing this project uses the open source project [Apache Kafka](https://kafka.apache.org/)
+
+For the client we use the one made by [Confluent](https://www.confluent.io/) the co-authors of apache kafka [Apache Kafka Node.js client](https://kafka.js.org/docs/getting-started)
+
+For each microservice a package under the `packages/node/events` folder is created that exposes a Producer class and a Consumer class.
+
+Further details can be found at the [README.md](packages/node/events/README.md)
 
 <!-- Getting Started -->
 
@@ -280,7 +283,7 @@ To run this project, you will need to add the following environment variables to
 
 ### :bangbang: Prerequisites
 
-This project uses Yarn as package manager
+This project uses Yarn as package manager and docker for development.
 
 ```bash
 npm install --global yarn
@@ -334,6 +337,12 @@ Go to the project directory
 
 Install dependencies
 
+Start the docker containers
+
+```bash
+make compose-dev
+```
+
 Start the server
 
 ```bash
@@ -348,9 +357,9 @@ To add a package to an app, please follow <a href='readme-assets/add-package.md'
 
 <!-- Deployment -->
 
-### :triangular_flag_on_post: Deployment
+### :triangular_flag_on_post: Deployment and build
 
-Work in progress...
+Follow this [guide](readme-assets/docker-files.md) to build all apps in projects.
 
 <!-- Usage -->
 

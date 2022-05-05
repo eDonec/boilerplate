@@ -16,8 +16,13 @@ const packages = [];
 packages.push(
   ...modules.map((module) => path.join(__dirname, "../../packages", module))
 );
-
+/** @type {import('@craco/craco').CracoConfig} */
 module.exports = {
+  jest: {
+    configure: {
+      ...require("config/jest/jest-cra"),
+    },
+  },
   webpack: {
     configure: (webpackConfig) => {
       const { isFound, match } = getLoader(

@@ -68,7 +68,10 @@ export default function HomePage() {
               <Button onClick={() => changeLanguage("fr")}>Fr</Button>
               <Button onClick={() => changeLanguage("en")}>En</Button>
             </div>
-
+            <div>
+              Process.env variable
+              <strong>{process.env.NEXT_PUBLIC_HELLO || "Hello"}</strong>
+            </div>
             <div className="flex gap-5">
               <FormProvider {...signUpFormMethods}>
                 <form onSubmit={signUpFormMethods.handleSubmit(onSubmitSignUp)}>

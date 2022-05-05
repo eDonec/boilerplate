@@ -28,4 +28,11 @@ esbuild
     plugins: [nodeExternalsPlugin()],
     define,
   })
-  .catch(() => process.exit(1));
+  .catch(() => {
+    revert().then(() => {
+      console.log("FAILEDDDDDDDDDDDDDDDDDDDDDDDDDD");
+      process.exit(1);
+    });
+  });
+
+const revert = () => import("./scripts/postbuild.js");

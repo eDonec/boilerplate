@@ -5,7 +5,7 @@ module.exports = {
   testEnvironment: "jsdom",
   setupFilesAfterEnv: [
     "@testing-library/jest-dom",
-    path.join(__dirname, "jest-jsx-transform.config.js"),
+    path.join(__dirname, "setup/jest-jsx-transform.config.js"),
   ],
   collectCoverageFrom: ["**/src/**/*.{js,ts,jsx,tsx}"],
   moduleFileExtensions: ["js", "jsx", "json", "ts", "tsx"],

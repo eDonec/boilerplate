@@ -1,0 +1,836 @@
+{
+	"info": {
+		"_postman_id": "f7d85088-23f4-4c80-82a4-d7c66ea326f6",
+		"name": "Boilerplate",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "auth",
+			"item": [
+				{
+					"name": "n",
+					"item": [
+						{
+							"name": "Sign up classic",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "f1bc7c29-ebda-49fe-baed-5cc8b1b36bcf",
+										"type": "text/javascript",
+										"exec": [
+											"if(pm.response.code === 201){\r",
+											"    pm.collectionVariables.set(\"accessToken\", pm.response.json().token.accessToken);\r",
+											"    pm.collectionVariables.set(\"refreshToken\", pm.response.json().token.refreshToken);\r",
+											"}\r",
+											""
+										]
+									}
+								}
+							],
+							"id": "9564fafc-9835-4975-ba80-ea1b9027dc48",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"email\": \"email@example.com\",\n  \"password\": \"password\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/auth/n/classic",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"auth",
+										"n",
+										"classic"
+									]
+								}
+							},
+							"response": [
+								{
+									"id": "55a4a5e2-797e-4ef9-86f9-ee6762a591ed",
+									"name": "Successful response",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"email\": \"email223@example.com\",\n  \"password\": \"password\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/auth/n/classic",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"auth",
+												"n",
+												"classic"
+											]
+										}
+									},
+									"status": "Created",
+									"code": 201,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Server",
+											"value": "nginx"
+										},
+										{
+											"key": "Date",
+											"value": "Tue, 03 May 2022 20:17:31 GMT"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "1392"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"570-WIm84FD82WvcnYyxH/0mM4S6e2E\""
+										},
+										{
+											"key": "Expires",
+											"value": "Tue, 03 May 2022 20:17:31 GMT"
+										},
+										{
+											"key": "Cache-Control",
+											"value": "max-age=0"
+										}
+									],
+									"cookie": [],
+									"responseTime": null,
+									"body": "{\n    \"authID\": \"62718ddb69028fc2393590aa\",\n    \"token\": {\n        \"accessToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJhbGwiLCJpc3MiOiJhdXRoIiwic2lkIjoiZFlYSmhwREZuV2JOVExaLVJpV3FGIiwicGF5bG9hZCI6eyJhdXRoSWQiOiI2MjcxOGRkYjY5MDI4ZmMyMzkzNTkwYWEifSwiaWF0IjoxNjUxNjA5MDUxLCJleHAiOjE2NTE2MDkwNjF9.v9Fs9IGAA1wnrmXqVtzybSVZoTaG7Z3hL8FH8eYU7aU\",\n        \"refreshToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJhbGwiLCJpc3MiOiJhdXRoIiwic2lkIjoiZFlYSmhwREZuV2JOVExaLVJpV3FGIiwicGF5bG9hZCI6eyJhdXRoSWQiOiI2MjcxOGRkYjY5MDI4ZmMyMzkzNTkwYWEifSwiaWF0IjoxNjUxNjA5MDUxLCJleHAiOjE2NTY3OTMwNTF9.D__dPJp99gFVRuPq2kfQ7Uo6CJlKP1CsXvhv51uKPKo\"\n    },\n    \"role\": {\n        \"_id\": \"62617c67bb7034ac2c1696b2\",\n        \"name\": \"PUBLIC\",\n        \"access\": [\n            {\n                \"ressource\": \"PUBLIC\",\n                \"privileges\": [\n                    \"READ\",\n                    \"READ_SELF\",\n                    \"WRITE\",\n                    \"WRITE_SELF\",\n                    \"DELETE\",\n                    \"DELETE_SELF\",\n                    \"GRANT\",\n                    \"REVOKE\"\n                ],\n                \"meta\": null,\n                \"_id\": \"627177e369028fc2393590a0\"\n            },\n            {\n                \"ressource\": \"USER\",\n                \"privileges\": [\n                    \"READ\",\n                    \"READ_SELF\",\n                    \"WRITE\",\n                    \"WRITE_SELF\",\n                    \"DELETE\",\n                    \"DELETE_SELF\",\n                    \"GRANT\",\n                    \"REVOKE\"\n                ],\n                \"meta\": null,\n                \"_id\": \"627177e369028fc2393590a1\"\n            }\n        ],\n        \"__v\": 0,\n        \"isDefault\": true,\n        \"updatedAt\": \"2022-05-03T18:43:47.373Z\"\n    },\n    \"access\": [\n        {\n            \"_id\": \"62718ddb69028fc2393590ab\",\n            \"ressource\": \"PUBLIC\",\n            \"privileges\": [\n                \"READ\",\n                \"READ_SELF\",\n                \"WRITE\",\n                \"WRITE_SELF\",\n                \"DELETE\",\n                \"DELETE_SELF\",\n                \"GRANT\",\n                \"REVOKE\"\n            ]\n        },\n        {\n            \"ressource\": \"USER\",\n            \"privileges\": [\n                \"READ\",\n                \"READ_SELF\",\n                \"WRITE\",\n                \"WRITE_SELF\",\n                \"DELETE\",\n                \"DELETE_SELF\",\n                \"GRANT\",\n                \"REVOKE\"\n            ],\n            \"meta\": null,\n            \"_id\": \"627177e369028fc2393590a1\"\n        }\n    ]\n}"
+								},
+								{
+									"id": "74be1f39-7375-40da-9abf-90cc23b22fa8",
+									"name": "Bad response",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"email\": \"emaixample.com\",\n  \"password\": \"password\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/auth/n/classic",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"auth",
+												"n",
+												"classic"
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Server",
+											"value": "nginx"
+										},
+										{
+											"key": "Date",
+											"value": "Tue, 03 May 2022 20:18:06 GMT"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "31"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"1f-5vTZdSNxBFr6yZxEnvFEVH6GZCM\""
+										}
+									],
+									"cookie": [],
+									"responseTime": null,
+									"body": "{\n    \"message\": \"Validation error!\",\n    \"fields\": [\n        {\n            \"fieldName\": \"email\",\n            \"message\": \"email must be a valid email address\"\n        }\n    ],\n    \"name\": \"String Validation Error!\"\n}"
+								}
+							]
+						},
+						{
+							"name": "Sign in classic",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "ac199dc0-1244-4415-97d0-bcb5bee07644",
+										"type": "text/javascript",
+										"exec": [
+											"if(pm.response.code === 200){\r",
+											"    pm.collectionVariables.set(\"accessToken\", pm.response.json().token.accessToken);\r",
+											"    pm.collectionVariables.set(\"refreshToken\", pm.response.json().token.refreshToken);\r",
+											"}\r",
+											""
+										]
+									}
+								}
+							],
+							"id": "15100fd7-c93e-49c5-b015-cc86593b4527",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"email\": \"email@example.com\",\n  \"password\": \"password\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/auth/n/sign-in/classic",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"auth",
+										"n",
+										"sign-in",
+										"classic"
+									]
+								}
+							},
+							"response": [
+								{
+									"id": "06cc27e1-dcd1-43e8-8186-6a6777910356",
+									"name": "Successful response",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"email\": \"email@example.com\",\n  \"password\": \"password\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/auth/n/sign-in/classic",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"auth",
+												"n",
+												"sign-in",
+												"classic"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										}
+									],
+									"cookie": [],
+									"responseTime": null,
+									"body": "{\n    \"authID\": \"627177d6c5be8c9700df2ba4\",\n    \"token\": {\n        \"accessToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJhbGwiLCJpc3MiOiJhdXRoIiwic2lkIjoiM3ljT3RuYWxiSktSQzFsV1NFYmlkIiwicGF5bG9hZCI6eyJhdXRoSWQiOiI2MjcxNzdkNmM1YmU4Yzk3MDBkZjJiYTQifSwiaWF0IjoxNjUxNjEwMzQyLCJleHAiOjE2NTE2MTAzNTJ9.0ucsQgaSkMUW-CfGSPFKrhH9WTwxhJZrOUkG0wWjlNc\",\n        \"refreshToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJhbGwiLCJpc3MiOiJhdXRoIiwic2lkIjoiM3ljT3RuYWxiSktSQzFsV1NFYmlkIiwicGF5bG9hZCI6eyJhdXRoSWQiOiI2MjcxNzdkNmM1YmU4Yzk3MDBkZjJiYTQifSwiaWF0IjoxNjUxNjEwMzQyLCJleHAiOjE2NTY3OTQzNDJ9.j8zNboS2hjblp1DzsFusaGJm3DiNwSKM4qC54sRJ0ao\"\n    },\n    \"role\": {\n        \"_id\": \"62617c67bb7034ac2c1696b2\",\n        \"name\": \"PUBLIC\",\n        \"access\": [\n            {\n                \"ressource\": \"PUBLIC\",\n                \"privileges\": [\n                    \"READ\",\n                    \"READ_SELF\",\n                    \"WRITE\",\n                    \"WRITE_SELF\",\n                    \"DELETE\",\n                    \"DELETE_SELF\",\n                    \"GRANT\",\n                    \"REVOKE\"\n                ],\n                \"meta\": null,\n                \"_id\": \"62718de7d2fa98628393c553\"\n            },\n            {\n                \"ressource\": \"USER\",\n                \"privileges\": [\n                    \"READ\",\n                    \"READ_SELF\",\n                    \"WRITE\",\n                    \"WRITE_SELF\",\n                    \"DELETE\",\n                    \"DELETE_SELF\",\n                    \"GRANT\",\n                    \"REVOKE\"\n                ],\n                \"meta\": null,\n                \"_id\": \"62718de7d2fa98628393c554\"\n            }\n        ],\n        \"__v\": 0,\n        \"isDefault\": true,\n        \"updatedAt\": \"2022-05-03T20:17:43.288Z\"\n    },\n    \"access\": [\n        {\n            \"_id\": \"627177d6c5be8c9700df2ba5\",\n            \"ressource\": \"PUBLIC\",\n            \"privileges\": [\n                \"READ\",\n                \"READ_SELF\",\n                \"WRITE\",\n                \"WRITE_SELF\",\n                \"DELETE\",\n                \"DELETE_SELF\",\n                \"GRANT\",\n                \"REVOKE\"\n            ]\n        },\n        {\n            \"ressource\": \"USER\",\n            \"privileges\": [\n                \"READ\",\n                \"READ_SELF\",\n                \"WRITE\",\n                \"WRITE_SELF\",\n                \"DELETE\",\n                \"DELETE_SELF\",\n                \"GRANT\",\n                \"REVOKE\"\n            ],\n            \"meta\": null,\n            \"_id\": \"62718de7d2fa98628393c554\"\n        }\n    ]\n}"
+								},
+								{
+									"id": "0fa6557b-5df6-4871-9591-daf031a1df93",
+									"name": "Bad response",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"description": "Added as a part of security scheme: bearer",
+												"key": "Authorization",
+												"value": "Bearer <token>"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"email\": \"email@asdexample.com\",\n  \"password\": \"password\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/auth/n/sign-in/classic",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"auth",
+												"n",
+												"sign-in",
+												"classic"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"responseTime": null,
+									"body": "{\r\n    \"message\": \"No user was found with these credentials\",\r\n    \"stack\": \"authentication validator auth\",\r\n    \"fields\": [\r\n        \"email\",\r\n        \"userName\"\r\n    ]\r\n}"
+								}
+							]
+						},
+						{
+							"name": "Logout auth client from session by refresh token",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "8d5cf3d0-9c8b-43bc-aeab-378ee6bb9d84",
+										"type": "text/javascript",
+										"exec": [
+											"if(pm.response.code === 200){\r",
+											"    pm.collectionVariables.unset('accessToken')\r",
+											"    pm.collectionVariables.unset('refreshToken')\r",
+											"}"
+										]
+									}
+								}
+							],
+							"id": "c85a2130-8edc-409c-a91f-56bd4d5d5b64",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{refreshToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/auth/n/logout",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"auth",
+										"n",
+										"logout"
+									]
+								}
+							},
+							"response": [
+								{
+									"id": "288f1288-5cf7-41f1-abc7-49a3775318ed",
+									"name": "Successful response",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/auth/n/logout",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"auth",
+												"n",
+												"logout"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "plain",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"enabled": true
+										}
+									],
+									"cookie": [],
+									"responseTime": null,
+									"body": null
+								},
+								{
+									"id": "a99c9582-7a1b-4336-b49b-57409ba81868",
+									"name": "Bad response",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/auth/n/logout",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"auth",
+												"n",
+												"logout"
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "1393"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"571-RHnGXpMdZDllguRv9NlyXk1XDhY\""
+										},
+										{
+											"key": "Date",
+											"value": "Tue, 03 May 2022 20:21:42 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"responseTime": null,
+									"body": "{\n    \"message\": \"Token invalid or expired\",\n    \"stack\": \"Error: Token invalid or expired\\n    at new TokenValidator (C:\\\\Users\\\\nader\\\\Documents\\\\devProjects\\\\boilerplate\\\\packages\\\\node\\\\token\\\\TokenValidator.ts:36:38)\\n    at decodeAndValidateToken (C:\\\\Users\\\\nader\\\\Documents\\\\devProjects\\\\boilerplate\\\\apps\\\\APIs\\\\auth\\\\src\\\\validators\\\\authN.ts:110:17)\\n    at C:\\\\Users\\\\nader\\\\Documents\\\\devProjects\\\\boilerplate\\\\apps\\\\APIs\\\\auth\\\\src\\\\validators\\\\authN.ts:93:19\\n    at C:\\\\Users\\\\nader\\\\Documents\\\\devProjects\\\\boilerplate\\\\apps\\\\APIs\\\\auth\\\\src\\\\errors\\\\middlewareWithTryCatch.ts:14:7\\n    at Layer.handle [as handle_request] (C:\\\\Users\\\\nader\\\\Documents\\\\devProjects\\\\boilerplate\\\\node_modules\\\\express\\\\lib\\\\router\\\\layer.js:95:5)\\n    at next (C:\\\\Users\\\\nader\\\\Documents\\\\devProjects\\\\boilerplate\\\\node_modules\\\\express\\\\lib\\\\router\\\\route.js:144:13)\\n    at Route.dispatch (C:\\\\Users\\\\nader\\\\Documents\\\\devProjects\\\\boilerplate\\\\node_modules\\\\express\\\\lib\\\\router\\\\route.js:114:3)\\n    at Layer.handle [as handle_request] (C:\\\\Users\\\\nader\\\\Documents\\\\devProjects\\\\boilerplate\\\\node_modules\\\\express\\\\lib\\\\router\\\\layer.js:95:5)\\n    at C:\\\\Users\\\\nader\\\\Documents\\\\devProjects\\\\boilerplate\\\\node_modules\\\\express\\\\lib\\\\router\\\\index.js:286:22\\n    at Function.process_params (C:\\\\Users\\\\nader\\\\Documents\\\\devProjects\\\\boilerplate\\\\node_modules\\\\express\\\\lib\\\\router\\\\index.js:348:12)\"\n}"
+								},
+								{
+									"id": "9e1ebc28-367a-416b-8737-71804366cf82",
+									"name": "Bad response for disconnected user",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/auth/n/logout",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"auth",
+												"n",
+												"logout"
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "477"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"1dd-xE5oLSIo9bh9gJ4J0/3LklXmjNc\""
+										},
+										{
+											"key": "Date",
+											"value": "Tue, 03 May 2022 20:35:08 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"responseTime": null,
+									"body": "{\n    \"message\": \"User session cannot be found he is probably disconnected\",\n    \"stack\": \"Error: User session cannot be found he is probably disconnected\\n    at C:\\\\Users\\\\nader\\\\Documents\\\\devProjects\\\\boilerplate\\\\apps\\\\APIs\\\\auth\\\\src\\\\validators\\\\async\\\\tokenValidator.ts:21:13\\n    at processTicksAndRejections (internal/process/task_queues.js:95:5)\\n    at async C:\\\\Users\\\\nader\\\\Documents\\\\devProjects\\\\boilerplate\\\\apps\\\\APIs\\\\auth\\\\src\\\\errors\\\\middlewareWithTryCatch.ts:14:7\"\n}"
+								}
+							]
+						}
+					],
+					"id": "4f63d840-0808-4cd3-a78f-2c1714481041"
+				},
+				{
+					"name": "z",
+					"item": [
+						{
+							"name": "Refresh Token",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "4936a9ac-d5d2-48b3-ba01-be817ef63e49",
+										"type": "text/javascript",
+										"exec": [
+											"if(pm.response.code === 201){\r",
+											"    pm.collectionVariables.set(\"accessToken\", pm.response.text());\r",
+											"}\r",
+											""
+										]
+									}
+								}
+							],
+							"id": "8918fdea-8d23-4bd4-9b05-0a9a56a45508",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{refreshToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/auth/z/refresh-token",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"auth",
+										"z",
+										"refresh-token"
+									]
+								}
+							},
+							"response": [
+								{
+									"id": "71eb4f3c-4493-437b-bca9-2c8941335334",
+									"name": "Successful response",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/auth/z/refresh-token",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"auth",
+												"z",
+												"refresh-token"
+											]
+										}
+									},
+									"status": "Created",
+									"code": 201,
+									"_postman_previewlanguage": "html",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Content-Type",
+											"value": "text/html; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "265"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"109-ZVsP1MWpCA3NCou5uFBNjCWJt0k\""
+										},
+										{
+											"key": "Date",
+											"value": "Tue, 03 May 2022 20:26:57 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"responseTime": null,
+									"body": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJhbGwiLCJpc3MiOiJhdXRoIiwic2lkIjoiSUpGTG5TTl9zaW9yS0J0UUF0MlRiIiwicGF5bG9hZCI6eyJhdXRoSWQiOiI2MjRlOTJhZmZhNGQ5YmZlM2M5YmZlMzUifSwiaWF0IjoxNjUxNjA5NjE3LCJleHAiOjE2NTE2MDk2Mjd9.YG-8jmiO55S8S60k6pemL5yLmkPqaj0uh4UsQpzJ0eU"
+								},
+								{
+									"id": "7b54ade5-094b-456e-99af-f97cec24bb00",
+									"name": "Bad Response",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/auth/z/refresh-token",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"auth",
+												"z",
+												"refresh-token"
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "1393"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"571-RHnGXpMdZDllguRv9NlyXk1XDhY\""
+										},
+										{
+											"key": "Date",
+											"value": "Tue, 03 May 2022 20:21:57 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"responseTime": null,
+									"body": "{\n    \"message\": \"Token invalid or expired\",\n    \"stack\": \"Error: Token invalid or expired\\n    at new TokenValidator (C:\\\\Users\\\\nader\\\\Documents\\\\devProjects\\\\boilerplate\\\\packages\\\\node\\\\token\\\\TokenValidator.ts:36:38)\\n    at decodeAndValidateToken (C:\\\\Users\\\\nader\\\\Documents\\\\devProjects\\\\boilerplate\\\\apps\\\\APIs\\\\auth\\\\src\\\\validators\\\\authN.ts:110:17)\\n    at C:\\\\Users\\\\nader\\\\Documents\\\\devProjects\\\\boilerplate\\\\apps\\\\APIs\\\\auth\\\\src\\\\validators\\\\authN.ts:93:19\\n    at C:\\\\Users\\\\nader\\\\Documents\\\\devProjects\\\\boilerplate\\\\apps\\\\APIs\\\\auth\\\\src\\\\errors\\\\middlewareWithTryCatch.ts:14:7\\n    at Layer.handle [as handle_request] (C:\\\\Users\\\\nader\\\\Documents\\\\devProjects\\\\boilerplate\\\\node_modules\\\\express\\\\lib\\\\router\\\\layer.js:95:5)\\n    at next (C:\\\\Users\\\\nader\\\\Documents\\\\devProjects\\\\boilerplate\\\\node_modules\\\\express\\\\lib\\\\router\\\\route.js:144:13)\\n    at Route.dispatch (C:\\\\Users\\\\nader\\\\Documents\\\\devProjects\\\\boilerplate\\\\node_modules\\\\express\\\\lib\\\\router\\\\route.js:114:3)\\n    at Layer.handle [as handle_request] (C:\\\\Users\\\\nader\\\\Documents\\\\devProjects\\\\boilerplate\\\\node_modules\\\\express\\\\lib\\\\router\\\\layer.js:95:5)\\n    at C:\\\\Users\\\\nader\\\\Documents\\\\devProjects\\\\boilerplate\\\\node_modules\\\\express\\\\lib\\\\router\\\\index.js:286:22\\n    at Function.process_params (C:\\\\Users\\\\nader\\\\Documents\\\\devProjects\\\\boilerplate\\\\node_modules\\\\express\\\\lib\\\\router\\\\index.js:348:12)\"\n}"
+								}
+							]
+						}
+					],
+					"id": "d509d7fc-99a0-4f4a-a12c-dab52c9640ea"
+				}
+			],
+			"id": "e88d3741-546d-4cef-ba8a-b03d4c233830",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "746339d9-7e9e-4c71-96ba-003bec00b8cf",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "e875bfac-5b18-4c1b-ad8a-5ee84bb1935d",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{accessToken}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "12e3df48-f4d1-452d-b532-5177df5271a9",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "8c5c017c-9092-4c87-9869-75cf0ebdd777",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "d85106bb-ca56-4e15-bd45-8ef4e0468784",
+			"key": "baseUrl",
+			"value": "http://localhost:3005/api/v1",
+			"type": "string"
+		}
+	]
+}

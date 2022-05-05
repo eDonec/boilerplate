@@ -2,7 +2,6 @@ const fs = require("fs");
 const path = require("path");
 const reversionPath = path.join(__dirname, "reversion.json");
 const revisions = JSON.parse(fs.readFileSync(reversionPath).toString());
-console.log(revisions);
 for (const revision of revisions) {
   const data = fs.readFileSync(revision.filePath);
   let _data = data.toString();
