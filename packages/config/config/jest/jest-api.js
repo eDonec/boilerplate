@@ -7,5 +7,4 @@ module.exports = {
     ...defaultConfig.setupFilesAfterEnv,
     path.join(__dirname, "setup/jest-api.setup.js"),
   ],
-  transformIgnorePatterns: ["<rootDir>/node_modules/(?!mongodb-memory-server)"],
 };

@@ -1,4 +1,4 @@
-const defaultConfig = require("config/jest/jest-express");
+const defaultConfig = require("config/jest/jest-api");
 
 module.exports = {
   ...defaultConfig,
@@ -8,6 +8,5 @@ module.exports = {
     ...defaultConfig.setupFilesAfterEnv,
     "<rootDir>/../jest.setup.js",
   ],
-  globalSetup: "<rootDir>/../jest.global-setup.config.js",
-  globalTeardown: "<rootDir>/../jest.global-teardown.config.js",
+  transformIgnorePatterns: ["<rootDir>/node_modules/(?!mongodb-memory-server)"],
 };
