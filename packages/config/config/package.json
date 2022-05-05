@@ -1,12 +1,12 @@
 {
   "name": "config",
-  "main": "index.js",
   "license": "MIT",
   "version": "0.1.0",
   "files": [
     "jest/jest-next.js",
     "jest/jest-cra.js",
     "jest/jest-express.js",
+    "jest/jest-api.js",
     "eslint/eslint-next.js",
     "eslint/eslint-server.js",
     "eslint/eslint-cra.js"

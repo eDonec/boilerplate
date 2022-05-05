@@ -34,11 +34,11 @@
     "*.config.js": [
       "prettier -w"
     ],
-    "apps/!(proxy)/**/!(*.config|*rc|next-sitemap|postbuild|prebuild).{js,jsx,ts,tsx,}": [
+    "apps/!(proxy)/**/!(*.config|*.setup|*rc|next-sitemap|postbuild|prebuild).{js,jsx,ts,tsx,}": [
       "eslint --fix --max-warnings=0",
       "prettier -w"
     ],
-    "packages/!(config)/**/!(*.config|*rc|next-sitemap|postbuild).{js,jsx,ts,tsx,}": [
+    "packages/!(config)/**/!(*.config|*.setup|*rc|next-sitemap|postbuild).{js,jsx,ts,tsx,}": [
       "eslint --fix --max-warnings=0",
       "prettier -w"
     ],
