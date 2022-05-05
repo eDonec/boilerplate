@@ -13,7 +13,7 @@ class AuthConsumer {
 
   subscribe: Subscriber;
 
-  // subscribeToAll;
+  subscribeToAll;
 
   constructor() {
     this.consumer = new Consumer(AuthEvents, "auth");
@@ -32,19 +32,19 @@ class AuthConsumer {
       };
     }
     this.subscribe = sub as Subscriber;
-    // this.subscribeToAll = (
-    //   onMessageReceived: (
-    //     // TODO: Fix typing here to infer it from the AuthEventsPayload directly
-    //     message:
-    //       | AuthEventsPayload[AuthEvents.UserCreated]
-    //       | AuthEventsPayload[AuthEvents.UserCreatedNewSession]
-    //       | AuthEventsPayload[AuthEvents.UserLinkedAccountToOAuth2]
-    //       | AuthEventsPayload[AuthEvents.UserSuspended],
-    //     key?: string
-    //   ) => void
-    // ) => {
-    //   this.consumer.subscribeToAll(onMessageReceived);
-    // };
+    this.subscribeToAll = (
+      onMessageReceived: (
+        // TODO: Fix typing here to infer it from the AuthEventsPayload directly
+        message:
+          | AuthEventsPayload[AuthEvents.UserCreated]
+          | AuthEventsPayload[AuthEvents.UserCreatedNewSession]
+          | AuthEventsPayload[AuthEvents.UserLinkedAccountToOAuth2]
+          | AuthEventsPayload[AuthEvents.UserSuspended],
+        key?: string
+      ) => void
+    ) => {
+      this.consumer.subscribeToAll(onMessageReceived);
+    };
   }
 }
 

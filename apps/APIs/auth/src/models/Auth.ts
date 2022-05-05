@@ -47,7 +47,7 @@ const schema = new Schema<AuthDocument>({
   },
   sessions: [String],
   role: {
-    type: String,
+    type: Schema.Types.ObjectId,
     ref: "Role",
   },
   customAccessList: {
