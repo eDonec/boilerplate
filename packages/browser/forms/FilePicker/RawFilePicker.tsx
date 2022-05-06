@@ -56,6 +56,7 @@ const FilePicker = forwardRef<HTMLInputElement, IComponentProps>(
           "flex cursor-pointer p-10 text-center",
           "bg-gray-100",
           "border-2 border-dashed",
+          !error && "dark:border-gray-500 dark:bg-gray-700 dark:text-gray-200",
           error &&
             "border-red-500 bg-red-50 text-red-900 placeholder-red-700 focus:border-red-500 focus:ring-red-500",
           error &&

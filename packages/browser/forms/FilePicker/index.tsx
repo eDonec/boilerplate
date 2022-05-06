@@ -8,8 +8,7 @@ import {
 
 import { TRule } from "field-validator/types";
 
-import { IComponentProps } from "./RawFilePicker";
-import { RawFilePicker } from "..";
+import RawFilePicker, { IComponentProps } from "./RawFilePicker";
 import { validateForm } from "../helpers/validateForm";
 
 export interface IProps
