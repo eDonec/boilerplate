@@ -12,6 +12,7 @@
     - [Import](#import)
     - [Example Usage](#example-usage)
     - [API](#api)
+      - [Hook API](#hook-api)
       - [Props](#props)
       - [Hook explanation](#hook-explanation)
     - [Types](#types)
@@ -69,19 +70,37 @@ export default HomePage;
 
 ### API
 
+#### Hook API
+
+As paramaters the hook takes a function that will be called when the user clicks on the confirm button.
+
+the hook will later return an array with two elements:
+
+- the first element is an object that contains the props that will be passed to the AlertDialog component containing the management of the opening and closing of the modal.
+- the second element is a wrapper function to the submit function that was taken as parameter, this function is a substitute that is the one we need to pass to the form or wherever we need a validation before handling something.
+
+```typescript
+const onSubmit: SubmitHandler<{ start: string }> = (value) =>
+  // some heavy irreversible logic here
+  console.log(value);
+const [submitModalProps, handleSubmit] = useAlertDialog(onSubmit);
+```
+
+in the above example the function handleSubmit should now be used in the form as a submit function. it will then fire a confirmation alert dialog before executing the heavy irreversible logic.
+
 <!-- AlertDialog-Props -->
 
 #### Props
 
-| Name           | Type       | Description                                                                                                                               | Required |
-| -------------- | ---------- | ----------------------------------------------------------------------------------------------------------------------------------------- | -------- |
-| title          | string     | An accessible name to be announced when the dialog is opened.                                                                             | True     |
-| message        | string     | An accessible description to be announced when the dialog is opened.                                                                      | True     |
-| confirmMessage | string     | An accessible confirmation button when the dialog is opened.                                                                              | True     |
-| cancelMessage  | string     | An accessible return button when the dialog is opened.                                                                                    | True     |
-| isOpen         | boolean    | Open and close the Modal .                                                                                                                | True     |
-| handleClose    | function() | fired when the Modal is opening.                                                                                                          | True     |
-| onSubmit       | function() | it MUST a submit function that is retrieved from the useAlertDialog hook and that wraps the actual submit function that you need to call. | True     |
+| Name           | Type       | Description                                                                                                                                                                             | Required |
+| -------------- | ---------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- |
+| title          | string     | A title for the modal                                                                                                                                                                   | True     |
+| message        | string     | The body of the modal or the alert message                                                                                                                                              | True     |
+| confirmMessage | string     | A message that will be displayd on the confirmation button of the modal                                                                                                                 | True     |
+| cancelMessage  | string     | A message that will be displayd on the cancle button of the modal                                                                                                                       | True     |
+| isOpen         | boolean    | a boolean state that when set to true opens the modal, closes elsewhere.                                                                                                                | True     |
+| handleClose    | function() | A callback funciton that will fire from inside the component when it should close (for the user to handle the changin of the isOpen variable on this callback's call)                   | True     |
+| onSubmit       | function() | it **MUST** be a submit function that is retrieved from the useAlertDialog hook and that **wraps the actual submit function that you need to call** when the confirm button is clicked. | True     |
 
 #### Hook explanation
 
