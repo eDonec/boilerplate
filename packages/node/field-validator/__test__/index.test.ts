@@ -1,4 +1,5 @@
 /* eslint-disable max-lines */
+
 import add from "date-fns/add";
 import sub from "date-fns/sub";
 
@@ -27,6 +28,7 @@ let validators: Validator;
 describe("should be valid for complex objects", () => {
   it("should accept an array of objects", () => {
     const arrayType = {
+      a: "a",
       test2: ["a", "b", "c"],
       simple: {
         st1: "string1",

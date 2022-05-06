@@ -24,7 +24,7 @@ export default class FieldValidator {
 
   multipleValidatorsError?: {
     message: string;
-    fields: any;
+    fields: { fieldName: string; message: string }[];
   } = undefined;
 
   error?: {
