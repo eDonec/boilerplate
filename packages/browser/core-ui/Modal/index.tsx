@@ -16,7 +16,11 @@ export const Modal: React.FC<ModalProps> = ({
   useModal({ handleClose });
 
   return (
-    <div className={clsx("fixed inset-5 md:inset-20", !isOpen && "hidden")}>
+    <div
+      className={clsx("fixed inset-5 md:inset-20", {
+        "pointer-events-none": !isOpen,
+      })}
+    >
       <div
         className={clsx(
           { "pointer-events-none": !isOpen },
@@ -24,7 +28,7 @@ export const Modal: React.FC<ModalProps> = ({
           "bg-black",
           isOpen ? "opacity-50" : " opacity-0",
           "z-0",
-          "transition-opacity duration-300 ease-in-out"
+          "transition-opacity duration-150 ease-in-out"
         )}
         onClick={handleClose}
       />
@@ -37,9 +41,11 @@ export const Modal: React.FC<ModalProps> = ({
           "rounded-lg  border-0",
           "bg-white shadow-lg dark:bg-gray-700",
           isOpen ? "opacity-100" : " opacity-0",
+          isOpen ? "translate-y-0 scale-[1]" : "translate-y-[-4%] scale-[.96]",
+          "transition-transform duration-150 ease-in-out",
           "max-h-[85vh] md:max-h-[75vh]",
           "overflow-auto transition-opacity",
-          "duration-300 ease-in-out"
+          "duration-150 ease-in-out"
         )}
       >
         <CloseButton handleClose={handleClose} />

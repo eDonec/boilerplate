@@ -1,10 +1,9 @@
-import { useState } from "react";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { useLocation } from "react-router-dom";
 
 import { Button, useDarkMode } from "core-ui";
-import Modal from "core-ui/Modal";
+import AlertDialog, { useAlertDialog } from "core-ui/AlertDialog";
 import clsx from "core-utils/clsx";
 import Checkbox from "forms/Checkbox";
 import FilePicker from "forms/FilePicker";
@@ -23,7 +22,6 @@ const HomePage = () => {
   const count = useAppSelector((state) => state.counter.count);
   const { isLoading, dispatch, classicDispatch } = useLoadingDispatch();
   const { t } = useTranslation();
-  const [open, setOpen] = useState(false);
 
   const increment = () => {
     classicDispatch(incrementCounter());
@@ -45,6 +43,8 @@ const HomePage = () => {
   const onSubmit: SubmitHandler<{ start: string }> = (value) =>
     // eslint-disable-next-line no-console
     console.log(value);
+
+  const [submitModalProps, handleSubmit] = useAlertDialog(onSubmit);
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-center dark:text-gray-200">
@@ -88,20 +88,9 @@ const HomePage = () => {
           Go to API
         </a>
       </p>
-      <Button onClick={() => setOpen(true)}>Toggle modal</Button>
 
-      <Modal isOpen={open} handleClose={() => setOpen(false)}>
-        <p>
-          Never gonna give you up Never gonna let you down Never gonna run
-          around and desert you Never gonna make you cry Never gonna say goodbye
-          Never gonna tell a lie and hurt you Never gonna give you up Never
-          gonna let you down Never gonna run around and desert you Never gonna
-          make you cry Never gonna say goodbye Never gonna tell a lie and hurt
-          you
-        </p>
-      </Modal>
       <FormProvider {...methods}>
-        <form onSubmit={methods.handleSubmit(onSubmit)}>
+        <form onSubmit={methods.handleSubmit(handleSubmit)}>
           <Input
             validate={[{ rule: "isEmpty" }]}
             name="start"
@@ -139,6 +128,13 @@ const HomePage = () => {
           <Button type="submit" light>
             submit
           </Button>
+          <AlertDialog
+            title="titre"
+            message="Etes-vous sur de vouloir continuer?"
+            confirmMessage="Confirmer"
+            cancelMessage="Annuler"
+            {...submitModalProps}
+          />
         </form>
       </FormProvider>
       <Button onClick={toggleDarkMode} light>
@@ -147,14 +143,18 @@ const HomePage = () => {
       <h2 className="my-3">Redux Counter : {count}</h2>
       <div className="flex flex-col gap-2">
         <div className="flex gap-2">
-          <Button disabled={count === 0 || isLoading} onClick={decrement}>
+          <Button
+            primary
+            disabled={count === 0 || isLoading}
+            onClick={decrement}
+          >
             {t("user.activation")}
           </Button>
-          <Button disabled={isLoading} onClick={increment}>
+          <Button primary disabled={isLoading} onClick={increment}>
             {t("api.notFound")}
           </Button>
         </div>
-        <Button onClick={setAsync} isLoading={isLoading}>
+        <Button outline onClick={setAsync} isLoading={isLoading}>
           {t("api.updated")}
         </Button>
       </div>
