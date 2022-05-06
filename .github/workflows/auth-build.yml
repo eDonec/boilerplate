@@ -59,4 +59,4 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }} # Provide GITHUB_TOKEN to login into the GitHub Packages
           image-name: auth # Provide only Docker image name
           dockerfile: .docker/Dockerfile.auth
-          image-tag: ${{ github.ref }} # Provide Docker image tag
+          image-tag: ${{ github.ref_name }} # Provide Docker image tag
