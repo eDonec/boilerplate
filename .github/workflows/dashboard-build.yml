@@ -30,7 +30,7 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }} # Provide GITHUB_TOKEN to login into the GitHub Packages
           image-name: dashboard # Provide Docker image name
           dockerfile: .docker/Dockerfile.dashboard # Provide Dockerfile path
-          extract-git-tag: true # Provide flag to extract Docker image tag from git reference
+          image-tag: head
 
   dashboard-build-and-publish-latest:
     runs-on: ubuntu-latest
@@ -59,4 +59,4 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }} # Provide GITHUB_TOKEN to login into the GitHub Packages
           image-name: dashboard # Provide only Docker image name
           dockerfile: .docker/Dockerfile.dashboard
-          image-tag: ${{ github.ref_name }} # Provide Docker image tag
+          extract-git-tag: true
