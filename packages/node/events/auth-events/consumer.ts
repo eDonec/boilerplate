@@ -3,45 +3,41 @@ import Consumer from "consumer";
 
 const events = Object.values(AuthEvents);
 
-type Subscriber = {
-  [eventName in AuthEvents]: (
-    onMessageReceived: (message: AuthEventsPayload[eventName]) => void
-  ) => Promise<void>;
+type OnMessageReceivedFunc<EventName extends AuthEvents> = (
+  message: AuthEventsPayload[EventName],
+  key?: EventName
+) => void;
+
+type TSubscriber<EventName extends AuthEvents> = (
+  onMessageReceived: OnMessageReceivedFunc<EventName>
+) => Promise<void>;
+
+type Subscribers = {
+  [eventName in AuthEvents]: TSubscriber<eventName>;
 };
 class AuthConsumer {
   private consumer: Consumer<typeof AuthEvents>;
 
-  subscribe: Subscriber;
+  subscribe: Subscribers;
 
   subscribeToAll;
 
   constructor() {
     this.consumer = new Consumer(AuthEvents, "auth");
-    const sub: Subscriber | Record<string, unknown> = {};
+    const sub: Subscribers | Record<string, unknown> = {};
 
     for (let index = 0; index < events.length; index++) {
       const eventName = events[index];
 
       sub[eventName] = async (
-        onMessageReceived: (
-          message: AuthEventsPayload[typeof eventName],
-          key?: string
-        ) => void
+        onMessageReceived: OnMessageReceivedFunc<typeof eventName>
       ) => {
         await this.consumer.subscribe(eventName, onMessageReceived);
       };
     }
-    this.subscribe = sub as Subscriber;
+    this.subscribe = sub as Subscribers;
     this.subscribeToAll = (
-      onMessageReceived: (
-        // TODO: Fix typing here to infer it from the AuthEventsPayload directly
-        message:
-          | AuthEventsPayload[AuthEvents.UserCreated]
-          | AuthEventsPayload[AuthEvents.UserCreatedNewSession]
-          | AuthEventsPayload[AuthEvents.UserLinkedAccountToOAuth2]
-          | AuthEventsPayload[AuthEvents.UserSuspended],
-        key?: string
-      ) => void
+      onMessageReceived: OnMessageReceivedFunc<AuthEvents>
     ) => {
       this.consumer.subscribeToAll(onMessageReceived);
     };

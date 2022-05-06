@@ -3,10 +3,11 @@ import Producer from "producer";
 
 const events = Object.values(AuthEvents);
 
+type TSender<EventName extends AuthEvents> = (
+  payload: AuthEventsPayload[EventName]
+) => Promise<void>;
 type EventSenders = {
-  [eventName in AuthEvents]: (
-    payload: AuthEventsPayload[eventName]
-  ) => Promise<void>;
+  [eventName in AuthEvents]: TSender<eventName>;
 };
 class AuthProducer {
   private producer: Producer<typeof AuthEvents>;
