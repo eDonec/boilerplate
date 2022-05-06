@@ -55,9 +55,9 @@ class Consumer<E extends { [eventName: string]: string }> {
     });
   }
 
-  async subscribe<T extends Record<string, unknown>>(
+  async subscribe<T extends Record<string, unknown>, K extends string>(
     eventName: keyof E,
-    onMessageReceived: (message: T, key?: string) => void
+    onMessageReceived: (message: T, key?: K) => void
   ) {
     await this.init();
     if (!this.events[eventName])
@@ -74,8 +74,8 @@ class Consumer<E extends { [eventName: string]: string }> {
       eachMessage: async ({ message }) => {
         // TODO: update deserializer to follow the same algorithm as serializer
         onMessageReceived(
-          JSON.parse(message.value?.toString() || ""),
-          message.key?.toString()
+          JSON.parse(message.value?.toString() || "") as T,
+          message.key?.toString() as unknown as K
         );
       },
     });
