@@ -9,8 +9,3 @@ jest.mock("producer", () =>
     send: jest.fn,
   }))
 );
-
-global.console = {
-  ...console,
-  log: jest.fn,
-};

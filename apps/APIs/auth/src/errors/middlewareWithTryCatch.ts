@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import { CustomInputError } from "custom-error";
+import ObjectValidationError from "custom-error/ObjectValidationError";
 import { errorLogger } from "errors/errorLogger";
 import { IMiddleware, StatusCodes } from "shared-types";
 
@@ -13,7 +13,7 @@ const middlewareWithTryCatch = <T = IMiddleware>(
       // @ts-expect-error
       await middleware(req, res, next);
     } catch (error) {
-      if (error instanceof CustomInputError)
+      if (error instanceof ObjectValidationError)
         res.status(StatusCodes.Unauthorized).send({
           message: error.message,
           stack: error.stack,

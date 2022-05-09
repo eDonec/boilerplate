@@ -1,4 +1,6 @@
-import CustomInputError, { ICustomError } from "custom-error/customInputError";
+import ObjectValidationError, {
+  IObjectValidationError,
+} from "custom-error/ObjectValidationError";
 
 import FieldValidator from "./FieldValidator";
 
@@ -20,7 +22,7 @@ export default class Validator<
       extractFieldValidatorsFromObject(objectToValidate);
 
     if (typeErrors.length)
-      throw new CustomInputError({
+      throw new ObjectValidationError({
         message: "All fields must be strings, numbers or Dates",
         fields: typeErrors,
       });
@@ -30,8 +32,10 @@ export default class Validator<
   }
 
   resolveErrors() {
-    const errors: { fields: CustomInputError["fields"]; message: string }[] =
-      [];
+    const errors: {
+      fields: ObjectValidationError["fields"];
+      message: string;
+    }[] = [];
 
     this.fields.forEach((field) => {
       if (!this.validate) return;
@@ -43,7 +47,7 @@ export default class Validator<
           errors.push(
             (this.validate[field].multipleValidatorsError ||
               this.validate[field].error) as {
-              fields: CustomInputError["fields"];
+              fields: ObjectValidationError["fields"];
               message: string;
             }
           );
@@ -51,19 +55,19 @@ export default class Validator<
       } else if (this.validate[field].error)
         errors.push(
           this.validate[field].error as {
-            fields: CustomInputError["fields"];
+            fields: ObjectValidationError["fields"];
             message: string;
           }
         );
     });
     if (errors.length > 0) {
       const message = "Validation error!";
-      let fields: ICustomError["fields"] = [];
+      let fields: IObjectValidationError["fields"] = [];
 
       errors.forEach((error) => {
         fields = [...fields, ...(error.fields || [])];
       });
-      throw new CustomInputError({ message, fields });
+      throw new ObjectValidationError({ message, fields });
     }
   }
 }
