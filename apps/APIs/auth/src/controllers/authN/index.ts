@@ -2,14 +2,14 @@ import IAuthServerMiddleware from "auth-types/IAuthServerMiddleware";
 import { AuthNRouteTypes } from "auth-types/routes/authN";
 import middlewareWithTryCatch from "errors/middlewareWithTryCatch";
 import { Request } from "express";
-import * as authNServices from "services/authN";
+import * as authNService from "services/authN";
 import { IMiddleware, StatusCodes } from "shared-types";
 import TokenValidator from "token/TokenValidator";
 
 export const signUpClassic: IMiddleware<
   Request<unknown, unknown, AuthNRouteTypes["/n/classic"]["POST"]["body"]>
 > = middlewareWithTryCatch(async (req, res) => {
-  const authResult = await authNServices.signUpClassic(req.body);
+  const authResult = await authNService.signUpClassic(req.body);
 
   res.status(StatusCodes.Created).send(authResult);
 }, StatusCodes["Bad Request"]);
@@ -20,7 +20,7 @@ export const signInClassic: IAuthServerMiddleware<
 > = middlewareWithTryCatch(async (_, res) => {
   const { currentAuth } = res.locals;
 
-  const authResult = await authNServices.signInClassic(currentAuth);
+  const authResult = await authNService.signInClassic(currentAuth);
 
   res.status(StatusCodes.OK).send(authResult);
 }, StatusCodes["Bad Request"]);
