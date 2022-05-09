@@ -1,6 +1,6 @@
 /* eslint-disable max-lines */
 import { AuthNRouteTypes } from "auth-types/routes/authN";
-import CustomInputError from "custom-error/customInputError";
+import ObjectValidationError from "custom-error/ObjectValidationError";
 import middlewareWithTryCatch from "errors/middlewareWithTryCatch";
 import { Request, Response } from "express";
 import FieldValidator from "field-validator";
@@ -12,7 +12,7 @@ export const signUpClassicValidator: IMiddleware<
   Response<{
     message: string;
     stack?: string;
-    fields?: CustomInputError["fields"];
+    fields?: ObjectValidationError["fields"];
     name?: string;
   }>
 > = middlewareWithTryCatch((req, _, next) => {
@@ -37,7 +37,7 @@ export const signInClassicValidator: IMiddleware<
   Response<{
     message: string;
     stack?: string;
-    fields?: CustomInputError["fields"];
+    fields?: ObjectValidationError["fields"];
     name?: string;
   }>
 > = middlewareWithTryCatch((req, _, next) => {
@@ -56,10 +56,10 @@ export const signInAppleValidator: IMiddleware<
   Response<{
     message: string;
     stack?: string;
-    fields?: CustomInputError["fields"];
+    fields?: ObjectValidationError["fields"];
     name?: string;
   }>
-> = middlewareWithTryCatch((req, res, next) => {
+> = middlewareWithTryCatch((req, _, next) => {
   const { familyName, givenName, token } = req.body;
   const validators = new FieldValidator({ familyName, givenName, token });
 
@@ -75,10 +75,10 @@ export const signInFacebookValidator: IMiddleware<
   Response<{
     message: string;
     stack?: string;
-    fields?: CustomInputError["fields"];
+    fields?: ObjectValidationError["fields"];
     name?: string;
   }>
-> = middlewareWithTryCatch((req, res, next) => {
+> = (req, _, next) => {
   const { token } = req.body;
   const validators = new FieldValidator({ token });
 
@@ -86,7 +86,7 @@ export const signInFacebookValidator: IMiddleware<
   validators.resolveErrors();
 
   return next();
-});
+};
 
 export const tokenValidator = (isRefreshToken = false): IMiddleware =>
   middlewareWithTryCatch((req, res, next) => {

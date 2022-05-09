@@ -1,1 +1,1 @@
-export { default as CustomInputError } from "./customInputError";
+export { default as ObjectValidationError } from "./ObjectValidationError";
