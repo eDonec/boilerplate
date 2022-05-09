@@ -1,5 +1,4 @@
 /* eslint-disable no-console */
-
 import { json } from "body-parser";
 import express from "express";
 import { seed } from "seed/seed";
@@ -23,37 +22,32 @@ beforeEach(async () => {
 describe("POST /n/classic", () => {
   describe("validation tests", () => {
     it("should respond successfully to email and password", async () => {
-      const response = await supertest(app)
-        .post("/n/classic")
-        .send({ email: "test@example.com", password: "password" });
+      const body = { email: "test@example.com", password: "password" };
+      const response = await supertest(app).post("/n/classic").send(body);
 
       expect(response.status).toEqual(StatusCodes.Created);
     });
     it("should throw a validation error if email is badly formatted", async () => {
-      const response = await supertest(app)
-        .post("/n/classic")
-        .send({ email: "testexample.com", password: "password" });
+      const body = { email: "testexample.com", password: "password" };
+      const response = await supertest(app).post("/n/classic").send(body);
 
       expect(response.status).toEqual(StatusCodes.Unauthorized);
     });
     it("should throw a validation error if password is badly formatted", async () => {
-      const response = await supertest(app)
-        .post("/n/classic")
-        .send({ email: "testexample.com", password: "123" });
+      const body = { email: "testexample.com", password: "123" };
+      const response = await supertest(app).post("/n/classic").send(body);
 
       expect(response.status).toEqual(StatusCodes.Unauthorized);
     });
     it("should throw a validation error if password field is absent", async () => {
-      const response = await supertest(app)
-        .post("/n/classic")
-        .send({ email: "testexample.com" });
+      const body = { email: "testexample.com" };
+      const response = await supertest(app).post("/n/classic").send(body);
 
       expect(response.status).toEqual(StatusCodes.Unauthorized);
     });
     it("should throw a validation error if email field is absent", async () => {
-      const response = await supertest(app)
-        .post("/n/classic")
-        .send({ password: "password" });
+      const body = { password: "password" };
+      const response = await supertest(app).post("/n/classic").send(body);
 
       expect(response.status).toEqual(StatusCodes.Unauthorized);
     });
