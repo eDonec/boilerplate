@@ -13,6 +13,8 @@ class Producer<E extends { [eventName: string]: string }> {
 
   private isInitialised = false;
 
+  private isInitializing?: Promise<void>;
+
   private topic: string;
 
   private events: E;
@@ -46,30 +48,51 @@ class Producer<E extends { [eventName: string]: string }> {
         `Event ${eventName} is not defined in the possible events`
       );
 
-    const response = await this.producer.send({
-      topic: `${this.topic}-${eventName}`,
-      // TODO: update serializer to use a more efficient algorithm
-      messages: [{ value: JSON.stringify(message), key: eventName as string }],
-      compression: CompressionTypes.GZIP,
-    });
+    const topic = `${this.topic}-${eventName}`;
 
-    if (response[0].errorCode !== 0)
+    try {
+      const response = await this.producer.send({
+        topic,
+        // TODO: update serializer to use a more efficient algorithm
+        messages: [
+          { value: JSON.stringify(message), key: eventName as string },
+        ],
+        compression: CompressionTypes.GZIP,
+      });
+
+      if (response[0].errorCode !== 0)
+        console.error(
+          "Error sending message error code :",
+          response[0].errorCode
+        );
+      else
+        console.log(
+          `Kafka producer sent message for topic ${response[0].topicName} with base offset ${response[0].baseOffset}`
+        );
+    } catch (error) {
       console.error(
-        "Error sending message error code :",
-        response[0].errorCode
+        `Error sending message for topic ${topic} with message offset ${message}`,
+        error
       );
-    else
-      console.log(
-        `Kafka producer sent message for topic ${response[0].topicName} with base offset ${response[0].baseOffset}`
-      );
+    }
 
     return this;
   }
 
   async init() {
+    /**
+     * workaround to this issue:
+     * auth:start: Kafka producer connected successfully you can now send messages
+     * auth:start: Kafka producer connected successfully you can now send messages
+     */
+    if (this.isInitializing) {
+      await this.isInitializing;
+    }
     if (this.isInitialised) return this;
     try {
-      await this.producer.connect();
+      this.isInitializing = this.producer.connect();
+      await this.isInitializing;
+      this.isInitializing = undefined;
       console.log(
         "Kafka producer connected successfully you can now send messages"
       );
