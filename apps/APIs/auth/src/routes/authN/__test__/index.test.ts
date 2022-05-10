@@ -1,17 +1,14 @@
 /* eslint-disable no-console */
-import { json } from "body-parser";
-import express from "express";
+import app from "init";
 import { seed } from "seed/seed";
 import { StatusCodes } from "shared-types";
 import supertest from "supertest";
 
 import authNRoutes from "..";
 
-const app = express();
+app.use(authNRoutes);
 
-app.use(json(), authNRoutes);
-
-beforeEach(async () => {
+beforeAll(async () => {
   try {
     await seed();
   } catch (error) {

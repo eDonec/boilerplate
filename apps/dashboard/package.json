@@ -27,7 +27,7 @@
     "build": "yarn clean && craco build",
     "test": "craco test --watchAll=false --coverage",
     "eject": "craco eject",
-    "lint": "eslint src --fix"
+    "lint": "tsc --noEmit && eslint src --fix"
   },
   "homepage": "/dashboard",
   "browserslist": {
@@ -43,7 +43,6 @@
     ]
   },
   "devDependencies": {
-    "react-scripts": "5.0.1",
     "@types/tailwindcss": "3.0.10",
     "prettier-plugin-tailwindcss": "0.1.10"
   }

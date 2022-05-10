@@ -1,10 +1,12 @@
 import { AUTH_PROVIDERS } from "shared-types";
+import TCustomErrors from "shared-types/Errors";
 
 export enum AuthEvents {
   UserSuspended = "UserSuspended",
   UserCreated = "UserCreated",
   UserCreatedNewSession = "UserCreatedNewSession",
   UserLinkedAccountToOAuth2 = "UserLinkedAccountToOAuth2",
+  AuthError = "AuthError",
 }
 
 export type AuthEventsPayload = {
@@ -31,4 +33,5 @@ export type AuthEventsPayload = {
     provider: AUTH_PROVIDERS;
     providerId: string;
   };
+  [AuthEvents.AuthError]: TCustomErrors;
 };
