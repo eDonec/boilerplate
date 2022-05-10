@@ -1,0 +1,11 @@
+{
+  "extends": "tsconfig/server.json",
+
+  "compilerOptions": {
+    "rootDir": ".",
+    "outDir": "build",
+    "sourceMap": false
+  },
+  "include": ["."],
+  "exclude": ["build", "node_modules", ".turbo", "coverage", "dist"]
+}
