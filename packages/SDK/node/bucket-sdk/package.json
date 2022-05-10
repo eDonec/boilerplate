@@ -1,0 +1,26 @@
+{
+  "name": "bucket-sdk",
+  "version": "0.1.0",
+  "private": true,
+  "main": "./build/cjs/index.js",
+  "module": "./build/esm/index.js",
+  "types": "./build/esm/index.d.ts",
+  "files": [
+    "/build"
+  ],
+  "scripts": {
+    "build": "yarn clean && yarn build:esm && yarn build:cjs",
+    "clean": "rimraf build",
+    "build:esm": "tsc -p tsconfig.prod.json --module ES2022 --outDir build/esm",
+    "build:cjs": "tsc -p tsconfig.prod.json --module commonjs --outDir build/cjs",
+    "lint": "eslint --fix",
+    "test": "jest --coverage --passWithNoTests"
+  },
+  "dependencies": {
+    "axios": "0.27.2",
+    "react": "18.1.0",
+    "server-sdk": "*",
+    "shared-types": "*",
+    "auth-types": "*"
+  }
+}
