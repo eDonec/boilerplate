@@ -30,5 +30,9 @@ image=auth
 update:
 	docker compose up --no-deps -d $(image) --build --force-recreate
 
+image=auth
+update-dev:
+	docker compose -f docker-compose.dev.yml up --no-deps -d $(image) --build --force-recreate
+
 compose-dev:
 	docker compose  -f docker-compose.dev.yml up --build --force-recreate -d --remove-orphans
