@@ -18,14 +18,14 @@
 									"listen": "test",
 									"script": {
 										"id": "f1bc7c29-ebda-49fe-baed-5cc8b1b36bcf",
-										"type": "text/javascript",
 										"exec": [
 											"if(pm.response.code === 201){\r",
 											"    pm.collectionVariables.set(\"accessToken\", pm.response.json().token.accessToken);\r",
 											"    pm.collectionVariables.set(\"refreshToken\", pm.response.json().token.refreshToken);\r",
 											"}\r",
 											""
-										]
+										],
+										"type": "text/javascript"
 									}
 								}
 							],
@@ -47,7 +47,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"email\": \"email@example.com\",\n  \"password\": \"password\"\n}",
+									"raw": "{\n  \"email\": \"emailexample.com\",\n  \"password\": \"password\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -807,7 +807,7 @@
 		{
 			"listen": "prerequest",
 			"script": {
-				"id": "12e3df48-f4d1-452d-b532-5177df5271a9",
+				"id": "d242fcfd-2655-406a-b401-c769ca31d57d",
 				"type": "text/javascript",
 				"exec": [
 					""
@@ -817,7 +817,7 @@
 		{
 			"listen": "test",
 			"script": {
-				"id": "8c5c017c-9092-4c87-9869-75cf0ebdd777",
+				"id": "9cf9b842-924b-4b09-934c-9960df4f9434",
 				"type": "text/javascript",
 				"exec": [
 					""
@@ -827,9 +827,9 @@
 	],
 	"variable": [
 		{
-			"id": "d85106bb-ca56-4e15-bd45-8ef4e0468784",
+			"id": "36d74ef0-9c3a-44bd-a4fa-d3f2ba146a2d",
 			"key": "baseUrl",
-			"value": "http://localhost:3005/api/v1",
+			"value": "http://localhost:3000/api/v1",
 			"type": "string"
 		}
 	]
