@@ -2,7 +2,20 @@
 
 &nbsp;
 
-### Validation Methods:
+## Table of content
+
+- [Field Validator](#field-validator)
+  - [Table of content](#table-of-content)
+  - [Validation Methods](#validation-methods)
+  - [Letter](#letter)
+  - [Numeric](#numeric)
+  - [Date](#date)
+  - [URL](#url)
+  - [Email](#email)
+  - [Confirm password](#confirm-password)
+  - [Exsists](#exsists)
+
+## Validation Methods
 
 - Letter
 - Numeric
@@ -14,7 +27,7 @@
 
 &nbsp;
 
-### Letter
+## Letter
 
 | Rules        | Params          | Type   | Description                                                  |
 | ------------ | --------------- | ------ | ------------------------------------------------------------ |
@@ -28,7 +41,7 @@
 
 &nbsp;
 
-### Numeric
+## Numeric
 
 | Rules              | Params                      | Type   | Description                                     |
 | ------------------ | --------------------------- | ------ | ----------------------------------------------- |
@@ -39,7 +52,7 @@
 
 &nbsp;
 
-### Date
+## Date
 
 | Rules       | Params | Type | Description                                      |
 | ----------- | ------ | ---- | ------------------------------------------------ |
@@ -49,7 +62,7 @@
 
 &nbsp;
 
-### URL
+## URL
 
 | Rules | Params | Type   | Description                                               |
 | ----- | ------ | ------ | --------------------------------------------------------- |
@@ -57,7 +70,7 @@
 
 &nbsp;
 
-### Email
+## Email
 
 | Rules   | Params | Type   | Description                                         |
 | ------- | ------ | ------ | --------------------------------------------------- |
@@ -65,13 +78,13 @@
 
 &nbsp;
 
-### Confirm password
+## Confirm password
 
 | Rules           | Params   | Type   | Description                                                                     |
 | --------------- | -------- | ------ | ------------------------------------------------------------------------------- |
 | isPasswordMatch | password | String | it will check that the password entered is same as this confirm password fields |
 
-### Exsists
+## Exsists
 
 | Rules  | Params | Type | Description                          |
 | ------ | ------ | ---- | ------------------------------------ |

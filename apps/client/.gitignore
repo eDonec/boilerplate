@@ -35,4 +35,4 @@ yarn-error.log*
 
 # next-sitemap
 robots.txt
-sitemap.xml
+sitemap*.xml

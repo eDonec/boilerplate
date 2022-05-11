@@ -1,18 +1,32 @@
-## CheckBox
+# CheckBox
 
 <!-- RawCheckBox -->
 
-### RawCheckbox
+## Table of content
+
+- [CheckBox](#checkbox)
+  - [Table of content](#table-of-content)
+  - [RawCheckbox](#rawcheckbox)
+    - [Import](#import)
+    - [Example Usage](#example-usage)
+      - [Props](#props)
+  - [CheckBox](#checkbox-1)
+    - [Import](#import-1)
+    - [Example Usage](#example-usage-1)
+      - [Props](#props-1)
+  - [Types](#types)
+
+## RawCheckbox
 
 <!-- RawCheckBox-Import -->
 
-#### Import
+### Import
 
 ```typescript
 import Select from "forms/Checkbox/RawCheckbox";
 ```
 
-#### Example Usage
+### Example Usage
 
 ```typescript
 export interface CheckboxProps extends RawCheckboxProps {
@@ -36,7 +50,7 @@ const Checkbox: React.FC<CheckboxProps> = ({ validate, ...props }) => {
 };
 ```
 
-##### Props
+#### Props
 
 | Name     | Type    | Description                                  | Required |
 | -------- | ------- | -------------------------------------------- | -------- |
@@ -45,11 +59,11 @@ const Checkbox: React.FC<CheckboxProps> = ({ validate, ...props }) => {
 | error    | string  | Shows an error message if truthy             | False    |
 | disabled | boolean | defines that the checkbox is disabled or not | False    |
 
-### CheckBox
+## CheckBox
 
 <!-- checkbox-import -->
 
-#### Import
+### Import
 
 ```typescript
 import Checkbox from "forms/Checkbox";
@@ -57,7 +71,7 @@ import Checkbox from "forms/Checkbox";
 
 <!--  checkbox-Usage -->
 
-#### Example Usage
+### Example Usage
 
 ```typescript
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
@@ -88,7 +102,7 @@ export default HomePage;
 
 <!-- checkBox-Props -->
 
-##### Props
+#### Props
 
 | Name           | Type    | Description                                                                     | Required |
 | -------------- | ------- | ------------------------------------------------------------------------------- | -------- |
@@ -98,6 +112,6 @@ export default HomePage;
 | name           | string  | Form field name                                                                 | True     |
 | validate       | TRule[] | validates the conditions                                                        | False    |
 
-### Types
+## Types
 
-`TRule` : refer to <a href='../field-validator/README.md'>**this guide**</a>.
+`TRule` : refer to <a href='../../field-validator/README.md'>**this guide**</a>.

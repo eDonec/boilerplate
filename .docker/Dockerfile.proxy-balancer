@@ -1,4 +1,4 @@
-FROM nginx:alpine
-
+FROM nginx:1.21.6-alpine
+ARG PROXY_BALANCER_PATH="./proxy-balancer.conf"
 COPY ./nginx /etc/nginx/.
-COPY ./proxy-balancer.conf /etc/nginx/conf.d/default.conf
+COPY ${PROXY_BALANCER_PATH} /etc/nginx/conf.d/default.conf

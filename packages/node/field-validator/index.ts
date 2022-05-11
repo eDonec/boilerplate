@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { get } from "core-utils";
-import CustomInputError, { ICustomError } from "custom-error/customInputError";
+import { ObjectValidationError } from "custom-error";
+import { IObjectValidationError } from "custom-error/ObjectValidationError";
 
 import FieldValidator from "./FieldValidator";
 
@@ -20,8 +21,10 @@ export default class Validator<T = any> {
   }
 
   resolveErrors() {
-    const errors: { fields: CustomInputError["fields"]; message: string }[] =
-      [];
+    const errors: {
+      fields: ObjectValidationError["fields"];
+      message: string;
+    }[] = [];
 
     this.fields.forEach((field) => {
       if (!this.validate) return;
@@ -32,7 +35,7 @@ export default class Validator<T = any> {
         if (!currentField.oneOfValidatorsIsClean && currentField.error) {
           errors.push(
             (currentField.multipleValidatorsError || currentField.error) as {
-              fields: CustomInputError["fields"];
+              fields: ObjectValidationError["fields"];
               message: string;
             }
           );
@@ -40,19 +43,19 @@ export default class Validator<T = any> {
       } else if (currentField.error)
         errors.push(
           currentField.error as {
-            fields: CustomInputError["fields"];
+            fields: ObjectValidationError["fields"];
             message: string;
           }
         );
     });
     if (errors.length > 0) {
       const message = "Validation error!";
-      let fields: ICustomError["fields"] = [];
+      let fields: IObjectValidationError["fields"] = [];
 
       errors.forEach((error) => {
         fields = [...fields, ...(error.fields || [])];
       });
-      throw new CustomInputError({ message, fields });
+      throw new ObjectValidationError({ message, fields });
     }
   }
 }
@@ -69,6 +72,7 @@ export const extractFieldValidatorsFromObject = <T = any>({
   const output: any = {};
 
   if (
+    !input ||
     typeof input === "string" ||
     typeof input === "number" ||
     input instanceof Date

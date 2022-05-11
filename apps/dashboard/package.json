@@ -1,30 +1,25 @@
 {
   "name": "dashboard",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "dependencies": {
-    "@reduxjs/toolkit": "1.8.0",
-    "@testing-library/jest-dom": "5.16.4",
-    "@testing-library/react": "12.0.0",
-    "@testing-library/user-event": "13.2.1",
-    "@types/jest": "27.0.1",
-    "@types/node": "16.7.13",
-    "@types/react": "18.0.0",
+    "@reduxjs/toolkit": "1.8.1",
+    "@types/node": "17.0.29",
+    "@types/react": "18.0.8",
     "@types/react-dom": "18.0.0",
     "auth-sdk": "*",
     "core-hooks": "*",
     "core-ui": "*",
     "core-utils": "*",
     "forms": "*",
-    "i18next": "21.6.14",
-    "react": "18.0.0",
-    "react-dom": "18.0.0",
-    "react-hook-form": "7.29.0",
-    "react-i18next": "11.16.2",
-    "react-redux": "8.0.0",
-    "react-router-dom": "6.2.2",
-    "react-scripts": "5.0.0",
-    "web-vitals": "2.1.0"
+    "i18next": "21.6.16",
+    "react": "18.1.0",
+    "react-dom": "18.1.0",
+    "react-hook-form": "7.30.0",
+    "react-i18next": "11.16.7",
+    "react-redux": "8.0.1",
+    "react-router-dom": "6.3.0",
+    "web-vitals": "2.1.4"
   },
   "scripts": {
     "start": "craco start",
@@ -48,7 +43,8 @@
     ]
   },
   "devDependencies": {
-    "@types/tailwindcss": "3.0.9",
-    "prettier-plugin-tailwindcss": "0.1.8"
+    "react-scripts": "5.0.1",
+    "@types/tailwindcss": "3.0.10",
+    "prettier-plugin-tailwindcss": "0.1.10"
   }
 }

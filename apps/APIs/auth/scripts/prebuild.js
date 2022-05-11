@@ -6,28 +6,11 @@ const path = require("path");
 const mainPackage = require("../../../../package.json");
 const rootDirReturns = "../../../../";
 
+const appPath = path.join(__dirname, "../");
+
+const sourcePath = path.join(appPath, "src");
+
 const workspaces = mainPackage.workspaces;
-
-const nodeAppsPath = path
-  .join(
-    __dirname,
-    rootDirReturns,
-    workspaces.find((workspace) => workspace.includes("APIs"))
-  )
-  .replace("*", "");
-
-const nodeAppNames = fs
-  .readdirSync(nodeAppsPath, {
-    withFileTypes: true,
-  })
-  .filter((dirent) => dirent.isDirectory())
-  .map((dirent) => dirent.name);
-const nodeAppSourcePaths = nodeAppNames.map((nodeAppName) => {
-  return path.join(nodeAppsPath, nodeAppName, "src");
-});
-const nodeAppBuildPaths = nodeAppSourcePaths.map((nodeApp) =>
-  path.join(nodeApp, "../build")
-);
 
 const internalNodePackageFolders = workspaces
   .filter(
@@ -95,20 +78,17 @@ const packagesBuildPathsFlatUnique = packagesBuildPathsFlat
   .filter((path, index, self) => index === self.findIndex((t) => t === path))
   .map((p) => p.substring(p.indexOf("packages") + "packages".length));
 
-const allBuildPaths = [...nodeAppBuildPaths, ...packagesBuildPathsFlatUnique];
-
 const packageAndPathObject = internalNodePackageNames.map((packageName) => ({
   packageName,
   path: packagesBuildPathsFlatUnique.find((o) => o.includes(packageName)),
 }));
-nodeAppSourcePaths.forEach((sourcePath) => {
-  fs.readdir(sourcePath, { withFileTypes: true }, (err, files) => {
-    if (err) {
-      console.log(`Unable to scan directory: ${err}`);
-      return;
-    }
-    sortImportsInFolder(files, sourcePath, 0);
-  });
+
+fs.readdir(sourcePath, { withFileTypes: true }, (err, files) => {
+  if (err) {
+    console.log(`Unable to scan directory: ${err}`);
+    return;
+  }
+  sortImportsInFolder(files, sourcePath, 0);
 });
 
 const sortImportsInFolder = (fileOrFolder, _path, depth) => {
@@ -144,12 +124,13 @@ const sortImportsInFile = (file, _path, depth) => {
     edits: [],
   };
   for (const route of packageAndPathObject) {
+    const lineToInsert = `"${_depth}${route.path}`.replace(/\\/g, "/");
     _data = _data.replace(
       new RegExp(`"(${route.packageName}(?=[/|"])(?!\/build))`, "g"),
-      `"${_depth}${route.path}`
+      lineToInsert
     );
     reversion.edits.push({
-      insertedLine: `"${_depth}${route.path}`,
+      insertedLine: lineToInsert,
       removedLine: `"${route.packageName}`,
     });
   }
@@ -157,12 +138,13 @@ const sortImportsInFile = (file, _path, depth) => {
   fs.writeFileSync(_path, _data);
   fs.writeFileSync(reversionJson, JSON.stringify(reversions));
 };
-
+const os = require("os");
 const resolveDepthRelativeToApp = (filePath) => {
   // trim string before apps
   const trimmedFilePath = filePath.substring(filePath.indexOf("apps"));
   // count number pf slashes in trimmed path
-  const depth = trimmedFilePath.split("/").length - 1;
+  const depth =
+    trimmedFilePath.split(os.platform() === "win32" ? "\\" : "/").length - 1;
   // const newPath = path.join(filePath, depthToString(depth + 1), "packages");
   const depthRoute = depthToString(depth);
   return `${depthRoute}packages`;
