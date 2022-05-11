@@ -5,7 +5,7 @@ all:
 	make proxy-balancer
 
 
-dash:
+dashboard:
 	docker build -f .docker/Dockerfile.dashboard -t dashboard .
 
 client:
@@ -14,12 +14,21 @@ client:
 proxy-balancer:
 	docker build -f .docker/Dockerfile.proxy-balancer -t proxy-balancer .
 
+
+image=auth
 auth:
 	docker build -f .docker/Dockerfile.auth -t auth .
 
 compose:
-	docker compose up --build --force-recreate
+	docker compose up  --build --force-recreate -d --remove-orphans
 
 image=auth
-update-image:
+test:
+	docker build -f .docker/Dockerfile.test.base -t test-$(image) --build-arg MICROSERVICE_NAME=$(image) .
+
+image=auth
+update:
 	docker compose up --no-deps -d $(image) --build --force-recreate
+
+compose-dev:
+	docker compose  -f docker-compose.dev.yml up --build --force-recreate -d --remove-orphans

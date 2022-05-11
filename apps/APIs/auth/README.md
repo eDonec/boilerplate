@@ -1,5 +1,39 @@
 # Server auth
 
+## Table of content
+
+- [Server auth](#server-auth)
+  - [Table of content](#table-of-content)
+  - [Events](#events)
+    - [Event list](#event-list)
+  - [Schemas](#schemas)
+    - [Role](#role)
+    - [Access](#access)
+      - [FULL_ACCESS constant](#full_access-constant)
+      - [Role ressource access' meta](#role-ressource-access-meta)
+    - [Auth](#auth)
+  - [Default roles](#default-roles)
+    - [God](#god)
+    - [Public](#public)
+  - [Types](#types)
+    - [IAuthServerMiddleware](#iauthservermiddleware)
+      - [Defenition](#defenition)
+
+## Events
+
+Event names and event payloads are defined in the `auth-types` package. in [file auth-types/events/index.ts](../../../packages/node/api-types/auth-types/events/index.ts).
+
+### Event list
+
+```typescript
+export enum AuthEvents {
+  UserSuspended = "UserSuspended",
+  UserCreated = "UserCreated",
+  UserCreatedNewSession = "UserCreatedNewSession",
+  UserLinkedAccountToOAuth2 = "UserLinkedAccountToOAuth2",
+}
+```
+
 ## Schemas
 
 ### Role

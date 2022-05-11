@@ -100,7 +100,7 @@ export default class FieldValidator {
     if (this.error) {
       // TODO: Check for reference transfer
       this.multipleValidatorsError = {
-        message: "One of the validators failed",
+        message: "One or more of the validators failed",
         fields: [
           ...(this.multipleValidatorsError?.fields || []),
           this.error.fields[0],

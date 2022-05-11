@@ -1,6 +1,6 @@
 module.exports = {
   ...require("./jest-common"),
-  testEnvironment: "jsdom",
+  testEnvironment: "jest-environment-jsdom",
   setupFilesAfterEnv: ["@testing-library/jest-dom"],
   collectCoverageFrom: ["<rootDir>/**/*.{js,ts,jsx,tsx}"],
   moduleFileExtensions: ["js", "jsx", "json", "ts", "tsx"],
