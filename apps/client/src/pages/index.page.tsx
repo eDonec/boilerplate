@@ -65,8 +65,12 @@ export default function HomePage() {
           layout flex min-h-screen flex-col items-center justify-center bg-white text-center"
           >
             <div className="flex gap-2">
-              <Button onClick={() => changeLanguage("fr")}>Fr</Button>
-              <Button onClick={() => changeLanguage("en")}>En</Button>
+              <Button primary onClick={() => changeLanguage("fr")}>
+                Fr
+              </Button>
+              <Button primary onClick={() => changeLanguage("en")}>
+                En
+              </Button>
             </div>
             <div>
               Process.env variable
@@ -83,7 +87,9 @@ export default function HomePage() {
                     type="password"
                     placeholder="password"
                   />
-                  <Button type="submit">Submit</Button>
+                  <Button primary type="submit">
+                    Submit
+                  </Button>
                 </form>
               </FormProvider>
               <FormProvider {...signInFormMethods}>
@@ -95,11 +101,13 @@ export default function HomePage() {
                     type="password"
                     placeholder="password"
                   />
-                  <Button type="submit">Submit</Button>
+                  <Button primary type="submit">
+                    Submit
+                  </Button>
                 </form>
               </FormProvider>
             </div>
-            <Button type="button" onClick={() => authSDK.logout()}>
+            <Button info type="button" onClick={() => authSDK.logout()}>
               logout
             </Button>
 
@@ -123,14 +131,18 @@ export default function HomePage() {
             <h2 className="my-3">Redux Counter : {count}</h2>
             <div className="flex flex-col gap-2">
               <div className="flex gap-2">
-                <Button disabled={count === 0 || isLoading} onClick={decrement}>
+                <Button
+                  info
+                  disabled={count === 0 || isLoading}
+                  onClick={decrement}
+                >
                   Decrement
                 </Button>
-                <Button disabled={isLoading} onClick={increment}>
+                <Button info disabled={isLoading} onClick={increment}>
                   Increment
                 </Button>
               </div>
-              <Button onClick={setAsync} isLoading={isLoading}>
+              <Button info onClick={setAsync} isLoading={isLoading}>
                 Set Counter to 300 Async
               </Button>
             </div>

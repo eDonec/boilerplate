@@ -12,6 +12,12 @@ const databaseConfig: ConnectOptions = {
   pass: process.env.DATABASE_PASSWORD,
 };
 
+try {
+  import("./seed");
+} catch (error) {
+  console.log("Seeding is not available");
+}
+
 if (!process.env.DATABASE_URI)
   throw new Error("Missing .env key : DATABASE_URI");
 
