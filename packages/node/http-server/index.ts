@@ -19,11 +19,11 @@ class Server {
 
   Router: (options?: RouterOptions | undefined) => ExpressRouter;
 
-  constructor(func: (payload: TCustomErrors) => void) {
+  constructor(eventEmitter: (payload: TCustomErrors) => void) {
     this.app = express();
     this.use = this.app.use.bind(this.app);
     this.listen = this.app.listen.bind(this.app);
-    this.Router = CustomRouter(func);
+    this.Router = CustomRouter(eventEmitter);
   }
 }
 
