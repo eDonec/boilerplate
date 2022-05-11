@@ -9,9 +9,9 @@ import router from "./routes";
 
 const app = express();
 
-const port = process.env.PORT || 4000;
-
 app.use(json());
+
+const port = process.env.PORT || 4000;
 
 const databaseConfig: ConnectOptions = {
   user: process.env.DATABASE_USER,
@@ -23,7 +23,7 @@ if (!process.env.DATABASE_URI)
 
 app.use("/api/v1/bucket", router);
 app.use("/api/v1/bucket*", (_req, res) => {
-  res.send(clsx(["Hello"], "World", { "!": true }));
+  res.send(clsx(["Hello"], "Bucket", { "!": true }));
 });
 
 connect(process.env.DATABASE_URI, databaseConfig)
