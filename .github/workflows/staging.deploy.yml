@@ -21,7 +21,7 @@ jobs:
           echo "GH_TOKEN=${{ secrets.GITHUB_TOKEN }}" >> $GITHUB_ENV
           echo "USERNAME=${{ secrets.HOST }}" >> $GITHUB_ENV
       - name: remote docker-compose up via ssh
-        uses: appleboy/ssh-action@v0.1.4
+        uses: appleboy/ssh-action@master
         env:
           APPTOKEN: ${{ env.GITHUB_TOKEN }}
           USERNAME: ${{ env.USERNAME }}
