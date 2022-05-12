@@ -4,8 +4,11 @@ on:
   push:
     branches: [master]
     paths:
+      - ".github/workflows/staging.deploy.yml"
+      - ".github/base.deploy.yml"
       - "apps/**"
       - "packages/**"
+      - "package.json"
 
 jobs:
   deploy-to-staging:
