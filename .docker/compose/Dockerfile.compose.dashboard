@@ -1,5 +1,5 @@
 # Create an image for the build
-FROM dashboard AS builder
+FROM ghcr.io/edonec/boilerplate/dashboard:staging AS builder
 ARG REACT_APP_HELLO
 ENV REACT_APP_HELLO=${REACT_APP_HELLO}
 ARG MICROSERVICE_NAME="dashboard"

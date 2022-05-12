@@ -1,4 +1,4 @@
-FROM client AS builder
+FROM ghcr.io/edonec/boilerplate/client:staging AS builder
 WORKDIR /app
 ARG MICROSERVICE_NAME="client"
 ARG NEXT_PUBLIC_HELLO
