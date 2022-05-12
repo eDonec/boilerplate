@@ -30,7 +30,6 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }} # Provide GITHUB_TOKEN to login into the GitHub Packages
           image-name: client # Provide only Docker image name, tag will be automatically set to latest
           dockerfile: .docker/Dockerfile.client
-
   client-build-and-publish-tag:
     runs-on: ubuntu-latest
     if: (github.ref != 'refs/heads/master') && (github.ref != 'refs/heads/develop') && (github.event.review.state == 'approved') # Running this job only for master and develop branch
@@ -38,10 +37,14 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+      - name: Extract branch name
+        shell: bash
+        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+        id: extract_branch
       - name: Build and Publish Tag Docker image
         uses: VaultVulp/gp-docker-action@1.2.0
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }} # Provide GITHUB_TOKEN to login into the GitHub Packages
           image-name: client # Provide only Docker image name
           dockerfile: .docker/Dockerfile.client
-          image-tag: head
+          image-tag: ${{ steps.extract_branch.outputs.branch }}
