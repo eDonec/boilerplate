@@ -41,4 +41,4 @@ jobs:
           script: |
             echo $APPTOKEN | docker login ghcr.io -u $USERNAME --password-stdin
             cd /docker/staging/compose-staging
-            docker compose up  --build --force-recreate -d --remove-orphans
+            docker compose  -f docker-compose.staging.yml up --build --force-recreate -d --remove-orphans
