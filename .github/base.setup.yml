@@ -5,8 +5,7 @@ on:
     branches: [master]
     paths:
       - ".github/workflows/staging.setup.yml"
-      - ".docker/compose/**"
-      - "docker-compose-staging.yml"
+      - "compose/**"
 
 jobs:
   send-compose-files-to-server:
