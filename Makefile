@@ -32,3 +32,6 @@ update:
 
 compose-dev:
 	docker compose  -f docker-compose.dev.yml up --build --force-recreate -d --remove-orphans
+
+compose-staging:
+	docker compose  -f docker-compose.staging.yml up --build --force-recreate -d --remove-orphans

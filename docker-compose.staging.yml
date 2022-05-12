@@ -31,11 +31,7 @@ services:
       - main-network
   proxy-balancer:
     restart: always
-    build:
-      args:
-        - PROXY_BALANCER_PATH=./proxy-balancer-staging.conf
-      context: .
-      dockerfile: ./.docker/Dockerfile.proxy-balancer
+    image: ghcr.io/edonec/boilerplate/proxy-balancer:staging
     depends_on:
       - client
       - dashboard
@@ -49,7 +45,7 @@ services:
 
   client:
     build:
-      context: ./.docker
+      context: ./.docker/compose
       dockerfile: Dockerfile.compose.client
       args:
         - NEXT_PUBLIC_HELLO="I am a variable"
@@ -64,7 +60,7 @@ services:
 
   dashboard:
     build:
-      context: ./.docker
+      context: ./.docker/compose
       dockerfile: Dockerfile.compose.dashboard
       args:
         - REACT_APP_HELLO="I am a variable"
@@ -76,7 +72,7 @@ services:
       - main-network
 
   auth:
-    image: auth
+    image: ghcr.io/edonec/boilerplate/auth:head
     restart: always
     command: yarn workspace auth start:prod
     environment:
