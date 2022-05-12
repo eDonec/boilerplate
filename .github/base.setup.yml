@@ -4,7 +4,7 @@ on:
   push:
     branches: [master]
     paths:
-      - ".github/workflows/*.setup.yml"
+      - ".github/workflows/staging.setup.yml"
       - ".docker/compose/**"
       - "docker-compose-staging.yml"
 
@@ -20,7 +20,8 @@ jobs:
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
-          password: ${{ secrets.PASSWORD }}
+          key: ${{ secrets.PRIVATE_KEY }}
+          port: ${{ secrets.PORT }}
           script: rm -r /docker/staging/*
       - name: Pull compose files into remote server
         uses: appleboy/scp-action@master
@@ -28,5 +29,6 @@ jobs:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.PRIVATE_KEY }}
+          port: ${{ secrets.PORT }}
           source: "docker-compose.staging.yml,.docker/compose/*"
           target: "/docker/staging"
