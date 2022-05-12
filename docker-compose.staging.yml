@@ -1,0 +1,131 @@
+version: "3.9"
+services:
+  database:
+    image: mongo
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: AKIARU2MX2BV4F7KRTMF
+    networks:
+      - main-network
+  imgproxy:
+    image: darthsim/imgproxy:latest
+    restart: always
+    environment:
+      - IMGPROXY_USE_S3=true
+      - IMGPROXY_S3_REGION=eu-west-3
+      - STORAGE_PROVIDER=S3
+      - STORAGE_PATH=edonec-turborepo-cache
+      - AWS_ACCESS_KEY_ID=AKIARU2MX2BV4F7KRTMF
+      - AWS_SECRET_ACCESS_KEY=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
+      - IMGPROXY_BIND=:3000
+      - IMGPROXY_CACHE_CONTROL_PASSTHROUGH=true
+      - IMGPROXY_SET_CANONICAL_HEADER=true
+      - IMGPROXY_USE_ETAG=true
+      - IMGPROXY_JPEG_PROGRESSIVE=true
+      - IMGPROXY_JPEG_TRELLIS_QUANT=true
+      - IMGPROXY_JPEG_OVERSHOOT_DERINGING=true
+      - IMGPROXY_ENABLE_WEBP_DETECTION=true
+      - IMGPROXY_ENFORCE_WEBP=true
+    networks:
+      - main-network
+  proxy-balancer:
+    restart: always
+    build:
+      args:
+        - PROXY_BALANCER_PATH=./proxy-balancer-staging.conf
+      context: .
+      dockerfile: ./.docker/Dockerfile.proxy-balancer
+    depends_on:
+      - client
+      - dashboard
+      - auth
+      - database
+      - imgproxy
+    ports:
+      - 3005:80
+    networks:
+      - main-network
+
+  client:
+    build:
+      context: ./.docker
+      dockerfile: Dockerfile.compose.client
+      args:
+        - NEXT_PUBLIC_HELLO="I am a variable"
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      - NEXT_TELEMETRY_DISABLED=1
+    command: node server.js
+    restart: always
+    networks:
+      - main-network
+
+  dashboard:
+    build:
+      context: ./.docker
+      dockerfile: Dockerfile.compose.dashboard
+      args:
+        - REACT_APP_HELLO="I am a variable"
+    restart: always
+    environment:
+      - NODE_ENV=production
+      - PORT=3005
+    networks:
+      - main-network
+
+  auth:
+    image: auth
+    restart: always
+    command: yarn workspace auth start:prod
+    environment:
+      - PORT=3000
+      - DATABASE_URI=mongodb://database:27017/auth?authSource=admin
+      - ACCESS_TOKEN_SECRET_KEY=%!L+shP~,3g+f:fk
+      - REFRESH_TOKEN_SECRET_KEY=7xet#7GaCdDU{t}s
+      - DATABASE_USER=root
+      - DATABASE_PASSWORD=AKIARU2MX2BV4F7KRTMF
+      - TOKEN_EXPIRES_IN=10s
+      - REFRESH_TOKEN_EXPIRES_IN=60d
+      - NUMBER_OF_AUTH_TRIALS=5
+      - KAFKA_BROKERS=broker:9092
+    networks:
+      - main-network
+    depends_on:
+      - database
+
+  zookeeper:
+    restart: always
+    image: confluentinc/cp-zookeeper:7.0.1
+    container_name: zookeeper
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+    networks:
+      - main-network
+
+  broker:
+    restart: always
+    image: confluentinc/cp-kafka:7.0.1
+    container_name: broker
+    ports:
+      # To learn about configuring Kafka for access across networks see
+      # https://www.confluent.io/blog/kafka-client-cannot-connect-to-broker-on-aws-on-docker-etc/
+      - "9092:9092"
+    depends_on:
+      - zookeeper
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: "zookeeper:2181"
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_INTERNAL:PLAINTEXT
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://broker:9092,PLAINTEXT_INTERNAL://broker:29092
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+    networks:
+      - main-network
+
+networks:
+  main-network:
+    driver: bridge
