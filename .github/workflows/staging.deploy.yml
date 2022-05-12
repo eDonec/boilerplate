@@ -22,13 +22,6 @@ jobs:
           echo "USERNAME=${{ secrets.USERNAME }}" >> $GITHUB_ENV
       - name: remote docker-compose up via ssh
         uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
-          key: ${{ secrets.PRIVATE_KEY }}
-          port: ${{ secrets.PORT }}
-      - name: Remove existing files from remote server
-        uses: appleboy/ssh-action@master
         env:
           APPTOKEN: ${{ secrets.GITHUB_TOKEN }}
           USERNAME: ${{ env.USERNAME }}
