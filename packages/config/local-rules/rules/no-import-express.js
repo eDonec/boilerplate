@@ -54,6 +54,7 @@ module.exports = {
           (spec) => spec.type === "ImportDefaultSpecifier"
         ) >= 0
       ) {
+        // TODO: add fix function if possible
         context.report({
           node,
           message:
