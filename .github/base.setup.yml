@@ -4,7 +4,7 @@ on:
   push:
     branches: [master]
     paths:
-      - ".github/workflows/base.setup.yml"
+      - ".github/workflows/*.setup.yml"
       - ".docker/compose/**"
       - "docker-compose-staging.yml"
 
