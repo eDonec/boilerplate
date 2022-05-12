@@ -45,7 +45,7 @@ services:
 
   client:
     build:
-      context: ./.docker/compose
+      context: .
       dockerfile: Dockerfile.compose.client
       args:
         - NEXT_PUBLIC_HELLO="I am a variable"
@@ -60,7 +60,7 @@ services:
 
   dashboard:
     build:
-      context: ./.docker/compose
+      context: .
       dockerfile: Dockerfile.compose.dashboard
       args:
         - REACT_APP_HELLO="I am a variable"
