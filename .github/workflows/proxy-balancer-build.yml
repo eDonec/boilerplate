@@ -9,14 +9,7 @@ on:
       - ".docker/Dockerfile.proxy-balancer*"
       - "packages/**"
   push:
-    branches: [master]
-    paths:
-      - "proxy-balancer.conf"
-      - ".github/workflows/proxy-balancer*"
-      - ".docker/Dockerfile.proxy-balancer*"
-      - "packages/**"
-  push:
-    branches: [release]
+    branches: [master, release]
     paths:
       - "proxy-balancer.conf"
       - ".github/workflows/proxy-balancer*"
