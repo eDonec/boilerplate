@@ -15,7 +15,7 @@
     "build:esm": "tsc -p tsconfig.prod.json --module ES2022 --outDir build/esm",
     "build:cjs": "tsc -p tsconfig.prod.json --module commonjs --outDir build/cjs",
     "test": "jest --coverage --passWithNoTests",
-    "lint": "eslint --fix"
+    "lint": "tsc --noEmit && eslint --fix"
   },
   "dependencies": {
     "kafkajs": "1.16.0",

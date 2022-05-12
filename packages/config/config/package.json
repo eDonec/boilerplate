@@ -12,6 +12,7 @@
     "eslint/eslint-cra.js"
   ],
   "devDependencies": {
+    "eslint-plugin-es-local-rules": "*",
     "@typescript-eslint/eslint-plugin": "5.21.0",
     "@typescript-eslint/parser": "5.21.0",
     "eslint-config-airbnb": "19.0.4",
@@ -27,6 +28,7 @@
     "eslint-plugin-simple-import-sort": "7.0.0",
     "eslint-plugin-testing-library": "5.3.1",
     "eslint-plugin-unused-imports": "2.0.0",
-    "react": "18.1.0"
+    "react": "18.1.0",
+    "react-scripts": "5.0.1"
   }
 }

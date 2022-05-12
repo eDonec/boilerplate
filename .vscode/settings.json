@@ -16,6 +16,8 @@
   "[markdown]": {
     "editor.formatOnSave": true
   },
+  "template-string-converter.enabled": true,
+  "template-string-converter.autoRemoveTemplateString": true,
   "search.exclude": {
     "**/node_modules": true,
     "**/bower_components": true,

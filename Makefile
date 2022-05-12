@@ -1,5 +1,5 @@
 all:
-	make dash &&\
+	make dashboard &&\
 	make client &&\
 	make auth &&\
 	make proxy-balancer
