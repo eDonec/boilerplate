@@ -1,15 +1,15 @@
 /* eslint-disable no-console */
-import { json } from "body-parser";
-import express from "express";
+// import app from "init";
+import app from "init";
 import { seed } from "seed/seed";
 import { StatusCodes } from "shared-types";
 import supertest from "supertest";
 
 import authNRoutes from "..";
 
-const app = express();
+// app.use(json());
 
-app.use(json(), authNRoutes);
+app.use(authNRoutes);
 
 beforeEach(async () => {
   try {
@@ -24,6 +24,8 @@ describe("POST /n/classic", () => {
     it("should respond successfully to email and password", async () => {
       const body = { email: "test@example.com", password: "password" };
       const response = await supertest(app).post("/n/classic").send(body);
+
+      console.log(response.body);
 
       expect(response.status).toEqual(StatusCodes.Created);
     });

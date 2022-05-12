@@ -8,7 +8,7 @@
     "start": "nodemon src/index.ts",
     "build": "tsc",
     "test": "jest --coverage",
-    "lint": "eslint src --fix"
+    "lint": "tsc --noEmit && eslint src --fix"
   },
   "dependencies": {
     "core-utils": "*",

@@ -13,7 +13,7 @@
     "clean": "rimraf build",
     "build:esm": "tsc -p tsconfig.prod.json --module ES2022 --outDir build/esm",
     "build:cjs": "tsc -p tsconfig.prod.json --module commonjs --outDir build/cjs",
-    "lint": "eslint --fix",
+    "lint": "tsc --noEmit && eslint --fix",
     "test": "jest --coverage --passWithNoTests"
   },
   "dependencies": {

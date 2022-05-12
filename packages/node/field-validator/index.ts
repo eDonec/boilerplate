@@ -1,6 +1,5 @@
-import ObjectValidationError, {
-  IObjectValidationError,
-} from "custom-error/ObjectValidationError";
+import ObjectValidationError from "custom-error/ObjectValidationError";
+import { IObjectValidationError } from "shared-types/Errors";
 
 import FieldValidator from "./FieldValidator";
 

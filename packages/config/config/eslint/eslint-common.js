@@ -1,6 +1,13 @@
+/** @type {import('eslint').Linter.Config} */
 module.exports = {
-  plugins: ["@typescript-eslint", "simple-import-sort", "unused-imports"],
+  plugins: [
+    "@typescript-eslint",
+    "simple-import-sort",
+    "unused-imports",
+    "es-local-rules",
+  ],
   rules: {
+    "es-local-rules/no-import-express": "error",
     "react/display-name": "off",
     "@typescript-eslint/no-use-before-define": "off",
     "spaced-comment": "off",

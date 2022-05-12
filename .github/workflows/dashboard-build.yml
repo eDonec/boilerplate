@@ -9,7 +9,7 @@ on:
       - ".docker/Dockerfile.dashboard*"
       - "packages/**"
   push:
-    branches: [master]
+    branches: [master, release]
     paths:
       - "apps/dashboard/**"
       - ".github/workflows/dashboard*"
@@ -17,6 +17,19 @@ on:
       - "packages/**"
 
 jobs:
+  dashboard-build-and-publish-release:
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/release' # Running this job only for master branch
+
+    steps:
+      - uses: actions/checkout@v3 # Checking out the repo
+
+      - name: Build and Publish latest Docker image
+        uses: VaultVulp/gp-docker-action@1.2.0
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }} # Provide GITHUB_TOKEN to login into the GitHub Packages
+          image-name: dashboard # Provide only Docker image name, tag will be automatically set to latest
+          dockerfile: .docker/Dockerfile.dashboard
   dashboard-build-and-publish-latest:
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/master' # Running this job only for master branch
@@ -28,16 +41,21 @@ jobs:
         uses: VaultVulp/gp-docker-action@1.2.0
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }} # Provide GITHUB_TOKEN to login into the GitHub Packages
-          image-name: dashboard # Provide only Docker image name, tag will be automatically set to latest
+          image-name: dashboard-staging # Provide only Docker image name, tag will be automatically set to latest
           dockerfile: .docker/Dockerfile.dashboard
+          image-tag: staging
 
-  dashboard-build-and-publish-tag:
+  dashboard-build-and-publish-head:
     runs-on: ubuntu-latest
     if: (github.ref != 'refs/heads/master') && (github.ref != 'refs/heads/develop') && (github.event.review.state == 'approved') # Running this job only for master and develop branch
 
     steps:
       - uses: actions/checkout@v3
 
+      - name: Extract branch name
+        shell: bash
+        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+        id: extract_branch
       - name: Build and Publish Tag Docker image
         uses: VaultVulp/gp-docker-action@1.2.0
         with:
