@@ -50,6 +50,8 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }} # Provide GITHUB_TOKEN to login into the GitHub Packages
           image-name: proxy-balancer-staging # Provide only Docker image name, tag will be automatically set to latest
           dockerfile: .docker/Dockerfile.proxy-balancer
+          image-tag: staging
+
   proxy-balancer-build-and-publish-head:
     runs-on: ubuntu-latest
     if: (github.ref != 'refs/heads/master') && (github.ref != 'refs/heads/develop') && (github.event.review.state == 'approved') # Running this job only for master and develop branch
@@ -65,5 +67,6 @@ jobs:
         uses: VaultVulp/gp-docker-action@1.2.0
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }} # Provide GITHUB_TOKEN to login into the GitHub Packages
-          image-name: proxy-balancer-head # Provide only Docker image name
+          image-name: proxy-balancer # Provide only Docker image name
           dockerfile: .docker/Dockerfile.proxy-balancer
+          image-tag: head
