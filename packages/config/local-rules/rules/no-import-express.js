@@ -18,7 +18,6 @@ module.exports = {
     schema: [], // no options
   },
   create: function (context) {
-    const sourceCode = context.getSourceCode();
     /**
      * Checks a node to see if any problems should be reported.
      * @param {import("eslint").Rule} node The node to check.
@@ -31,7 +30,6 @@ module.exports = {
       const importName = node.specifiers[0]?.local?.name;
       const filename = context.getFilename();
       const importNamed = node.specifiers[0]?.imported?.name;
-      console.log({ filename, importName, importSource, importNamed });
       if (
         filename.includes("http-server") &&
         !filename.includes("APIs") &&
