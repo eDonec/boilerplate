@@ -9,14 +9,7 @@ on:
       - ".docker/Dockerfile.dashboard*"
       - "packages/**"
   push:
-    branches: [master]
-    paths:
-      - "apps/dashboard/**"
-      - ".github/workflows/dashboard*"
-      - ".docker/Dockerfile.dashboard*"
-      - "packages/**"
-  push:
-    branches: [release]
+    branches: [master, release]
     paths:
       - "apps/dashboard/**"
       - ".github/workflows/dashboard*"

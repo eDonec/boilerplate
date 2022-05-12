@@ -9,14 +9,7 @@ on:
       - ".docker/Dockerfile.auth*"
       - "packages/**"
   push:
-    branches: [master]
-    paths:
-      - "apps/APIs/auth/**"
-      - ".github/workflows/auth*"
-      - ".docker/Dockerfile.auth*"
-      - "packages/**"
-  push:
-    branches: [release]
+    branches: [master, release]
     paths:
       - "apps/APIs/auth/**"
       - ".github/workflows/auth*"

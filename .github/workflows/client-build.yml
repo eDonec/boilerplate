@@ -9,14 +9,7 @@ on:
       - ".docker/Dockerfile.client*"
       - "packages/**"
   push:
-    branches: [master]
-    paths:
-      - "apps/client/**"
-      - ".github/workflows/client*"
-      - ".docker/Dockerfile.client*"
-      - "packages/**"
-  push:
-    branches: [release]
+    branches: [master, release]
     paths:
       - "apps/client/**"
       - ".github/workflows/client*"

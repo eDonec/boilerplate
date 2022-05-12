@@ -9,14 +9,7 @@ on:
       - ".docker/Dockerfile.${{packageName}}*"
       - "packages/**"
   push:
-    branches: [master]
-    paths:
-      - "${{packagePath}}"
-      - ".github/workflows/${{packageName}}*"
-      - ".docker/Dockerfile.${{packageName}}*"
-      - "packages/**"
-  push:
-    branches: [release]
+    branches: [master, release]
     paths:
       - "${{packagePath}}"
       - ".github/workflows/${{packageName}}*"
