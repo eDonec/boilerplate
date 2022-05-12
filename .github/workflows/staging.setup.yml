@@ -18,17 +18,17 @@ jobs:
       - name: Remove existing files from remote server
         uses: appleboy/ssh-action@master
         with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
+          host: 160.156.137.162
+          username: root
           key: ${{ secrets.PRIVATE_KEY }}
-          port: ${{ secrets.PORT }}
+          port: 22
           script: rm -r /docker/staging/*
       - name: Pull compose files into remote server
         uses: appleboy/scp-action@master
         with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
+          host: 160.156.137.162
+          username: root
           key: ${{ secrets.PRIVATE_KEY }}
-          port: ${{ secrets.PORT }}
+          port: 22
           source: "docker-compose.staging.yml,.docker/compose/*"
           target: "/docker/staging"
