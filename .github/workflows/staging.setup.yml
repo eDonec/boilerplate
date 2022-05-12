@@ -30,5 +30,5 @@ jobs:
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.PRIVATE_KEY }}
           port: ${{ secrets.PORT }}
-          source: "docker-compose.staging.yml,.docker/compose/*"
+          source: "docker-compose.staging.yml,.docker/compose/**"
           target: "/docker/staging"
