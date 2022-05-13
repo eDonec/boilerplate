@@ -14,14 +14,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3 # Checking out the repo
-      - name: Remove existing files from remote server
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
-          key: ${{ secrets.PRIVATE_KEY }}
-          port: ${{ secrets.PORT }}
-          script: rm -rf /docker/tmp/staging || true
+
       - name: Operations
         uses: alinz/ssh-scp-action@master
         env:
@@ -39,12 +32,6 @@ jobs:
           # then uploads these 2 files
           scp: |
             compose/staging ${{ secrets.USERNAME }}@${{ secrets.HOST }}:/docker/staging
-
-          # then run these commands
-          ssh_after: |
-            cd /docker/staging
-            echo PORT=$HELLO >> .env
-            echo USERNAME=$MESSAGE >> .env
 
   deploy-to-staging:
     runs-on: ubuntu-latest
@@ -68,4 +55,6 @@ jobs:
           script: |
             echo $APPTOKEN | docker login ghcr.io -u $USERNAME --password-stdin
             cd /docker/staging
+            echo PROT=$APPTOKEN >> .env
+            echo NAME=$USERNAME >> .env
             docker-compose up --build --force-recreate -d --remove-orphans
