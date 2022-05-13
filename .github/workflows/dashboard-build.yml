@@ -66,9 +66,9 @@ jobs:
           envs: APPTOKEN,USERNAME
           script: |
             echo $APPTOKEN | docker login ghcr.io -u $USERNAME --password-stdin
-            cd /docker/staging/compose-staging
+            cd /docker/staging
             docker pull ghcr.io/edonec/boilerplate/dashboard:staging
-            docker-compose -f docker-compose.staging.yml up --no-deps --build --force-recreate -d dashboard
+            docker-compose up --no-deps --build --force-recreate -d dashboard
 
   dashboard-build-and-publish-head:
     runs-on: ubuntu-latest
