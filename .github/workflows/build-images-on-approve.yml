@@ -1,0 +1,177 @@
+name: "build and deploy images to head env on PR approve"
+
+on:
+  pull_request_review:
+    types: [submitted]
+    paths:
+      - "apps/**"
+      - ".github/workflows/head.build.yml"
+      - ".docker/Dockerfile.*"
+      - "packages/**"
+      - "package.json"
+
+jobs:
+  client-build-and-publish-head:
+    runs-on: ubuntu-latest
+    if: (github.ref != 'refs/heads/master') && (github.ref != 'refs/heads/develop') && (github.event.review.state == 'approved') # Running this job only for master and develop branch
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Build and Publish Tag Docker image
+        uses: VaultVulp/gp-docker-action@1.2.0
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }} # Provide GITHUB_TOKEN to login into the GitHub Packages
+          image-name: client # Provide only Docker image name
+          dockerfile: .docker/Dockerfile.client
+          image-tag: head
+  client-deploy-to-head:
+    runs-on: ubuntu-latest
+    needs: [client-build-and-publish-head]
+    if: (github.ref != 'refs/heads/master') && (github.ref != 'refs/heads/develop') && (github.event.review.state == 'approved') # Running this job only for master and develop branch
+    steps:
+      - name: Set the value
+        run: |
+          echo "GH_TOKEN=${{ secrets.GITHUB_TOKEN }}" >> $GITHUB_ENV
+          echo "USERNAME=${{ secrets.USERNAME }}" >> $GITHUB_ENV
+      - name: remote docker-compose up via ssh
+        uses: appleboy/ssh-action@master
+        env:
+          APPTOKEN: ${{ secrets.GITHUB_TOKEN }}
+          USERNAME: ${{ env.USERNAME }}
+        with:
+          host: ${{ secrets.HEAD_HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.HEAD_PRIVATE_KEY }}
+          port: ${{ secrets.PORT }}
+          envs: APPTOKEN,USERNAME
+          script: |
+            echo $APPTOKEN | docker login ghcr.io -u $USERNAME --password-stdin
+            cd /docker/head
+            docker pull ghcr.io/edonec/boilerplate/client:head
+            docker-compose up --no-deps --build --force-recreate -d client
+
+  dashboard-build-and-publish-head:
+    runs-on: ubuntu-latest
+    if: (github.ref != 'refs/heads/master') && (github.ref != 'refs/heads/develop') && (github.event.review.state == 'approved') # Running this job only for master and develop branch
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Build and Publish Tag Docker image
+        uses: VaultVulp/gp-docker-action@1.2.0
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }} # Provide GITHUB_TOKEN to login into the GitHub Packages
+          image-name: dashboard # Provide only Docker image name
+          dockerfile: .docker/Dockerfile.dashboard
+          image-tag: head
+  dashboard-deploy-to-head:
+    runs-on: ubuntu-latest
+    needs: [dashboard-build-and-publish-head]
+    if: (github.ref != 'refs/heads/master') && (github.ref != 'refs/heads/develop') && (github.event.review.state == 'approved') # Running this job only for master and develop branch
+    steps:
+      - name: Set the value
+        run: |
+          echo "GH_TOKEN=${{ secrets.GITHUB_TOKEN }}" >> $GITHUB_ENV
+          echo "USERNAME=${{ secrets.USERNAME }}" >> $GITHUB_ENV
+      - name: remote docker-compose up via ssh
+        uses: appleboy/ssh-action@master
+        env:
+          APPTOKEN: ${{ secrets.GITHUB_TOKEN }}
+          USERNAME: ${{ env.USERNAME }}
+        with:
+          host: ${{ secrets.HEAD_HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.HEAD_PRIVATE_KEY }}
+          port: ${{ secrets.PORT }}
+          envs: APPTOKEN,USERNAME
+          script: |
+            echo $APPTOKEN | docker login ghcr.io -u $USERNAME --password-stdin
+            cd /docker/head
+            docker pull ghcr.io/edonec/boilerplate/dashboard:head
+            docker-compose up --no-deps --build --force-recreate -d dashboard
+
+  auth-build-and-publish-head:
+    runs-on: ubuntu-latest
+    if: (github.ref != 'refs/heads/master') && (github.ref != 'refs/heads/develop') && (github.event.review.state == 'approved') # Running this job only for master and develop branch
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Build and Publish Tag Docker image
+        uses: VaultVulp/gp-docker-action@1.2.0
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }} # Provide GITHUB_TOKEN to login into the GitHub Packages
+          image-name: auth # Provide only Docker image name
+          dockerfile: .docker/Dockerfile.auth
+          image-tag: head
+  auth-deploy-to-head:
+    runs-on: ubuntu-latest
+    needs: [auth-build-and-publish-head]
+    if: (github.ref != 'refs/heads/master') && (github.ref != 'refs/heads/develop') && (github.event.review.state == 'approved') # Running this job only for master and develop branch
+    steps:
+      - name: Set the value
+        run: |
+          echo "GH_TOKEN=${{ secrets.GITHUB_TOKEN }}" >> $GITHUB_ENV
+          echo "USERNAME=${{ secrets.USERNAME }}" >> $GITHUB_ENV
+      - name: remote docker-compose up via ssh
+        uses: appleboy/ssh-action@master
+        env:
+          APPTOKEN: ${{ secrets.GITHUB_TOKEN }}
+          USERNAME: ${{ env.USERNAME }}
+        with:
+          host: ${{ secrets.HEAD_HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.HEAD_PRIVATE_KEY }}
+          port: ${{ secrets.PORT }}
+          envs: APPTOKEN,USERNAME
+          script: |
+            echo $APPTOKEN | docker login ghcr.io -u $USERNAME --password-stdin
+            cd /docker/head
+            docker pull ghcr.io/edonec/boilerplate/auth:head
+            docker-compose up --no-deps --build --force-recreate -d auth
+
+  proxy-balancer-build-and-publish-head:
+    runs-on: ubuntu-latest
+    if: (github.ref != 'refs/heads/master') && (github.ref != 'refs/heads/develop') && (github.event.review.state == 'approved') # Running this job only for master and develop branch
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Build and Publish Tag Docker image
+        uses: VaultVulp/gp-docker-action@1.2.0
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }} # Provide GITHUB_TOKEN to login into the GitHub Packages
+          image-name: proxy-balancer # Provide only Docker image name
+          dockerfile: .docker/Dockerfile.proxy-balancer
+          image-tag: head
+  proxy-balancer-deploy-to-head:
+    runs-on: ubuntu-latest
+    needs: [proxy-balancer-build-and-publish-head]
+    if: (github.ref != 'refs/heads/master') && (github.ref != 'refs/heads/develop') && (github.event.review.state == 'approved') # Running this job only for master and develop branch
+    steps:
+      - name: Set the value
+        run: |
+          echo "GH_TOKEN=${{ secrets.GITHUB_TOKEN }}" >> $GITHUB_ENV
+          echo "USERNAME=${{ secrets.USERNAME }}" >> $GITHUB_ENV
+      - name: remote docker-compose up via ssh
+        uses: appleboy/ssh-action@master
+        env:
+          APPTOKEN: ${{ secrets.GITHUB_TOKEN }}
+          USERNAME: ${{ env.USERNAME }}
+        with:
+          host: ${{ secrets.HEAD_HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.HEAD_PRIVATE_KEY }}
+          port: ${{ secrets.PORT }}
+          envs: APPTOKEN,USERNAME
+          script: |
+            echo $APPTOKEN | docker login ghcr.io -u $USERNAME --password-stdin
+            cd /docker/head
+            docker pull ghcr.io/edonec/boilerplate/proxy-balancer:head
+            docker-compose up --no-deps --build --force-recreate -d proxy-balancer
+
+
+  end-to-end-test-head-deployment:
+    runs-on: ubuntu-latest
+    needs: [client-deploy-to-head, dashboard-deploy-to-head, auth-deploy-to-head, proxy-balancer-deploy-to-head]
+    steps:
+      - name: lets see
+        run: |
+          echo "Hello world"
