@@ -83,6 +83,6 @@ jobs:
             echo REFRESH_TOKEN_SECRET_KEY=$REFRESH_TOKEN_SECRET_KEY >> .env
             echo TOKEN_EXPIRES_IN=$TOKEN_EXPIRES_IN >> .env
             echo REFRESH_TOKEN_EXPIRES_IN=$REFRESH_TOKEN_EXPIRES_IN >> .env
-            echo $FULL_CHAIN_CERT >> fullchain.pem
-            echo $PRIVATE_KEY_CERT >> privkey.pem
+            echo "$PRIVATE_KEY_CERT" >> privkey.pem
+            echo "$FULL_CHAIN_CERT" | base64 --decode > fullchain.pem
             docker-compose up --build --force-recreate -d --remove-orphans
