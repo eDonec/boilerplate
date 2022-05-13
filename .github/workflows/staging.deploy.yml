@@ -33,7 +33,7 @@ jobs:
           target: "/docker/staging"
   deploy-to-staging:
     runs-on: ubuntu-latest
-
+    needs: [send-compose-files-to-server]
     steps:
       - name: Set the value
         run: |
