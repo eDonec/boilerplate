@@ -6,6 +6,7 @@ on:
     paths:
       - "apps/**"
       - "packages/**"
+      - ".github/workflows/staging.setup.yml"
 
 jobs:
   deploy-to-staging:
