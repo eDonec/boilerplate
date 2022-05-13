@@ -22,23 +22,26 @@ jobs:
           key: ${{ secrets.PRIVATE_KEY }}
           port: ${{ secrets.PORT }}
           script: rm -rf /docker/tmp/staging || true
-      - name: Pull compose files into remote server
-        uses: appleboy/scp-action@master
+      - name: Operations
+        uses: alinz/ssh-scp-action@master
+        env:
+          HELLO: cool
+          MESSAGE: hello world
         with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
           key: ${{ secrets.PRIVATE_KEY }}
-          port: ${{ secrets.PORT }}
-          source: "compose/staging"
-          target: "/docker/tmp/staging"
-      - name: unpack folder in correct place
-        uses: appleboy/ssh-action@master
-        with:
           host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
-          key: ${{ secrets.PRIVATE_KEY }}
           port: ${{ secrets.PORT }}
-          script: |
+          user: ${{ secrets.USERNAME }}
+          # runs this on remove server
+          ssh_before: |
+            rm -rf /docker/tmp/staging || true
+
+          # then uploads these 2 files
+          scp: |
+            compose/staging ${{ secrets.USERNAME }}@${{ secrets.HOST }}:/docker/tmp/staging
+
+          # then run these commands
+          ssh_after: |
             rm -rf /docker/staging || true
             mv /docker/tmp/staging/compose/staging /docker/staging
 
