@@ -4,21 +4,21 @@ services:
     image: mongo
     restart: always
     environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: AKIARU2MX2BV4F7KRTMF
+      - MONGO_INITDB_ROOT_USERNAME=${DATABASE_USER}
+      - MONGO_INITDB_ROOT_PASSWORD=${DATABASE_PASSWORD}
     networks:
       - main-network
   imgproxy:
     image: darthsim/imgproxy:latest
     restart: always
     environment:
+      - IMGPROXY_BIND=:${PORT}
+      - IMGPROXY_S3_REGION=${AWS_REGION}
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
       - IMGPROXY_USE_S3=true
-      - IMGPROXY_S3_REGION=eu-west-3
-      - STORAGE_PROVIDER=S3
       - STORAGE_PATH=edonec-turborepo-cache
-      - AWS_ACCESS_KEY_ID=AKIARU2MX2BV4F7KRTMF
-      - AWS_SECRET_ACCESS_KEY=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
-      - IMGPROXY_BIND=:3000
+      - STORAGE_PROVIDER=S3
       - IMGPROXY_CACHE_CONTROL_PASSTHROUGH=true
       - IMGPROXY_SET_CANONICAL_HEADER=true
       - IMGPROXY_USE_ETAG=true
@@ -27,6 +27,7 @@ services:
       - IMGPROXY_JPEG_OVERSHOOT_DERINGING=true
       - IMGPROXY_ENABLE_WEBP_DETECTION=true
       - IMGPROXY_ENFORCE_WEBP=true
+
     networks:
       - main-network
   proxy-balancer:
@@ -45,14 +46,12 @@ services:
 
   client:
     build:
-      context: .
+      context: ./.docker
       dockerfile: Dockerfile.compose.client
       args:
-        - NEXT_PUBLIC_HELLO="I am a variable"
+        - NEXT_PUBLIC_HELLO=Hello
     environment:
-      - NODE_ENV=production
-      - PORT=3000
-      - NEXT_TELEMETRY_DISABLED=1
+      - NODE_ENV=${NODE_ENV}
     command: node server.js
     restart: always
     networks:
@@ -66,8 +65,8 @@ services:
         - REACT_APP_HELLO="I am a variable"
     restart: always
     environment:
-      - NODE_ENV=production
-      - PORT=3005
+      - NODE_ENV=${NODE_ENV}
+      - PORT=${PORT}
     networks:
       - main-network
 
@@ -76,14 +75,14 @@ services:
     restart: always
     command: yarn workspace auth start:prod
     environment:
-      - PORT=3000
+      - PORT=${PORT}
       - DATABASE_URI=mongodb://database:27017/auth?authSource=admin
-      - ACCESS_TOKEN_SECRET_KEY=%!L+shP~,3g+f:fk
-      - REFRESH_TOKEN_SECRET_KEY=7xet#7GaCdDU{t}s
-      - DATABASE_USER=root
-      - DATABASE_PASSWORD=AKIARU2MX2BV4F7KRTMF
-      - TOKEN_EXPIRES_IN=10s
-      - REFRESH_TOKEN_EXPIRES_IN=60d
+      - ACCESS_TOKEN_SECRET_KEY=${ACCESS_TOKEN_SECRET_KEY}
+      - REFRESH_TOKEN_SECRET_KEY=${REFRESH_TOKEN_SECRET_KEY}
+      - DATABASE_USER=${DATABASE_USER}
+      - DATABASE_PASSWORD=${DATABASE_PASSWORD}
+      - TOKEN_EXPIRES_IN=${TOKEN_EXPIRES_IN}
+      - REFRESH_TOKEN_EXPIRES_IN=${REFRESH_TOKEN_EXPIRES_IN}
       - NUMBER_OF_AUTH_TRIALS=5
       - KAFKA_BROKERS=broker:9092
     networks:
