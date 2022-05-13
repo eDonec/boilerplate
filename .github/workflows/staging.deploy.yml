@@ -25,8 +25,8 @@ jobs:
       - name: Operations
         uses: alinz/ssh-scp-action@master
         env:
-          HELLO: cool
-          MESSAGE: hello world
+          HELLO: ${{ secrets.PORT }}
+          MESSAGE: ${{ secrets.USERNAME }}
         with:
           key: ${{ secrets.PRIVATE_KEY }}
           host: ${{ secrets.HOST }}
@@ -42,7 +42,9 @@ jobs:
 
           # then run these commands
           ssh_after: |
-            ls -l /docker/staging
+            cd /docker/staging
+            echo PORT=$HELLO >> .env
+            echo USERNAME=$MESSAGE >> .env
 
   deploy-to-staging:
     runs-on: ubuntu-latest
