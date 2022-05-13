@@ -46,7 +46,7 @@ services:
 
   client:
     build:
-      context: ./.docker
+      context: .
       dockerfile: Dockerfile.compose.client
       args:
         - NEXT_PUBLIC_HELLO=Hello
