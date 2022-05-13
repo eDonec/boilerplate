@@ -51,7 +51,7 @@ jobs:
           AWS_REGION: ${{ secrets.AWS_REGION}}
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID}}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY}}
-          PORT: 3000
+          CONTAINERS_PORT: 3000
           NODE_ENV: ${{ secrets.NODE_ENV}}
           ACCESS_TOKEN_SECRET_KEY: ${{ secrets.ACCESS_TOKEN_SECRET_KEY}}
           REFRESH_TOKEN_SECRET_KEY: ${{ secrets.REFRESH_TOKEN_SECRET_KEY}}
@@ -72,7 +72,7 @@ jobs:
             echo AWS_REGION=$AWS_REGION >> .env
             echo AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID >> .env
             echo AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY >> .env
-            echo PORT=$PORT >> .env
+            echo PORT=$CONTAINERS_PORT >> .env
             echo NODE_ENV=$NODE_ENV >> .env
             echo ACCESS_TOKEN_SECRET_KEY=$ACCESS_TOKEN_SECRET_KEY >> .env
             echo REFRESH_TOKEN_SECRET_KEY=$REFRESH_TOKEN_SECRET_KEY >> .env
