@@ -105,10 +105,6 @@ services:
     restart: always
     image: confluentinc/cp-kafka:7.0.1
     container_name: broker
-    ports:
-      # To learn about configuring Kafka for access across networks see
-      # https://www.confluent.io/blog/kafka-client-cannot-connect-to-broker-on-aws-on-docker-etc/
-      - "9092:9092"
     depends_on:
       - zookeeper
     environment:
