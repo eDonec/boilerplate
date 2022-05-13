@@ -9,9 +9,8 @@ on:
       - "comopose-staging/*"
 
 jobs:
-  send-new-compose-files-to-server-and-redeploy-compose:
+  send-compose-files-to-server:
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/master' # Running this job only for master branch
 
     steps:
       - uses: actions/checkout@v3 # Checking out the repo
@@ -32,6 +31,10 @@ jobs:
           port: ${{ secrets.PORT }}
           source: "compose-staging"
           target: "/docker/staging"
+  deploy-to-staging:
+    runs-on: ubuntu-latest
+
+    steps:
       - name: Set the value
         run: |
           echo "GH_TOKEN=${{ secrets.GITHUB_TOKEN }}" >> $GITHUB_ENV
