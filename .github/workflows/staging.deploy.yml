@@ -6,7 +6,7 @@ on:
     paths:
       - ".github/workflows/staging.deploy.yml"
       - ".github/base.deploy.yml"
-      - "comopose-staging/*"
+      - "compose-staging/*"
 
 jobs:
   send-compose-files-to-server:
