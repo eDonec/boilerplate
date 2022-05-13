@@ -58,8 +58,6 @@ jobs:
           REFRESH_TOKEN_SECRET_KEY: ${{ secrets.HEAD_REFRESH_TOKEN_SECRET_KEY}}
           TOKEN_EXPIRES_IN: ${{ secrets.TOKEN_EXPIRES_IN}}
           REFRESH_TOKEN_EXPIRES_IN: ${{ secrets.REFRESH_TOKEN_EXPIRES_IN}}
-          FULL_CHAIN_CERT: ${{ secrets.HEAD_FULL_CHAIN_CERT}}
-          PRIVATE_KEY_CERT: ${{ secrets.HEAD_PRIVATE_KEY_CERT}}
         with:
           host: ${{ secrets.HEAD_HOST }}
           username: ${{ secrets.USERNAME }}
@@ -83,6 +81,6 @@ jobs:
             echo REFRESH_TOKEN_SECRET_KEY=$REFRESH_TOKEN_SECRET_KEY >> .env
             echo TOKEN_EXPIRES_IN=$TOKEN_EXPIRES_IN >> .env
             echo REFRESH_TOKEN_EXPIRES_IN=$REFRESH_TOKEN_EXPIRES_IN >> .env
-            echo $FULL_CHAIN_CERT >> fullchain.pem
-            echo $PRIVATE_KEY_CERT >> privkey.pem
+            cp ../fullchain.pem .
+            cp ../privkey.pem .
             docker-compose up --build --force-recreate -d --remove-orphans

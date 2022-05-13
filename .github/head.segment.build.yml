@@ -1,0 +1,38 @@
+${{packageName}}-build-and-publish-head:
+    runs-on: ubuntu-latest
+    if: (github.ref != 'refs/heads/master') && (github.ref != 'refs/heads/develop') && (github.event.review.state == 'approved') # Running this job only for master and develop branch
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Build and Publish Tag Docker image
+        uses: VaultVulp/gp-docker-action@1.2.0
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }} # Provide GITHUB_TOKEN to login into the GitHub Packages
+          image-name: ${{packageName}} # Provide only Docker image name
+          dockerfile: .docker/Dockerfile.${{packageName}}
+          image-tag: head
+  ${{packageName}}-deploy-to-head:
+    runs-on: ubuntu-latest
+    needs: [${{packageName}}-build-and-publish-head]
+    if: (github.ref != 'refs/heads/master') && (github.ref != 'refs/heads/develop') && (github.event.review.state == 'approved') # Running this job only for master and develop branch
+    steps:
+      - name: Set the value
+        run: |
+          echo "GH_TOKEN=${{ secrets.GITHUB_TOKEN }}" >> $GITHUB_ENV
+          echo "USERNAME=${{ secrets.USERNAME }}" >> $GITHUB_ENV
+      - name: remote docker-compose up via ssh
+        uses: appleboy/ssh-action@master
+        env:
+          APPTOKEN: ${{ secrets.GITHUB_TOKEN }}
+          USERNAME: ${{ env.USERNAME }}
+        with:
+          host: ${{ secrets.HEAD_HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.HEAD_PRIVATE_KEY }}
+          port: ${{ secrets.PORT }}
+          envs: APPTOKEN,USERNAME
+          script: |
+            echo $APPTOKEN | docker login ghcr.io -u $USERNAME --password-stdin
+            cd /docker/head
+            docker pull ghcr.io/edonec/boilerplate/${{packageName}}:head
+            docker-compose up --no-deps --build --force-recreate -d ${{packageName}}
