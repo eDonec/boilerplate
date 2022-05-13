@@ -68,7 +68,7 @@ jobs:
             echo $APPTOKEN | docker login ghcr.io -u $USERNAME --password-stdin
             cd /docker/staging/compose-staging
             docker pull ghcr.io/edonec/boilerplate/auth:staging
-            docker-compose -f docker-compose.staging.yml up --build --force-recreate -d --remove-orphans
+            docker-compose -f docker-compose.staging.yml up --no-deps --build --force-recreate -d auth
 
   auth-build-and-publish-head:
     runs-on: ubuntu-latest
