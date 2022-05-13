@@ -34,16 +34,15 @@ jobs:
           user: ${{ secrets.USERNAME }}
           # runs this on remove server
           ssh_before: |
-            rm -rf /docker/tmp/staging || true
+            rm -rf /docker/staging || true
 
           # then uploads these 2 files
           scp: |
-            compose/staging ${{ secrets.USERNAME }}@${{ secrets.HOST }}:/docker/tmp/staging
+            compose/staging ${{ secrets.USERNAME }}@${{ secrets.HOST }}:/docker/staging
 
           # then run these commands
           ssh_after: |
-            rm -rf /docker/staging || true
-            mv /docker/tmp/staging/compose/staging /docker/staging
+            ls -l /docker/staging
 
   deploy-to-staging:
     runs-on: ubuntu-latest
