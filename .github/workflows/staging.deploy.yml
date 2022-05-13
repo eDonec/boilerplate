@@ -30,7 +30,7 @@ jobs:
           key: ${{ secrets.PRIVATE_KEY }}
           port: ${{ secrets.PORT }}
           source: "compose/staging/*"
-          target: "/docker/staging"
+          target: "/docker/staging/*"
   deploy-to-staging:
     runs-on: ubuntu-latest
     needs: [send-compose-files-to-server]
