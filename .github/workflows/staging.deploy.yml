@@ -6,6 +6,7 @@ on:
     paths:
       - ".github/workflows/staging.deploy.yml"
       - ".github/base.deploy.yml"
+      - "comopose-staging/**"
       - "apps/**"
       - "packages/**"
       - "package.json"
