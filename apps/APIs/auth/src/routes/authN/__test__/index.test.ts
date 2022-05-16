@@ -7,8 +7,6 @@ import supertest from "supertest";
 
 import authNRoutes from "..";
 
-// app.use(json());
-
 app.use(authNRoutes);
 
 beforeEach(async () => {
