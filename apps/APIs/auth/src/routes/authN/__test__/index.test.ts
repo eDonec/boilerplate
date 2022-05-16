@@ -33,25 +33,25 @@ describe("POST /n/classic", () => {
       const body = { email: "testexample.com", password: "password" };
       const response = await supertest(app).post("/n/classic").send(body);
 
-      expect(response.status).toEqual(StatusCodes.Unauthorized);
+      expect(response.status).toEqual(StatusCodes["Bad Request"]);
     });
     it("should throw a validation error if password is badly formatted", async () => {
       const body = { email: "testexample.com", password: "123" };
       const response = await supertest(app).post("/n/classic").send(body);
 
-      expect(response.status).toEqual(StatusCodes.Unauthorized);
+      expect(response.status).toEqual(StatusCodes["Bad Request"]);
     });
     it("should throw a validation error if password field is absent", async () => {
       const body = { email: "testexample.com" };
       const response = await supertest(app).post("/n/classic").send(body);
 
-      expect(response.status).toEqual(StatusCodes.Unauthorized);
+      expect(response.status).toEqual(StatusCodes["Bad Request"]);
     });
     it("should throw a validation error if email field is absent", async () => {
       const body = { password: "password" };
       const response = await supertest(app).post("/n/classic").send(body);
 
-      expect(response.status).toEqual(StatusCodes.Unauthorized);
+      expect(response.status).toEqual(StatusCodes["Bad Request"]);
     });
   });
 });
