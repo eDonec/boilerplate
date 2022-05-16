@@ -1,8 +1,9 @@
 import IAuthServerMiddleware from "auth-types/IAuthServerMiddleware";
 import { AuthNRouteTypes } from "auth-types/routes/authN";
+import { UnauthorizedError } from "custom-error";
+import NotFoundError from "custom-error/NotFoundError";
 import { Request } from "http-server";
 import Role from "models/Role";
-import StatusCodes from "shared-types/StatusCodes";
 
 export const checkAuthRole: IAuthServerMiddleware<
   Request<
@@ -23,21 +24,20 @@ export const checkAuthRole: IAuthServerMiddleware<
   const { currentAuth } = res.locals;
 
   if (!dbRole) {
-    res.status(StatusCodes["Not Found"]).send({
+    throw new NotFoundError({
       message: "Role not found",
       stack: "Role not found in authorization check",
+      ressource: "Role",
     });
-
-    return;
   }
 
   if (currentAuth.role.name !== dbRole.name) {
-    res.status(StatusCodes.Unauthorized).send({
+    throw new UnauthorizedError({
       message: "User not authorized ",
       stack: "Authorization denied for user",
+      reason: "User does not have this role or above",
+      ressource: dbRole.name,
     });
-
-    return;
   }
 
   next();

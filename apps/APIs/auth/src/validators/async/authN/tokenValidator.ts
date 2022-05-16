@@ -1,3 +1,4 @@
+import { NotFoundError } from "custom-error";
 import Auth from "models/Auth";
 import { IMiddleware } from "shared-types";
 import TokenValidator from "token/TokenValidator";
@@ -15,9 +16,15 @@ export const findAndValidateAuthClientByRefreshToken: IMiddleware = async (
   ).populate("role");
 
   if (!authUsersByRefreshToken)
-    throw new Error("User not found refresh token is invalid!");
+    throw new NotFoundError({
+      message: "User not found or refresh token is invalid!",
+      ressource: "User",
+    });
   if (!authUsersByRefreshToken.sessions.includes(refreshToken.decodedToken.sid))
-    throw new Error("User session cannot be found he is probably disconnected");
+    throw new NotFoundError({
+      message: "User session cannot be found he is probably disconnected",
+      ressource: "User",
+    });
   res.locals.currentAuth = authUsersByRefreshToken;
   next();
 };
