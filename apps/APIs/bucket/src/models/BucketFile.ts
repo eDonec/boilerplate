@@ -1,4 +1,4 @@
-import { BucketFileType } from "bucket-types/models/Files";
+import { BucketFileType } from "bucket-types/models/BucketFile";
 import { model, Schema } from "mongoose";
 
 const schema = new Schema<BucketFileType>({

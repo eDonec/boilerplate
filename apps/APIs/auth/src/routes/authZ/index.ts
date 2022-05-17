@@ -13,5 +13,6 @@ router.get(
   asyncAuthNValidators.findAndValidateAuthClientByRefreshToken,
   authZController.refreshAccessToken
 );
+router.get(`${BASE_ROUTE}/upload-token`, authZController.getUploadToken);
 
 export default router;

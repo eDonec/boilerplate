@@ -5,11 +5,8 @@ import { useLocation } from "react-router-dom";
 import { Button, useDarkMode } from "core-ui";
 import AlertDialog, { useAlertDialog } from "core-ui/AlertDialog";
 import clsx from "core-utils/clsx";
-import Checkbox from "forms/Checkbox";
+import { Checkbox, Input, RadioButton, Select } from "forms";
 import FilePicker from "forms/FilePicker";
-import Input from "forms/Input";
-import RadioButton from "forms/RadioButton";
-import Select from "forms/Select";
 
 import LanguageSelector from "components/LanguageSelector";
 
@@ -22,7 +19,6 @@ const HomePage = () => {
   const count = useAppSelector((state) => state.counter.count);
   const { isLoading, dispatch, classicDispatch } = useLoadingDispatch();
   const { t } = useTranslation();
-
   const increment = () => {
     classicDispatch(incrementCounter());
   };
@@ -47,9 +43,9 @@ const HomePage = () => {
   const [submitModalProps, handleSubmit] = useAlertDialog(onSubmit);
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center dark:text-gray-200">
+    <div className="container mx-auto flex min-h-screen flex-col items-center justify-center dark:text-gray-200">
       <LanguageSelector />
-      <h1 className="mb-4">CRA + Tailwind CSS + TypeScript + Redux Tookit</h1>
+      <h1 className="mb-4">CRA + Tailwind CSS + TypeScript + Redux Toolkit</h1>
       <p className="mt-2 text-sm text-gray-700 dark:text-gray-200">
         <a
           className={clsx(
@@ -105,13 +101,13 @@ const HomePage = () => {
               { value: "m", label: "Male" },
             ]}
             className="bg-radio"
-          ></RadioButton>
+          />
           <Checkbox
             name="check"
             className="bg-dak"
             label="check box for test"
             defaultChecked
-          ></Checkbox>
+          />
           <Select
             name="select"
             validate={[{ rule: "exists" }]}
@@ -124,7 +120,8 @@ const HomePage = () => {
             name="image"
             label="Click to select image"
             accept=".jpeg,.jpg,.png,.docx,.pptx,.pdf,.xlsx"
-          ></FilePicker>
+          />
+
           <Button type="submit" light>
             submit
           </Button>

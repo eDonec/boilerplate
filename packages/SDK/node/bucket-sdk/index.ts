@@ -1,25 +1,43 @@
+import axios, { CancelToken, CancelTokenSource } from "axios";
 import { UploadRouteTypes } from "bucket-types/routes/upload";
-import ServerSDK from "server-sdk/sdk";
-import ServerSDKTypes from "server-sdk/types";
 
 const baseUrl = "/v1/bucket";
+const getCancelToken = () => axios.CancelToken.source();
 
-export default class BucketSDK extends ServerSDK {
-  //temp
+export default class BucketSDK {
+  private api = axios.create({
+    baseURL: `/api${baseUrl}`,
+  });
+
+  public getCancelToken: () => CancelTokenSource;
+
+  constructor(uploadToken: string) {
+    this.getCancelToken = getCancelToken.bind(this);
+    this.api.defaults.headers.common.Authorization = `Bearer ${uploadToken}`;
+  }
 
   public async addFiles({
-    body,
+    file,
+    onUploadProgress,
+    cancelToken,
   }: {
-    body: UploadRouteTypes["/upload/"]["POST"]["body"];
-    query?: never;
-    params?: never;
+    file: File;
+    onUploadProgress?: (progress: number) => void;
+    cancelToken?: CancelToken;
   }) {
+    const formData = new FormData();
+
+    formData.append("file", file);
+
     const { data } = await this.api.post<
       UploadRouteTypes["/upload/"]["POST"]["response"]
-    >(`${baseUrl}/upload/`, body);
+    >(`/upload/`, formData, {
+      onUploadProgress: ({ total, loaded }) => {
+        onUploadProgress?.(Math.round((loaded * 100) / total));
+      },
+      cancelToken,
+    });
 
     return data;
   }
 }
-
-export type BucketSDKTypes = ServerSDKTypes<BucketSDK>;

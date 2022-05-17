@@ -6,3 +6,4 @@ export { default as Input } from "./Input";
 export { default as RawInput } from "./Input/RawInput";
 export { default as RadioButton } from "./RadioButton";
 export { default as RawRadioButton } from "./RadioButton/RawRadioButton";
+export { default as Select } from "./Select";
