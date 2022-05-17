@@ -11,6 +11,9 @@ const modules = [
   "node/core-utils",
   "SDK/node/auth-sdk",
   "SDK/node/server-sdk",
+  "node/api-types/auth-types",
+  "node/shared-types",
+  "node/custom-error",
 ];
 const packages = [];
 packages.push(

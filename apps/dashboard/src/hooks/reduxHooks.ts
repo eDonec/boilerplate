@@ -13,8 +13,8 @@ export const useAppSelector: TypedUseSelectorHook<RootState> = (
   equalityFN = objectEqual
 ) => useSelector(selector, equalityFN);
 
-export const useLoading = () => {
-  const [loadingProcesses, setIsLoading] = useState(0);
+export const useLoading = (initialState = 0) => {
+  const [loadingProcesses, setIsLoading] = useState(initialState);
 
   const startLoading = useCallback(() => {
     setIsLoading((prev) => prev + 1);
@@ -26,9 +26,9 @@ export const useLoading = () => {
   return { startLoading, stopLoading, isLoading: loadingProcesses > 0 };
 };
 
-export const useLoadingDispatch = () => {
+export const useLoadingDispatch = (initialState = 0) => {
   const classicDispatch = useAppDispatch();
-  const { startLoading, stopLoading, isLoading } = useLoading();
+  const { startLoading, stopLoading, isLoading } = useLoading(initialState);
 
   const dispatch = useCallback(
     async (callback: ThunkAction<unknown, RootState, undefined, AnyAction>) => {
