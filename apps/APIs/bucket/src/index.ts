@@ -2,6 +2,8 @@
 import { json } from "body-parser";
 import clsx from "core-utils/clsx";
 import express from "express";
+import fs from "fs-extra";
+import { resolvePath } from "init";
 import { connect, ConnectOptions } from "mongoose";
 import "dotenv/config";
 
@@ -10,6 +12,8 @@ import router from "./routes";
 const app = express();
 
 app.use(json());
+
+fs.mkdirSync(resolvePath("public"), { recursive: true });
 
 const port = process.env.PORT || 4000;
 

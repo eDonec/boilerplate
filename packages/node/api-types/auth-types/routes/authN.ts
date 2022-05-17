@@ -60,6 +60,11 @@ export type AuthNRouteTypes = {
       response: void;
     };
   };
+  "/z/upload-token": {
+    GET: {
+      response: string;
+    };
+  };
   //! GENERATOR-ANCHOR
 };
 

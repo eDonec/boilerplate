@@ -16,6 +16,7 @@ export interface IProps
   name: string;
   validate?: TRule[];
 }
+
 const FilePicker: React.FC<IProps> = ({
   name,
   validate,
@@ -32,8 +33,8 @@ const FilePicker: React.FC<IProps> = ({
       control={control}
       render={({ field: { onChange, value, ref } }) => (
         <RawFilePicker
-          name={name}
           {...filePickerProps}
+          name={name}
           ref={ref}
           value={value}
           onChange={onChange}

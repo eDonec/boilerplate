@@ -26,3 +26,24 @@ export const refreshAccessToken: IAuthServerMiddleware<
 
   res.status(StatusCodes.Created).send(accessToken.token);
 }, StatusCodes["Bad Request"]);
+
+export const getUploadToken: IAuthServerMiddleware<
+  Request,
+  AuthNRouteTypes["/z/upload-token"]["GET"]["response"]
+> = (_, res) => {
+  const uploadToken = new TokenGenerator(
+    {
+      aud: "bucket",
+      iss: "auth",
+      sid: "none",
+      payload: {
+        maxFiles: 5,
+        mimeTypes: ["image/png", "image/jpg", "image/jpeg"],
+      },
+    },
+    false,
+    process.env.UPLOAD_SECRET_KEY
+  );
+
+  res.status(StatusCodes.Created).send(uploadToken.token);
+};

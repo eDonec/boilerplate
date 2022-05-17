@@ -11,6 +11,7 @@ const modules = [
   "node/core-utils",
   "SDK/node/auth-sdk",
   "SDK/node/server-sdk",
+  "SDK/node/bucket-sdk",
 ];
 const packages = [];
 packages.push(

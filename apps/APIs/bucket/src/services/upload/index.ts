@@ -1,5 +1,11 @@
-import { BucketFileDocument } from "bucket-types/models/Files";
+import {
+  GetObjectCommand,
+  PutObjectCommand,
+  S3Client,
+} from "@aws-sdk/client-s3";
+import { BucketFileDocument } from "bucket-types/models/BucketFile";
 import { UploadRouteTypes } from "bucket-types/routes/upload";
+import { Request, Response } from "express";
 import fs from "fs-extra";
 import { resolvePath } from "init";
 import BucketFile from "models/BucketFile";
@@ -19,8 +25,18 @@ process.on("SIGINT", () => {
   process.exit();
 });
 
+const s3Client = new S3Client({
+  region: "eu-west-3",
+});
+
+console.log({
+  access: process.env.AWS_ACCESS_KEY_ID,
+  secret: process.env.AWS_SECRET_ACCESS_KEY,
+});
+
 export const addFiles = async (
-  file: Express.Multer.File
+  file: Express.Multer.File,
+  req: Request
 ): Promise<UploadRouteTypes["/upload/"]["POST"]["response"]> => {
   await assertFileType(file);
 
@@ -28,12 +44,9 @@ export const addFiles = async (
     new Date().setMinutes(new Date().getMinutes() + PENDING_DURATION_MINUTES)
   ).getTime();
 
-  const newUrl = await uploadFiletoAWSBucket({
-    url: file.path,
-    filename: file.filename,
-  });
+  const newUrl = await uploadFiletoAWSBucket(file);
 
-  await BucketFile.create({
+  const bucketFile = await BucketFile.create({
     isPersisted: false,
     mimetype: file.mimetype,
     path: newUrl,
@@ -42,8 +55,14 @@ export const addFiles = async (
     isDeleted: false,
   });
 
+  req.on("aborted", () => {
+    deleteFile(bucketFile);
+  });
+
   return {
     url: newUrl,
+    type: file.mimetype,
+    name: file.filename,
   };
 };
 
@@ -60,20 +79,31 @@ const deleteFile = async (bucketFile: BucketFileDocument) => {
   await bucketFile.save();
 };
 
-const uploadFiletoAWSBucket = async ({
-  url,
-  filename,
-}: {
-  url: string;
-  filename: string;
-}): Promise<string> => {
+const uploadFiletoAWSBucket = async (
+  file: Express.Multer.File
+): Promise<string> => {
   //! temporary implementation
-  const newUrl = path.join(TEMP_BUCKET_BASE_PATH, filename);
 
-  await fs.copyFile(url, newUrl);
-  await fs.unlink(url);
+  await s3Client.send(
+    new PutObjectCommand({
+      Bucket: "edonec-boilerplate-files",
+      Key: file.filename,
+      Body: fs.createReadStream(file.path),
+    })
+  );
 
-  return newUrl;
+  return path.join("images", file.filename);
+};
+
+export const getFileFromBucket = async (key: string, res: Response) => {
+  const data = await s3Client.send(
+    new GetObjectCommand({
+      Bucket: "edonec-boilerplate-files",
+      Key: key,
+    })
+  );
+
+  console.log(data);
 };
 
 const deleteFileFromAWSBucket = async (url: string): Promise<void> => {

@@ -1,6 +1,8 @@
 import { useCallback, useEffect, useState } from "react";
 import { FileRejection, useDropzone } from "react-dropzone";
 
+import { UploadedFile } from "bucket-types/utils";
+
 export interface IFileWithPreview extends File {
   preview: string;
   path?: string;
@@ -9,7 +11,7 @@ export interface IFileWithPreview extends File {
 type FilePickerProps = {
   maxFiles: number;
   accept?: string | string[] | undefined;
-  onChange?: (files: IFileWithPreview) => void;
+  onChange?: (files: UploadedFile | UploadedFile[]) => void;
   errors?: (error: FileRejection[]) => void;
 };
 export const useFilePicker = ({
@@ -17,12 +19,10 @@ export const useFilePicker = ({
   maxFiles,
   accept,
 }: FilePickerProps) => {
-  const [files, setFiles] = useState<IFileWithPreview[]>([]);
+  const [files, setFiles] = useState<(IFileWithPreview | UploadedFile)[]>([]);
   const [rejectedFiles, setFilesRejected] = useState<string[][]>([]);
   const handlePictureClick = (
-    event:
-      | React.MouseEvent<HTMLSpanElement, MouseEvent>
-      | React.KeyboardEvent<HTMLSpanElement>,
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
     index: number,
     fn: (index: number) => void
   ) => {
@@ -51,8 +51,12 @@ export const useFilePicker = ({
   }, []);
 
   useEffect(() => {
-    onChange?.(files[0]);
-  }, [files, onChange]);
+    const filesToSubmit = files.filter(
+      (file): file is UploadedFile => !(file instanceof File)
+    );
+
+    onChange?.(maxFiles > 1 ? filesToSubmit : filesToSubmit[0]);
+  }, [files, onChange, maxFiles]);
 
   const { getRootProps, getInputProps, isDragActive, isDragReject } =
     useDropzone({
@@ -65,6 +69,29 @@ export const useFilePicker = ({
     setFiles((prev) => prev.filter((_file, i) => index !== i));
   };
 
+  const onFileUploaded = useCallback(
+    ({
+      file,
+      uploadedFile,
+    }: {
+      uploadedFile: UploadedFile;
+      file: IFileWithPreview;
+    }) => {
+      setFiles((prev) => {
+        const prevCopy = [...prev];
+        const index = prev.findIndex(
+          (el) => el instanceof File && el.preview === file.preview
+        );
+
+        if (index !== -1)
+          prevCopy[index] = { ...uploadedFile, name: file.name };
+
+        return prevCopy;
+      });
+    },
+    []
+  );
+
   return {
     getRootProps,
     getInputProps,
@@ -74,5 +101,6 @@ export const useFilePicker = ({
     rejectedFiles,
     handlePictureClick,
     deleteFile,
+    onFileUploaded,
   };
 };

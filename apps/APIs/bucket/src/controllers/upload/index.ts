@@ -4,16 +4,11 @@ import * as uploadService from "services/upload";
 import { IMiddleware, StatusCodes } from "shared-types";
 
 export const addFiles: IMiddleware<
-  Request<
-    unknown,
-    unknown,
-    UploadRouteTypes["/upload/"]["POST"]["body"],
-    unknown
-  >,
+  Request,
   Response<UploadRouteTypes["/upload/"]["POST"]["response"]>
 > = async (req, res) => {
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  const response = await uploadService.addFiles(req.file!);
+  const response = await uploadService.addFiles(req.file!, req);
 
   res.status(StatusCodes.Created).send(response);
 };
