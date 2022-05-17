@@ -1,3 +1,4 @@
+export * from "./AccessRessources";
 export * from "./auth/access";
 export * from "./auth/authProviders";
 export * from "./auth/IToken";

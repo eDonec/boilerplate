@@ -60,6 +60,11 @@ export type AuthNRouteTypes = {
       response: void;
     };
   };
+  "/n/me": {
+    GET: {
+      response: AuthResponse;
+    };
+  };
   //! GENERATOR-ANCHOR
 };
 

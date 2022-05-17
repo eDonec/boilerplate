@@ -92,6 +92,14 @@ export default class AuthSDK extends ServerSDK {
     this.setBearerToken(token.accessToken);
     this.refreshToken = token.refreshToken;
   }
+
+  public async getAuthByAccessToken() {
+    const { data } = await this.api.get<
+      AuthNRouteTypes["/n/me"]["GET"]["response"]
+    >(`${baseUrl}/n/me`);
+
+    return data;
+  }
 }
 
 export type AuthSDKTypes = ServerSDKTypes<AuthSDK>;

@@ -1,7 +1,0 @@
-{
-  "baseUrl": "/role-by-access-token",
-  "name": "rolesByAccessToken",
-  "method": "POST",
-
-  "response": "AuthResponse"
-}

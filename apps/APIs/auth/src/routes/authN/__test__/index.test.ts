@@ -53,3 +53,7 @@ describe("POST /n/classic", () => {
     });
   });
 });
+
+describe("GET /n/me", () => {
+  describe("validation tests", () => {});
+});

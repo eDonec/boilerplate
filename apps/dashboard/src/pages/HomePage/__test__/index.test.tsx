@@ -10,7 +10,7 @@ import store from "_redux/store";
 import HomePage from "../index";
 
 jest.mock(
-  "containers/PrivateWrapper",
+  "containers/AuthWrappers/PrivateWrapper",
   () =>
     ({ children }: ReactChildrenProps) =>
       children

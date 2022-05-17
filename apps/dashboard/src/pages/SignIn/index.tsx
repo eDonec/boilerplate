@@ -3,7 +3,7 @@ import { FormProvider } from "react-hook-form";
 import Button from "core-ui/Button";
 import { Input } from "forms";
 
-import { LoggedOutWrapper } from "containers/LoggedOutWrapper";
+import { LoggedOutWrapper } from "containers/AuthWrappers/LoggedOutWrapper";
 
 import useSignIn from "./useSignIn";
 

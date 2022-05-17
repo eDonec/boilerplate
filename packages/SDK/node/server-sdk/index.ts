@@ -32,7 +32,7 @@ export default class ApiSDK {
         const request = error.config;
 
         if (
-          error.response?.status === StatusCodes.Unauthorized &&
+          error.response?.status === StatusCodes.Forbidden &&
           error.response.data.message === "Token invalid or expired" &&
           !request._retry
         ) {

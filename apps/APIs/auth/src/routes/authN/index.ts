@@ -1,5 +1,6 @@
 import * as authNController from "controllers/authN";
 import { Router } from "init";
+import { getAuthByAccessToken } from "middlewares/currentAuth";
 import { AUTH_PROVIDERS } from "shared-types";
 import * as asyncAuthNValidators from "validators/async/authN";
 import * as asyncAuthZValidators from "validators/async/authZ";
@@ -41,6 +42,13 @@ router.get(
   authNValidators.tokenValidator(true),
   asyncAuthNValidators.findAndValidateAuthClientByRefreshToken,
   authNController.logoutAuthClientFromSession
+);
+
+router.get(
+  `${BASE_ROUTE}/me`,
+  authNValidators.tokenValidator(false),
+  getAuthByAccessToken,
+  authNController.getAuthByAccessToken
 );
 
 export default router;

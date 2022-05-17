@@ -20,6 +20,7 @@
   "dependencies": {
     "dotenv": "16.0.0",
     "jsonwebtoken": "8.5.1",
+    "custom-error": "*",
     "nanoid": "3.3.3"
   },
   "devDependencies": {
