@@ -9,13 +9,15 @@ import Checkbox from "forms/Checkbox";
 import FilePicker from "forms/FilePicker";
 import Input from "forms/Input";
 import RadioButton from "forms/RadioButton";
-import Select from "forms/Select";
+import { ACCESS_RESSOURCES, PRIVILEGE } from "shared-types";
 
 import LanguageSelector from "components/LanguageSelector";
-import PrivateWrapper from "containers/PrivateWrapper";
+import AccessProtectedWrapper from "containers/AuthWrappers/AccessProtectedWrapper";
+import PrivateWrapper from "containers/AuthWrappers/PrivateWrapper";
 
 import { useAppSelector, useLoadingDispatch } from "hooks/reduxHooks";
 
+import { logout } from "_redux/slices/auth";
 import { decrementCounter, incrementCounter } from "_redux/slices/counter";
 import { setCounterAsync } from "_redux/slices/counter/thunk";
 
@@ -49,114 +51,113 @@ const HomePage = () => {
   const [submitModalProps, handleSubmit] = useAlertDialog(onSubmit);
 
   return (
-    <PrivateWrapper>
-      <div className="flex min-h-screen flex-col items-center justify-center dark:text-gray-200">
-        <LanguageSelector />
-        <h1 className="mb-4">CRA + Tailwind CSS + TypeScript + Redux Tookit</h1>
-        <p className="mt-2 text-sm text-gray-700 dark:text-gray-200">
-          <a
-            className={clsx(
-              "inline-flex items-center rounded px-4 py-2 font-semibold",
-              "focus-visible:ring-primary-500 focus:outline-none focus-visible:ring",
-              "shadow-sm",
-              "transition-colors duration-75"
-            )}
-            href="/"
+    <div className="flex min-h-screen flex-col items-center justify-center dark:text-gray-200">
+      <LanguageSelector />
+      <h1 className="mb-4">CRA + Tailwind CSS + TypeScript + Redux Tookit</h1>
+      <p className="mt-2 text-sm text-gray-700 dark:text-gray-200">
+        <a
+          className={clsx(
+            "inline-flex items-center rounded px-4 py-2 font-semibold",
+            "focus-visible:ring-primary-500 focus:outline-none focus-visible:ring",
+            "shadow-sm",
+            "transition-colors duration-75"
+          )}
+          href="/"
+        >
+          Go to client {process.env.REACT_APP_HELLO || "hello World"}
+        </a>
+      </p>
+      <p className="mt-2 text-sm text-gray-700 dark:text-gray-200">
+        <Link
+          className={clsx(
+            "inline-flex items-center rounded px-4 py-2 font-semibold",
+            "focus-visible:ring-primary-500 focus:outline-none focus-visible:ring",
+            "shadow-sm",
+            "transition-colors duration-75",
+            "disabled:cursor-not-allowed"
+          )}
+          to="/sign-in"
+        >
+          Go to sign-in
+        </Link>
+      </p>
+      <PrivateWrapper>
+        <Button
+          primary
+          onClick={() => {
+            classicDispatch(logout());
+          }}
+        >
+          logout
+        </Button>
+      </PrivateWrapper>
+      <FormProvider {...methods}>
+        <form onSubmit={methods.handleSubmit(handleSubmit)}>
+          <Input
+            validate={[{ rule: "isEmpty" }]}
+            name="start"
+            type="text"
+            placeholder="placeholder"
+            label="Input for test"
+          />
+          <RadioButton
+            name="radio"
+            values={[
+              { value: "f", label: "Female" },
+              { value: "m", label: "Male" },
+            ]}
+            className="bg-radio"
+          ></RadioButton>
+          <Checkbox
+            name="check"
+            className="bg-dak"
+            label="check box for test"
+            defaultChecked
+          ></Checkbox>
+          <AccessProtectedWrapper
+            previlages={[PRIVILEGE.DELETE_SELF, PRIVILEGE.DELETE]}
+            ressource={ACCESS_RESSOURCES.USER}
           >
-            Go to client {process.env.REACT_APP_HELLO || "hello World"}
-          </a>
-        </p>
-        <p className="mt-2 text-sm text-gray-700 dark:text-gray-200">
-          <Link
-            className={clsx(
-              "inline-flex items-center rounded px-4 py-2 font-semibold",
-              "focus-visible:ring-primary-500 focus:outline-none focus-visible:ring",
-              "shadow-sm",
-              "transition-colors duration-75",
-              "disabled:cursor-not-allowed",
-              "bg-primary-700 text-white",
-              "border-primary-600 border",
-              "hover:bg-primary-600 hover:text-white",
-              "active:bg-primary-500",
-              "disabled:bg-primary-400 disabled:hover:bg-primary-400"
-            )}
-            to="/sign-in"
-          >
-            Go to sign-in
-          </Link>
-        </p>
-
-        <FormProvider {...methods}>
-          <form onSubmit={methods.handleSubmit(handleSubmit)}>
-            <Input
-              validate={[{ rule: "isEmpty" }]}
-              name="start"
-              type="text"
-              placeholder="placeholder"
-              label="Input for test"
-            />
-            <RadioButton
-              name="radio"
-              values={[
-                { value: "f", label: "Female" },
-                { value: "m", label: "Male" },
-              ]}
-              className="bg-radio"
-            ></RadioButton>
-            <Checkbox
-              name="check"
-              className="bg-dak"
-              label="check box for test"
-              defaultChecked
-            ></Checkbox>
-            <Select
-              name="select"
-              validate={[{ rule: "exists" }]}
-              options={[
-                { label: "English", value: "en" },
-                { label: "Français", value: "fr" },
-              ]}
-            />
             <FilePicker
               name="image"
               label="Click to select image"
               accept=".jpeg,.jpg,.png,.docx,.pptx,.pdf,.xlsx"
             ></FilePicker>
-            <Button type="submit" light>
-              submit
-            </Button>
-            <AlertDialog
-              title="titre"
-              message="Etes-vous sur de vouloir continuer?"
-              confirmMessage="Confirmer"
-              cancelMessage="Annuler"
-              {...submitModalProps}
-            />
-          </form>
-        </FormProvider>
-        <Button onClick={toggleDarkMode} light>
-          Toggle Dark mode
-        </Button>
-        <h2 className="my-3">Redux Counter : {count}</h2>
-        <div className="flex flex-col gap-2">
-          <div className="flex gap-2">
-            <Button
-              primary
-              disabled={count === 0 || isLoading}
-              onClick={decrement}
-            >
-              {t("user.activation")}
-            </Button>
-            <Button primary disabled={isLoading} onClick={increment}>
-              {t("api.notFound")}
-            </Button>
-          </div>
-          <Button outline onClick={setAsync} isLoading={isLoading}>
-            {t("api.updated")}
+          </AccessProtectedWrapper>
+          <Button type="submit" light>
+            submit
+          </Button>
+          <AlertDialog
+            title="titre"
+            message="Etes-vous sur de vouloir continuer?"
+            confirmMessage="Confirmer"
+            cancelMessage="Annuler"
+            {...submitModalProps}
+          />
+        </form>
+      </FormProvider>
+      <Button onClick={toggleDarkMode} light>
+        Toggle Dark mode
+      </Button>
+      <h2 className="my-3">Redux Counter : {count}</h2>
+      <div className="flex flex-col gap-2">
+        <div className="flex gap-2">
+          <Button
+            primary
+            disabled={count === 0 || isLoading}
+            onClick={decrement}
+          >
+            {t("user.activation")}
+          </Button>
+          <Button primary disabled={isLoading} onClick={increment}>
+            {t("api.notFound")}
           </Button>
         </div>
+        <Button outline onClick={setAsync} isLoading={isLoading}>
+          {t("api.updated")}
+        </Button>
       </div>
-    </PrivateWrapper>
+    </div>
   );
 };
 

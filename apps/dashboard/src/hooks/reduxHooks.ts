@@ -20,7 +20,9 @@ export const useLoading = (initialState = 0) => {
     setIsLoading((prev) => prev + 1);
   }, []);
   const stopLoading = useCallback(() => {
-    setIsLoading((prev) => Math.max(prev - 1, 0));
+    setIsLoading((prev) =>
+      Math.max(prev - 1 === initialState ? 0 : prev - 1, 0)
+    );
   }, []);
 
   return { startLoading, stopLoading, isLoading: loadingProcesses > 0 };
@@ -33,11 +35,15 @@ export const useLoadingDispatch = (initialState = 0) => {
   const dispatch = useCallback(
     async (callback: ThunkAction<unknown, RootState, undefined, AnyAction>) => {
       startLoading();
-      const response = await classicDispatch(callback);
+      try {
+        const response = await classicDispatch(callback);
 
-      stopLoading();
+        stopLoading();
 
-      return response;
+        return response;
+      } catch (error) {
+        stopLoading();
+      }
     },
     [classicDispatch, startLoading, stopLoading]
   ) as typeof classicDispatch;

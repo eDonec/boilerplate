@@ -12,12 +12,10 @@ export default class UnauthorizedError extends Error {
     reason,
     ressource,
     requiredRole,
-    stack,
     name,
   }: IUnauthorizedError) {
     super(message);
     this.name = name || "Unauthorized access to ressource!";
-    this.stack = stack;
     this.reason = reason;
     this.ressource = ressource;
     this.requiredRole = requiredRole;

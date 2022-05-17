@@ -1,6 +1,7 @@
 import IAuthServerMiddleware from "auth-types/IAuthServerMiddleware";
+import { AuthDocument } from "auth-types/models/Auth";
 import { AuthNRouteTypes } from "auth-types/routes/authN";
-import { Request } from "http-server";
+import { Request, Response } from "http-server";
 import * as authNService from "services/authN";
 import { IMiddleware, StatusCodes } from "shared-types";
 import TokenValidator from "token/TokenValidator";
@@ -42,3 +43,18 @@ export const logoutAuthClientFromSession: IAuthServerMiddleware<
 };
 
 export * from "./thirdParty";
+
+export const getAuthByAccessToken: IMiddleware<
+  Request<unknown, unknown, unknown, unknown>,
+  Response<
+    AuthNRouteTypes["/n/me"]["GET"]["response"],
+    { token: TokenValidator<{ authId: string }>; currentAuth: AuthDocument }
+  >
+> = async (req, res) => {
+  const response = authNService.getAuthByAccessToken(
+    res.locals.currentAuth,
+    res.locals.token.token
+  );
+
+  res.status(StatusCodes.OK).send(response);
+};

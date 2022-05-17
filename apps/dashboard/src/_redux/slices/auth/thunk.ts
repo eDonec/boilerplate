@@ -1,5 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import Api, { db } from "api";
+import { AuthResponse } from "auth-types/routes/authN";
 import { ISignInForm } from "pages/SignIn/useSignIn";
 import { isApiError } from "server-sdk";
 
@@ -16,18 +17,9 @@ export const signIn = createAsyncThunk(
     try {
       const auth = await Api.authSDK.signInClassic({
         body: signInFormValues,
-        query: { role: "PUBLIC" },
-        // TODO: Change acceptable roles to "SUPER_ADMIN"
       });
 
-      db.createOrUpdate("auth", {
-        id: auth.authID,
-        token: {
-          accessToken: auth.token.accessToken,
-          refreshToken: auth.token.refreshToken,
-        },
-      });
-      localStorage.setItem("authId", auth.authID);
+      persistAuthClient(auth);
 
       return auth;
     } catch (error) {
@@ -41,6 +33,7 @@ export const signIn = createAsyncThunk(
 export const checkSignInStatus = createAsyncThunk<
   {
     isLoggedIn: boolean;
+    authClient?: AuthResponse;
   },
   void
 >("auth/check-sign-in-status", async () => {
@@ -52,14 +45,27 @@ export const checkSignInStatus = createAsyncThunk<
     authId
   );
 
-  if (!authData) return { isLoggedIn: false };
+  if (!authData) return { isLoggedIn: false, authClient: undefined };
 
   Api.mainApi.initOrReInit(
     authData.token.accessToken,
     authData.token.refreshToken
   );
+  const authClient = await Api.authSDK.getAuthByAccessToken();
 
-  await Api.mainApi.refreshUserToken();
+  authClient.token.refreshToken = authData.token.refreshToken;
+  persistAuthClient(authClient);
 
-  return { isLoggedIn: Api.authSDK.isLoggedIn() };
+  return { authClient, isLoggedIn: Api.authSDK.isLoggedIn() };
 });
+
+const persistAuthClient = (auth: AuthResponse) => {
+  db.createOrUpdate("auth", {
+    id: auth.authID,
+    token: {
+      accessToken: auth.token.accessToken,
+      refreshToken: auth.token.refreshToken,
+    },
+  });
+  localStorage.setItem("authId", auth.authID);
+};
