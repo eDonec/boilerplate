@@ -74,7 +74,7 @@ services:
       - main-network
 
   auth:
-    image: ghcr.io/edonec/boilerplate/auth:staging
+    image: ghcr.io/edonec/boilerplate/auth:head
     restart: always
     command: yarn workspace auth start:prod
     environment:
