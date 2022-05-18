@@ -10,7 +10,7 @@ export const useAuthState = () => {
   }));
 
   if (isLoggedIn) return { isLoggedIn, isLoading, roleName: role?.name };
-  if (!optimisticIsLoggedIn) return { isLoggedIn: false, isLoading };
+  if (!optimisticIsLoggedIn) return { isLoggedIn: false };
   if (isLoading) return { isLoading };
 
   return { isLoggedIn: false, roleName: role?.name, isLoading };
