@@ -1,9 +1,9 @@
 import { Router } from "express";
 
-import upload from "./upload";
+import file from "./file";
 
 const router = Router();
 
-router.use(upload);
+router.use(file);
 
 export default router;
