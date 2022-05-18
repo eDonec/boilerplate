@@ -6,8 +6,9 @@ import { ACCESS_TYPE, AUTH_PROVIDERS } from "shared-types";
 import { seedRoles } from "constants/defaultRoles";
 
 const DEFAULT_USER = {
-  email: "email@example.com",
-  password: "password",
+  // TODO: move this to .env and github secrets
+  email: process.env.ROOT_USER_EMAIL,
+  password: process.env.ROOT_USER_PASSWORD,
   authType: ACCESS_TYPE.USER,
   authProvider: [AUTH_PROVIDERS.CLASSIC],
   sessions: [],
@@ -43,7 +44,7 @@ export const seed = async () => {
 
     console.log(`Seeded and updated ${seedRoles.length} roles`);
     console.log(
-      `Seeded and updated default user with email ${newRootUser.email} with role GOD`
+      `Seeded and updated default user with email ${newRootUser.email} with role "GOD"`
     );
     console.log(`Seeding Completed...`);
   } catch (error) {
