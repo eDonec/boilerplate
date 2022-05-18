@@ -1,5 +1,5 @@
 import * as fileController from "controllers/file";
-import { Router } from "express";
+import { Router } from "init";
 import upload from "middlewares/upload";
 
 const router = Router();

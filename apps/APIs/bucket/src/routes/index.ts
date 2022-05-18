@@ -1,4 +1,4 @@
-import { Router } from "express";
+import { Router } from "init";
 
 import file from "./file";
 

@@ -1,12 +1,11 @@
 import * as authNController from "controllers/authN";
-import { Router } from "express";
+import { Router } from "init";
 import { AUTH_PROVIDERS } from "shared-types";
 import * as asyncAuthNValidators from "validators/async/authN";
 import * as asyncAuthZValidators from "validators/async/authZ";
 import * as authNValidators from "validators/sync/authN";
 
 const router = Router();
-
 const BASE_ROUTE = "/n";
 
 router.post(

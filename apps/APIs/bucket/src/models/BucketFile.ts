@@ -10,7 +10,7 @@ const schema = new Schema<BucketFileType>({
   mimetype: { type: String, required: true },
   size: { type: Number, required: true },
   key: { type: String, required: true },
-
+  originalFileName: { type: String, required: true },
   invalidateAt: Number,
 });
 

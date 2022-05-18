@@ -1,108 +1,97 @@
 import IAuthServerMiddleware from "auth-types/IAuthServerMiddleware";
 import { AuthNRouteTypes } from "auth-types/routes/authN";
 import { compareSync } from "bcrypt";
+import { ObjectValidationError, UnauthorizedError } from "custom-error";
 import add from "date-fns/add";
 import isAfter from "date-fns/isAfter";
-import middlewareWithTryCatch from "errors/middlewareWithTryCatch";
 import Auth from "models/Auth";
 import * as authZServices from "services/authZ";
 import { AUTH_PROVIDERS, IMiddleware } from "shared-types";
-import StatusCodes from "shared-types/StatusCodes";
 
-export const signInClassicValidator: IMiddleware = middlewareWithTryCatch(
-  async (req, res, next) => {
-    const {
-      email,
-      userName,
-    }: AuthNRouteTypes["/n/sign-in/classic"]["POST"]["body"] = req.body;
+export const signInClassicValidator: IMiddleware = async (req, res, next) => {
+  const {
+    email,
+    userName,
+  }: AuthNRouteTypes["/n/sign-in/classic"]["POST"]["body"] = req.body;
 
-    const authUsersByUserNameOrEmail = await Auth.findOne(
-      userName
-        ? {
-            $or: [{ email }, { userName }],
-          }
-        : { email }
-    ).populate("role");
+  const authUsersByUserNameOrEmail = await Auth.findOne(
+    userName
+      ? {
+          $or: [{ email }, { userName }],
+        }
+      : { email }
+  ).populate("role");
 
-    if (authUsersByUserNameOrEmail == null) {
-      res.status(StatusCodes.Unauthorized).send({
-        message: "No user was found with these credentials",
-        stack: "authentication validator auth",
-        fields: ["email", "userName"],
+  if (authUsersByUserNameOrEmail == null) {
+    throw new ObjectValidationError({
+      message: "No user was found with these credentials",
+      stack: "authentication validator auth",
+      fields: [
+        { fieldName: "email", message: "email not found!" },
+        { fieldName: "userName", message: "If provided, username not found!" },
+      ],
+    });
+  }
+  res.locals.currentAuth = authUsersByUserNameOrEmail;
+  next();
+};
+export const checkSuspension: IAuthServerMiddleware = async (
+  _req,
+  res,
+  next
+) => {
+  const { currentAuth } = res.locals;
+
+  if (currentAuth.isSuspended) {
+    if (currentAuth.suspentionLiftTime > new Date()) {
+      throw new UnauthorizedError({
+        message: `User is suspended untill ${
+          currentAuth.suspentionLiftTime
+        } for ${currentAuth.suspentionReason || "an unknown reason"}`,
+        reason: "User suspended",
       });
-
-      return;
     }
-    res.locals.currentAuth = authUsersByUserNameOrEmail;
-    next();
+    currentAuth.isSuspended = false;
+    await currentAuth.save();
   }
-);
-export const checkSuspension: IAuthServerMiddleware = middlewareWithTryCatch(
-  async (_req, res, next) => {
-    const { currentAuth } = res.locals;
+  next();
+};
 
-    if (currentAuth.isSuspended) {
-      if (currentAuth.suspentionLiftTime > new Date()) {
-        res.status(StatusCodes.Unauthorized).send({
-          message: `User is suspended untill ${
-            currentAuth.suspentionLiftTime
-          } for ${currentAuth.suspentionReason || "an unknown reason"}`,
-          stack: "authentication validator auth",
-        });
+export const checkBanned: IAuthServerMiddleware = async (_req, res, next) => {
+  const { currentAuth } = res.locals;
 
-        return;
-      }
-      currentAuth.isSuspended = false;
-      await currentAuth.save();
-    }
-    next();
+  if (currentAuth.isBanned) {
+    throw new UnauthorizedError({
+      message: "User is banned indefinitely!",
+      reason: "User banned",
+    });
   }
-);
-
-export const checkBanned: IAuthServerMiddleware = middlewareWithTryCatch(
-  async (_req, res, next) => {
-    const { currentAuth } = res.locals;
-
-    if (currentAuth.isBanned) {
-      res.status(StatusCodes.Unauthorized).send({
-        message: "User is banned",
-        stack: "authentication validator auth",
-      });
-
-      return;
-    }
-    next();
-  }
-);
+  next();
+};
 
 export const checkAuthProvider: (
   authProvide: AUTH_PROVIDERS
-) => IAuthServerMiddleware = (authProvider) =>
-  middlewareWithTryCatch((_req, res, next) => {
-    const { currentAuth } = res.locals;
+) => IAuthServerMiddleware = (authProvider) => (_req, res, next) => {
+  const { currentAuth } = res.locals;
 
-    if (!currentAuth.authProvider.includes(authProvider)) {
-      res.status(StatusCodes.Unauthorized).send({
-        message: `User has never signed up with classic method you can use ${currentAuth.authProvider.join(
-          " or "
-        )} to login to your account`,
-        stack: "authentication validator auth",
-      });
+  if (!currentAuth.authProvider.includes(authProvider)) {
+    throw new UnauthorizedError({
+      message: `User has never signed up with classic method you can use ${currentAuth.authProvider.join(
+        " or "
+      )} to login to your account`,
+      reason: "No classic signup found",
+    });
+  }
+  next();
+};
+export const checkPassword: IAuthServerMiddleware = async (req, res, next) => {
+  const { currentAuth } = res.locals;
+  const { password } = req.body;
 
-      return;
-    }
-    next();
-  });
-export const checkPassword: IAuthServerMiddleware = middlewareWithTryCatch(
-  async (req, res, next) => {
-    const { currentAuth } = res.locals;
-    const { password } = req.body;
-
-    if (currentAuth.password && !compareSync(password, currentAuth.password)) {
-      res.status(StatusCodes.Unauthorized).send({
-        message: `Password incorrect`,
-        stack: "authentication validator auth",
-      });
+  if (currentAuth.password && !compareSync(password, currentAuth.password)) {
+    // defer the next process to the next event loop cicle to avoid blocking the request
+    // and answering the client ASAP
+    process.nextTick(async () => {
       if (
         isAfter(add(currentAuth.lastTrialSince, { minutes: 10 }), new Date())
       ) {
@@ -119,10 +108,13 @@ export const checkPassword: IAuthServerMiddleware = middlewareWithTryCatch(
       } else currentAuth.numberOfUnsuccessfulTrials = 1;
       currentAuth.lastTrialSince = new Date();
       await currentAuth.save();
-
-      return;
-    }
-
-    next();
+    });
+    // anser the client here
+    throw new UnauthorizedError({
+      message: `Password incorrect`,
+      reason: "authentication validator auth",
+    });
   }
-);
+
+  next();
+};

@@ -6,7 +6,6 @@ coverage
 dist
 !generators/*/.env
 tsconfig.tsbuildinfo
-!.env
 **/turbo*
 out
 graph*

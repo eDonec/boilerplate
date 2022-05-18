@@ -1,0 +1,23 @@
+name: "build and deploy images to head env on PR approve"
+
+on:
+  pull_request_review:
+    types: [submitted]
+    paths:
+      - "apps/**"
+      - ".github/workflows/head.build.yml"
+      - ".docker/Dockerfile.*"
+      - "packages/**"
+      - "package.json"
+
+jobs:
+  ${{jobs}}
+
+
+  end-to-end-test-head-deployment:
+    runs-on: ubuntu-latest
+    needs: ${{needs}}
+    steps:
+      - name: lets see
+        run: |
+          echo "Hello world"

@@ -1,5 +1,5 @@
 all:
-	make dash &&\
+	make dashboard &&\
 	make client &&\
 	make auth &&\
 	make proxy-balancer
@@ -36,3 +36,6 @@ update-dev:
 
 compose-dev:
 	docker compose  -f docker-compose.dev.yml up --build --force-recreate -d --remove-orphans
+
+compose-staging:
+	docker compose  -f docker-compose.staging.yml up --build --force-recreate -d --remove-orphans
