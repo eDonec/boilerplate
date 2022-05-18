@@ -9,12 +9,8 @@ const schema = new Schema<BucketFileType>({
   },
   mimetype: { type: String, required: true },
   size: { type: Number, required: true },
-  path: { type: String, required: true },
-  isDeleted: {
-    type: Boolean,
-    required: true,
-    default: false,
-  },
+  key: { type: String, required: true },
+
   invalidateAt: Number,
 });
 

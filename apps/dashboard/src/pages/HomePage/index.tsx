@@ -121,7 +121,6 @@ const HomePage = () => {
             label="Click to select image"
             accept=".jpeg,.jpg,.png,.docx,.pptx,.pdf,.xlsx"
           />
-
           <Button type="submit" light>
             submit
           </Button>

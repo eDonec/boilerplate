@@ -1,41 +1,62 @@
-import axios, { CancelToken, CancelTokenSource } from "axios";
-import { UploadRouteTypes } from "bucket-types/routes/upload";
+import axios from "axios";
+import { FileRouteTypes } from "bucket-types/routes/file";
 
 const baseUrl = "/v1/bucket";
-const getCancelToken = () => axios.CancelToken.source();
 
 export default class BucketSDK {
   private api = axios.create({
     baseURL: `/api${baseUrl}`,
   });
 
-  public getCancelToken: () => CancelTokenSource;
-
   constructor(uploadToken: string) {
-    this.getCancelToken = getCancelToken.bind(this);
     this.api.defaults.headers.common.Authorization = `Bearer ${uploadToken}`;
   }
 
-  public async addFiles({
+  public async addFile({
     file,
     onUploadProgress,
-    cancelToken,
+    abortController,
   }: {
     file: File;
     onUploadProgress?: (progress: number) => void;
-    cancelToken?: CancelToken;
+    abortController?: AbortController;
   }) {
     const formData = new FormData();
 
     formData.append("file", file);
 
     const { data } = await this.api.post<
-      UploadRouteTypes["/upload/"]["POST"]["response"]
-    >(`/upload/`, formData, {
+      FileRouteTypes["/file/"]["POST"]["response"]
+    >(`/file/`, formData, {
       onUploadProgress: ({ total, loaded }) => {
         onUploadProgress?.(Math.round((loaded * 100) / total));
       },
-      cancelToken,
+      signal: abortController?.signal,
+    });
+
+    return data;
+  }
+
+  public async addBatchFiles({
+    files,
+    onUploadProgress,
+    abortController,
+  }: {
+    files: File[];
+    onUploadProgress?: (progress: number) => void;
+    abortController?: AbortController;
+  }) {
+    const formData = new FormData();
+
+    files.forEach((file) => formData.append("file", file));
+
+    const { data } = await this.api.post<
+      FileRouteTypes["/file/"]["POST"]["response"]
+    >(`/file/`, formData, {
+      onUploadProgress: ({ total, loaded }) => {
+        onUploadProgress?.(Math.round((loaded * 100) / total));
+      },
+      signal: abortController?.signal,
     });
 
     return data;

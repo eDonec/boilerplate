@@ -35,17 +35,17 @@ const FilePreview = ({
   const [uploadProgress, setUploadProgress] = useState(0);
   const [file, setFile] = useState(_file);
   const [didUpload, setDidUpload] = useState(!(_file instanceof File));
-  const cancelToken = useRef<ReturnType<BucketSDK["getCancelToken"]>>();
+  const cancelToken = useRef<AbortController>();
 
   useEffect(() => {
     if (!(_file instanceof File) || didUpload) return;
 
     (async () => {
-      cancelToken.current = bucketSDK.getCancelToken();
-      const data = await bucketSDK.addFiles({
+      cancelToken.current = new AbortController();
+      const data = await bucketSDK.addFile({
         file: _file,
         onUploadProgress: setUploadProgress,
-        cancelToken: cancelToken.current.token,
+        abortController: cancelToken.current,
       });
 
       setFile(data);
@@ -56,7 +56,7 @@ const FilePreview = ({
 
   useEffect(
     () => () => {
-      cancelToken.current?.cancel();
+      cancelToken.current?.abort();
     },
     []
   );
@@ -110,7 +110,11 @@ const FilePreview = ({
             (file.type === "image/jpeg" && (
               <img
                 alt="upload"
-                src={file instanceof File ? file.preview : file.url}
+                src={
+                  file instanceof File
+                    ? file.preview
+                    : `http://localhost:3000/api/v1/bucket/file/${file.key}`
+                }
                 className="mt-auto mb-auto"
               />
             ))}
