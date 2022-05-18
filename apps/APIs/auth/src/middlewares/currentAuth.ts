@@ -14,8 +14,9 @@ export const getAuthByAccessToken: IMiddleware<
   >
 > = async (_, res, next) => {
   const { token } = res.locals;
+
   const currentAuth = await Auth.findOne({
-    id: token.decodedToken.payload.authId,
+    _id: token.decodedToken.payload.authId,
   }).populate("role");
 
   if (!currentAuth)
