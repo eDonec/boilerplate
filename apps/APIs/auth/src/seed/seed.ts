@@ -11,7 +11,6 @@ const DEFAULT_USER = {
   password: process.env.ROOT_USER_PASSWORD,
   authType: ACCESS_TYPE.USER,
   authProvider: [AUTH_PROVIDERS.CLASSIC],
-  sessions: [],
   isActive: true,
 };
 
