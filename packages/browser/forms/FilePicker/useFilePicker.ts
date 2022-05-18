@@ -69,29 +69,6 @@ export const useFilePicker = ({
     setFiles((prev) => prev.filter((_file, i) => index !== i));
   };
 
-  const onFileUploaded = useCallback(
-    ({
-      file,
-      uploadedFile,
-    }: {
-      uploadedFile: UploadedFile;
-      file: IFileWithPreview;
-    }) => {
-      setFiles((prev) => {
-        const prevCopy = [...prev];
-        const index = prev.findIndex(
-          (el) => el instanceof File && el.preview === file.preview
-        );
-
-        if (index !== -1)
-          prevCopy[index] = { ...uploadedFile, name: file.name };
-
-        return prevCopy;
-      });
-    },
-    []
-  );
-
   return {
     getRootProps,
     getInputProps,
@@ -101,6 +78,5 @@ export const useFilePicker = ({
     rejectedFiles,
     handlePictureClick,
     deleteFile,
-    onFileUploaded,
   };
 };

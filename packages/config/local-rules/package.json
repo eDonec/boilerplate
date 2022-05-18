@@ -1,0 +1,9 @@
+{
+  "name": "eslint-plugin-es-local-rules",
+  "license": "MIT",
+  "version": "0.1.0",
+  "files": [
+    "rules/no-import-express.js"
+  ],
+  "devDependencies": {}
+}

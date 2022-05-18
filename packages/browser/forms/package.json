@@ -27,6 +27,6 @@
   },
   "scripts": {
     "test": "jest --coverage",
-    "lint": "eslint --fix"
+    "lint": "tsc --noEmit && eslint --fix"
   }
 }

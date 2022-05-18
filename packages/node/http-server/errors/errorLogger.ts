@@ -1,4 +1,4 @@
-import ErrorDocument from "models/ErrorDocument";
+import ErrorDocument from "../ErrorDocument";
 
 export const errorLogger = (
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

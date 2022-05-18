@@ -1,0 +1,123 @@
+version: "3.9"
+services:
+  database:
+    image: mongo
+    restart: always
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=${DATABASE_USER}
+      - MONGO_INITDB_ROOT_PASSWORD=${DATABASE_PASSWORD}
+    networks:
+      - main-network
+  imgproxy:
+    image: darthsim/imgproxy:latest
+    restart: always
+    environment:
+      - IMGPROXY_BIND=:${PORT}
+      - IMGPROXY_S3_REGION=${AWS_REGION}
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+      - IMGPROXY_USE_S3=true
+      - STORAGE_PATH=edonec-turborepo-cache
+      - STORAGE_PROVIDER=S3
+      - IMGPROXY_CACHE_CONTROL_PASSTHROUGH=true
+      - IMGPROXY_SET_CANONICAL_HEADER=true
+      - IMGPROXY_USE_ETAG=true
+      - IMGPROXY_JPEG_PROGRESSIVE=true
+      - IMGPROXY_JPEG_TRELLIS_QUANT=true
+      - IMGPROXY_JPEG_OVERSHOOT_DERINGING=true
+      - IMGPROXY_ENABLE_WEBP_DETECTION=true
+      - IMGPROXY_ENFORCE_WEBP=true
+
+    networks:
+      - main-network
+  proxy-balancer:
+    restart: always
+    build:
+      context: .
+      dockerfile: Dockerfile.proxy-balancer
+    depends_on:
+      - client
+      - dashboard
+      - auth
+      - database
+      - imgproxy
+    ports:
+      - "80:80"
+      - "443:443"
+    networks:
+      - main-network
+
+  client:
+    build:
+      context: .
+      dockerfile: Dockerfile.compose.client
+      args:
+        - NEXT_PUBLIC_HELLO=Hello
+    environment:
+      - NODE_ENV=${NODE_ENV}
+    command: node server.js
+    restart: always
+    networks:
+      - main-network
+
+  dashboard:
+    build:
+      context: .
+      dockerfile: Dockerfile.compose.dashboard
+      args:
+        - REACT_APP_HELLO="I am a variable"
+    restart: always
+    environment:
+      - NODE_ENV=${NODE_ENV}
+      - PORT=${PORT}
+    networks:
+      - main-network
+
+  auth:
+    image: ghcr.io/edonec/boilerplate/auth:staging
+    restart: always
+    command: yarn workspace auth start:prod
+    environment:
+      - PORT=${PORT}
+      - DATABASE_URI=mongodb://database:27017/auth?authSource=admin
+      - ACCESS_TOKEN_SECRET_KEY=${ACCESS_TOKEN_SECRET_KEY}
+      - REFRESH_TOKEN_SECRET_KEY=${REFRESH_TOKEN_SECRET_KEY}
+      - DATABASE_USER=${DATABASE_USER}
+      - DATABASE_PASSWORD=${DATABASE_PASSWORD}
+      - TOKEN_EXPIRES_IN=${TOKEN_EXPIRES_IN}
+      - REFRESH_TOKEN_EXPIRES_IN=${REFRESH_TOKEN_EXPIRES_IN}
+      - NUMBER_OF_AUTH_TRIALS=5
+      - KAFKA_BROKERS=broker:9092
+    networks:
+      - main-network
+    depends_on:
+      - database
+
+  zookeeper:
+    restart: always
+    image: confluentinc/cp-zookeeper:7.0.1
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+    networks:
+      - main-network
+
+  broker:
+    restart: always
+    image: confluentinc/cp-kafka:7.0.1
+    depends_on:
+      - zookeeper
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: "zookeeper:2181"
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_INTERNAL:PLAINTEXT
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://broker:9092,PLAINTEXT_INTERNAL://broker:29092
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+    networks:
+      - main-network
+
+networks:
+  main-network:
+    driver: bridge

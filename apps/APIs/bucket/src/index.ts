@@ -1,16 +1,9 @@
 /* eslint-disable no-console */
-import { json } from "body-parser";
-import clsx from "core-utils/clsx";
-import express from "express";
 import { connect, ConnectOptions } from "mongoose";
-import "./init";
 import "dotenv/config";
 
+import app from "./init";
 import router from "./routes";
-
-const app = express();
-
-app.use(json());
 
 const port = process.env.PORT || 4000;
 
@@ -23,12 +16,11 @@ if (!process.env.DATABASE_URI)
   throw new Error("Missing .env key : DATABASE_URI");
 
 app.use("/api/v1/bucket", router);
-app.use("/api/v1/bucket*", (_req, res) => {
-  res.send(clsx(["Hello"], "Bucket", { "!": true }));
-});
 
 connect(process.env.DATABASE_URI, databaseConfig)
   .then(() => {
+    import("schedule");
+
     app.listen(port, () => {
       console.log(`🚀 Server listening at http://localhost:${port}`);
     });

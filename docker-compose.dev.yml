@@ -35,6 +35,7 @@ services:
     networks:
       - main-network
   zookeeper:
+    restart: always
     image: confluentinc/cp-zookeeper:7.0.1
     container_name: zookeeper
     environment:
@@ -44,6 +45,7 @@ services:
       - main-network
 
   broker:
+    restart: always
     image: confluentinc/cp-kafka:7.0.1
     container_name: broker
     ports:

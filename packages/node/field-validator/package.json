@@ -14,11 +14,12 @@
     "build:esm": "tsc -p tsconfig.prod.json --module ES2022 --outDir build/esm",
     "build:cjs": "tsc -p tsconfig.prod.json --module commonjs --outDir build/cjs",
     "test": "jest --coverage",
-    "lint": "eslint --fix --max-warnings=0"
+    "lint": "tsc --noEmit && eslint --fix --max-warnings=0"
   },
   "dependencies": {
     "custom-error": "*",
-    "date-fns": "2.28.0"
+    "date-fns": "2.28.0",
+    "shared-types": "*"
   },
   "devDependencies": {}
 }

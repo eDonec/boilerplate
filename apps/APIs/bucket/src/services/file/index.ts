@@ -1,10 +1,9 @@
 import { AbortController } from "@aws-sdk/abort-controller";
 import { BucketFileDocument } from "bucket-types/models/BucketFile";
 import { FileRouteTypes } from "bucket-types/routes/file";
-import { Request, Response } from "express";
+import producer from "events/producer";
 import fs from "fs-extra";
 import BucketFile from "models/BucketFile";
-import { scheduleJob } from "node-schedule";
 import {
   deleteBucketFile,
   getBucketFileStream,
@@ -13,62 +12,43 @@ import {
 
 import { assertFileType } from "helpers/assertFiletype";
 
-if (!process.env.PENDING_DURATION_MINUTES)
-  throw new Error("Missing required env variable : PENDING_DURATION_MINUTES");
-
-export const addFile = async (
+const addSingleFile = async (
   file: Express.Multer.File,
-  req: Request
-): Promise<FileRouteTypes["/file/"]["POST"]["response"]> => {
+  abortController?: AbortController
+) => {
   await assertFileType(file);
 
-  const invalidateTimestamp = new Date(
-    new Date().setMinutes(
-      new Date().getMinutes() + Number(process.env.PENDING_DURATION_MINUTES)
-    )
-  ).getTime();
-
-  const abortController = new AbortController();
-
-  const key = await uploadFiletoAWSBucket(file, abortController);
+  const invalidateTimestamp = getInvalidateTimeStamp();
+  const key = await uploadFileToBucketAndDeleteOnDisk({
+    file,
+    abortController,
+  });
   const bucketFile = await BucketFile.create({
-    isPersisted: false,
+    originalFileName: file.originalname,
     mimetype: file.mimetype,
-    key,
     size: file.size,
+    isPersisted: false,
+    key,
     invalidateAt: invalidateTimestamp,
     isDeleted: false,
   });
 
-  req.on("aborted", () => {
-    abortController.abort();
-    deleteFile(bucketFile);
-    if (fs.pathExistsSync(file.path)) fs.unlinkSync(file.path);
-  });
+  producer.emit.FileUploaded(formatBucketFileResponse(bucketFile));
 
-  return {
-    key: file.filename,
-    type: file.mimetype,
-    name: file.filename,
-  };
+  return bucketFile;
 };
 
-export const addBatchFiles = async (
-  files: Express.Multer.File[],
-  req: Request
-) => Promise.all(files.map((file) => addFile(file, req)));
-
-const deleteFile = async (bucketFile: BucketFileDocument) => {
-  await deleteBucketFile(bucketFile.key);
-  await bucketFile.delete();
-};
-
-const uploadFiletoAWSBucket = async (
-  file: Express.Multer.File,
-  abortController?: AbortController
-): Promise<string> => {
+const uploadFileToBucketAndDeleteOnDisk = async ({
+  file,
+  abortController,
+  key,
+}: {
+  file: Express.Multer.File;
+  abortController?: AbortController;
+  key?: string;
+}): Promise<string> => {
   // Can be a path style string for better concern separation
-  const fileKey = file.filename;
+  const fileKey = key || file.filename;
 
   await uploadBucketFile(file, fileKey, abortController);
 
@@ -77,16 +57,34 @@ const uploadFiletoAWSBucket = async (
   return fileKey;
 };
 
-export const getBucketFile = async (key: string, res: Response) => {
-  const abortController = new AbortController();
+const getInvalidateTimeStamp = () => {
+  if (!process.env.PENDING_DURATION_MINUTES)
+    throw new Error("Missing required env variable : PENDING_DURATION_MINUTES");
 
-  res.req.on("aborted", () => {
-    abortController.abort();
-  });
+  return Date.now() + Number(process.env.PENDING_DURATION_MINUTES) * 60 * 1000;
+};
 
-  const stream = await getBucketFileStream(key, abortController);
+export const addBatchFiles = async (
+  files: Express.Multer.File[],
+  abortController?: AbortController
+) => Promise.all(files.map((file) => addSingleFile(file, abortController)));
 
-  stream.pipe(res);
+export const getBucketFile = getBucketFileStream;
+export const addFile = addSingleFile;
+export const formatBucketFileResponse = ({
+  key,
+  mimetype,
+  id,
+  originalFileName,
+}: BucketFileDocument): FileRouteTypes["/file/"]["POST"]["response"] => ({
+  key,
+  type: mimetype,
+  name: originalFileName,
+  _id: id,
+});
+export const deleteFile = async (bucketFile: BucketFileDocument) => {
+  await deleteBucketFile(bucketFile.key);
+  await bucketFile.delete();
 };
 
 // const persistFile = async (url: string) => {
@@ -95,15 +93,6 @@ export const getBucketFile = async (key: string, res: Response) => {
 //     { $set: { isPersisted: true, invalidateAt: null } }
 //   );
 // };
-
-scheduleJob("*/30 * * * *", async () => {
-  (
-    await BucketFile.find({
-      isPersisted: { $ne: true },
-      invalidateAt: { $lte: Date.now() },
-    })
-  ).forEach(deleteFile);
-});
 
 // ! Instant Delete
 // (async () => {

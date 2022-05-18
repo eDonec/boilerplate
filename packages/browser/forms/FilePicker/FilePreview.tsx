@@ -21,17 +21,9 @@ const bucketSDK = new BucketSDK("");
 type FilePreviewProps = {
   file: IFileWithPreview | UploadedFile;
   onDelete: React.MouseEventHandler<HTMLButtonElement>;
-  onFileUploaded: (args: {
-    uploadedFile: UploadedFile;
-    file: IFileWithPreview;
-  }) => void;
 };
 
-const FilePreview = ({
-  file: _file,
-  onDelete,
-  onFileUploaded,
-}: FilePreviewProps) => {
+const FilePreview = ({ file: _file, onDelete }: FilePreviewProps) => {
   const [uploadProgress, setUploadProgress] = useState(0);
   const [file, setFile] = useState(_file);
   const [didUpload, setDidUpload] = useState(!(_file instanceof File));
@@ -50,9 +42,8 @@ const FilePreview = ({
 
       setFile(data);
       setDidUpload(true);
-      onFileUploaded({ uploadedFile: data, file: _file });
     })();
-  }, [didUpload, onFileUploaded, _file]);
+  }, [didUpload, _file]);
 
   useEffect(
     () => () => {

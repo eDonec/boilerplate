@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import { Request, Response } from "http-server";
 
 import * as authNValidator from "../index";
 

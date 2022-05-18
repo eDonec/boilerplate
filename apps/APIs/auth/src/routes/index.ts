@@ -1,4 +1,4 @@
-import { Router } from "express";
+import { Router } from "init";
 
 import authN from "./authN";
 import authZ from "./authZ";
