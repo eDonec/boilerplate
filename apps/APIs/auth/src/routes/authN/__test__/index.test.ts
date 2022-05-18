@@ -66,10 +66,6 @@ describe("GET /n/me", () => {
       .get("/n/me")
       .set("Authorization", `Bearer ${signUpResponse.body.token.accessToken}`);
 
-    console.log({
-      me: getMeResponse.body,
-      signUpResponse: signUpResponse.body,
-    });
     expect(getMeResponse.body.authID).toBe(signUpResponse.body.authID);
   });
 });
