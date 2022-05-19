@@ -13,11 +13,17 @@ export default class ApiSDK {
 
   public resetTokensCallbacks: ResetTokenCallback[] = [];
 
+  private onAccessTokenChange?: (token: string | null) => void;
+
   constructor(accessToken?: string, refreshToken?: string) {
     this.api = axios.create({
       baseURL: `/api`,
     });
     this.initOrReInit(accessToken, refreshToken);
+  }
+
+  setOnAccessTokenChange(cb: (token: string | null) => void) {
+    this.onAccessTokenChange = cb;
   }
 
   initOrReInit(accessToken?: string, refreshToken?: string) {
@@ -57,6 +63,7 @@ export default class ApiSDK {
       headers: { Authorization: `Bearer ${this.refreshToken}` },
     });
 
+    this.onAccessTokenChange?.(data);
     this.setBearerToken(data);
   }
 
