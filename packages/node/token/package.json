@@ -4,7 +4,7 @@
   "private": true,
   "main": "./build/cjs/index.js",
   "module": "./build/esm/index.js",
-  "types": "./build/esm/index.d.ts",
+  "types": "./index.ts",
   "files": [
     "/build/cjs",
     "/build/esm"
@@ -20,6 +20,7 @@
   "dependencies": {
     "dotenv": "16.0.0",
     "jsonwebtoken": "8.5.1",
+    "custom-error": "*",
     "nanoid": "3.3.3"
   },
   "devDependencies": {
