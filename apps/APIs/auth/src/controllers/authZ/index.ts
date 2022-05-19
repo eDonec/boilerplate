@@ -7,7 +7,7 @@ import TokenValidator from "token/TokenValidator";
 
 export const refreshAccessToken: IAuthServerMiddleware<
   Request,
-  AuthNRouteTypes["/n/refresh-token"]["GET"]["response"],
+  AuthNRouteTypes["/z/refresh-token"]["GET"]["response"],
   {
     refreshToken: TokenValidator<{ authId: string }>;
   }

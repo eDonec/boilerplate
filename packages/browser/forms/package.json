@@ -20,7 +20,8 @@
     "react-dropzone": "12.1.0",
     "react-hook-form": "7.30.0",
     "bucket-types": "*",
-    "bucket-sdk": "*"
+    "bucket-sdk": "*",
+    "core-ui": "*"
   },
   "peerDependencies": {
     "field-validator": "*"

@@ -8,6 +8,8 @@ import { ACCESS_TYPE, AUTH_PROVIDERS } from "shared-types";
 
 import { PUBLIC_ROLE } from "constants/defaultRoles";
 
+import { constructRoleArray } from "helpers/constructRoleArray";
+
 import { generateAuthResponse } from "./helpers";
 
 export const signUpClassic = async ({
@@ -49,3 +51,16 @@ export const signInClassic = async (
   generateAuthResponse(authClient);
 
 export * from "./thirdParty";
+
+export const getAuthByAccessToken = (
+  currentAuth: AuthDocument,
+  accessToken: string
+): AuthNRouteTypes["/n/me"]["GET"]["response"] => ({
+  authID: currentAuth.id,
+  token: {
+    accessToken,
+    refreshToken: "",
+  },
+  role: currentAuth.role,
+  access: constructRoleArray(currentAuth.role, currentAuth.customAccessList),
+});

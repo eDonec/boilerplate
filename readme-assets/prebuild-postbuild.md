@@ -156,8 +156,8 @@ With the addition of a tsconfig.prod.json file, we can now use the `tsc` command
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
-    "composite": true,
-    "declaration": true
+    "composite": false,
+    "declaration": false
   },
   "exclude": [
     "build",

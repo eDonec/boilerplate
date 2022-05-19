@@ -2,6 +2,7 @@ import { forwardRef, useEffect, useRef } from "react";
 
 import BucketSDK from "bucket-sdk";
 import { UploadedFile } from "bucket-types/utils";
+import Loader from "core-ui/Loader";
 import { clsx } from "core-utils";
 
 import FilePreview from "./FilePreview";
@@ -97,13 +98,13 @@ const FilePicker = forwardRef<HTMLInputElement, IComponentProps>(
         </div>
         <div
           className={clsx([
-            "pointer-events-none absolute inset-0 flex flex-col items-center justify-center bg-opacity-50 backdrop-blur transition-opacity",
+            "bg-primary-600 pointer-events-none absolute inset-0 flex flex-col items-center justify-center bg-opacity-10 backdrop-blur transition-opacity",
             {
               "opacity-0": mediaUploadToken,
             },
           ])}
         >
-          <span>TODO : ADD LOADER</span>
+          <Loader />
         </div>
       </div>
     );
