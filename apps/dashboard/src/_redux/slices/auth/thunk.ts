@@ -53,6 +53,13 @@ export const checkSignInStatus = createAsyncThunk<
   );
   const authClient = await Api.authSDK.getAuthByAccessToken();
 
+  Api.mainApi.setOnAccessTokenChange((accessToken) => {
+    if (!accessToken) return;
+
+    authClient.token.accessToken = accessToken;
+
+    persistAuthClient(authClient);
+  });
   authClient.token.refreshToken = authData.token.refreshToken;
   persistAuthClient(authClient);
 
