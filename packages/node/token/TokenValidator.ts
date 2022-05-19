@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
+import UnauthorizedError from "custom-error/UnauthorizedError";
 import { decode, Secret, verify } from "jsonwebtoken";
 import "dotenv/config";
 
@@ -19,6 +20,8 @@ export default class TokenValidator<T = string | object | Buffer> {
 
   decodedToken!: IDecodedToken<T>;
 
+  private reason?: string;
+
   protected TOKEN_SECRET_KEY: string | Secret;
 
   constructor(token: string, isRefreshToken = false, secret?: Secret) {
@@ -35,8 +38,16 @@ export default class TokenValidator<T = string | object | Buffer> {
         "access Token secret key is not set please set it up in .env before using this app"
       );
 
-    if (typeof token !== "string") throw new Error("Token invalid or expired");
-    if (!this.validate(token)) throw new Error("Token invalid or expired");
+    if (typeof token !== "string")
+      throw new UnauthorizedError({
+        message: "Token invalid or expired",
+        reason: this.reason || "Token validation",
+      });
+    if (!this.validate(token))
+      throw new UnauthorizedError({
+        message: "Token invalid or expired",
+        reason: this.reason || "Token validation",
+      });
     this.token = token;
 
     this.decodedToken = this.desirializeToken(this.token);
@@ -65,6 +76,8 @@ export default class TokenValidator<T = string | object | Buffer> {
 
       return true;
     } catch (error) {
+      this.reason = error instanceof Error ? error.message : undefined;
+
       return false;
     }
   }

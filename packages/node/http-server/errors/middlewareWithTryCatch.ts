@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
+import { NotFoundError } from "custom-error";
 import ObjectValidationError from "custom-error/ObjectValidationError";
 import UnauthorizedError from "custom-error/UnauthorizedError";
 import { IMiddleware, StatusCodes } from "shared-types";
@@ -32,6 +33,14 @@ const middlewareWithTryCatch = <T extends IMiddleware>(
             reason: error.reason,
             ressource: error.ressource,
             requiredRole: error.requiredRole,
+          });
+      if (error instanceof NotFoundError)
+        return sendEventAndResponse(req, res, eventSender)
+          .status("Not Found")
+          .send({
+            message: error.message,
+            stack: error.stack,
+            ressource: error.ressource,
           });
 
       return sendEventAndResponse(req, res, eventSender)
