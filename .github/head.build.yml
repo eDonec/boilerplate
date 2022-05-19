@@ -6,7 +6,7 @@ ${{changeTrigger}}
 jobs:
   send-compose-files-to-server:
     runs-on: ubuntu-latest
-    if: (github.event.review.state == 'approved')
+${{changeCondition}}
 
     steps:
       - uses: actions/checkout@v3 # Checking out the repo
