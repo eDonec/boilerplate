@@ -1,5 +1,6 @@
 import React from "react";
 import { createRoot } from "react-dom/client";
+import { Toaster } from "react-hot-toast";
 import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
 
@@ -25,6 +26,7 @@ root.render(
     <BrowserRouter basename="/dashboard">
       <Provider store={store}>
         <DarkModeProvider>
+          <Toaster />
           <AppRouter />
         </DarkModeProvider>
       </Provider>

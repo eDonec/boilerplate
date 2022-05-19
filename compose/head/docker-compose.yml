@@ -74,13 +74,15 @@ services:
       - main-network
 
   auth:
-    image: ghcr.io/edonec/boilerplate/auth:staging
+    image: ghcr.io/edonec/boilerplate/auth:head
     restart: always
     command: yarn workspace auth start:prod
     environment:
       - PORT=${PORT}
       - DATABASE_URI=mongodb://database:27017/auth?authSource=admin
       - ACCESS_TOKEN_SECRET_KEY=${ACCESS_TOKEN_SECRET_KEY}
+      - ROOT_USER_EMAIL=${ROOT_USER_EMAIL}
+      - ROOT_USER_PASSWORD=${ROOT_USER_PASSWORD}
       - REFRESH_TOKEN_SECRET_KEY=${REFRESH_TOKEN_SECRET_KEY}
       - DATABASE_USER=${DATABASE_USER}
       - DATABASE_PASSWORD=${DATABASE_PASSWORD}

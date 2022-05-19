@@ -1,3 +1,4 @@
+// eslint-disable-next-line es-local-rules/no-import-express
 import { Router, RouterOptions } from "express";
 import { IRouter } from "express-serve-static-core";
 import { IMiddleware } from "shared-types";

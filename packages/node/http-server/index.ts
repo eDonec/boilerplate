@@ -1,3 +1,4 @@
+// eslint-disable-next-line es-local-rules/no-import-express
 import express, {
   Express,
   NextFunction,

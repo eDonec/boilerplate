@@ -50,7 +50,7 @@ export type AuthNRouteTypes = {
       response: AuthResponse;
     };
   };
-  "/n/refresh-token": {
+  "/z/refresh-token": {
     GET: {
       response: string;
     };
@@ -58,6 +58,11 @@ export type AuthNRouteTypes = {
   "/n/logout": {
     GET: {
       response: void;
+    };
+  };
+  "/n/me": {
+    GET: {
+      response: AuthResponse;
     };
   };
   //! GENERATOR-ANCHOR

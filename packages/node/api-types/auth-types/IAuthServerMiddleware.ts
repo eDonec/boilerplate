@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Request, Response } from "express";
+import { Request, Response } from "http-server";
 import { IMiddleware } from "shared-types";
 
 import { AuthDocument } from "./models/Auth";

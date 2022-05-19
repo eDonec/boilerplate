@@ -1,6 +1,6 @@
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 import { Button, useDarkMode } from "core-ui";
 import AlertDialog, { useAlertDialog } from "core-ui/AlertDialog";
@@ -9,12 +9,15 @@ import Checkbox from "forms/Checkbox";
 import FilePicker from "forms/FilePicker";
 import Input from "forms/Input";
 import RadioButton from "forms/RadioButton";
-import Select from "forms/Select";
+import { ACCESS_RESSOURCES, PRIVILEGE } from "shared-types";
 
 import LanguageSelector from "components/LanguageSelector";
+import AccessProtectedWrapper from "containers/AuthWrappers/AccessProtectedWrapper";
+import PrivateWrapper from "containers/AuthWrappers/PrivateWrapper";
 
 import { useAppSelector, useLoadingDispatch } from "hooks/reduxHooks";
 
+import { logout } from "_redux/slices/auth";
 import { decrementCounter, incrementCounter } from "_redux/slices/counter";
 import { setCounterAsync } from "_redux/slices/counter/thunk";
 
@@ -40,9 +43,10 @@ const HomePage = () => {
   const methods = useForm({
     defaultValues: { start: "" },
   });
-  const onSubmit: SubmitHandler<{ start: string }> = (value) =>
+  const onSubmit: SubmitHandler<{ start: string }> = (value) => {
     // eslint-disable-next-line no-console
     console.log(value);
+  };
 
   const [submitModalProps, handleSubmit] = useAlertDialog(onSubmit);
 
@@ -56,13 +60,7 @@ const HomePage = () => {
             "inline-flex items-center rounded px-4 py-2 font-semibold",
             "focus-visible:ring-primary-500 focus:outline-none focus-visible:ring",
             "shadow-sm",
-            "transition-colors duration-75",
-            "disabled:cursor-not-allowed",
-            "bg-primary-700 text-white",
-            "border-primary-600 border",
-            "hover:bg-primary-600 hover:text-white",
-            "active:bg-primary-500",
-            "disabled:bg-primary-400 disabled:hover:bg-primary-400"
+            "transition-colors duration-75"
           )}
           href="/"
         >
@@ -70,25 +68,29 @@ const HomePage = () => {
         </a>
       </p>
       <p className="mt-2 text-sm text-gray-700 dark:text-gray-200">
-        <a
+        <Link
           className={clsx(
             "inline-flex items-center rounded px-4 py-2 font-semibold",
             "focus-visible:ring-primary-500 focus:outline-none focus-visible:ring",
             "shadow-sm",
             "transition-colors duration-75",
-            "disabled:cursor-not-allowed",
-            "bg-primary-700 text-white",
-            "border-primary-600 border",
-            "hover:bg-primary-600 hover:text-white",
-            "active:bg-primary-500",
-            "disabled:bg-primary-400 disabled:hover:bg-primary-400"
+            "disabled:cursor-not-allowed"
           )}
-          href="/api/v1"
+          to="/sign-in"
         >
-          Go to API
-        </a>
+          Go to sign-in
+        </Link>
       </p>
-
+      <PrivateWrapper>
+        <Button
+          primary
+          onClick={() => {
+            classicDispatch(logout());
+          }}
+        >
+          logout
+        </Button>
+      </PrivateWrapper>
       <FormProvider {...methods}>
         <form onSubmit={methods.handleSubmit(handleSubmit)}>
           <Input
@@ -112,19 +114,16 @@ const HomePage = () => {
             label="check box for test"
             defaultChecked
           ></Checkbox>
-          <Select
-            name="select"
-            validate={[{ rule: "exists" }]}
-            options={[
-              { label: "English", value: "en" },
-              { label: "Français", value: "fr" },
-            ]}
-          />
-          <FilePicker
-            name="image"
-            label="Click to select image"
-            accept=".jpeg,.jpg,.png,.docx,.pptx,.pdf,.xlsx"
-          ></FilePicker>
+          <AccessProtectedWrapper
+            previlages={[PRIVILEGE.DELETE_SELF, PRIVILEGE.DELETE]}
+            ressource={ACCESS_RESSOURCES.USER}
+          >
+            <FilePicker
+              name="image"
+              label="Click to select image"
+              accept=".jpeg,.jpg,.png,.docx,.pptx,.pdf,.xlsx"
+            ></FilePicker>
+          </AccessProtectedWrapper>
           <Button type="submit" light>
             submit
           </Button>
