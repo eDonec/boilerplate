@@ -26,12 +26,12 @@ services:
     build:
       args:
         - PROXY_BALANCER_PATH=./proxy-balancer-dev.conf
-      context: .
+      context: ../
       dockerfile: ./.docker/Dockerfile.proxy-balancer
     depends_on:
       - imgproxy
     ports:
-      - 3005:80
+      - 3007:80
     networks:
       - main-network
   zookeeper:
