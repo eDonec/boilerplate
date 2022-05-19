@@ -9,6 +9,7 @@ const modules = [
   "browser/forms",
   "node/field-validator",
   "node/core-utils",
+  "node/shared-types",
   "SDK/node/auth-sdk",
   "SDK/node/server-sdk",
   "SDK/node/bucket-sdk",

@@ -27,21 +27,26 @@ export const refreshAccessToken: IAuthServerMiddleware<
 };
 
 export const getUploadToken: IAuthServerMiddleware<
-  Request,
+  Request<
+    unknown,
+    unknown,
+    unknown,
+    AuthNRouteTypes["/z/upload-token"]["GET"]["query"]
+  >,
   AuthNRouteTypes["/z/upload-token"]["GET"]["response"]
-> = (_, res) => {
+> = (req, res) => {
   const uploadToken = new TokenGenerator(
     {
       aud: "bucket",
       iss: "auth",
       sid: "none",
       payload: {
-        maxFiles: 5,
-        mimeTypes: ["image/png", "image/jpg", "image/jpeg"],
+        mimeTypes: req.query.mimeTypes,
       },
     },
     false,
-    process.env.UPLOAD_SECRET_KEY
+    process.env.UPLOAD_SECRET_KEY,
+    process.env.UPLOAD_TOKEN_EXPIRES_IN
   );
 
   res.status(StatusCodes.Created).send(uploadToken.token);

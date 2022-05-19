@@ -63,6 +63,9 @@ export type AuthNRouteTypes = {
   "/z/upload-token": {
     GET: {
       response: string;
+      query: {
+        mimeTypes: string[];
+      };
     };
   };
   //! GENERATOR-ANCHOR

@@ -31,7 +31,8 @@
     "shared-types": "*",
     "bucket-events": "*",
     "http-server": "*",
-    "custom-error": "*"
+    "custom-error": "*",
+    "token": "*"
   },
   "devDependencies": {
     "@types/body-parser": "1.19.2",

@@ -1,12 +1,14 @@
-import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { useLocation } from "react-router-dom";
 
+import MediaFormContext from "contexts/MediaFormContext";
 import { Button, useDarkMode } from "core-ui";
 import AlertDialog, { useAlertDialog } from "core-ui/AlertDialog";
 import clsx from "core-utils/clsx";
 import { Checkbox, Input, RadioButton, Select } from "forms";
 import FilePicker from "forms/FilePicker";
+import { authSDK } from "sdks";
 
 import LanguageSelector from "components/LanguageSelector";
 
@@ -16,30 +18,30 @@ import { decrementCounter, incrementCounter } from "_redux/slices/counter";
 import { setCounterAsync } from "_redux/slices/counter/thunk";
 
 const HomePage = () => {
+  useLocation();
   const count = useAppSelector((state) => state.counter.count);
   const { isLoading, dispatch, classicDispatch } = useLoadingDispatch();
   const { t } = useTranslation();
   const increment = () => {
     classicDispatch(incrementCounter());
   };
-
   const decrement = () => {
     classicDispatch(decrementCounter());
   };
-
   const setAsync = () => {
     dispatch(setCounterAsync(300));
   };
   const { toggleDarkMode } = useDarkMode();
-
-  useLocation();
+  const fetchUploadToken = () =>
+    authSDK.getUploadToken({
+      query: { mimeTypes: ["image/jpg", "image/jpeg", "image/png"] },
+    });
   const methods = useForm({
     defaultValues: { start: "" },
   });
   const onSubmit: SubmitHandler<{ start: string }> = (value) =>
     // eslint-disable-next-line no-console
     console.log(value);
-
   const [submitModalProps, handleSubmit] = useAlertDialog(onSubmit);
 
   return (
@@ -84,55 +86,56 @@ const HomePage = () => {
           Go to API
         </a>
       </p>
-
-      <FormProvider {...methods}>
-        <form onSubmit={methods.handleSubmit(handleSubmit)}>
-          <Input
-            validate={[{ rule: "isEmpty" }]}
-            name="start"
-            type="text"
-            placeholder="placeholder"
-            label="Input for test"
-          />
-          <RadioButton
-            name="radio"
-            values={[
-              { value: "f", label: "Female" },
-              { value: "m", label: "Male" },
-            ]}
-            className="bg-radio"
-          />
-          <Checkbox
-            name="check"
-            className="bg-dak"
-            label="check box for test"
-            defaultChecked
-          />
-          <Select
-            name="select"
-            validate={[{ rule: "exists" }]}
-            options={[
-              { label: "English", value: "en" },
-              { label: "Français", value: "fr" },
-            ]}
-          />
-          <FilePicker
-            name="image"
-            label="Click to select image"
-            accept=".jpeg,.jpg,.png,.docx,.pptx,.pdf,.xlsx"
-          />
-          <Button type="submit" light>
-            submit
-          </Button>
-          <AlertDialog
-            title="titre"
-            message="Etes-vous sur de vouloir continuer?"
-            confirmMessage="Confirmer"
-            cancelMessage="Annuler"
-            {...submitModalProps}
-          />
-        </form>
-      </FormProvider>
+      <MediaFormContext
+        {...methods}
+        fetchTokenFunction={fetchUploadToken}
+        onSubmit={handleSubmit}
+      >
+        <Input
+          validate={[{ rule: "isEmpty" }]}
+          name="start"
+          type="text"
+          placeholder="placeholder"
+          label="Input for test"
+        />
+        <RadioButton
+          name="radio"
+          values={[
+            { value: "f", label: "Female" },
+            { value: "m", label: "Male" },
+          ]}
+          className="bg-radio"
+        />
+        <Checkbox
+          name="check"
+          className="bg-dak"
+          label="check box for test"
+          defaultChecked
+        />
+        <Select
+          name="select"
+          validate={[{ rule: "exists" }]}
+          options={[
+            { label: "English", value: "en" },
+            { label: "Français", value: "fr" },
+          ]}
+        />
+        <FilePicker
+          name="image"
+          label="Click to select image"
+          accept=".jpeg,.jpg,.png"
+        />
+        <Button type="submit" light>
+          submit
+        </Button>
+        <AlertDialog
+          title="titre"
+          message="Etes-vous sur de vouloir continuer?"
+          confirmMessage="Confirmer"
+          cancelMessage="Annuler"
+          {...submitModalProps}
+        />
+      </MediaFormContext>
       <Button onClick={toggleDarkMode} light>
         Toggle Dark mode
       </Button>

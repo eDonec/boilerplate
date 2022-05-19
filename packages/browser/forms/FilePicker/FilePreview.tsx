@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
+// TODO: FIX svg imports
 
 import { useEffect, useRef, useState } from "react";
 
@@ -16,38 +17,48 @@ import powerpoint from "./svg/powerpoint.svg";
 import word from "./svg/word.svg";
 import { IFileWithPreview } from "./useFilePicker";
 
-const bucketSDK = new BucketSDK("");
-
 type FilePreviewProps = {
   file: IFileWithPreview | UploadedFile;
   onDelete: React.MouseEventHandler<HTMLButtonElement>;
+  bucketSDK: BucketSDK | null;
+  onUploadFailed: () => void;
 };
 
-const FilePreview = ({ file: _file, onDelete }: FilePreviewProps) => {
+const FilePreview = ({
+  file: _file,
+  onDelete,
+  bucketSDK,
+  onUploadFailed,
+}: FilePreviewProps) => {
   const [uploadProgress, setUploadProgress] = useState(0);
   const [file, setFile] = useState(_file);
   const [didUpload, setDidUpload] = useState(!(_file instanceof File));
-  const cancelToken = useRef<AbortController>();
+  const abortController = useRef<AbortController>();
 
   useEffect(() => {
-    if (!(_file instanceof File) || didUpload) return;
+    if (!(_file instanceof File) || didUpload || !bucketSDK) return;
 
     (async () => {
-      cancelToken.current = new AbortController();
-      const data = await bucketSDK.addFile({
-        file: _file,
-        onUploadProgress: setUploadProgress,
-        abortController: cancelToken.current,
-      });
+      try {
+        abortController.current = new AbortController();
+        const data = await bucketSDK.addFile({
+          file: _file,
+          onUploadProgress: setUploadProgress,
+          abortController: abortController.current,
+        });
 
-      setFile(data);
-      setDidUpload(true);
+        setFile(data);
+        setDidUpload(true);
+      } catch (error) {
+        if (error instanceof Error && error.message === "canceled") return;
+        onUploadFailed();
+      }
     })();
   }, [didUpload, _file]);
 
   useEffect(
     () => () => {
-      cancelToken.current?.abort();
+      abortController.current?.abort();
     },
     []
   );
@@ -110,7 +121,7 @@ const FilePreview = ({ file: _file, onDelete }: FilePreviewProps) => {
               />
             ))}
         </div>
-        <span className="text-xs">{_file.name}</span>
+        <span className="text-xs">{file.name}</span>
       </div>
       {!didUpload && (
         <div className="rounded-full bg-gray-200">

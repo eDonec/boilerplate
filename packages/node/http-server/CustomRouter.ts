@@ -17,6 +17,7 @@ const CustomRouter =
     >(method: Method) {
       return function customMethod(this: Method, ...args: Parameters<Method>) {
         const [path, ...middlewares] = args;
+
         const customMiddlewares = middlewares.map((middleware) =>
           middlewareWithTryCatch(middleware as IMiddleware, eventSender)
         );
