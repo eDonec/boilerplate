@@ -5,7 +5,11 @@ import RawFilePicker from "../RawFilePicker";
 describe("Button renderer", () => {
   it("should render successfully", () => {
     const { baseElement } = render(
-      <RawFilePicker name="Test name" label="test label" />
+      <RawFilePicker
+        mediaUploadToken={null}
+        name="Test name"
+        label="test label"
+      />
     );
 
     expect(baseElement).toBeTruthy();

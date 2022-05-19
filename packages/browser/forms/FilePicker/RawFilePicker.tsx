@@ -1,21 +1,11 @@
-/* eslint-disable max-lines */
-/* eslint-disable @typescript-eslint/ban-ts-comment */
-/* eslint-disable simple-import-sort/imports */
-// TODO: FIX svg imports
+import { forwardRef, useEffect, useRef } from "react";
 
-import { forwardRef } from "react";
+import BucketSDK from "bucket-sdk";
 import { UploadedFile } from "bucket-types/utils";
-
 import { clsx } from "core-utils";
-// @ts-ignore
 
-// @ts-ignore
-
-// @ts-ignore
-// @ts-ignore
-
-import { useFilePicker } from "./useFilePicker";
 import FilePreview from "./FilePreview";
+import { useFilePicker } from "./useFilePicker";
 
 export interface IProps {
   maxFiles?: number;
@@ -30,10 +20,11 @@ export interface IProps {
 
 export interface IComponentProps extends IProps {
   value?: string[] | string;
+  mediaUploadToken: string | null;
 }
 
 const FilePicker = forwardRef<HTMLInputElement, IComponentProps>(
-  ({ error, onChange, maxFiles = 20, accept }, ref) => {
+  ({ error, onChange, maxFiles = 20, accept, mediaUploadToken }, ref) => {
     const {
       getInputProps,
       getRootProps,
@@ -46,12 +37,20 @@ const FilePicker = forwardRef<HTMLInputElement, IComponentProps>(
       onChange,
       maxFiles,
       accept,
+      mediaUploadToken,
     });
+
+    const bucketSDK = useRef<BucketSDK | null>(null);
+
+    useEffect(() => {
+      if (mediaUploadToken && !bucketSDK.current)
+        bucketSDK.current = new BucketSDK(mediaUploadToken);
+    }, [mediaUploadToken]);
 
     return (
       <div
         className={clsx(
-          "flex cursor-pointer p-10 text-center",
+          "relative flex cursor-pointer p-10 text-center",
           "bg-gray-100",
           "border-2 border-dashed",
           !error && "dark:border-gray-500 dark:bg-gray-700 dark:text-gray-200",
@@ -80,9 +79,11 @@ const FilePicker = forwardRef<HTMLInputElement, IComponentProps>(
               <div className="m-5 flex flex-wrap gap-4">
                 {files.map((file, index) => (
                   <FilePreview
-                    key={index}
+                    bucketSDK={bucketSDK.current}
+                    key={file instanceof File ? file.preview : file.key}
                     file={file}
                     onDelete={(e) => handlePictureClick(e, index, deleteFile)}
+                    onUploadFailed={() => deleteFile(index)}
                   />
                 ))}
               </div>
@@ -93,6 +94,16 @@ const FilePicker = forwardRef<HTMLInputElement, IComponentProps>(
               {error}
             </p>
           )}
+        </div>
+        <div
+          className={clsx([
+            "pointer-events-none absolute inset-0 flex flex-col items-center justify-center bg-opacity-50 backdrop-blur transition-opacity",
+            {
+              "opacity-0": mediaUploadToken,
+            },
+          ])}
+        >
+          <span>TODO : ADD LOADER</span>
         </div>
       </div>
     );

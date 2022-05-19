@@ -13,11 +13,13 @@ type FilePickerProps = {
   accept?: string | string[] | undefined;
   onChange?: (files: UploadedFile | UploadedFile[]) => void;
   errors?: (error: FileRejection[]) => void;
+  mediaUploadToken: string | null;
 };
 export const useFilePicker = ({
   onChange,
   maxFiles,
   accept,
+  mediaUploadToken,
 }: FilePickerProps) => {
   const [files, setFiles] = useState<(IFileWithPreview | UploadedFile)[]>([]);
   const [rejectedFiles, setFilesRejected] = useState<string[][]>([]);
@@ -64,6 +66,7 @@ export const useFilePicker = ({
       onDropRejected,
       maxFiles,
       accept,
+      disabled: !mediaUploadToken,
     });
   const deleteFile = (index: number) => {
     setFiles((prev) => prev.filter((_file, i) => index !== i));
