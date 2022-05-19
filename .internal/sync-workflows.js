@@ -80,19 +80,21 @@ const syncBuildAndTestDocker = (
   const deps = [];
   const jobs = apps
     .map((app) => {
-      deps.push(
-        `\${{packageName}}-build-and-publish-\${{stage}}`
-          .replace(/\${{packageName}}/g, app.packageName)
-          .replace(/\${{stage}}/g, stage)
-      );
       // ${{packageName}}-build-and-publish-${{stage}}
-      return segmentWorkFlow
+      const editedSegmetWorkFlow = segmentWorkFlow
         .replace(/\${{packageName}}/g, app.packageName)
         .replace(/\${{stage}}/g, stage)
         .replace(/\${{STAGE}}/g, stage.toUpperCase())
         .replace(/\${{changeTrigger}}/g, changeTrigger)
         .replace(/\${{changeCondition}}/g, changeCondition)
         .replace(/\${{deps}}/g, deps.join(", "));
+
+      deps.push(
+        `\${{packageName}}-deploy-to-\${{stage}}`
+          .replace(/\${{packageName}}/g, app.packageName)
+          .replace(/\${{stage}}/g, stage)
+      );
+      return editedSegmetWorkFlow;
     })
     .join("\n\n  ");
   const newWorkflow = baseWorkFlow
