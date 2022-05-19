@@ -124,20 +124,13 @@ const sortImportsInFile = (file, _path, depth) => {
     edits: [],
   };
   for (const route of packageAndPathObject) {
-    const lineToInsert = `"${_depth}${route.path}`.replace(/\\/g, "/");
-    _data = _data.replace(
-      new RegExp(`"(${route.packageName}(?=[/|"])(?!\/build))`, "g"),
-      lineToInsert
-    );
-    reversion.edits.push({
-      insertedLine: lineToInsert,
-      removedLine: `"${route.packageName}`,
-    });
+    _data = lineReplacer(_depth, route, _data, reversion);
   }
   reversions.push(reversion);
   fs.writeFileSync(_path, _data);
   fs.writeFileSync(reversionJson, JSON.stringify(reversions));
 };
+
 const os = require("os");
 const resolveDepthRelativeToApp = (filePath) => {
   // trim string before apps
@@ -158,3 +151,65 @@ const depthToString = (depth) => {
   }
   return res;
 };
+function lineReplacer(_depth, route, _data, reversion) {
+  const fromRegex = new RegExp(
+    `from "(${route.packageName}(?=[/|"])(?!\/build))`,
+    "g"
+  );
+  const fromLineToInsert = `from "${_depth}${route.path}`.replace(/\\/g, "/");
+  _data = lineReplaceArrayMaker(
+    _data,
+    fromRegex,
+    fromLineToInsert,
+    reversion,
+    `from "${route.packageName}`
+  );
+
+  // const requireRegex = new RegExp(
+  //   `require\("(${route.packageName}(?=[/|"])(?!\/build))`,
+  //   "g"
+  // );
+  // const requireLineToInsert = `require("${_depth}${route.path}`.replace(
+  //   /\\/g,
+  //   "/"
+  // );
+  // _data = lineReplaceArrayMaker(
+  //   _data,
+  //   requireRegex,
+  //   requireLineToInsert,
+  //   reversion,
+  //   route
+  // );
+
+  // const importRegex = new RegExp(
+  //   `import\("(${route.packageName}(?=[/|"])(?!\/build))`,
+  //   "g"
+  // );
+  // const importLineToInsert = `import("${_depth}${route.path}`.replace(
+  //   /\\/g,
+  //   "/"
+  // );
+  // _data = lineReplaceArrayMaker(
+  //   _data,
+  //   importRegex,
+  //   importLineToInsert,
+  //   reversion,
+  //   route
+  // );
+  return _data;
+}
+
+function lineReplaceArrayMaker(
+  _data,
+  fromRegex,
+  fromLineToInsert,
+  reversion,
+  removedLine
+) {
+  _data = _data.replace(fromRegex, fromLineToInsert);
+  reversion.edits.push({
+    insertedLine: fromLineToInsert,
+    removedLine,
+  });
+  return _data;
+}
