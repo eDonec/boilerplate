@@ -97,13 +97,6 @@ export const deleteFile = async (bucketFile: BucketFileDocument) => {
   await bucketFile.delete();
 };
 
-// const persistFile = async (url: string) => {
-//   await BucketFile.findOneAndUpdate(
-//     { path: url },
-//     { $set: { isPersisted: true, invalidateAt: null } }
-//   );
-// };
-
 // ! Instant Delete
 // (async () => {
 //   (
