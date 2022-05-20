@@ -32,7 +32,8 @@
     "bucket-events": "*",
     "http-server": "*",
     "custom-error": "*",
-    "token": "*"
+    "token": "*",
+    "jsonwebtoken": "8.5.1"
   },
   "devDependencies": {
     "@types/body-parser": "1.19.2",
