@@ -28,7 +28,7 @@
   "typescript.referencesCodeLens.enabled": true,
   "appService.zipIgnorePattern": [".vscode{,/**}"],
   "appService.deploySubpath": "",
-  "ffdiles.exclude": {
+  "files.exclude": {
     "**/coverage": true,
     "**/.eslintrc.js": true,
     ".sdocker": true,
@@ -79,7 +79,8 @@
     "**/.docker": true,
     "**/.internal": true,
     "**/.markdownlint.json": true,
-    "**/.gitlab-ci.yml": true
+    "**/.gitlab-ci.yml": true,
+    "compose": true
   },
   "explorerExclude.backup": null,
   "typescript.tsdk": "node_modules/typescript/lib",

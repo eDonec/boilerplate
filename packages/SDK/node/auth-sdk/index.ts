@@ -84,6 +84,20 @@ export default class AuthSDK extends ServerSDK {
     this.refreshToken = null;
   }
 
+  public async getUploadToken({
+    query,
+  }: {
+    body?: never;
+    query: AuthNRouteTypes["/z/upload-token"]["GET"]["query"];
+    params?: never;
+  }) {
+    const { data } = await this.api.get<
+      AuthNRouteTypes["/z/upload-token"]["GET"]["response"]
+    >(`${baseUrl}/z/upload-token`, { params: query });
+
+    return data;
+  }
+
   public isLoggedIn() {
     return !!this.refreshToken;
   }

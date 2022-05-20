@@ -60,6 +60,14 @@ export type AuthNRouteTypes = {
       response: void;
     };
   };
+  "/z/upload-token": {
+    GET: {
+      response: string;
+      query: {
+        mimeTypes: string[];
+      };
+    };
+  };
   "/n/me": {
     GET: {
       response: AuthResponse;

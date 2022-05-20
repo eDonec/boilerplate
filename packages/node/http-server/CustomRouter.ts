@@ -1,4 +1,3 @@
-// eslint-disable-next-line es-local-rules/no-import-express
 import { Router, RouterOptions } from "express";
 import { IRouter } from "express-serve-static-core";
 import { IMiddleware } from "shared-types";
@@ -18,6 +17,7 @@ const CustomRouter =
     >(method: Method) {
       return function customMethod(this: Method, ...args: Parameters<Method>) {
         const [path, ...middlewares] = args;
+
         const customMiddlewares = middlewares.map((middleware) =>
           middlewareWithTryCatch(middleware as IMiddleware, eventSender)
         );
