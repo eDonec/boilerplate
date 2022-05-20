@@ -17,7 +17,7 @@ services:
       - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
       - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
       - IMGPROXY_USE_S3=true
-      - STORAGE_PATH=edonec-turborepo-cache
+      - STORAGE_PATH=edonec-boilerplate-files
       - STORAGE_PROVIDER=S3
       - IMGPROXY_CACHE_CONTROL_PASSTHROUGH=true
       - IMGPROXY_SET_CANONICAL_HEADER=true
@@ -27,29 +27,28 @@ services:
       - IMGPROXY_JPEG_OVERSHOOT_DERINGING=true
       - IMGPROXY_ENABLE_WEBP_DETECTION=true
       - IMGPROXY_ENFORCE_WEBP=true
+      - IMGPROXY_PATH_PREFIX=/imgproxy
 
     networks:
       - main-network
   proxy-balancer:
     restart: always
-    build:
-      context: .
-      dockerfile: Dockerfile.proxy-balancer
+    image: proxy-balancer
     depends_on:
       - client
       - dashboard
       - auth
+      - bucket
       - database
       - imgproxy
     ports:
-      - "80:80"
-      - "443:443"
+      - 3005:80
     networks:
       - main-network
 
   client:
     build:
-      context: .
+      context: ./.docker
       dockerfile: Dockerfile.compose.client
       args:
         - NEXT_PUBLIC_HELLO=Hello
@@ -62,10 +61,10 @@ services:
 
   dashboard:
     build:
-      context: .
+      context: ./.docker
       dockerfile: Dockerfile.compose.dashboard
       args:
-        - REACT_APP_HELLO="I am a variable"
+        - REACT_APP_HELLO=${REACT_APP_HELLO}
     restart: always
     environment:
       - NODE_ENV=${NODE_ENV}
@@ -81,8 +80,6 @@ services:
       - PORT=${PORT}
       - DATABASE_URI=mongodb://database:27017/auth?authSource=admin
       - ACCESS_TOKEN_SECRET_KEY=${ACCESS_TOKEN_SECRET_KEY}
-      - ROOT_USER_EMAIL=${ROOT_USER_EMAIL}
-      - ROOT_USER_PASSWORD=${ROOT_USER_PASSWORD}
       - REFRESH_TOKEN_SECRET_KEY=${REFRESH_TOKEN_SECRET_KEY}
       - DATABASE_USER=${DATABASE_USER}
       - DATABASE_PASSWORD=${DATABASE_PASSWORD}
@@ -90,6 +87,33 @@ services:
       - REFRESH_TOKEN_EXPIRES_IN=${REFRESH_TOKEN_EXPIRES_IN}
       - NUMBER_OF_AUTH_TRIALS=5
       - KAFKA_BROKERS=broker:9092
+      - UPLOAD_SECRET_KEY=${UPLOAD_SECRET_KEY}
+      - ROOT_USER_EMAIL=${ROOT_USER_EMAIL}
+      - ROOT_USER_PASSWORD=${ROOT_USER_PASSWORD}
+      - MICROSERVICE_NAME=auth
+    networks:
+      - main-network
+    depends_on:
+      - database
+
+  bucket:
+    image: ghcr.io/edonec/boilerplate/bucket:head
+    restart: always
+    command: yarn workspace bucket start:prod
+    environment:
+      - PORT=${PORT}
+      - DATABASE_URI=mongodb://database:27017/bucket?authSource=admin
+      - DATABASE_USER=${DATABASE_USER}
+      - DATABASE_PASSWORD=${DATABASE_PASSWORD}
+      - KAFKA_BROKERS=broker:9092
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+      - AWS_REGION=${AWS_REGION}
+      - AWS_BUCKET=edonec-boilerplate-files
+      - PENDING_DURATION_MINUTES=1440
+      - UPLOAD_SECRET_KEY=${UPLOAD_SECRET_KEY}
+      - TMP_DIR_NAME=tmp
+
     networks:
       - main-network
     depends_on:

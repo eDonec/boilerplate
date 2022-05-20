@@ -32,7 +32,7 @@ app.use(
 
 app.use(
   "/imgproxy*",
-  createProxyMiddleware({ target: "http://127.0.0.1:3005/", ws: true })
+  createProxyMiddleware({ target: "http://127.0.0.1:3007/", ws: true })
 );
 
 app.use(

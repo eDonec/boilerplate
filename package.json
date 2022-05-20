@@ -20,8 +20,8 @@
     "sync:workflows": "node .internal/sync-workflows.js"
   },
   "workspaces": [
-    "apps/*",
     "apps/APIs/*",
+    "apps/*",
     "packages/browser/*",
     "packages/config/*",
     "packages/node/*",
