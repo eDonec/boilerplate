@@ -7,6 +7,7 @@ export type BucketFileType = {
   isPersisted: boolean;
   invalidateAt?: number;
   originalFileName: string;
+  url: string;
 };
 
 export type BucketFileDocument = HydratedDocument<BucketFileType>;

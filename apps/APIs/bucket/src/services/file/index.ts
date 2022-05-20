@@ -23,6 +23,13 @@ const addSingleFile = async (
     file,
     abortController,
   });
+
+  const url = file.mimetype.startsWith("image/")
+    ? `/imgproxy/insecure/rs:fit:$w:$h/g:no/${Buffer.from(
+        `s3://${process.env.AWS_BUCKET}/${key}`
+      ).toString("base64")}`
+    : `/api/v1/bucket/file/${key}`;
+
   const bucketFile = await BucketFile.create({
     originalFileName: file.originalname,
     mimetype: file.mimetype,
@@ -31,6 +38,7 @@ const addSingleFile = async (
     key,
     invalidateAt: invalidateTimestamp,
     isDeleted: false,
+    url,
   });
 
   producer.emit.FileUploaded(formatBucketFileResponse(bucketFile));
@@ -76,11 +84,13 @@ export const formatBucketFileResponse = ({
   mimetype,
   id,
   originalFileName,
+  url,
 }: BucketFileDocument): FileRouteTypes["/file/"]["POST"]["response"] => ({
   key,
   type: mimetype,
   name: originalFileName,
   _id: id,
+  url,
 });
 export const deleteFile = async (bucketFile: BucketFileDocument) => {
   await deleteBucketFile(bucketFile.key);

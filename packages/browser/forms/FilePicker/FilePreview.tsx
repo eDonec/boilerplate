@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from "react";
 
 import BucketSDK from "bucket-sdk";
 import { UploadedFile } from "bucket-types/utils";
+import { getImageUrl } from "core-utils";
 import clsx from "core-utils/clsx";
 
 // @ts-ignore
@@ -22,6 +23,10 @@ type FilePreviewProps = {
   onDelete: React.MouseEventHandler<HTMLButtonElement>;
   bucketSDK: BucketSDK | null;
   onUploadFailed: () => void;
+  onFileUploaded: (fileData: {
+    uploadedFile: UploadedFile;
+    file: IFileWithPreview;
+  }) => void;
 };
 
 const FilePreview = ({
@@ -29,6 +34,7 @@ const FilePreview = ({
   onDelete,
   bucketSDK,
   onUploadFailed,
+  onFileUploaded,
 }: FilePreviewProps) => {
   const [uploadProgress, setUploadProgress] = useState(0);
   const [file, setFile] = useState(_file);
@@ -47,6 +53,7 @@ const FilePreview = ({
           abortController: abortController.current,
         });
 
+        onFileUploaded({ uploadedFile: data, file: _file });
         setFile(data);
         setDidUpload(true);
       } catch (error) {
@@ -115,9 +122,9 @@ const FilePreview = ({
                 src={
                   file instanceof File
                     ? file.preview
-                    : `http://localhost:3000/api/v1/bucket/file/${file.key}`
+                    : getImageUrl(file.url, 80, 80)
                 }
-                className="mt-auto mb-auto"
+                className="my-auto"
               />
             ))}
         </div>

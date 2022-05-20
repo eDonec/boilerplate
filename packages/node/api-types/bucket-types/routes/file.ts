@@ -6,6 +6,7 @@ export type FileRouteTypes = {
         type: string;
         name: string;
         _id: string;
+        url: string;
       };
     };
   };
