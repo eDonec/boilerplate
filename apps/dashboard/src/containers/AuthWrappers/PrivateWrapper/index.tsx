@@ -26,7 +26,7 @@ const PrivateWrapper: React.FC<IProps> = ({ children, fallback }) => {
       </div>
     );
 
-  return <div className="p-4">{children}</div>;
+  return <>{children}</>;
 };
 
 export default PrivateWrapper;
