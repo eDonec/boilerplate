@@ -191,3 +191,28 @@
     @apply min-h-[calc(100vh-56px)];
   }
 }
+@layer utilities {
+  .scrollbar::-webkit-scrollbar {
+    -webkit-appearance: none;
+    width: 10px;
+    height: 10px;
+  }
+
+  .scrollbar::-webkit-scrollbar-track {
+    background: var(--color-gray-800);
+
+    border-radius: 0;
+  }
+
+  .scrollbar::-webkit-scrollbar-thumb {
+    background: var(--color-gray-500);
+    cursor: pointer;
+    border-radius: 5px;
+    -webkit-transition: color 0.2s ease;
+    transition: color 0.2s ease;
+  }
+
+  .scrollbar::-webkit-scrollbar-thumb:hover {
+    background: var(--color-gray-400);
+  }
+}
