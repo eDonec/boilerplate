@@ -1,23 +1,12 @@
-/* eslint-disable max-lines */
-/* eslint-disable @typescript-eslint/ban-ts-comment */
-/* eslint-disable simple-import-sort/imports */
-// TODO: FIX svg imports
+import { forwardRef, useEffect, useRef } from "react";
 
-import { forwardRef } from "react";
-
+import BucketSDK from "bucket-sdk";
+import { UploadedFile } from "bucket-types/utils";
+import Loader from "core-ui/Loader";
 import { clsx } from "core-utils";
-// @ts-ignore
 
-import excel from "./svg/excel.svg";
-// @ts-ignore
-
-import pdf from "./svg/pdf.svg";
-// @ts-ignore
-import powerpoint from "./svg/powerpoint.svg";
-// @ts-ignore
-
-import word from "./svg/word.svg";
-import { IFileWithPreview, useFilePicker } from "./useFilePicker";
+import FilePreview from "./FilePreview";
+import { useFilePicker } from "./useFilePicker";
 
 export interface IProps {
   maxFiles?: number;
@@ -25,17 +14,18 @@ export interface IProps {
 
   label?: string;
 
-  onChange?: (files: IFileWithPreview) => void;
+  onChange?: (files: UploadedFile | UploadedFile[]) => void;
   error?: string;
   name: string;
 }
 
 export interface IComponentProps extends IProps {
   value?: string[] | string;
+  mediaUploadToken: string | null;
 }
 
 const FilePicker = forwardRef<HTMLInputElement, IComponentProps>(
-  ({ error, onChange, maxFiles = 0, accept }, ref) => {
+  ({ error, onChange, maxFiles = 20, accept, mediaUploadToken }, ref) => {
     const {
       getInputProps,
       getRootProps,
@@ -44,16 +34,25 @@ const FilePicker = forwardRef<HTMLInputElement, IComponentProps>(
       rejectedFiles,
       handlePictureClick,
       deleteFile,
+      onFileUploaded,
     } = useFilePicker({
       onChange,
       maxFiles,
       accept,
+      mediaUploadToken,
     });
+
+    const bucketSDK = useRef<BucketSDK | null>(null);
+
+    useEffect(() => {
+      if (mediaUploadToken && !bucketSDK.current)
+        bucketSDK.current = new BucketSDK(mediaUploadToken);
+    }, [mediaUploadToken]);
 
     return (
       <div
         className={clsx(
-          "flex cursor-pointer p-10 text-center",
+          "relative flex cursor-pointer p-10 text-center",
           "bg-gray-100",
           "border-2 border-dashed",
           !error && "dark:border-gray-500 dark:bg-gray-700 dark:text-gray-200",
@@ -76,82 +75,19 @@ const FilePicker = forwardRef<HTMLInputElement, IComponentProps>(
                 : "Glissez votre fichier ou bien cliquez ici pour le selectionner"}
             </div>
             {rejectedFiles.length > 0 && (
-              <div className="ml-1  text-red-600">{rejectedFiles[0]}</div>
+              <div className="ml-1 text-red-600">{rejectedFiles[0]}</div>
             )}
             {files.length > 0 && (
-              <div className="m-5 grid  grid-cols-1 gap-4 sm:grid-cols-4">
+              <div className="m-5 flex flex-wrap gap-4">
                 {files.map((file, index) => (
-                  <div
-                    key={file.preview || file.name + index}
-                    className="flex flex-col items-center justify-center"
-                  >
-                    <div
-                      className={clsx(
-                        "h-25 w-25 relative flex p-3 text-center",
-                        "bg-white shadow-md"
-                      )}
-                    >
-                      <span
-                        className="absolute top-[-12px] right-[-12px]"
-                        tabIndex={index}
-                        role="button"
-                        onClick={(event) =>
-                          handlePictureClick(event, index, deleteFile)
-                        }
-                        onKeyDown={(event) =>
-                          handlePictureClick(event, index, deleteFile)
-                        }
-                      >
-                        <svg
-                          className="h-8 w-8 justify-end text-gray-400"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                        >
-                          <circle
-                            className="text-gray-200"
-                            fill="white"
-                            cx="12"
-                            cy="12"
-                            r="10"
-                          />
-                          <line x1="15" y1="9" x2="9" y2="15" />
-                          <line x1="9" y1="9" x2="15" y2="15" />
-                        </svg>
-                      </span>
-                      <div className="flex w-20 text-center">
-                        {file.type ===
-                          "application/vnd.openxmlformats-officedocument.wordprocessingml.document" && (
-                          <img src={word}></img>
-                        )}
-                        {file.type === "application/pdf" && (
-                          <img src={pdf}></img>
-                        )}
-                        {file.type ===
-                          "application/vnd.openxmlformats-officedocument.presentationml.presentation" && (
-                          <img src={powerpoint}></img>
-                        )}
-                        {file.type ===
-                          "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" && (
-                          <img src={excel}></img>
-                        )}
-                        {file.type === "image/png" ||
-                        file.type === "image/jpg" ||
-                        file.type === "image/jpeg" ? (
-                          <img
-                            alt="upload"
-                            src={file.preview}
-                            className="mt-auto mb-auto"
-                          />
-                        ) : (
-                          error
-                        )}
-                      </div>
-                    </div>
-                    <div className=" w-20  text-center text-xs">
-                      {file.name}
-                    </div>
-                  </div>
+                  <FilePreview
+                    onFileUploaded={onFileUploaded}
+                    bucketSDK={bucketSDK.current}
+                    key={file instanceof File ? file.preview : file.key}
+                    file={file}
+                    onDelete={(e) => handlePictureClick(e, index, deleteFile)}
+                    onUploadFailed={() => deleteFile(index)}
+                  />
                 ))}
               </div>
             )}
@@ -161,6 +97,16 @@ const FilePicker = forwardRef<HTMLInputElement, IComponentProps>(
               {error}
             </p>
           )}
+        </div>
+        <div
+          className={clsx([
+            "bg-primary-600 pointer-events-none absolute inset-0 flex flex-col items-center justify-center bg-opacity-10 backdrop-blur transition-opacity",
+            {
+              "opacity-0": mediaUploadToken,
+            },
+          ])}
+        >
+          <Loader />
         </div>
       </div>
     );

@@ -1,27 +1,26 @@
-import {
-  Controller,
-  FieldError,
-  get,
-  useFormContext,
-  useFormState,
-} from "react-hook-form";
+import { Controller, FieldError, get, useFormState } from "react-hook-form";
 
 import { TRule } from "field-validator/types";
 
 import RawFilePicker, { IComponentProps } from "./RawFilePicker";
+import useMediaFormContext from "../contexts/RawMediaFormProvider/useMediaFormContext";
 import { validateForm } from "../helpers/validateForm";
 
 export interface IProps
-  extends Omit<IComponentProps, "error" | "onChange" | "value"> {
+  extends Omit<
+    IComponentProps,
+    "error" | "onChange" | "value" | "mediaUploadToken"
+  > {
   name: string;
   validate?: TRule[];
 }
+
 const FilePicker: React.FC<IProps> = ({
   name,
   validate,
   ...filePickerProps
 }) => {
-  const { control } = useFormContext();
+  const { control, mediaUploadToken } = useMediaFormContext();
   const { errors } = useFormState();
   const error = get(errors, name) as FieldError | undefined;
 
@@ -32,15 +31,16 @@ const FilePicker: React.FC<IProps> = ({
       control={control}
       render={({ field: { onChange, value, ref } }) => (
         <RawFilePicker
-          name={name}
           {...filePickerProps}
+          mediaUploadToken={mediaUploadToken}
+          name={name}
           ref={ref}
           value={value}
           onChange={onChange}
           error={error?.message}
         />
       )}
-    ></Controller>
+    />
   );
 };
 

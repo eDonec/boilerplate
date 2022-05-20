@@ -9,6 +9,7 @@ const withTM = require("next-transpile-modules")([
   "field-validator",
   "auth-sdk",
   "server-sdk",
+  "bucket-sdk",
   "shared-types",
 ]);
 

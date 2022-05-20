@@ -1,23 +1,13 @@
 all:
-	make dashboard &&\
-	make client &&\
-	make auth &&\
-	make proxy-balancer
+	make image image=dashboard &&\
+	make image image=client &&\
+	make image image=auth &&\
+	make image image=bucket &&\
+	make image image=proxy-balancer
 
-
-dashboard:
-	docker build -f .docker/Dockerfile.dashboard -t dashboard .
-
-client:
-	docker build -f .docker/Dockerfile.client -t client .
-
-proxy-balancer:
-	docker build -f .docker/Dockerfile.proxy-balancer -t proxy-balancer .
-
-
-image=auth
-auth:
-	docker build -f .docker/Dockerfile.auth -t auth .
+image=dashboard
+image:
+	docker build -f .docker/Dockerfile.$(image) -t $(image) .
 
 compose:
 	docker compose up  --build --force-recreate -d --remove-orphans
@@ -29,6 +19,10 @@ test:
 image=auth
 update:
 	docker compose up --no-deps -d $(image) --build --force-recreate
+
+image=auth
+update-dev:
+	docker compose -f docker-compose.dev.yml up --no-deps -d $(image) --build --force-recreate
 
 compose-dev:
 	cd dev && docker compose  up --build --force-recreate -d --remove-orphans

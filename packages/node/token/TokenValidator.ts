@@ -3,11 +3,6 @@ import UnauthorizedError from "custom-error/UnauthorizedError";
 import { decode, Secret, verify } from "jsonwebtoken";
 import "dotenv/config";
 
-if (!process.env.ACCESS_TOKEN_SECRET_KEY)
-  throw new Error(
-    "access Token secret key is not set please set it up in .env before using this app"
-  );
-
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export interface IDecodedToken<
   T = {
@@ -34,6 +29,14 @@ export default class TokenValidator<T = string | object | Buffer> {
 
     if (!token)
       throw new Error("Please Provide a token to the token constructor");
+    if (isRefreshToken && !process.env.REFRESH_TOKEN_SECRET_KEY)
+      throw new Error(
+        "refresh Token secret key is not set please set it up in .env before using this app"
+      );
+    if (!isRefreshToken && !secret && !process.env.ACCESS_TOKEN_SECRET_KEY)
+      throw new Error(
+        "access Token secret key is not set please set it up in .env before using this app"
+      );
 
     if (typeof token !== "string")
       throw new UnauthorizedError({
