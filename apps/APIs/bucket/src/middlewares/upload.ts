@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { ObjectValidationError } from "custom-error";
 import { unlinkSync } from "fs-extra";
 import { Request } from "http-server";
@@ -7,7 +8,7 @@ import multer from "multer";
 export default multer({
   storage: multer.diskStorage({
     destination: (_req, _file, cb) => {
-      cb(null, resolvePath("public"));
+      cb(null, resolvePath(process.env.TMP_DIR_NAME!));
     },
     filename: (
       req: Request<
@@ -44,7 +45,7 @@ export default multer({
       const filename = [generated, fileExtension].filter(Boolean).join(".");
 
       req.on("aborted", () => {
-        unlinkSync(resolvePath("public", filename));
+        unlinkSync(resolvePath(process.env.TMP_DIR_NAME!, filename));
       });
 
       cb(null, filename);

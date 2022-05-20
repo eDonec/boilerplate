@@ -71,6 +71,22 @@ export const useFilePicker = ({
   const deleteFile = (index: number) => {
     setFiles((prev) => prev.filter((_file, i) => index !== i));
   };
+  const onFileUploaded = useCallback(
+    ({
+      file,
+      uploadedFile,
+    }: {
+      uploadedFile: UploadedFile;
+      file: IFileWithPreview;
+    }) => {
+      setFiles((prev) =>
+        prev.map((el) =>
+          el instanceof File && el.preview === file.preview ? uploadedFile : el
+        )
+      );
+    },
+    []
+  );
 
   return {
     getRootProps,
@@ -81,5 +97,6 @@ export const useFilePicker = ({
     rejectedFiles,
     handlePictureClick,
     deleteFile,
+    onFileUploaded,
   };
 };

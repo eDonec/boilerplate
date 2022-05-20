@@ -11,6 +11,7 @@ const schema = new Schema<BucketFileType>({
   size: { type: Number, required: true },
   key: { type: String, required: true },
   originalFileName: { type: String, required: true },
+  url: { type: String, required: true },
   invalidateAt: Number,
 });
 

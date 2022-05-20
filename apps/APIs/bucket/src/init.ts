@@ -7,10 +7,13 @@ import path from "path";
 // eslint-disable-next-line simple-import-sort/imports
 import "dotenv/config";
 
+if (!process.env.TMP_DIR_NAME)
+  throw new Error("Missing .env variable : TMP_DIR_NAME");
+
 export const resolvePath = (...pathToResolve: string[]) =>
   path.join(__dirname, `../`, ...pathToResolve);
 
-fs.mkdirSync(resolvePath("public"), { recursive: true });
+fs.mkdirSync(resolvePath(process.env.TMP_DIR_NAME), { recursive: true });
 
 const server = new Server(producer.emit.BucketError);
 

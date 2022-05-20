@@ -34,6 +34,7 @@ const FilePicker = forwardRef<HTMLInputElement, IComponentProps>(
       rejectedFiles,
       handlePictureClick,
       deleteFile,
+      onFileUploaded,
     } = useFilePicker({
       onChange,
       maxFiles,
@@ -80,6 +81,7 @@ const FilePicker = forwardRef<HTMLInputElement, IComponentProps>(
               <div className="m-5 flex flex-wrap gap-4">
                 {files.map((file, index) => (
                   <FilePreview
+                    onFileUploaded={onFileUploaded}
                     bucketSDK={bucketSDK.current}
                     key={file instanceof File ? file.preview : file.key}
                     file={file}
