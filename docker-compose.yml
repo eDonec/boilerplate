@@ -113,6 +113,7 @@ services:
       - PENDING_DURATION_MINUTES=1440
       - UPLOAD_SECRET_KEY=${UPLOAD_SECRET_KEY}
       - TMP_DIR_NAME=tmp
+      - MICROSERVICE_NAME=bucket
 
     networks:
       - main-network
