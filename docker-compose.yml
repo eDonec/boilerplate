@@ -17,7 +17,7 @@ services:
       - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
       - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
       - IMGPROXY_USE_S3=true
-      - STORAGE_PATH=edonec-turborepo-cache
+      - STORAGE_PATH=edonec-boilerplate-files
       - STORAGE_PROVIDER=S3
       - IMGPROXY_CACHE_CONTROL_PASSTHROUGH=true
       - IMGPROXY_SET_CANONICAL_HEADER=true
@@ -27,6 +27,7 @@ services:
       - IMGPROXY_JPEG_OVERSHOOT_DERINGING=true
       - IMGPROXY_ENABLE_WEBP_DETECTION=true
       - IMGPROXY_ENFORCE_WEBP=true
+      - IMGPROXY_PATH_PREFIX=/imgproxy
 
     networks:
       - main-network
@@ -37,6 +38,7 @@ services:
       - client
       - dashboard
       - auth
+      - bucket
       - database
       - imgproxy
     ports:
@@ -85,9 +87,34 @@ services:
       - REFRESH_TOKEN_EXPIRES_IN=${REFRESH_TOKEN_EXPIRES_IN}
       - NUMBER_OF_AUTH_TRIALS=5
       - KAFKA_BROKERS=broker:9092
+      - UPLOAD_SECRET_KEY=${UPLOAD_SECRET_KEY}
       - ROOT_USER_EMAIL=${ROOT_USER_EMAIL}
       - ROOT_USER_PASSWORD=${ROOT_USER_PASSWORD}
       - MICROSERVICE_NAME=auth
+    networks:
+      - main-network
+    depends_on:
+      - database
+
+  bucket:
+    image: bucket
+    restart: always
+    command: yarn workspace bucket start:prod
+    environment:
+      - PORT=${PORT}
+      - DATABASE_URI=mongodb://database:27017/bucket?authSource=admin
+      - DATABASE_USER=${DATABASE_USER}
+      - DATABASE_PASSWORD=${DATABASE_PASSWORD}
+      - KAFKA_BROKERS=broker:9092
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+      - AWS_REGION=${AWS_REGION}
+      - AWS_BUCKET=edonec-boilerplate-files
+      - PENDING_DURATION_MINUTES=1440
+      - UPLOAD_SECRET_KEY=${UPLOAD_SECRET_KEY}
+      - TMP_DIR_NAME=tmp
+      - MICROSERVICE_NAME=bucket
+
     networks:
       - main-network
     depends_on:

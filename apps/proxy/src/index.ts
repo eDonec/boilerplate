@@ -11,6 +11,11 @@ const port = process.env.PORT || 3000;
 /** PROXY */
 
 app.use(
+  "/api/v1/bucket*",
+  createProxyMiddleware({ target: "http://127.0.0.1:4002/", ws: true })
+);
+
+app.use(
   "/api/v1/auth*",
   createProxyMiddleware({ target: "http://127.0.0.1:4001/", ws: true })
 );
@@ -23,6 +28,11 @@ app.use(
 app.use(
   "/api/v1*",
   createProxyMiddleware({ target: "http://127.0.0.1:4000/", ws: true })
+);
+
+app.use(
+  "/imgproxy*",
+  createProxyMiddleware({ target: "http://127.0.0.1:3007/", ws: true })
 );
 
 app.use(

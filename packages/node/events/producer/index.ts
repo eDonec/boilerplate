@@ -38,10 +38,7 @@ class Producer<E extends { [eventName: string]: string }> {
     });
   }
 
-  async send<T extends Record<string, unknown>>(
-    message: string | T,
-    eventName: keyof E
-  ) {
+  async send(message: unknown, eventName: keyof E) {
     await this.init();
     if (!this.events[eventName])
       throw new Error(
