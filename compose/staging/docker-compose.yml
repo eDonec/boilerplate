@@ -33,7 +33,9 @@ services:
       - main-network
   proxy-balancer:
     restart: always
-    image: proxy-balancer
+    build:
+      context: .
+      dockerfile: Dockerfile.proxy-balancer
     depends_on:
       - client
       - dashboard
@@ -42,13 +44,14 @@ services:
       - database
       - imgproxy
     ports:
-      - 3005:80
+      - "80:80"
+      - "443:443"
     networks:
       - main-network
 
   client:
     build:
-      context: ./.docker
+      context: .
       dockerfile: Dockerfile.compose.client
       args:
         - NEXT_PUBLIC_HELLO=Hello
@@ -61,10 +64,10 @@ services:
 
   dashboard:
     build:
-      context: ./.docker
+      context: .
       dockerfile: Dockerfile.compose.dashboard
       args:
-        - REACT_APP_HELLO=${REACT_APP_HELLO}
+        - REACT_APP_HELLO="I am a variable"
     restart: always
     environment:
       - NODE_ENV=${NODE_ENV}
