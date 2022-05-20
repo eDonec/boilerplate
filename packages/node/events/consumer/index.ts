@@ -38,9 +38,7 @@ class Consumer<E extends { [eventName: string]: string }> {
     });
   }
 
-  async subscribeToAll<T extends Record<string, unknown>>(
-    onMessageReceived: (message: T) => void
-  ) {
+  async subscribeToAll<T>(onMessageReceived: (message: T) => void) {
     await this.init();
     await this.consumer.subscribe({
       topic: new RegExp(`${this.topic}`, "g"),
@@ -55,7 +53,7 @@ class Consumer<E extends { [eventName: string]: string }> {
     });
   }
 
-  async subscribe<T extends Record<string, unknown>, K extends string>(
+  async subscribe<T, K extends string>(
     eventName: keyof E,
     onMessageReceived: (message: T, key?: K) => void
   ) {

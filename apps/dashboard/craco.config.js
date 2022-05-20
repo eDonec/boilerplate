@@ -9,11 +9,13 @@ const modules = [
   "browser/forms",
   "node/field-validator",
   "node/core-utils",
-  "SDK/node/auth-sdk",
-  "SDK/node/server-sdk",
+  "node/shared-types",
   "node/api-types/auth-types",
   "node/shared-types",
   "node/custom-error",
+  "SDK/node/auth-sdk",
+  "SDK/node/server-sdk",
+  "SDK/node/bucket-sdk",
 ];
 const packages = [];
 packages.push(
