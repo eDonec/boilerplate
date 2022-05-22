@@ -1,0 +1,25 @@
+{
+  "name": "core-cra-components",
+  "version": "0.1.0",
+  "main": "./index.tsx",
+  "types": "./index.tsx",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/react": "18.0.8",
+    "@types/react-dom": "18.0.0",
+    "@types/react-helmet": "^6.1.5",
+    "config": "*",
+    "tsconfig": "*"
+  },
+  "dependencies": {
+    "core-utils": "*",
+    "react": "18.1.0",
+    "react-dom": "18.1.0",
+    "react-helmet": "6.1.0",
+    "shared-types": "*"
+  },
+  "scripts": {
+    "test": "jest --coverage --passWithNoTests",
+    "lint": "tsc --noEmit && eslint --fix"
+  }
+}

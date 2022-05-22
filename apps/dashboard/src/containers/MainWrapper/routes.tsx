@@ -3,6 +3,7 @@ import React from "react";
 import { ACCESS_RESSOURCES, PRIVILEGE } from "shared-types";
 
 import DashboardIcon from "components/Sidebar/Icons/DashboardIcon";
+import { Privileges } from "containers/AuthWrappers/AccessProtectedWrapper";
 
 export const routes: Routes = [
   {
@@ -11,7 +12,20 @@ export const routes: Routes = [
       {
         title: "Home",
         to: "/",
-        privileges: [],
+        Icon: <DashboardIcon />,
+      },
+    ],
+  },
+  {
+    title: "Clients",
+    links: [
+      {
+        title: "Authenticated Clients",
+        to: "/authenticated-clients",
+        privileges: {
+          ressource: ACCESS_RESSOURCES.USER,
+          privileges: [PRIVILEGE.READ],
+        },
         Icon: <DashboardIcon />,
       },
     ],
@@ -20,33 +34,29 @@ export const routes: Routes = [
     title: "Configuration",
     links: [
       {
-        title: "Acces",
+        title: "Access",
         to: "/roles",
-        privileges: [
-          {
-            ressource: ACCESS_RESSOURCES.ROLE,
-            previlages: [],
-          },
-        ],
+        privileges: {
+          ressource: ACCESS_RESSOURCES.ROLE,
+        },
         Icon: <DashboardIcon />,
       },
     ],
   },
 ];
 
-type Routes = {
+export type UnseenNotification = {
+  numberOfUnseenNotifications: number;
+  route: "Home" | "Access";
+};
+
+export type Routes = {
   title: string;
-  privileges?: {
-    ressource: ACCESS_RESSOURCES;
-    previlages: PRIVILEGE | PRIVILEGE[];
-  };
+  privileges?: Privileges;
   links: {
     title: string;
     to: string;
-    privileges: {
-      ressource: ACCESS_RESSOURCES;
-      previlages: PRIVILEGE | PRIVILEGE[];
-    }[];
+    privileges?: Privileges;
     Icon: React.ReactNode;
   }[];
 }[];

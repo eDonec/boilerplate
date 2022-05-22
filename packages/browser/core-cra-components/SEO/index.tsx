@@ -1,5 +1,5 @@
-import Head from "next/head";
-import { useRouter } from "next/router";
+import { Helmet } from "react-helmet";
+import { useLocation } from "react-router";
 
 import { favicons } from "./favicons";
 
@@ -27,15 +27,15 @@ const SEO: React.FC<ISEOProps> = ({
   image = "https://image.freepik.com/photos-gratuite/bagages-jaunes-plat-copie-espace_23-2148786124.jpg",
   date,
 }) => {
-  const router = useRouter();
+  const { pathname } = useLocation();
 
   return (
-    <Head>
+    <Helmet>
       <title>{title}</title>
       <meta name="robots" content={robots} />
       <meta content={description} name="description" />
-      <meta property="og:url" content={`${url}${router.asPath}`} />
-      <link rel="canonical" href={`${url}${router.asPath}`} />
+      <meta property="og:url" content={`${url}${pathname}`} />
+      <link rel="canonical" href={`${url}${pathname}`} />
       {/* Open Graph */}
       <meta property="og:type" content={type} />
       <meta property="og:site_name" content={siteName} />
@@ -44,7 +44,7 @@ const SEO: React.FC<ISEOProps> = ({
       <meta name="image" property="og:image" content={image} />
       {/* Twitter */}
       <meta name="twitter:card" content="summary_large_image" />
-      <meta name="twitter:site" content={`${url}${router.asPath}`} />
+      <meta name="twitter:site" content={`${url}${pathname}`} />
       <meta name="twitter:title" content={title} />
       <meta name="twitter:description" content={description} />
       <meta name="twitter:image" content={image} />
@@ -66,7 +66,7 @@ const SEO: React.FC<ISEOProps> = ({
         content="/favicon/ms-icon-144x144.png"
       />
       <meta name="theme-color" content="#ffffff" />
-    </Head>
+    </Helmet>
   );
 };
 
