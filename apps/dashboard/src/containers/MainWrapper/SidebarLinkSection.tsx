@@ -1,3 +1,5 @@
+import React from "react";
+
 import ReactChildrenProps from "shared-types/ReactChildren";
 
 type Props = {

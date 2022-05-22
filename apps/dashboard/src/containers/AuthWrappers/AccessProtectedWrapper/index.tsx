@@ -3,17 +3,18 @@ import ReactChildrenProps from "shared-types/ReactChildren";
 
 import { useAccessProtectedWrapper } from "./useAccessProtectedWrapper";
 
-type IProps = ReactChildrenProps & {
-  ressource: ACCESS_RESSOURCES;
-  previlages: PRIVILEGE | PRIVILEGE[];
+export type Privileges = {
+  ressource?: ACCESS_RESSOURCES;
+  privileges?: PRIVILEGE | PRIVILEGE[];
   // TODO: Do something about meta values inside the access object by sending a function or something
 };
+type IProps = ReactChildrenProps & Privileges;
 const AccessProtectedWrapper: React.FC<IProps> = ({
   ressource,
-  previlages,
+  privileges,
   children,
 }) => {
-  const { isAccessible } = useAccessProtectedWrapper(ressource, previlages);
+  const { isAccessible } = useAccessProtectedWrapper(ressource, privileges);
 
   if (isAccessible) return <>{children}</>;
 
