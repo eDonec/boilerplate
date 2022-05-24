@@ -106,7 +106,11 @@ const FilePicker = forwardRef<HTMLInputElement, IComponentProps>(
             },
           ])}
         >
-          <Loader />
+          <Loader
+            className={clsx({
+              hidden: mediaUploadToken,
+            })}
+          />
         </div>
       </div>
     );

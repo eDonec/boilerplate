@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { clsx } from "core-utils";
 import ReactChildrenProps from "shared-types/ReactChildren";
 
-import SidebarMobileOpenButtonIcon from "./Icons/SidebarMobileOpenButtonIcon";
+import SidebarMobileOpenButtonIcon from "components/Icons/SidebarMobileOpenButtonIcon";
 
 type Props = { links: JSX.Element } & ReactChildrenProps;
 
@@ -15,7 +15,7 @@ const Sidebar: React.FC<Props> = ({ children, links }) => {
       <div className="md:min-w-[18rem]" />
       <div
         className={clsx(
-          "fixed z-10 max-h-screen min-h-screen w-72 min-w-[18rem] flex-col justify-between shadow transition duration-150 ease-in-out md:flex",
+          "fixed z-20 max-h-screen min-h-screen w-72 min-w-[18rem] flex-col justify-between shadow transition duration-150 ease-in-out md:flex",
           { "translate-x-[-260px]": !isOpen },
           "md:translate-x-0"
         )}
@@ -34,7 +34,7 @@ const Sidebar: React.FC<Props> = ({ children, links }) => {
       <div
         onClick={() => setIsOpen(false)}
         className={clsx(
-          "fixed  top-0 left-0 z-0 h-screen w-screen bg-white/30 opacity-0 backdrop-blur-sm transition-[opacity] md:hidden ",
+          "fixed  top-0 left-0 z-10 h-screen w-screen bg-white/30 opacity-0 backdrop-blur-sm transition-[opacity] md:hidden ",
           { "pointer-events-none": !isOpen },
           { "opacity-100": isOpen }
         )}
