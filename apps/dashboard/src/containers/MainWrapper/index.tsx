@@ -10,6 +10,7 @@ import PrivateWrapper from "containers/AuthWrappers/PrivateWrapper";
 
 import { toPropperCase } from "helpers/toProperCase";
 
+import Navbar from "./Navbar";
 import PageWrapperHeader, { PageWrapperHeaderProps } from "./PageWrapperHeader";
 import { UnseenNotification } from "./routes";
 import SidebarLinkSection from "./SidebarLinkSection";
@@ -38,15 +39,17 @@ const MainWrapper: React.FC<Props> = ({
   return (
     <>
       <SEO
-        description={restOfPageWrapperHeaderProps.description}
         title={toPropperCase(restOfPageWrapperHeaderProps.title)}
+        description={restOfPageWrapperHeaderProps.description}
       />
 
       <PrivateWrapper>
         <div className="flex-no-wrap flex">
           <Sidebar>
             <Link to="/">
-              <EDonecLogo />
+              <div className="m-auto flex h-16 justify-center  border-b border-gray-500">
+                <EDonecLogo className="self-center align-middle" />
+              </div>
             </Link>
             <SidebarSearch onChange={handleChange} />
             {filteredRoutes.map((section) => (
@@ -59,6 +62,7 @@ const MainWrapper: React.FC<Props> = ({
             ))}
           </Sidebar>
           <div className="h-full w-full md:max-w-[calc(100vw-18rem)]">
+            <Navbar />
             <PageWrapperHeader
               customIcon={CustomIcon || Icon}
               {...restOfPageWrapperHeaderProps}
