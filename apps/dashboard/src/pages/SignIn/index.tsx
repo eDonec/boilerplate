@@ -1,5 +1,6 @@
 import { FormProvider } from "react-hook-form";
 
+import SEO from "core-cra-components/SEO";
 import Button from "core-ui/Button";
 import { Input } from "forms";
 
@@ -12,6 +13,7 @@ export const SignIn = () => {
 
   return (
     <LoggedOutWrapper>
+      <SEO title="Dashboard sign in" />
       <div className="flex min-h-screen items-center justify-center ">
         <div className="mt-4 bg-white px-40 py-32 text-left shadow-xl dark:bg-black">
           <h3 className="text-center text-2xl font-bold">
