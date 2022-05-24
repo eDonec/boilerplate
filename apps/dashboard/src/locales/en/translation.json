@@ -21,5 +21,10 @@
   "homePage": {
     "joinUsButton": "Join us",
     "activation": "activation"
+  },
+  "linksNames": {
+    "dashboard": "Dashboard",
+    "add": "Create",
+    "edit": "Edit"
   }
 }

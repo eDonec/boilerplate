@@ -3,16 +3,16 @@ import { Link } from "react-router-dom";
 import { toPropperCase } from "helpers/toProperCase";
 
 import Seperator from "./Seperator";
-import { linkTranslator, useBreadcrumbs } from "./useBreadcrumbs";
+import { useBreadcrumbs } from "./useBreadcrumbs";
 
 const Breadcrumbs = () => {
-  const { firstPath, pathList, currentPath } = useBreadcrumbs();
+  const { linkTranslator, firstPath, pathList, currentPath } = useBreadcrumbs();
 
   if (!currentPath) return null;
-  if (!linkTranslator[currentPath] && process.env.NODE_ENV === "development")
-    throw new Error(
-      "Link is not defined in linkTranslator, containers/MainWrapper/Breadcrumbs/useBreadcrumbs.ts"
-    );
+  // if (!linkTranslator[currentPath] && process.env.NODE_ENV === "development")
+  //   throw new Error(
+  //     "Link is not defined in linkTranslator, containers/MainWrapper/Breadcrumbs/useBreadcrumbs.ts"
+  //   );
 
   return (
     <nav className="mt-4 mb-6 font-bold" aria-label="Breadcrumb">

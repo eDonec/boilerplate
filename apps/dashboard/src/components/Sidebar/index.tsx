@@ -5,30 +5,30 @@ import ReactChildrenProps from "shared-types/ReactChildren";
 
 import SidebarMobileOpenButtonIcon from "components/Icons/SidebarMobileOpenButtonIcon";
 
-type Props = { links: JSX.Element } & ReactChildrenProps;
+type Props = ReactChildrenProps;
 
-const Sidebar: React.FC<Props> = ({ children, links }) => {
+const Sidebar: React.FC<Props> = ({ children }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div className="flex-no-wrap flex">
+    <>
       <div className="md:min-w-[18rem]" />
       <div
         className={clsx(
           "fixed z-20 max-h-screen min-h-screen w-72 min-w-[18rem] flex-col justify-between shadow transition duration-150 ease-in-out md:flex",
-          { "translate-x-[-260px]": !isOpen },
+          { "translate-x-[-18rem]": !isOpen },
           "md:translate-x-0"
         )}
       >
         <div className="absolute top-0 left-0 h-screen w-72 bg-gray-900 shadow">
           <div
-            className="absolute right-0 mt-16 -mr-10 flex h-10 w-10 cursor-pointer items-center justify-center rounded-tr rounded-br bg-gray-800 shadow md:hidden"
+            className="absolute right-0 mt-16 -mr-10 flex h-10 w-10 cursor-pointer items-center justify-center rounded-tr rounded-br bg-gray-900 shadow md:hidden"
             id="mobile-toggler"
             onClick={() => setIsOpen(!isOpen)}
           >
             <SidebarMobileOpenButtonIcon isOpen={isOpen} />
           </div>
-          <div className="scrollbar max-h-screen overflow-auto">{links}</div>
+          <div className="scrollbar max-h-screen overflow-auto">{children}</div>
         </div>
       </div>
       <div
@@ -39,8 +39,7 @@ const Sidebar: React.FC<Props> = ({ children, links }) => {
           { "opacity-100": isOpen }
         )}
       />
-      {children}
-    </div>
+    </>
   );
 };
 
