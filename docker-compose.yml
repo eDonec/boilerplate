@@ -28,6 +28,7 @@ services:
       - IMGPROXY_ENABLE_WEBP_DETECTION=true
       - IMGPROXY_ENFORCE_WEBP=true
       - IMGPROXY_PATH_PREFIX=/imgproxy
+      - IMGPROXY_MAX_SRC_RESOLUTION=9999
 
     networks:
       - main-network
