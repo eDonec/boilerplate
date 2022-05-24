@@ -5,9 +5,9 @@ import ReactChildrenProps from "shared-types/ReactChildren";
 
 import SidebarMobileOpenButtonIcon from "./Icons/SidebarMobileOpenButtonIcon";
 
-type Props = { page: React.ReactNode } & ReactChildrenProps;
+type Props = { links: JSX.Element } & ReactChildrenProps;
 
-const Sidebar: React.FC<Props> = ({ children, page }) => {
+const Sidebar: React.FC<Props> = ({ children, links }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -28,22 +28,18 @@ const Sidebar: React.FC<Props> = ({ children, page }) => {
           >
             <SidebarMobileOpenButtonIcon isOpen={isOpen} />
           </div>
-          <div className="scrollbar max-h-screen overflow-auto">{children}</div>
+          <div className="scrollbar max-h-screen overflow-auto">{links}</div>
         </div>
       </div>
-      <div className="container mx-auto h-64 w-11/12 py-10 px-6 sm:w-4/5">
-        <div className="h-full w-full">
-          <div
-            onClick={() => setIsOpen(false)}
-            className={clsx(
-              "fixed top-0 left-0 z-0 h-screen w-screen bg-white/30 opacity-0 backdrop-blur-sm transition-[opacity] md:hidden ",
-              { "pointer-events-none": !isOpen },
-              { "opacity-100": isOpen }
-            )}
-          />
-          {page}
-        </div>
-      </div>
+      <div
+        onClick={() => setIsOpen(false)}
+        className={clsx(
+          "fixed  top-0 left-0 z-0 h-screen w-screen bg-white/30 opacity-0 backdrop-blur-sm transition-[opacity] md:hidden ",
+          { "pointer-events-none": !isOpen },
+          { "opacity-100": isOpen }
+        )}
+      />
+      {children}
     </div>
   );
 };
