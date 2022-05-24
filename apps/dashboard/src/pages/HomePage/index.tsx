@@ -170,6 +170,7 @@ const HomePage = () => {
             </Button>
           </div>
         </div>
+        <div className="min-h-screen"></div>
       </MainWrapper>
     </>
   );
