@@ -5,10 +5,8 @@ import ReactChildrenProps from "shared-types/ReactChildren";
 import Sidebar from "components/Sidebar";
 import EDonecLogo from "components/Sidebar/Icons/EDonecLogo";
 import SidebarSearch from "components/Sidebar/SidebarSearch";
-import AccessProtectedWrapper from "containers/AuthWrappers/AccessProtectedWrapper";
 
 import { UnseenNotification } from "./routes";
-import SidebarLink from "./SidebarLink";
 import SidebarLinkSection from "./SidebarLinkSection";
 import { useMainWrapper } from "./useMainWrapper";
 
@@ -21,33 +19,28 @@ const MainWrapper: React.FC<Props> = ({ children, notification }) => {
   // handled later and a logout button and end the feature of thus wrapper
 
   return (
-    <Sidebar page={children}>
-      <Link to="/">
-        <EDonecLogo />
-      </Link>
-      <SidebarSearch onChange={handleChange} />
-      {filteredRoutes.map((section) => (
-        <SidebarLinkSection key={section.title} title={section.title}>
-          {section.links.map(({ title, to, Icon, privileges }) => (
-            <AccessProtectedWrapper
-              key={to}
-              ressource={privileges?.ressource}
-              privileges={privileges?.privileges}
-            >
-              <SidebarLink
-                to={to}
-                title={title}
-                numberOfUnseenNotifications={
-                  notification?.find((notifiy) => notifiy.route === title)
-                    ?.numberOfUnseenNotifications
-                }
-              >
-                {Icon}
-              </SidebarLink>
-            </AccessProtectedWrapper>
+    <Sidebar
+      links={
+        <>
+          <Link to="/">
+            <EDonecLogo />
+          </Link>
+          <SidebarSearch onChange={handleChange} />
+          {filteredRoutes.map((section) => (
+            <SidebarLinkSection
+              notification={notification}
+              links={section.links}
+              key={section.title}
+              title={section.title}
+            />
           ))}
-        </SidebarLinkSection>
-      ))}
+        </>
+      }
+    >
+      <div className="h-full w-full">
+        This is header
+        <div className="mx-auto w-11/12 px-6 sm:w-4/5">{children}</div>
+      </div>
     </Sidebar>
   );
 };
