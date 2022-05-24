@@ -32,7 +32,7 @@ const SidebarLinkSection: React.FC<Props> = ({
                 ?.numberOfUnseenNotifications
             }
           >
-            {Icon}
+            <Icon />
           </SidebarLink>
         </AccessProtectedWrapper>
       ))}

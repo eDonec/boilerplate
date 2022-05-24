@@ -1,4 +1,4 @@
-import SearchIcon from "./Icons/SearchIcon";
+import SearchIcon from "components/Icons/SearchIcon";
 
 interface Props {
   onChange: (value: string) => void;
