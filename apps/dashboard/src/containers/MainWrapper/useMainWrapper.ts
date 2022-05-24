@@ -1,63 +1,28 @@
 import { useEffect, useState } from "react";
-
-import { ACCESS } from "shared-types";
-
-import { accessMatcher } from "containers/AuthWrappers/AccessProtectedWrapper/useAccessProtectedWrapper";
+import { useLocation } from "react-router-dom";
 
 import { useAppSelector } from "hooks/reduxHooks";
 
 import { Routes, routes } from "./routes";
+import {
+  findAccessibleRoutes,
+  getRouteIconFromPathName,
+  searchRoutes,
+} from "./routeUtils";
 
 export const useMainWrapper = () => {
   const access = useAppSelector(({ auth }) => auth.access);
-
+  const { pathname } = useLocation();
   const [filteredRoutes, setFilteredRoutes] = useState<Routes>([]);
+
   const handleChange = (value: string) => {
     setFilteredRoutes(findAccessibleRoutes(searchRoutes(value.trim()), access));
   };
+  const currentRouteIcon = getRouteIconFromPathName(pathname);
 
   useEffect(() => {
     setFilteredRoutes(findAccessibleRoutes(routes, access));
   }, [access]);
 
-  return { access, handleChange, filteredRoutes };
+  return { access, handleChange, filteredRoutes, currentRouteIcon };
 };
-
-export const searchRoutes = (query: string): Routes =>
-  query.length === 0
-    ? routes
-    : routes
-        .map((section) => ({
-          ...section,
-          links: section.links.filter((link) =>
-            link.title.toLowerCase().includes(query.toLowerCase())
-          ),
-        }))
-        .filter((section) => section.links.length > 0);
-
-const findAccessibleRoutes = (searchedRoutes: Routes, access?: ACCESS[]) =>
-  access
-    ? searchedRoutes
-        .filter(({ privileges }) => {
-          if (!privileges) return true;
-
-          return accessMatcher(
-            access,
-            privileges.ressource,
-            privileges.privileges
-          );
-        })
-        .map((section) => ({
-          ...section,
-          links: section.links.filter(({ privileges }) => {
-            if (!privileges) return true;
-
-            return accessMatcher(
-              access,
-              privileges.ressource,
-              privileges.privileges
-            );
-          }),
-        }))
-        .filter((section) => section.links.length > 0)
-    : [];

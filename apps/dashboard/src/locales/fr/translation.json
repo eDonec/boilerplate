@@ -20,5 +20,10 @@
   "homePage": {
     "joinUsButton": "Nous rejoindre",
     "activation": "activation"
+  },
+  "linksNames": {
+    "dashboard": "Administration",
+    "add": "Créer",
+    "edit": "Modifer"
   }
 }
