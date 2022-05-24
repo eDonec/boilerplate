@@ -1,5 +1,3 @@
-import * as React from "react";
-
 import Head from "next/head";
 import { useRouter } from "next/router";
 
@@ -18,18 +16,17 @@ interface ISEOProps {
 }
 
 const SEO: React.FC<ISEOProps> = ({
-  title = "Next.js + Tailwind CSS + TypeScript Starter",
-  siteName = "Next.js + Tailwind CSS + TypeScript Starter",
-  author = "Kepler Travel",
-  description = "A starter for Next.js, Tailwind CSS, and TypeScript with Absolute Import, Seo, Link component, pre-configured with Husky",
-  url = "https://tsnext-tw.thcl.dev",
+  title = "eDonec Ultimate boilerplate",
+  siteName = "eDonec Ultimate boilerplate",
+  author = "eDonec",
+  description = "A boilerplate for eDonec with microservice architecture and stuff",
+  url = "https://staging.themerchant.site",
   type = "website",
   robots = "follow, index",
   // !NOTE to self: Create a system that generates images!! inspirations https://github.com/theodorusclarence/og // https://github.com/vercel/og-image#readme
   image = "https://image.freepik.com/photos-gratuite/bagages-jaunes-plat-copie-espace_23-2148786124.jpg",
   date,
 }) => {
-  // TODO : FIX ROUTER ISSUE
   const router = useRouter();
 
   return (
@@ -74,11 +71,3 @@ const SEO: React.FC<ISEOProps> = ({
 };
 
 export default SEO;
-
-// TODO: Add product pricing to list and description to Open Graph [to be verfied]
-// Ref: https://developers.facebook.com/docs/payments/product/
-// TODO: add facebook app ID
-// Ref: https://developers.facebook.com/docs/sharing/webmasters/
-// TODO: add these 2
-// og:image:secure_url: Same as og:image if SSL is being used.
-// og:image:width and og:image:height: Image dimensions.
