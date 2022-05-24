@@ -21,7 +21,7 @@ const PrivateWrapper: React.FC<IProps> = ({ children, fallback }) => {
     return fallback ? (
       <>{fallback}</>
     ) : (
-      <div className=" fixed top-0 left-0 z-10 flex h-full w-full items-center justify-center bg-white/30 text-center align-middle backdrop-blur-sm">
+      <div className="fixed top-0 left-0 z-10 flex h-full w-full items-center justify-center bg-white/30 text-center align-middle backdrop-blur-sm">
         <Loader />
       </div>
     );

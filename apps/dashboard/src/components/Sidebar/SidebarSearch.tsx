@@ -4,7 +4,7 @@ interface Props {
   onChange: (value: string) => void;
 }
 const SidebarSearch: React.FC<Props> = ({ onChange }) => (
-  <div className="mt-2 flex w-full justify-center border-t border-gray-700 pl-6 pr-4">
+  <div className="mt-2 flex w-full justify-center pl-6 pr-4">
     <div className="relative min-w-full">
       <input
         className="w-full rounded bg-transparent py-2 pr-5 text-lg text-gray-50 focus:outline-none "
