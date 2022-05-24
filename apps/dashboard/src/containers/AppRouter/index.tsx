@@ -11,6 +11,7 @@ const AppRouter = () => {
   return (
     <Routes>
       <Route path="/sign-in" element={<SignIn />} />
+      <Route path="/product/:id/edit" element={<HomePage />} />
       <Route path="*" element={<HomePage />} />
     </Routes>
   );

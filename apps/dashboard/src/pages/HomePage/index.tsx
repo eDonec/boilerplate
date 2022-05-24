@@ -5,7 +5,6 @@ import { Link, useLocation } from "react-router-dom";
 
 import MediaFormContext from "contexts/MediaFormContext";
 import ButtonLink from "core-cra-components/ButtonLink";
-import SEO from "core-cra-components/SEO";
 import { Button, useDarkMode } from "core-ui";
 import AlertDialog, { useAlertDialog } from "core-ui/AlertDialog";
 import clsx from "core-utils/clsx";
@@ -53,7 +52,6 @@ const HomePage = () => {
 
   return (
     <>
-      <SEO title="Dashboard" />
       <MainWrapper
         title="dashboard"
         description="Overview of your store"
@@ -63,7 +61,7 @@ const HomePage = () => {
           </ButtonLink>
         }
       >
-        <div className="container mx-auto flex min-h-screen flex-col items-center justify-center dark:text-gray-200">
+        <div className="mx-auto flex min-h-screen flex-col items-center justify-center dark:text-gray-200">
           <LanguageSelector />
           <h1 className="mb-4">
             CRA + Tailwind CSS + TypeScript + Redux Toolkit
