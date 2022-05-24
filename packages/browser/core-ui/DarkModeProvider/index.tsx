@@ -23,7 +23,7 @@ export default DarkModeProvider;
 const DarkModeWrapper: React.FC<
   React.PropsWithChildren<{ className?: string }>
 > = ({
-  className = "dark:bg-dark bg-gray-50 transition-all duration-700",
+  className = "dark:bg-dark bg-gray-50 min-h-screen transition-[background-color] duration-700",
   children,
 }) => {
   const { theme } = useDarkMode();

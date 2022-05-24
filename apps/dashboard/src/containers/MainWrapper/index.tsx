@@ -1,47 +1,75 @@
 import { Link } from "react-router-dom";
 
+import SEO from "core-cra-components/SEO";
 import ReactChildrenProps from "shared-types/ReactChildren";
 
+import EDonecLogo from "components/Icons/EDonecLogo";
 import Sidebar from "components/Sidebar";
-import EDonecLogo from "components/Sidebar/Icons/EDonecLogo";
 import SidebarSearch from "components/Sidebar/SidebarSearch";
+import PrivateWrapper from "containers/AuthWrappers/PrivateWrapper";
 
+import { toPropperCase } from "helpers/toProperCase";
+
+import PageWrapperHeader, { PageWrapperHeaderProps } from "./PageWrapperHeader";
 import { UnseenNotification } from "./routes";
 import SidebarLinkSection from "./SidebarLinkSection";
 import { useMainWrapper } from "./useMainWrapper";
 
-type Props = { notification?: UnseenNotification[] } & ReactChildrenProps;
+type Props = {
+  notification?: UnseenNotification[];
+} & PageWrapperHeaderProps &
+  ReactChildrenProps;
 
 // TODO: Add a hook to get the unseen notifications
-const MainWrapper: React.FC<Props> = ({ children, notification }) => {
-  const { filteredRoutes, handleChange } = useMainWrapper();
+const MainWrapper: React.FC<Props> = ({
+  children,
+  notification,
+  customIcon: CustomIcon,
+  ...restOfPageWrapperHeaderProps
+}) => {
+  const {
+    filteredRoutes,
+    handleChange,
+    currentRouteIcon: Icon,
+  } = useMainWrapper();
   // TODO: Add a header to the main wrapper that contains a search bar to be
   // handled later and a logout button and end the feature of thus wrapper
 
   return (
-    <Sidebar
-      links={
-        <>
-          <Link to="/">
-            <EDonecLogo />
-          </Link>
-          <SidebarSearch onChange={handleChange} />
-          {filteredRoutes.map((section) => (
-            <SidebarLinkSection
-              notification={notification}
-              links={section.links}
-              key={section.title}
-              title={section.title}
+    <>
+      <SEO
+        description={restOfPageWrapperHeaderProps.description}
+        title={toPropperCase(restOfPageWrapperHeaderProps.title)}
+      />
+
+      <PrivateWrapper>
+        <div className="flex-no-wrap flex">
+          <Sidebar>
+            <Link to="/">
+              <EDonecLogo />
+            </Link>
+            <SidebarSearch onChange={handleChange} />
+            {filteredRoutes.map((section) => (
+              <SidebarLinkSection
+                notification={notification}
+                links={section.links}
+                key={section.title}
+                title={section.title}
+              />
+            ))}
+          </Sidebar>
+          <div className="h-full w-full md:max-w-[calc(100vw-18rem)]">
+            <PageWrapperHeader
+              customIcon={CustomIcon || Icon}
+              {...restOfPageWrapperHeaderProps}
             />
-          ))}
-        </>
-      }
-    >
-      <div className="h-full w-full">
-        This is header
-        <div className="mx-auto w-11/12 px-6 sm:w-4/5">{children}</div>
-      </div>
-    </Sidebar>
+            <div className="max:w-4/5 max:md:w-11/12 container mx-auto w-4/5 md:w-11/12">
+              {children}
+            </div>
+          </div>
+        </div>
+      </PrivateWrapper>
+    </>
   );
 };
 

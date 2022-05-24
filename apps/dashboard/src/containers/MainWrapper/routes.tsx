@@ -1,8 +1,6 @@
-import React from "react";
-
 import { ACCESS_RESSOURCES, PRIVILEGE } from "shared-types";
 
-import DashboardIcon from "components/Sidebar/Icons/DashboardIcon";
+import DashboardIcon from "components/Icons/DashboardIcon";
 import { Privileges } from "containers/AuthWrappers/AccessProtectedWrapper";
 
 export const routes: Routes = [
@@ -12,7 +10,7 @@ export const routes: Routes = [
       {
         title: "Home",
         to: "/",
-        Icon: <DashboardIcon />,
+        Icon: DashboardIcon,
       },
     ],
   },
@@ -26,7 +24,7 @@ export const routes: Routes = [
           ressource: ACCESS_RESSOURCES.USER,
           privileges: [PRIVILEGE.READ],
         },
-        Icon: <DashboardIcon />,
+        Icon: DashboardIcon,
       },
     ],
   },
@@ -34,12 +32,12 @@ export const routes: Routes = [
     title: "Configuration",
     links: [
       {
-        title: "Access",
+        title: "Roles",
         to: "/roles",
         privileges: {
           ressource: ACCESS_RESSOURCES.ROLE,
         },
-        Icon: <DashboardIcon />,
+        Icon: DashboardIcon,
       },
     ],
   },
@@ -47,7 +45,7 @@ export const routes: Routes = [
 
 export type UnseenNotification = {
   numberOfUnseenNotifications: number;
-  route: "Home" | "Access";
+  route: "Home" | "Roles" | "Authenticated Clients";
 };
 
 export type Routes = {
@@ -57,6 +55,6 @@ export type Routes = {
     title: string;
     to: string;
     privileges?: Privileges;
-    Icon: React.ReactNode;
+    Icon: typeof DashboardIcon;
   }[];
 }[];
