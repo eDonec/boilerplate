@@ -41,71 +41,141 @@ jobs:
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/master'
     steps:
-      - uses: actions/checkout@v3
-      - name: Build and Publish Tag Docker image
-        uses: VaultVulp/gp-docker-action@1.2.0
+      -
+        name: Checkout
+        uses: actions/checkout@v3
+      -
+        name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+      -
+        name: Login to GitHub Container Registry
+        uses: docker/login-action@v2
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }} # Provide GITHUB_TOKEN to login into the GitHub Packages
-          image-name: proxy-balancer # Provide only Docker image name
-          dockerfile: .docker/Dockerfile.proxy-balancer
-          image-tag: staging
-
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      -
+        name: Build and push
+        uses: docker/build-push-action@v3
+        with:
+          context: .
+          file: .docker/Dockerfile.proxy-balancer
+          push: true
+          tags: ghcr.io/edonec/boilerplate/proxy-balancer:staging
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
 
   auth-build-and-publish-staging:
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/master'
     steps:
-      - uses: actions/checkout@v3
-      - name: Build and Publish Tag Docker image
-        uses: VaultVulp/gp-docker-action@1.2.0
+      -
+        name: Checkout
+        uses: actions/checkout@v3
+      -
+        name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+      -
+        name: Login to GitHub Container Registry
+        uses: docker/login-action@v2
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }} # Provide GITHUB_TOKEN to login into the GitHub Packages
-          image-name: auth # Provide only Docker image name
-          dockerfile: .docker/Dockerfile.auth
-          image-tag: staging
-
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      -
+        name: Build and push
+        uses: docker/build-push-action@v3
+        with:
+          context: .
+          file: .docker/Dockerfile.auth
+          push: true
+          tags: ghcr.io/edonec/boilerplate/auth:staging
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
 
   bucket-build-and-publish-staging:
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/master'
     steps:
-      - uses: actions/checkout@v3
-      - name: Build and Publish Tag Docker image
-        uses: VaultVulp/gp-docker-action@1.2.0
+      -
+        name: Checkout
+        uses: actions/checkout@v3
+      -
+        name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+      -
+        name: Login to GitHub Container Registry
+        uses: docker/login-action@v2
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }} # Provide GITHUB_TOKEN to login into the GitHub Packages
-          image-name: bucket # Provide only Docker image name
-          dockerfile: .docker/Dockerfile.bucket
-          image-tag: staging
-
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      -
+        name: Build and push
+        uses: docker/build-push-action@v3
+        with:
+          context: .
+          file: .docker/Dockerfile.bucket
+          push: true
+          tags: ghcr.io/edonec/boilerplate/bucket:staging
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
 
   client-build-and-publish-staging:
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/master'
     steps:
-      - uses: actions/checkout@v3
-      - name: Build and Publish Tag Docker image
-        uses: VaultVulp/gp-docker-action@1.2.0
+      -
+        name: Checkout
+        uses: actions/checkout@v3
+      -
+        name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+      -
+        name: Login to GitHub Container Registry
+        uses: docker/login-action@v2
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }} # Provide GITHUB_TOKEN to login into the GitHub Packages
-          image-name: client # Provide only Docker image name
-          dockerfile: .docker/Dockerfile.client
-          image-tag: staging
-
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      -
+        name: Build and push
+        uses: docker/build-push-action@v3
+        with:
+          context: .
+          file: .docker/Dockerfile.client
+          push: true
+          tags: ghcr.io/edonec/boilerplate/client:staging
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
 
   dashboard-build-and-publish-staging:
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/master'
     steps:
-      - uses: actions/checkout@v3
-      - name: Build and Publish Tag Docker image
-        uses: VaultVulp/gp-docker-action@1.2.0
+      -
+        name: Checkout
+        uses: actions/checkout@v3
+      -
+        name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+      -
+        name: Login to GitHub Container Registry
+        uses: docker/login-action@v2
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }} # Provide GITHUB_TOKEN to login into the GitHub Packages
-          image-name: dashboard # Provide only Docker image name
-          dockerfile: .docker/Dockerfile.dashboard
-          image-tag: staging
-
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      -
+        name: Build and push
+        uses: docker/build-push-action@v3
+        with:
+          context: .
+          file: .docker/Dockerfile.dashboard
+          push: true
+          tags: ghcr.io/edonec/boilerplate/dashboard:staging
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
 
   deploy-to-staging:
     runs-on: ubuntu-latest
@@ -137,7 +207,7 @@ jobs:
         with:
           host: ${{ secrets.STAGING_HOST }}
           username: ${{ secrets.USERNAME }}
-          key: ${{ secrets.STAGING_PRIVATE_KEY }}
+          key: ${{ secrets.PRIVATE_KEY }}
           port: ${{ secrets.PORT }}
           envs: APPTOKEN,USERNAME,DATABASE_USER,DATABASE_PASSWORD,AWS_REGION,AWS_ACCESS_KEY_ID,AWS_SECRET_ACCESS_KEY,CONTAINERS_PORT,NODE_ENV,ACCESS_TOKEN_SECRET_KEY,REFRESH_TOKEN_SECRET_KEY,TOKEN_EXPIRES_IN,REFRESH_TOKEN_EXPIRES_IN,ROOT_USER_PASSWORD,ROOT_USER_PASSWORD,UPLOAD_SECRET_KEY
           script: |
