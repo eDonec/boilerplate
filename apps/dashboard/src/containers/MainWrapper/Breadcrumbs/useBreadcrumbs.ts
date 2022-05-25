@@ -8,9 +8,9 @@ export const useBreadcrumbs = () => {
     edit: t("linksNames.edit"),
     add: t("linksNames.add"),
   };
-
   const { pathname } = useLocation();
 
+  // TODO: FIX THIS STUPID THING
   const pathList = pathname
     .split("/")
     .filter((path) => path !== "") as (keyof typeof linkTranslator)[];

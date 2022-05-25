@@ -10,27 +10,3 @@ ${{changeCondition}}
           image-name: ${{packageName}} # Provide only Docker image name
           dockerfile: .docker/Dockerfile.${{packageName}}
           image-tag: ${{stage}}
-  ${{packageName}}-deploy-to-${{stage}}:
-    runs-on: ubuntu-latest
-    needs: [deploy-to-${{stage}}, ${{packageName}}-build-and-publish-${{stage}}, ${{deps}}]
-    steps:
-      - name: Set the value
-        run: |
-          echo "GH_TOKEN=${{ secrets.GITHUB_TOKEN }}" >> $GITHUB_ENV
-          echo "USERNAME=${{ secrets.USERNAME }}" >> $GITHUB_ENV
-      - name: remote docker-compose up via ssh
-        uses: appleboy/ssh-action@master
-        env:
-          APPTOKEN: ${{ secrets.GITHUB_TOKEN }}
-          USERNAME: ${{ env.USERNAME }}
-        with:
-          host: ${{ secrets.${{STAGE}}_HOST }}
-          username: ${{ secrets.USERNAME }}
-          key: ${{ secrets.${{STAGE}}_PRIVATE_KEY }}
-          port: ${{ secrets.PORT }}
-          envs: APPTOKEN,USERNAME
-          script: |
-            echo $APPTOKEN | docker login ghcr.io -u $USERNAME --password-stdin
-            cd /docker/${{stage}}
-            docker pull ghcr.io/edonec/boilerplate/${{packageName}}:${{stage}}
-            docker-compose up --no-deps --build --force-recreate -d ${{packageName}}
