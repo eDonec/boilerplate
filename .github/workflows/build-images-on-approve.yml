@@ -235,7 +235,7 @@ jobs:
             docker pull ghcr.io/edonec/boilerplate/dashboard:head
             cp ../fullchain.pem .
             cp ../privkey.pem .
-
+            docker-compose up --build --force-recreate -d --remove-orphans
 
 
   end-to-end-test-head-deployment:
