@@ -65,6 +65,7 @@ const authSlice = createSlice({
       state.isLoading = false;
     });
     builder.addCase(checkSignInStatus.rejected, (state) => {
+      localStorage.removeItem("authId");
       state.isLoggedIn = false;
       state.role = undefined;
       state.access = undefined;
