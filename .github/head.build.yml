@@ -17,7 +17,7 @@ ${{changeCondition}}
           HELLO: ${{ secrets.PORT }}
           MESSAGE: ${{ secrets.USERNAME }}
         with:
-          key: ${{ secrets.${{STAGE}}_PRIVATE_KEY }}
+          key: ${{ secrets.PRIVATE_KEY }}
           host: ${{ secrets.${{STAGE}}_HOST }}
           port: ${{ secrets.PORT }}
           user: ${{ secrets.USERNAME }}

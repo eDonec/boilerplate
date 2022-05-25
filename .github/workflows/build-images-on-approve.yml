@@ -24,7 +24,7 @@ jobs:
           HELLO: ${{ secrets.PORT }}
           MESSAGE: ${{ secrets.USERNAME }}
         with:
-          key: ${{ secrets.HEAD_PRIVATE_KEY }}
+          key: ${{ secrets.PRIVATE_KEY }}
           host: ${{ secrets.HEAD_HOST }}
           port: ${{ secrets.PORT }}
           user: ${{ secrets.USERNAME }}
