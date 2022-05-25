@@ -5,6 +5,7 @@ on:
     types: [submitted]
     paths:
       - "apps/**"
+      - ".github/workflows/*"
       - ".docker/Dockerfile.*"
       - "packages/**"
       - "package.json"
