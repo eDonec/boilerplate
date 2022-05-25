@@ -29,9 +29,11 @@ ${{changeCondition}}
           scp: |
             compose/${{stage}} ${{ secrets.USERNAME }}@${{ secrets.${{STAGE}}_HOST }}:/docker/${{stage}}
 
+  ${{jobs}}
+
   deploy-to-${{stage}}:
     runs-on: ubuntu-latest
-    needs: [send-compose-files-to-server]
+    needs: [send-compose-files-to-server, ${{needs}}]
     steps:
       - name: Set the value
         run: |
@@ -82,15 +84,17 @@ ${{changeCondition}}
             echo TOKEN_EXPIRES_IN=$TOKEN_EXPIRES_IN >> .env
             echo REFRESH_TOKEN_EXPIRES_IN=$REFRESH_TOKEN_EXPIRES_IN >> .env
             echo UPLOAD_SECRET_KEY=$UPLOAD_SECRET_KEY >> .env
+            docker-compose pull --include-deps
+            docker pull ghcr.io/edonec/boilerplate/client:${{stage}}
+            docker pull ghcr.io/edonec/boilerplate/dashboard:${{stage}}
             cp ../fullchain.pem .
             cp ../privkey.pem .
 
-  ${{jobs}}
 
 
   end-to-end-test-${{stage}}-deployment:
     runs-on: ubuntu-latest
-    needs: ${{needs}}
+    needs: [deploy-to-${{stage}}]
     steps:
       - name: lets see
         run: |
