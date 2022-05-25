@@ -89,7 +89,7 @@ ${{changeCondition}}
             docker pull ghcr.io/edonec/boilerplate/dashboard:${{stage}}
             cp ../fullchain.pem .
             cp ../privkey.pem .
-
+            docker-compose up --build --force-recreate -d --remove-orphans
 
 
   end-to-end-test-${{stage}}-deployment:
