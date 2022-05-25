@@ -41,6 +41,7 @@ const stagingChangeTrigger = `  push:
     branches: [master]
     paths:
       - "apps/**"
+      - ".github/workflows/*"
       - ".docker/Dockerfile.*"
       - "packages/**"
       - "package.json"
@@ -52,6 +53,7 @@ const headChangeTrigger = `  pull_request_review:
     types: [submitted]
     paths:
       - "apps/**"
+      - ".github/workflows/*"
       - ".docker/Dockerfile.*"
       - "packages/**"
       - "package.json"

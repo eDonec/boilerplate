@@ -5,6 +5,7 @@ on:
     branches: [master]
     paths:
       - "apps/**"
+      - ".github/workflows/*"
       - ".docker/Dockerfile.*"
       - "packages/**"
       - "package.json"
