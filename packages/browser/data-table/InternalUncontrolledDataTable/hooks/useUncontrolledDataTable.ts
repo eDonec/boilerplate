@@ -1,26 +1,29 @@
 import { useEffect, useMemo, useState } from "react";
-import { useSearchParams } from "react-router-dom";
-
-import { DEFAULT_DATATABLE_LIMIT } from "components/DataTable/ControlledDataTable/defaults";
-import {
-  PaginatedResponse,
-  SortDirection,
-} from "components/DataTable/ControlledDataTable/types";
 
 import {
   emptyPaginationResponse,
   UncontrolledDataTableURLParams,
 } from "../constants";
-import { FetchFunction } from "../types";
+import { InternalUncontrolledDataTableProps } from "../types";
 import { isSortDirection } from "../utils";
+import { DEFAULT_DATATABLE_LIMIT } from "../../ControlledDataTable/defaults";
+import {
+  PaginatedResponse,
+  SortDirection,
+} from "../../ControlledDataTable/types";
 
-export const useUncontrolledDataTable = <T>(
-  fetchFunction: FetchFunction<T>
-) => {
+export const useUncontrolledDataTable = <T>({
+  fetchFunction,
+  searchParams,
+  setSearchParams,
+  onFetchError,
+}: Pick<
+  InternalUncontrolledDataTableProps<T>,
+  "fetchFunction" | "searchParams" | "setSearchParams" | "onFetchError"
+>) => {
   const [data, setData] = useState<PaginatedResponse<T>>(
     emptyPaginationResponse
   );
-  const [searchParams, setSearchParams] = useSearchParams();
   const [loading, setLoading] = useState(true);
 
   const { limit, page, sortField, sortDirection } = useMemo(
@@ -58,8 +61,7 @@ export const useUncontrolledDataTable = <T>(
 
         setData(newData);
       } catch (error) {
-        // eslint-disable-next-line no-console
-        console.error(error);
+        onFetchError?.(error);
       }
       setLoading(false);
     })();

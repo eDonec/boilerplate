@@ -1,4 +1,4 @@
-import { SortDirection } from "components/DataTable/ControlledDataTable/types";
+import { SortDirection } from "../../ControlledDataTable/types";
 
 export const isSortDirection = (input?: unknown): input is SortDirection =>
   typeof input === "string" &&

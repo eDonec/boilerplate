@@ -1,11 +1,13 @@
 import { useUncontrolledDataTable } from "./hooks/useUncontrolledDataTable";
-import { UncontrolledDataTableProps } from "./types";
+import { InternalUncontrolledDataTableProps } from "./types";
 import ControlledDataTable from "../ControlledDataTable";
 
-const UncontrolledDataTable = <T,>({
+const InternalUncontrolledDataTable = <T,>({
   fetchFunction,
+  searchParams,
+  setSearchParams,
   ...datatableProps
-}: UncontrolledDataTableProps<T>) => {
+}: InternalUncontrolledDataTableProps<T>) => {
   const {
     data,
     onPageChange,
@@ -14,7 +16,11 @@ const UncontrolledDataTable = <T,>({
     currentSort,
     limit,
     loading,
-  } = useUncontrolledDataTable(fetchFunction);
+  } = useUncontrolledDataTable({
+    fetchFunction,
+    searchParams,
+    setSearchParams,
+  });
 
   return (
     <ControlledDataTable
@@ -30,4 +36,4 @@ const UncontrolledDataTable = <T,>({
   );
 };
 
-export default UncontrolledDataTable;
+export default InternalUncontrolledDataTable;

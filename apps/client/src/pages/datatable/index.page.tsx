@@ -1,14 +1,9 @@
-/* eslint-disable max-lines */
-
-import UncontrolledDataTable from "core-cra-components/UncontrolledDataTable";
+import { UncontrolledDataTable } from "core-next-components";
 import {
   DataTableColumn,
   FetchFunction,
   PaginatedResponse,
-} from "core-cra-components/UncontrolledDataTable/types";
-
-import PrivateWrapper from "containers/AuthWrappers/PrivateWrapper";
-import MainWrapper from "containers/MainWrapper";
+} from "core-next-components/UncontrolledDataTable/types";
 
 type User = {
   _id: string;
@@ -130,16 +125,12 @@ const fetchFunction: FetchFunction<User> = async () => {
   return paginatedUsers;
 };
 
-const AccessPage = () => (
-  <PrivateWrapper>
-    <MainWrapper title="Roles" description="Role management">
-      <UncontrolledDataTable
-        fetchFunction={fetchFunction}
-        columns={dataColumns}
-        keyExtractor={({ item }) => item._id}
-      />
-    </MainWrapper>
-  </PrivateWrapper>
+const DataTablePage = () => (
+  <UncontrolledDataTable
+    fetchFunction={fetchFunction}
+    columns={dataColumns}
+    keyExtractor={({ item }) => item._id}
+  />
 );
 
-export default AccessPage;
+export default DataTablePage;

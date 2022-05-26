@@ -1,15 +1,14 @@
 import { clsx } from "core-utils";
 import Select from "forms/Select/RawSelect";
 
-import Chevron from "components/Icons/Chevron";
-import ChevronEnd from "components/Icons/ChevronEnd";
-
 import {
   DEFAULT_DATATABLE_LIMIT,
   DEFAULT_DATATABLE_LIMIT_OPTIONS,
 } from "../defaults";
 import { useDataTableContext } from "../hooks/useDataTableContext";
 import { formatLimit, formatLimitOptions } from "../utils";
+import Chevron from "../../components/Icons/Chevron";
+import ChevronEnd from "../../components/Icons/ChevronEnd";
 
 const DataTableFooter = () => {
   const {
