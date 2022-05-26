@@ -4,12 +4,18 @@ import {
   FetchFunction,
   PaginatedResponse,
 } from "core-next-components/UncontrolledDataTable/types";
+import {
+  extractQueryParams,
+  isSortDirection,
+} from "core-next-components/UncontrolledDataTable/utils";
+
+import { GetServerSideProps } from "next";
 
 type User = {
   _id: string;
   firstName: string;
   lastName: string;
-  birthday?: Date;
+  birthday?: string;
   nested: {
     value: string;
   };
@@ -20,78 +26,31 @@ const users: User[] = [
     _id: "1",
     firstName: "Hey",
     lastName: "yo",
-    birthday: new Date(),
+    birthday: new Date().toDateString(),
     nested: { value: "hey" },
   },
   {
     _id: "2",
     firstName: "Hey",
     lastName: "yo",
-    birthday: new Date(),
+    birthday: new Date().toDateString(),
+
     nested: { value: "hey" },
   },
   {
     _id: "3",
     firstName: "Hey",
     lastName: "yo",
-    birthday: new Date(),
-    nested: { value: "hey" },
-  },
-  {
-    _id: "4",
-    firstName: "Hey Reprehenderit cupidatat Eu veniam ad",
-    lastName: "yo",
-    birthday: new Date(),
-    nested: { value: "hey" },
-  },
-  {
-    _id: "5",
-    firstName: "Hey",
-    lastName: "yo",
-    birthday: new Date(),
-    nested: { value: "hey" },
-  },
-  {
-    _id: "6",
-    firstName: "Hey",
-    lastName: "yo",
-    birthday: new Date(),
-    nested: { value: "hey" },
-  },
-  {
-    _id: "7",
-    firstName: "Hey",
-    lastName: "yo",
-    birthday: new Date(),
-    nested: { value: "hey" },
-  },
-  {
-    _id: "8",
-    firstName: "Hey Reprehenderit cupidatat Eu veniam ad",
-    lastName: "yo",
-    birthday: new Date(),
-    nested: { value: "hey" },
-  },
-  {
-    _id: "9",
-    firstName: "Hey",
-    lastName: "yo",
-    birthday: new Date(),
-    nested: { value: "hey" },
-  },
-  {
-    _id: "10",
-    firstName: "Hey Reprehenderit cupidatat Eu veniam ad",
-    lastName: "yo",
-    birthday: new Date(),
+    birthday: new Date().toDateString(),
+
     nested: { value: "hey" },
   },
 ];
 
 const paginatedUsers: PaginatedResponse<User> = {
   items: users,
-  totalItems: 100,
-  totalPages: 10,
+  totalItems: 200,
+  totalPages: 2,
   hasNextPage: true,
   page: 1,
 };
@@ -104,11 +63,17 @@ const dataColumns: DataTableColumn<User>[] = [
   {
     selector: "lastName",
     title: "Nom",
+    className: "text-red-600",
+  },
+  {
+    selector: "fullName",
+    title: "Full name",
+    cell: ({ firstName, lastName }) => <>{`${firstName} ${lastName}`}</>,
   },
   {
     selector: "birthday",
     title: "Date de naissance",
-    cell: ({ birthday }) => <b>{birthday?.toDateString()}</b>,
+    cell: ({ birthday }) => <b>{birthday}</b>,
   },
   {
     selector: "nested.value",
@@ -125,12 +90,55 @@ const fetchFunction: FetchFunction<User> = async () => {
   return paginatedUsers;
 };
 
-const DataTablePage = () => (
-  <UncontrolledDataTable
-    fetchFunction={fetchFunction}
-    columns={dataColumns}
-    keyExtractor={({ item }) => item._id}
-  />
-);
+export const normalizeQueryParam = (input: string | string[]) =>
+  input instanceof Array ? input[0] : input;
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  try {
+    const formattedQuery = Object.entries(context.query).reduce<
+      Record<string, string>
+    >(
+      (prev, [key, value]) =>
+        value ? { ...prev, [key]: normalizeQueryParam(value) } : prev,
+      {}
+    );
+
+    const { page, limit, sortDirection, sortField } = extractQueryParams(
+      new URLSearchParams(formattedQuery)
+    );
+
+    const initialDatatableData = await fetchFunction({
+      page,
+      limit,
+      sortField: sortField || undefined,
+      sortDirection: isSortDirection(sortDirection) ? sortDirection : undefined,
+    });
+
+    return {
+      props: {
+        initialDatatableData,
+      },
+    };
+  } catch (error) {
+    return {
+      props: {},
+    };
+  }
+};
+
+type DataTablePageProps = {
+  initialDatatableData?: PaginatedResponse<User>;
+};
+
+const DataTablePage = ({ initialDatatableData }: DataTablePageProps) => {
+  return (
+    <UncontrolledDataTable
+      fetchFunction={fetchFunction}
+      columns={dataColumns}
+      keyExtractor={({ item }) => item._id}
+      initialValue={initialDatatableData}
+    />
+  );
+};
 
 export default DataTablePage;

@@ -16,7 +16,8 @@
     "forms": "*",
     "shared-types": "*",
     "react": "18.1.0",
-    "react-dom": "18.1.0"
+    "react-dom": "18.1.0",
+    "core-hooks": "*"
   },
   "scripts": {
     "test": "jest --coverage --passWithNoTests",

@@ -25,5 +25,6 @@ export type InternalUncontrolledDataTableProps<T> = Pick<
   fetchFunction: FetchFunction<T>;
   searchParams: URLSearchParams;
   setSearchParams: (nextSearchParams: URLSearchParams) => void;
+  initialValue?: ControlledDataTableProps<T>["data"];
   onFetchError?: (error: unknown) => void;
 };
