@@ -4,7 +4,7 @@ import Select from "forms/Select/RawSelect";
 import Chevron from "components/Icons/Chevron";
 import ChevronEnd from "components/Icons/ChevronEnd";
 
-import { useDataTableContext } from "./DataTableContext";
+import { useDataTableContext } from "../hooks/useDataTableContext";
 
 const DataTableFooter = () => {
   const {
