@@ -1,6 +1,6 @@
 import React from "react";
 
-import { FlatListProps } from "components/FlatList";
+import { FlatListProps } from "../components/FlatList";
 
 export enum SortDirection {
   ASC = "ASC",

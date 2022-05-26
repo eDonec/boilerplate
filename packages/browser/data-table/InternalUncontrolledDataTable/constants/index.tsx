@@ -1,4 +1,4 @@
-import { PaginatedResponse } from "components/DataTable/ControlledDataTable/types";
+import { PaginatedResponse } from "../../ControlledDataTable/types";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const emptyPaginationResponse: PaginatedResponse<any> = {

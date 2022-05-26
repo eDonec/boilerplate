@@ -11,7 +11,7 @@ export type FetchFunction<T> = (args: {
   sortField?: string;
 }) => Promise<PaginatedResponse<T>>;
 
-export type UncontrolledDataTableProps<T> = Pick<
+export type InternalUncontrolledDataTableProps<T> = Pick<
   ControlledDataTableProps<T>,
   | "className"
   | "rowClassName"
@@ -23,4 +23,7 @@ export type UncontrolledDataTableProps<T> = Pick<
   | "limitOptions"
 > & {
   fetchFunction: FetchFunction<T>;
+  searchParams: URLSearchParams;
+  setSearchParams: (nextSearchParams: URLSearchParams) => void;
+  onFetchError?: (error: unknown) => void;
 };

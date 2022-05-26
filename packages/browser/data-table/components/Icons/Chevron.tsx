@@ -1,8 +1,10 @@
 import { clsx } from "core-utils";
 
-import { IProps } from "./DashboardIcon";
+type ChevronProps = {
+  className?: string;
+};
 
-const Chevron: React.FC<IProps> = ({ className }) => (
+const Chevron: React.FC<ChevronProps> = ({ className }) => (
   <svg
     className={clsx("h-4 w-4 min-w-fit", className)}
     width="24"

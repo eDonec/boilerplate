@@ -1,9 +1,6 @@
 import { ISelectOption } from "forms/Select";
 
-import {
-  DataTableColumn,
-  HeaderItem,
-} from "components/DataTable/ControlledDataTable/types";
+import { DataTableColumn, HeaderItem } from "../types";
 
 export const getDataTableHeaderItems = <T>(
   columns: DataTableColumn<T>[]

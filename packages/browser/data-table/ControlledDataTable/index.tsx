@@ -1,14 +1,13 @@
 import { Loader } from "core-ui";
 import { clsx } from "core-utils";
 
-import FlatList, { ListRenderItem } from "components/FlatList";
-
 import { DataTableProvider } from "./context/DataTableContext";
 import { useDataTable } from "./hooks/useDataTable";
 import DataTableFooter from "./inner-components/DataTableFooter";
 import DataTableHeader from "./inner-components/DataTableHeader";
 import DataTableRow from "./inner-components/DataTableRow";
 import { ControlledDataTableProps } from "./types";
+import FlatList, { ListRenderItem } from "../components/FlatList";
 
 const ControlledDataTable = <T,>(props: ControlledDataTableProps<T>) => {
   const { data, columns, loading, ...rest } = props;

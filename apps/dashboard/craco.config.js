@@ -8,6 +8,7 @@ const modules = [
   "browser/core-ui",
   "browser/core-cra-components",
   "browser/forms",
+  "browser/data-table",
   "node/field-validator",
   "node/core-utils",
   "node/shared-types",

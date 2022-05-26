@@ -6,6 +6,7 @@ const withTM = require("next-transpile-modules")([
   "core-hooks",
   "core-next-components",
   "forms",
+  "data-table",
   "field-validator",
   "auth-sdk",
   "server-sdk",
