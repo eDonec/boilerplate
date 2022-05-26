@@ -5,8 +5,8 @@ import { ISelectOption } from "forms/Select";
 import { FlatListProps } from "components/FlatList";
 
 export enum SortDirection {
-  ASC = 1,
-  DSC = -1,
+  ASC = "ASC",
+  DSC = "DSC",
 }
 
 export type PaginatedResponse<T> = {

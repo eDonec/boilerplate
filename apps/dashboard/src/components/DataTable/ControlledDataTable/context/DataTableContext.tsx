@@ -2,7 +2,7 @@ import { createContext } from "react";
 
 import ReactChildrenProps from "shared-types/ReactChildren";
 
-import { ControlledDataTableProps } from "../../types";
+import { ControlledDataTableProps } from "../types";
 
 export const DataTableContext =
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

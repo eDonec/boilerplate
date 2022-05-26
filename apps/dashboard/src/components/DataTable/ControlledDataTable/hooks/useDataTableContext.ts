@@ -1,6 +1,6 @@
 import { useContext } from "react";
 
-import { ControlledDataTableProps } from "components/DataTable/types";
+import { ControlledDataTableProps } from "components/DataTable/ControlledDataTable/types";
 
 import { DataTableContext } from "../context/DataTableContext";
 
