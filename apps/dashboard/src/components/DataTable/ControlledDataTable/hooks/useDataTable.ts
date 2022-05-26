@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 
-import { DataTableColumn } from "./types";
-import { getDataTableHeaderItems } from "./utils";
+import { getDataTableHeaderItems } from "../utils";
+import { DataTableColumn } from "../../types";
 
 export const useDataTable = <T>(columns: DataTableColumn<T>[]) => {
   const headerItems = useMemo(

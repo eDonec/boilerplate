@@ -1,13 +1,13 @@
 /* eslint-disable max-lines */
 import { useState } from "react";
 
-import ControlledDataTable from "components/ControlledDataTable";
+import ControlledDataTable from "components/DataTable/ControlledDataTable";
 import {
   DataTableColumn,
   PaginatedResponse,
   SelectedSort,
   SortDirection,
-} from "components/ControlledDataTable/types";
+} from "components/DataTable/types";
 import PrivateWrapper from "containers/AuthWrappers/PrivateWrapper";
 import MainWrapper from "containers/MainWrapper";
 

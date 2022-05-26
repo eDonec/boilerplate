@@ -1,7 +1,7 @@
 import { clsx, get } from "core-utils";
 
-import { useDataTableContext } from "./DataTableContext";
-import { DataTableRowProps } from "./types";
+import { useDataTableContext } from "../hooks/useDataTableContext";
+import { DataTableRowProps } from "../../types";
 
 const DataTableRow = <T,>({ item, index }: DataTableRowProps<T>) => {
   const {

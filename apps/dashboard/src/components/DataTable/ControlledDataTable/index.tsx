@@ -1,11 +1,11 @@
 import FlatList, { ListRenderItem } from "components/FlatList";
 
-import { DataTableProvider } from "./DataTableContext";
-import DataTableFooter from "./DataTableFooter";
-import DataTableHeader from "./DataTableHeader";
-import DataTableRow from "./DataTableRow";
-import { ControlledDataTableProps } from "./types";
-import { useDataTable } from "./useDataTable";
+import { DataTableProvider } from "./context/DataTableContext";
+import { useDataTable } from "./hooks/useDataTable";
+import DataTableFooter from "./inner-components/DataTableFooter";
+import DataTableHeader from "./inner-components/DataTableHeader";
+import DataTableRow from "./inner-components/DataTableRow";
+import { ControlledDataTableProps } from "../types";
 
 const ControlledDataTable = <T,>(props: ControlledDataTableProps<T>) => {
   const { data, columns, ...rest } = props;

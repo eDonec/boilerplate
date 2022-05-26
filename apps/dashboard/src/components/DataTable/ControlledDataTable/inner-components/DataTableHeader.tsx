@@ -1,9 +1,12 @@
 import { clsx } from "core-utils";
 
+import {
+  DataTableHeaderProps,
+  SortDirection,
+} from "components/DataTable/types";
 import Chevron from "components/Icons/Chevron";
 
-import { useDataTableContext } from "./DataTableContext";
-import { DataTableHeaderProps, SortDirection } from "./types";
+import { useDataTableContext } from "../hooks/useDataTableContext";
 
 const DEFAULT_SORT_DIRECTION = SortDirection.DSC;
 
@@ -44,9 +47,9 @@ const DataTableHeader = ({ headerItems }: DataTableHeaderProps) => {
             <div className="flex items-center justify-between ">
               {headerItem.label}
               <Chevron
-                className={clsx("ml-3 transition-transform", {
+                className={clsx("ml-3 transition-[opacity,transform]", {
                   "rotate-180": currentSortDirection === SortDirection.ASC,
-                  invisible: !currentSortDirection,
+                  "opacity-0": !currentSortDirection,
                 })}
               />
             </div>
