@@ -6,9 +6,8 @@ import {
 } from "components/DataTable/ControlledDataTable/types";
 import Chevron from "components/Icons/Chevron";
 
+import { DEFAULT_DATATABLE_SORT_DIRECTION } from "../defaults";
 import { useDataTableContext } from "../hooks/useDataTableContext";
-
-const DEFAULT_SORT_DIRECTION = SortDirection.DSC;
 
 const DataTableHeader = ({ headerItems }: DataTableHeaderProps) => {
   const { currentSort, headerClassName, onSortChange } = useDataTableContext();
@@ -41,7 +40,7 @@ const DataTableHeader = ({ headerItems }: DataTableHeaderProps) => {
                           ? "DSC"
                           : "ASC"
                       ]
-                    : DEFAULT_SORT_DIRECTION,
+                    : DEFAULT_DATATABLE_SORT_DIRECTION,
               })
             }
           >

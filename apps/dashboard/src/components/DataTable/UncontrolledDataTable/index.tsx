@@ -6,8 +6,15 @@ const UncontrolledDataTable = <T,>({
   fetchFunction,
   ...datatableProps
 }: UncontrolledDataTableProps<T>) => {
-  const { data, onPageChange, onLimitChange, onSortChange, currentSort } =
-    useUncontrolledDataTable(fetchFunction);
+  const {
+    data,
+    onPageChange,
+    onLimitChange,
+    onSortChange,
+    currentSort,
+    limit,
+    loading,
+  } = useUncontrolledDataTable(fetchFunction);
 
   return (
     <ControlledDataTable
@@ -17,6 +24,8 @@ const UncontrolledDataTable = <T,>({
       onSortChange={onSortChange}
       onLimitChange={onLimitChange}
       currentSort={currentSort}
+      limit={limit}
+      loading={loading}
     />
   );
 };

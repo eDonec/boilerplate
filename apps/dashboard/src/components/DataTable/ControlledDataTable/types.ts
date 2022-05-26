@@ -1,7 +1,5 @@
 import React from "react";
 
-import { ISelectOption } from "forms/Select";
-
 import { FlatListProps } from "components/FlatList";
 
 export enum SortDirection {
@@ -63,7 +61,8 @@ export type ControlledDataTableProps<T> = Pick<
   onPageChange?: (page: number) => void;
   currentSort?: SelectedSort;
   onSortChange?: (args: { field: string; direction: SortDirection }) => void;
-  limit?: ISelectOption<string>;
-  limitOptions?: ISelectOption<string>[];
-  onLimitChange?: (limit: ISelectOption<string>) => void;
+  limit?: number;
+  limitOptions?: number[];
+  onLimitChange?: (limit: number) => void;
+  loading?: boolean;
 };

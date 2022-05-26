@@ -21,7 +21,7 @@ export const OptionHeader: React.FC<IProps> = ({
 }) => (
   <div
     className={clsx([
-      "flex w-48",
+      "flex",
       "cursor-pointer",
       "items-center justify-between",
       "rounded border",
