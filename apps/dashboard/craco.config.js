@@ -2,26 +2,7 @@
 
 const path = require("path");
 const { getLoader, loaderByName } = require("@craco/craco");
-
-const modules = [
-  "browser/core-hooks",
-  "browser/core-ui",
-  "browser/core-cra-components",
-  "browser/forms",
-  "node/field-validator",
-  "node/core-utils",
-  "node/shared-types",
-  "node/api-types/auth-types",
-  "node/shared-types",
-  "node/custom-error",
-  "SDK/node/auth-sdk",
-  "SDK/node/server-sdk",
-  "SDK/node/bucket-sdk",
-];
-const packages = [];
-packages.push(
-  ...modules.map((module) => path.join(__dirname, "../../packages", module))
-);
+const packages = require("./scripts/dependecies");
 /** @type {import('@craco/craco').CracoConfig} */
 module.exports = {
   jest: {
@@ -43,7 +24,7 @@ module.exports = {
 
         match.loader.include = include.concat(packages);
       }
-
+      console.log(webpackConfig.plugins);
       return webpackConfig;
     },
   },
