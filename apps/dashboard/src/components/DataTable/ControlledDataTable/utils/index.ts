@@ -7,4 +7,5 @@ export const getDataTableHeaderItems = <T>(
     label: col.title,
     value: col.sortCallbackValue || col.selector,
     className: col.className,
+    sortable: typeof col.sortable === "boolean" ? col.sortable : true,
   }));

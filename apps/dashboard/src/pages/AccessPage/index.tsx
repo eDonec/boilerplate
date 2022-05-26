@@ -117,6 +117,7 @@ const dataColumns: DataTableColumn<User>[] = [
   {
     selector: "nested.value",
     title: "Misc.",
+    sortable: false,
   },
 ];
 

@@ -22,7 +22,7 @@ const DataTableFooter = () => {
         <div
           className={clsx(
             footerClassName,
-            "flex items-center justify-end gap-4 bg-gray-50 px-6 py-3 text-xs text-gray-700 dark:bg-gray-700 dark:text-gray-400"
+            "flex items-center justify-end gap-4 bg-gray-100 px-6 py-3 text-xs text-gray-700 dark:bg-gray-700 dark:text-gray-400"
           )}
         >
           <span>Items per page</span>

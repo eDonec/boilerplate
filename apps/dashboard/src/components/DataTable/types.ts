@@ -30,6 +30,7 @@ export type HeaderItem = {
   label: string;
   value: string;
   className?: string;
+  sortable?: boolean;
 };
 export type SelectedSort = {
   field: string;
