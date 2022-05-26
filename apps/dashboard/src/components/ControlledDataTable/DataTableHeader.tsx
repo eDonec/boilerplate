@@ -5,7 +5,7 @@ import Chevron from "components/Icons/Chevron";
 import { useDataTableContext } from "./DataTableContext";
 import { DataTableHeaderProps, SortDirection } from "./types";
 
-const DEFAULT_SORT_DIRECTION = SortDirection.ASC;
+const DEFAULT_SORT_DIRECTION = SortDirection.DSC;
 
 const DataTableHeader = ({ headerItems }: DataTableHeaderProps) => {
   const { currentSort, headerClassName, onSortChange } = useDataTableContext();
