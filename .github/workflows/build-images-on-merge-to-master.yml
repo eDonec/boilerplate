@@ -223,9 +223,9 @@ jobs:
             echo AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY >> .env
             echo PORT=$CONTAINERS_PORT >> .env
             echo NODE_ENV=$NODE_ENV >> .env
-            echo ACCESS_TOKEN_SECRET_KEY=$ACCESS_TOKEN_SECRET_KEY >> .env
             echo ROOT_USER_EMAIL=$ROOT_USER_EMAIL >> .env
             echo ROOT_USER_PASSWORD=$ROOT_USER_PASSWORD >> .env
+            echo ACCESS_TOKEN_SECRET_KEY=$ACCESS_TOKEN_SECRET_KEY >> .env
             echo REFRESH_TOKEN_SECRET_KEY=$REFRESH_TOKEN_SECRET_KEY >> .env
             echo TOKEN_EXPIRES_IN=$TOKEN_EXPIRES_IN >> .env
             echo REFRESH_TOKEN_EXPIRES_IN=$REFRESH_TOKEN_EXPIRES_IN >> .env

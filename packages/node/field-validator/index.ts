@@ -89,7 +89,7 @@ const extractFieldValidatorsFromObject = <
     )
       typeErrors.push({
         fieldName: key as string,
-        message: `${key} must be a string, number or Date`,
+        message: `${String(key)} must be a string, number or Date`,
       });
     validate[key] = new FieldValidator(objectToValidate[key], key as string);
 
