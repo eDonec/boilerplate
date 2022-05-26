@@ -1,5 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 
+import AccessPage from "pages/AccessPage";
 import HomePage from "pages/HomePage";
 import { SignIn } from "pages/SignIn";
 
@@ -12,6 +13,7 @@ const AppRouter = () => {
     <Routes>
       <Route path="/sign-in" element={<SignIn />} />
       <Route path="/product/:id/edit" element={<HomePage />} />
+      <Route path="/roles" element={<AccessPage />} />
       <Route path="*" element={<HomePage />} />
     </Routes>
   );
