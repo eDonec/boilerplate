@@ -41,6 +41,7 @@ const stagingChangeTrigger = `  push:
     branches: [master]
     paths:
       - "apps/**"
+      - ".github/workflows/*"
       - ".docker/Dockerfile.*"
       - "packages/**"
       - "package.json"
@@ -52,6 +53,7 @@ const headChangeTrigger = `  pull_request_review:
     types: [submitted]
     paths:
       - "apps/**"
+      - ".github/workflows/*"
       - ".docker/Dockerfile.*"
       - "packages/**"
       - "package.json"
@@ -74,9 +76,9 @@ const syncBuildAndTestDocker = (
   const segmentWorkFlow = fs
     .readFileSync(path.join(__dirname, segmentPath))
     .toString();
-  const needs = `[${apps
-    .map((app) => `${app.packageName}-deploy-to-${stage}`)
-    .join(", ")}]`;
+  const needs = `${apps
+    .map((app) => `${app.packageName}-build-and-publish-${stage}`)
+    .join(", ")}`;
   const deps = [];
   const jobs = apps
     .map((app) => {
@@ -103,6 +105,7 @@ const syncBuildAndTestDocker = (
     .replace(/\${{stage}}/g, stage)
     .replace(/\${{STAGE}}/g, stage.toUpperCase())
     .replace(/\${{changeTrigger}}/g, changeTrigger)
+    .replace(/\${{deps}}/g, deps.join(", "))
     .replace(/\${{changeCondition}}/g, changeCondition);
   fs.writeFileSync(path.join(__dirname, outputPath), newWorkflow);
 };

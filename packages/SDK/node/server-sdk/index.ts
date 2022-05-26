@@ -38,6 +38,7 @@ export default class ApiSDK {
         const request = error.config;
 
         if (
+          !request.url.includes("/z/refresh-token") &&
           error.response?.status === StatusCodes.Forbidden &&
           error.response.data.message === "Token invalid or expired" &&
           !request._retry
