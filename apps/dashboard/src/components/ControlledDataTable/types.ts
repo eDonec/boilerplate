@@ -38,28 +38,13 @@ export type SelectedSort = {
 
 // Component props
 
-export type DataTableFooterProps = {
-  className?: string;
-  page: number;
-  totalPages: number;
-  totalItems: number;
-  onPageChange?: (page: number) => void;
-  limit?: ISelectOption<string>;
-  limitOptions?: ISelectOption<string>[];
-  onLimitChange?: (limit: ISelectOption<string>) => void;
-};
-
 export type DataTableHeaderProps = {
   headerItems: HeaderItem[];
-  className?: string;
-  selectedSort?: SelectedSort;
-  onSortChange?: (newSort: SelectedSort) => void;
 };
 
 export type DataTableRowProps<T> = {
   item: T;
-  columns: DataTableColumn<T>[];
-  className?: string;
+  index: number;
 };
 
 export type ControlledDataTableProps<T> = Pick<
@@ -71,6 +56,7 @@ export type ControlledDataTableProps<T> = Pick<
 > & {
   rowClassName?: string;
   headerClassName?: string;
+  footerClassName?: string;
   data: PaginatedResponse<T>;
   columns: DataTableColumn<T>[];
   onPageChange?: (page: number) => void;
