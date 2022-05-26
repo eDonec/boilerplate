@@ -18,7 +18,7 @@ if (!i18n.isInitialized) {
       },
     },
     fallbackLng: "en",
-    debug: process.env.NODE_ENV === "development",
+    debug: false,
     saveMissing: true,
 
     ns: ["translations"],

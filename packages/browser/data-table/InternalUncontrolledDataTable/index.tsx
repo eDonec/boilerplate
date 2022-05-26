@@ -6,6 +6,7 @@ const InternalUncontrolledDataTable = <T,>({
   fetchFunction,
   searchParams,
   setSearchParams,
+  initialValue,
   ...datatableProps
 }: InternalUncontrolledDataTableProps<T>) => {
   const {
@@ -20,6 +21,7 @@ const InternalUncontrolledDataTable = <T,>({
     fetchFunction,
     searchParams,
     setSearchParams,
+    initialValue,
   });
 
   return (

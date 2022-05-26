@@ -1,12 +1,13 @@
 import { useEffect, useMemo, useState } from "react";
 
+import { useFirstMount } from "core-hooks";
+
 import {
   emptyPaginationResponse,
   UncontrolledDataTableURLParams,
 } from "../constants";
 import { InternalUncontrolledDataTableProps } from "../types";
-import { isSortDirection } from "../utils";
-import { DEFAULT_DATATABLE_LIMIT } from "../../ControlledDataTable/defaults";
+import { extractQueryParams, isSortDirection } from "../utils";
 import {
   PaginatedResponse,
   SortDirection,
@@ -17,37 +18,30 @@ export const useUncontrolledDataTable = <T>({
   searchParams,
   setSearchParams,
   onFetchError,
+  initialValue,
 }: Pick<
   InternalUncontrolledDataTableProps<T>,
-  "fetchFunction" | "searchParams" | "setSearchParams" | "onFetchError"
+  | "fetchFunction"
+  | "searchParams"
+  | "setSearchParams"
+  | "onFetchError"
+  | "initialValue"
 >) => {
   const [data, setData] = useState<PaginatedResponse<T>>(
-    emptyPaginationResponse
+    initialValue || emptyPaginationResponse
   );
-  const [loading, setLoading] = useState(true);
-
+  const [loading, setLoading] = useState(!initialValue);
   const { limit, page, sortField, sortDirection } = useMemo(
-    () => ({
-      page: Math.max(
-        Number(searchParams.get(UncontrolledDataTableURLParams.PAGE)),
-        1
-      ),
-      limit: Number(searchParams.get(UncontrolledDataTableURLParams.LIMIT))
-        ? Math.max(
-            Number(searchParams.get(UncontrolledDataTableURLParams.LIMIT)),
-            1
-          )
-        : DEFAULT_DATATABLE_LIMIT,
-      sortField: searchParams.get(UncontrolledDataTableURLParams.SORT_FIELD),
-      sortDirection: searchParams.get(
-        UncontrolledDataTableURLParams.SORT_DIRECTION
-      ),
-    }),
+    () => extractQueryParams(searchParams),
     [searchParams]
   );
+  const firstMount = useFirstMount();
 
   useEffect(() => {
     (async () => {
+      if (firstMount && initialValue) {
+        return;
+      }
       try {
         setLoading(true);
         const newData = await fetchFunction({
