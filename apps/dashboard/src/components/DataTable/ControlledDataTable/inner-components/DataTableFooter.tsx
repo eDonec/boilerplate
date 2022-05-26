@@ -4,21 +4,27 @@ import Select from "forms/Select/RawSelect";
 import Chevron from "components/Icons/Chevron";
 import ChevronEnd from "components/Icons/ChevronEnd";
 
+import {
+  DEFAULT_DATATABLE_LIMIT,
+  DEFAULT_DATATABLE_LIMIT_OPTIONS,
+} from "../defaults";
 import { useDataTableContext } from "../hooks/useDataTableContext";
+import { formatLimit, formatLimitOptions } from "../utils";
 
 const DataTableFooter = () => {
   const {
     footerClassName,
-    limit = { label: "10", value: "10" },
-    limitOptions = [{ label: "10", value: "10" }],
+    limit = DEFAULT_DATATABLE_LIMIT,
+    limitOptions = DEFAULT_DATATABLE_LIMIT_OPTIONS,
     onLimitChange = () => {},
     data: { totalItems, totalPages, page },
     onPageChange,
+    columns,
   } = useDataTableContext();
 
   return (
     <tr>
-      <td colSpan={100}>
+      <td colSpan={columns.length}>
         <div
           className={clsx(
             footerClassName,
@@ -27,13 +33,13 @@ const DataTableFooter = () => {
         >
           <span>Items per page</span>
           <Select
-            options={limitOptions}
-            value={limit}
-            onChange={onLimitChange}
+            options={formatLimitOptions(limitOptions)}
+            value={formatLimit(limit)}
+            onChange={(newLimit) => onLimitChange(Number(newLimit.value))}
           />
           <span>
-            {`${1 + Math.max(page - 1, 0) * Number(limit.value)} - ${Math.min(
-              Number(limit.value) * page,
+            {`${1 + Math.max(page - 1, 0) * limit} - ${Math.min(
+              limit * page,
               totalItems
             )} of ${totalItems}`}
           </span>

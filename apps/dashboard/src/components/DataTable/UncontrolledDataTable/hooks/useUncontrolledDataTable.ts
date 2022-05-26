@@ -1,14 +1,16 @@
 import { useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 
-import { ISelectOption } from "forms/Select";
-
+import { DEFAULT_DATATABLE_LIMIT } from "components/DataTable/ControlledDataTable/defaults";
 import {
   PaginatedResponse,
   SortDirection,
 } from "components/DataTable/ControlledDataTable/types";
 
-import { emptyPaginationResponse } from "../constants";
+import {
+  emptyPaginationResponse,
+  UncontrolledDataTableURLParams,
+} from "../constants";
 import { FetchFunction } from "../types";
 import { isSortDirection } from "../utils";
 
@@ -19,13 +21,24 @@ export const useUncontrolledDataTable = <T>(
     emptyPaginationResponse
   );
   const [searchParams, setSearchParams] = useSearchParams();
+  const [loading, setLoading] = useState(true);
 
   const { limit, page, sortField, sortDirection } = useMemo(
     () => ({
-      page: Math.max(Number(searchParams.get("page")), 1),
-      limit: Math.max(Number(searchParams.get("limit")), 1),
-      sortField: searchParams.get("sortField"),
-      sortDirection: searchParams.get("sortDirection"),
+      page: Math.max(
+        Number(searchParams.get(UncontrolledDataTableURLParams.PAGE)),
+        1
+      ),
+      limit: Number(searchParams.get(UncontrolledDataTableURLParams.LIMIT))
+        ? Math.max(
+            Number(searchParams.get(UncontrolledDataTableURLParams.LIMIT)),
+            1
+          )
+        : DEFAULT_DATATABLE_LIMIT,
+      sortField: searchParams.get(UncontrolledDataTableURLParams.SORT_FIELD),
+      sortDirection: searchParams.get(
+        UncontrolledDataTableURLParams.SORT_DIRECTION
+      ),
     }),
     [searchParams]
   );
@@ -33,6 +46,7 @@ export const useUncontrolledDataTable = <T>(
   useEffect(() => {
     (async () => {
       try {
+        setLoading(true);
         const newData = await fetchFunction({
           page,
           limit,
@@ -47,16 +61,17 @@ export const useUncontrolledDataTable = <T>(
         // eslint-disable-next-line no-console
         console.error(error);
       }
+      setLoading(false);
     })();
   }, [limit, page, sortField, sortDirection]);
 
   const onPageChange = (newPage: number) => {
-    searchParams.set("page", newPage.toString());
+    searchParams.set(UncontrolledDataTableURLParams.PAGE, newPage.toString());
     setSearchParams(searchParams);
   };
 
-  const onLimitChange = (newLimit: ISelectOption<string>) => {
-    searchParams.set("limit", newLimit.value);
+  const onLimitChange = (newLimit: number) => {
+    searchParams.set(UncontrolledDataTableURLParams.LIMIT, `${newLimit}`);
     setSearchParams(searchParams);
   };
 
@@ -67,8 +82,11 @@ export const useUncontrolledDataTable = <T>(
     field: string;
     direction: SortDirection;
   }) => {
-    searchParams.set("sortDirection", `${direction}`);
-    searchParams.set("sortField", `${field}`);
+    searchParams.set(
+      UncontrolledDataTableURLParams.SORT_DIRECTION,
+      `${direction}`
+    );
+    searchParams.set(UncontrolledDataTableURLParams.SORT_FIELD, `${field}`);
     setSearchParams(searchParams);
   };
 
@@ -89,5 +107,7 @@ export const useUncontrolledDataTable = <T>(
     onLimitChange,
     data,
     currentSort,
+    limit,
+    loading,
   };
 };

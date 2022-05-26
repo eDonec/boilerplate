@@ -8,3 +8,10 @@ export const emptyPaginationResponse: PaginatedResponse<any> = {
   hasNextPage: false,
   page: 1,
 };
+
+export enum UncontrolledDataTableURLParams {
+  PAGE = "page",
+  LIMIT = "limit",
+  SORT_DIRECTION = "sort-direction",
+  SORT_FIELD = "sort-field",
+}

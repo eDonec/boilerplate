@@ -13,9 +13,9 @@ export type FlatListProps<T> = {
   data: T[];
   renderItem: ListRenderItem<T>;
   keyExtractor: ListKeyExtractor<T>;
-  renderListHeader?: () => JSX.Element;
-  renderListFooter?: () => JSX.Element;
-  renderListSeparator?: () => JSX.Element;
+  renderListHeader?: JSX.Element;
+  renderListFooter?: JSX.Element;
+  renderListSeparator?: JSX.Element;
 };
 
 const FlatList = <T,>({
@@ -35,16 +35,16 @@ const FlatList = <T,>({
     )}
   >
     <table className="w-full table-auto ">
-      {renderListHeader && <thead>{renderListHeader()}</thead>}
+      {renderListHeader && <thead>{renderListHeader}</thead>}
       <tbody className={clsx(contentContainerClassName)}>
         {data.map((item, index) => (
           <Fragment key={keyExtractor({ item, index })}>
             {renderItem({ item, index })}
-            {index !== data.length - 1 && renderListSeparator?.()}
+            {index !== data.length - 1 && renderListSeparator}
           </Fragment>
         ))}
       </tbody>
-      {renderListFooter && <tfoot>{renderListFooter()}</tfoot>}
+      {renderListFooter && <tfoot>{renderListFooter}</tfoot>}
     </table>
   </div>
 );

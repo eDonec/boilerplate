@@ -20,6 +20,7 @@ export type UncontrolledDataTableProps<T> = Pick<
   | "headerClassName"
   | "columns"
   | "keyExtractor"
+  | "limitOptions"
 > & {
   fetchFunction: FetchFunction<T>;
 };

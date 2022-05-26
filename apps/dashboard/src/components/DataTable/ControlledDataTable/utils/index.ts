@@ -1,3 +1,5 @@
+import { ISelectOption } from "forms/Select";
+
 import {
   DataTableColumn,
   HeaderItem,
@@ -12,3 +14,13 @@ export const getDataTableHeaderItems = <T>(
     className: col.className,
     sortable: typeof col.sortable === "boolean" ? col.sortable : true,
   }));
+
+export const formatLimit = (limit: number): ISelectOption<string> => ({
+  label: `${limit}`,
+  value: `${limit}`,
+});
+
+export const formatLimitOptions = (
+  limitOptions: number[]
+): ISelectOption<string>[] =>
+  limitOptions.sort((a, b) => a - b).map(formatLimit);
