@@ -4,7 +4,10 @@ import ReactChildrenProps from "shared-types/ReactChildren";
 
 import { ControlledDataTableProps } from "./types";
 
-const DataTableContext = createContext({});
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const DataTableContext = createContext<ControlledDataTableProps<any> | null>(
+  null
+);
 
 export const createDataTableContext = <T,>() =>
   createContext<ControlledDataTableProps<T> | null>(null);
