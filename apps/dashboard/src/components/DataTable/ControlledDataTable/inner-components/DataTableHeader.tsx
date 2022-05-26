@@ -3,7 +3,7 @@ import { clsx } from "core-utils";
 import {
   DataTableHeaderProps,
   SortDirection,
-} from "components/DataTable/types";
+} from "components/DataTable/ControlledDataTable/types";
 import Chevron from "components/Icons/Chevron";
 
 import { useDataTableContext } from "../hooks/useDataTableContext";

@@ -1,13 +1,11 @@
 /* eslint-disable max-lines */
-import { useState } from "react";
 
-import ControlledDataTable from "components/DataTable/ControlledDataTable";
 import {
   DataTableColumn,
   PaginatedResponse,
-  SelectedSort,
-  SortDirection,
-} from "components/DataTable/types";
+} from "components/DataTable/ControlledDataTable/types";
+import UncontrolledDataTable from "components/DataTable/UncontrolledDataTable";
+import { FetchFunction } from "components/DataTable/UncontrolledDataTable/types";
 import PrivateWrapper from "containers/AuthWrappers/PrivateWrapper";
 import MainWrapper from "containers/MainWrapper";
 
@@ -21,79 +19,81 @@ type User = {
   };
 };
 
-const users: PaginatedResponse<User> = {
-  items: [
-    {
-      _id: "1",
-      firstName: "Hey",
-      lastName: "yo",
-      birthday: new Date(),
-      nested: { value: "hey" },
-    },
-    {
-      _id: "2",
-      firstName: "Hey",
-      lastName: "yo",
-      birthday: new Date(),
-      nested: { value: "hey" },
-    },
-    {
-      _id: "3",
-      firstName: "Hey",
-      lastName: "yo",
-      birthday: new Date(),
-      nested: { value: "hey" },
-    },
-    {
-      _id: "4",
-      firstName: "Hey Reprehenderit cupidatat Eu veniam ad",
-      lastName: "yo",
-      birthday: new Date(),
-      nested: { value: "hey" },
-    },
-    {
-      _id: "5",
-      firstName: "Hey",
-      lastName: "yo",
-      birthday: new Date(),
-      nested: { value: "hey" },
-    },
-    {
-      _id: "6",
-      firstName: "Hey",
-      lastName: "yo",
-      birthday: new Date(),
-      nested: { value: "hey" },
-    },
-    {
-      _id: "7",
-      firstName: "Hey",
-      lastName: "yo",
-      birthday: new Date(),
-      nested: { value: "hey" },
-    },
-    {
-      _id: "8",
-      firstName: "Hey Reprehenderit cupidatat Eu veniam ad",
-      lastName: "yo",
-      birthday: new Date(),
-      nested: { value: "hey" },
-    },
-    {
-      _id: "9",
-      firstName: "Hey",
-      lastName: "yo",
-      birthday: new Date(),
-      nested: { value: "hey" },
-    },
-    {
-      _id: "10",
-      firstName: "Hey Reprehenderit cupidatat Eu veniam ad",
-      lastName: "yo",
-      birthday: new Date(),
-      nested: { value: "hey" },
-    },
-  ],
+const users: User[] = [
+  {
+    _id: "1",
+    firstName: "Hey",
+    lastName: "yo",
+    birthday: new Date(),
+    nested: { value: "hey" },
+  },
+  {
+    _id: "2",
+    firstName: "Hey",
+    lastName: "yo",
+    birthday: new Date(),
+    nested: { value: "hey" },
+  },
+  {
+    _id: "3",
+    firstName: "Hey",
+    lastName: "yo",
+    birthday: new Date(),
+    nested: { value: "hey" },
+  },
+  {
+    _id: "4",
+    firstName: "Hey Reprehenderit cupidatat Eu veniam ad",
+    lastName: "yo",
+    birthday: new Date(),
+    nested: { value: "hey" },
+  },
+  {
+    _id: "5",
+    firstName: "Hey",
+    lastName: "yo",
+    birthday: new Date(),
+    nested: { value: "hey" },
+  },
+  {
+    _id: "6",
+    firstName: "Hey",
+    lastName: "yo",
+    birthday: new Date(),
+    nested: { value: "hey" },
+  },
+  {
+    _id: "7",
+    firstName: "Hey",
+    lastName: "yo",
+    birthday: new Date(),
+    nested: { value: "hey" },
+  },
+  {
+    _id: "8",
+    firstName: "Hey Reprehenderit cupidatat Eu veniam ad",
+    lastName: "yo",
+    birthday: new Date(),
+    nested: { value: "hey" },
+  },
+  {
+    _id: "9",
+    firstName: "Hey",
+    lastName: "yo",
+    birthday: new Date(),
+    nested: { value: "hey" },
+  },
+  {
+    _id: "10",
+    firstName: "Hey Reprehenderit cupidatat Eu veniam ad",
+    lastName: "yo",
+    birthday: new Date(),
+    nested: { value: "hey" },
+  },
+];
+
+const paginatedUsers: PaginatedResponse<User> = {
+  items: users,
   totalItems: 100,
   totalPages: 10,
   hasNextPage: true,
@@ -121,25 +121,24 @@ const dataColumns: DataTableColumn<User>[] = [
   },
 ];
 
-const AccessPage = () => {
-  const [currentSort, setCurrentSort] = useState<SelectedSort>({
-    field: "firstName",
-    direction: SortDirection.ASC,
+const fetchFunction: FetchFunction<User> = async () => {
+  await new Promise<void>((resolve) => {
+    setTimeout(resolve, 500);
   });
 
-  return (
-    <PrivateWrapper>
-      <MainWrapper title="Roles" description="Role management">
-        <ControlledDataTable
-          currentSort={currentSort}
-          onSortChange={setCurrentSort}
-          data={users}
-          columns={dataColumns}
-          keyExtractor={({ item }) => item._id}
-        />
-      </MainWrapper>
-    </PrivateWrapper>
-  );
+  return paginatedUsers;
 };
+
+const AccessPage = () => (
+  <PrivateWrapper>
+    <MainWrapper title="Roles" description="Role management">
+      <UncontrolledDataTable
+        fetchFunction={fetchFunction}
+        columns={dataColumns}
+        keyExtractor={({ item }) => item._id}
+      />
+    </MainWrapper>
+  </PrivateWrapper>
+);
 
 export default AccessPage;

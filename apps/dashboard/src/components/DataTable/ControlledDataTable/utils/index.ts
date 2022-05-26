@@ -1,4 +1,7 @@
-import { DataTableColumn, HeaderItem } from "components/DataTable/types";
+import {
+  DataTableColumn,
+  HeaderItem,
+} from "components/DataTable/ControlledDataTable/types";
 
 export const getDataTableHeaderItems = <T>(
   columns: DataTableColumn<T>[]
