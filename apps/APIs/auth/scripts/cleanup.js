@@ -1,13 +1,13 @@
 const path = require("path");
-
 const localPackageJson = require("../package.json");
 const {
   extractInternalPackagesFromPackageJson,
   resolveMultipleInternalPackageDirs,
   getAllPackageJsonDepsRecursive,
   getPackageNameFromPath,
-  copyPackage,
 } = require("./lib");
+
+const fs = require("fs");
 
 const internalImportedPackageNames =
   extractInternalPackagesFromPackageJson(localPackageJson);
@@ -22,11 +22,11 @@ const allDependecyTreePackageNames = allDependecyTreeDirs.map((packagePath) =>
   getPackageNameFromPath(packagePath)
 );
 
-console.log({
-  internalImportedPackageNames,
-  internalPackageDirs,
-  allDependecyTreeDirs,
+console.log(allDependecyTreePackageNames);
+
+allDependecyTreePackageNames.forEach((dep) => {
+  fs.rmSync(path.join(__dirname, "../src", dep), {
+    recursive: true,
+    force: true,
+  });
 });
-allDependecyTreeDirs.forEach((dep) => copyPackage(dep));
-// TODO: clean up the deps post build
-module.exports = [];
