@@ -10,5 +10,5 @@
     "baseUrl": "./src"
   },
   "include": ["src"],
-  "exclude": ["node_modules", ".turbo", "coverage", "dist", "**/__test__/**"]
+  "exclude": ["node_modules", ".turbo", "coverage", "dist"]
 }
