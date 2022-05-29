@@ -71,7 +71,7 @@ services:
   auth:
     image: ghcr.io/edonec/boilerplate/auth:head
     restart: always
-    command: yarn workspace auth start:prod
+    command: node /app/index.js
     environment:
       - PORT=${PORT}
       - DATABASE_URI=mongodb://database:27017/auth?authSource=admin
@@ -95,7 +95,7 @@ services:
   bucket:
     image: ghcr.io/edonec/boilerplate/bucket:head
     restart: always
-    command: yarn workspace bucket start:prod
+    command: node /app/index.js
     environment:
       - PORT=${PORT}
       - DATABASE_URI=mongodb://database:27017/bucket?authSource=admin
