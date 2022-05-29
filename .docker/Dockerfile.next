@@ -1,0 +1,76 @@
+ARG MICROSERVICE_NAME="client"
+# Create an image with the necessary files
+FROM alpine AS copier
+WORKDIR /app
+COPY ./.git ./.git
+COPY ./apps ./apps
+COPY ./.turbo ./.turbo
+COPY ./packages ./packages
+COPY ./turbo.json ./turbo.json
+COPY ./package.json ./package.json
+COPY ./yarn.lock ./yarn.lock
+
+
+
+# Create an image with the pruned microservice
+FROM nader2560/turborepo-base AS pruner
+
+ARG MICROSERVICE_NAME
+
+WORKDIR /app
+COPY --from=copier /app .
+RUN turbo prune --scope=${MICROSERVICE_NAME} --docker
+
+
+# Create an image with the installed dependacies
+FROM node:18-alpine AS installer
+RUN apk update
+WORKDIR /app
+COPY --from=pruner /app/out/json/ .
+COPY --from=pruner /app/out/yarn.lock ./yarn.lock
+RUN yarn install --frozen-lockfile --network-timeout 100000
+COPY  .internal ./.internal
+
+# Create an image for the build
+FROM node:18-alpine AS builder
+
+RUN apk update
+ARG MICROSERVICE_NAME
+WORKDIR /app
+COPY --from=pruner /app/.git ./.git
+COPY --from=pruner /app/.turbo ./.turbo
+COPY --from=installer /app/ .
+COPY --from=pruner /app/out/full/ .
+COPY .gitignore .gitignore
+ENV NODE_ENV production
+COPY --from=installer /app/.internal ./.internal
+ARG NEXT_PUBLIC_HELLO
+ENV NEXT_PUBLIC_HELLO=${NEXT_PUBLIC_HELLO}
+RUN yarn build --filter=${MICROSERVICE_NAME}
+
+
+FROM node:18-alpine AS runner
+WORKDIR /app
+ARG MICROSERVICE_NAME
+
+RUN addgroup --system --gid 1001 nodejs
+RUN adduser --system --uid 1001 nextjs
+
+RUN chown -R nextjs:nodejs /app
+ENV NODE_ENV production
+# Next.js collects completely anonymous telemetry data about general usage.
+# The next line disables it
+ENV NEXT_TELEMETRY_DISABLED 1
+
+# Automatically leverage output traces to reduce image size
+# https://nextjs.org/docs/advanced-features/output-file-tracing
+COPY --from=builder /app/apps/${MICROSERVICE_NAME}/build/standalone/apps/${MICROSERVICE_NAME} ./
+COPY --from=builder /app/apps/${MICROSERVICE_NAME}/build/standalone/node_modules ./node_modules
+COPY --from=builder /app/apps/${MICROSERVICE_NAME}/build/standalone/package.json ./
+COPY --from=builder /app/apps/${MICROSERVICE_NAME}/build/static ./build/static
+
+# You only need to copy next.config.js if you are NOT using the default configuration
+COPY --from=builder /app/apps/${MICROSERVICE_NAME}/next.config.js ./
+COPY --from=builder /app/apps/${MICROSERVICE_NAME}/public ./public
+
+

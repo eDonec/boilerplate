@@ -20,7 +20,7 @@ services:
       - STORAGE_PATH=edonec-boilerplate-files
       - STORAGE_PROVIDER=S3
       - IMGPROXY_CACHE_CONTROL_PASSTHROUGH=true
-      - IMGPROXY_SET_CANONICAL_HEADER=true
+      - IMGPROXY_SET_CANONICAL_stagingER=true
       - IMGPROXY_USE_ETAG=true
       - IMGPROXY_JPEG_PROGRESSIVE=true
       - IMGPROXY_JPEG_TRELLIS_QUANT=true
@@ -51,11 +51,7 @@ services:
       - main-network
 
   client:
-    build:
-      context: .
-      dockerfile: Dockerfile.compose.client
-      args:
-        - NEXT_PUBLIC_HELLO=Hello
+    image: ghcr.io/edonec/boilerplate/client:staging
     environment:
       - NODE_ENV=${NODE_ENV}
     command: node server.js
@@ -64,11 +60,7 @@ services:
       - main-network
 
   dashboard:
-    build:
-      context: .
-      dockerfile: Dockerfile.compose.dashboard
-      args:
-        - REACT_APP_HELLO="I am a variable"
+    image: ghcr.io/edonec/boilerplate/dashboard:staging
     restart: always
     environment:
       - NODE_ENV=${NODE_ENV}

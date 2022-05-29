@@ -51,11 +51,7 @@ services:
       - main-network
 
   client:
-    build:
-      context: .
-      dockerfile: Dockerfile.compose.client
-      args:
-        - NEXT_PUBLIC_HELLO=Hello
+    image: ghcr.io/edonec/boilerplate/client:head
     environment:
       - NODE_ENV=${NODE_ENV}
     command: node server.js
@@ -64,11 +60,7 @@ services:
       - main-network
 
   dashboard:
-    build:
-      context: .
-      dockerfile: Dockerfile.compose.dashboard
-      args:
-        - REACT_APP_HELLO="I am a variable"
+    image: ghcr.io/edonec/boilerplate/dashboard:head
     restart: always
     environment:
       - NODE_ENV=${NODE_ENV}

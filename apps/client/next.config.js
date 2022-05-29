@@ -1,18 +1,7 @@
 const path = require("path");
 // eslint-disable-next-line @typescript-eslint/no-var-requires
-const withTM = require("next-transpile-modules")([
-  "core-utils",
-  "core-ui",
-  "core-hooks",
-  "core-next-components",
-  "forms",
-  "data-table",
-  "field-validator",
-  "auth-sdk",
-  "server-sdk",
-  "bucket-sdk",
-  "shared-types",
-]);
+const internalModules = require("./scripts/getInternalDependencies");
+const withTM = require("next-transpile-modules")(internalModules);
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {

@@ -5,14 +5,9 @@ const {
   packagesWithTestScripts,
   appsWithTestScript,
 } = require("./getPackagesPath");
-const dockerApps = [
-  {
-    packageName: "proxy-balancer",
-    packagePath: "proxy-balancer.conf",
-    isApp: false,
-  },
-  ...appsWithTestScript,
-].filter((app) => app.packageName !== "e2e");
+const dockerApps = [...appsWithTestScript].filter(
+  (app) => app.packageName !== "e2e"
+);
 
 const syncWorkflowsFromBase = (basePath, packages, workflowType) => {
   const baseWorkflows = fs
@@ -88,6 +83,7 @@ const syncBuildAndTestDocker = (
         .replace(/\${{stage}}/g, stage)
         .replace(/\${{STAGE}}/g, stage.toUpperCase())
         .replace(/\${{changeTrigger}}/g, changeTrigger)
+        .replace(/\${{Dockerfile}}/g, app.Dockerfile)
         .replace(/\${{changeCondition}}/g, changeCondition)
         .replace(/\${{deps}}/g, deps.join(", "));
 

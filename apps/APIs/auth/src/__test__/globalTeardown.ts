@@ -3,9 +3,9 @@
 import { MongoMemoryServer } from "mongodb-memory-server";
 import * as mongoose from "mongoose";
 
-export = async function globalTeardown() {
+export default async function globalTeardown() {
   const instance: MongoMemoryServer = (global as any).__MONGOINSTANCE;
 
   await mongoose.disconnect();
   await instance.stop();
-};
+}

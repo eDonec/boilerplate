@@ -42,10 +42,10 @@ class Producer<E extends { [eventName: string]: string }> {
     await this.init();
     if (!this.events[eventName])
       throw new Error(
-        `Event ${eventName} is not defined in the possible events`
+        `Event ${String(eventName)} is not defined in the possible events`
       );
 
-    const topic = `${this.topic}-${eventName}`;
+    const topic = `${this.topic}-${String(eventName)}`;
 
     try {
       const response = await this.producer.send({
