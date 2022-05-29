@@ -2,7 +2,7 @@
 
 const path = require("path");
 const { getLoader, loaderByName } = require("@craco/craco");
-const packages = require("./scripts/dependecies");
+const packages = require("./scripts/getInternalDependencyDirs");
 /** @type {import('@craco/craco').CracoConfig} */
 module.exports = {
   jest: {
@@ -24,7 +24,6 @@ module.exports = {
 
         match.loader.include = include.concat(packages);
       }
-      console.log(webpackConfig.plugins);
       return webpackConfig;
     },
   },
