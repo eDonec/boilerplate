@@ -3,7 +3,7 @@
 import { MongoMemoryServer } from "mongodb-memory-server";
 import * as mongoose from "mongoose";
 
-export = async function globalSetup() {
+export default async function globalSetup() {
   const instance = await MongoMemoryServer.create();
   const uri = instance.getUri();
 
@@ -13,4 +13,4 @@ export = async function globalSetup() {
   await mongoose.connect(uri);
   await mongoose.connection.dropDatabase();
   await mongoose.disconnect();
-};
+}

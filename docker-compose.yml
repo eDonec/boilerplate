@@ -20,7 +20,7 @@ services:
       - STORAGE_PATH=edonec-boilerplate-files
       - STORAGE_PROVIDER=S3
       - IMGPROXY_CACHE_CONTROL_PASSTHROUGH=true
-      - IMGPROXY_SET_CANONICAL_HEADER=true
+      - IMGPROXY_SET_CANONICAL_stagingER=true
       - IMGPROXY_USE_ETAG=true
       - IMGPROXY_JPEG_PROGRESSIVE=true
       - IMGPROXY_JPEG_TRELLIS_QUANT=true
@@ -34,7 +34,9 @@ services:
       - main-network
   proxy-balancer:
     restart: always
-    image: proxy-balancer
+    build:
+      context: ./.docker
+      dockerfile: Dockerfile.proxy-balancer
     depends_on:
       - client
       - dashboard
@@ -43,16 +45,13 @@ services:
       - database
       - imgproxy
     ports:
-      - 3005:80
+      - "80:80"
+      - "443:443"
     networks:
       - main-network
 
   client:
-    build:
-      context: ./.docker
-      dockerfile: Dockerfile.compose.client
-      args:
-        - NEXT_PUBLIC_HELLO=Hello
+    image: client
     environment:
       - NODE_ENV=${NODE_ENV}
     command: node server.js
@@ -61,11 +60,7 @@ services:
       - main-network
 
   dashboard:
-    build:
-      context: ./.docker
-      dockerfile: Dockerfile.compose.dashboard
-      args:
-        - REACT_APP_HELLO=${REACT_APP_HELLO}
+    image: dashboard
     restart: always
     environment:
       - NODE_ENV=${NODE_ENV}
@@ -114,7 +109,6 @@ services:
       - PENDING_DURATION_MINUTES=1440
       - UPLOAD_SECRET_KEY=${UPLOAD_SECRET_KEY}
       - TMP_DIR_NAME=tmp
-      - MICROSERVICE_NAME=bucket
 
     networks:
       - main-network

@@ -80,13 +80,34 @@ allPackagesWithTestScripts.forEach((package) => {
 });
 const appsWithTestScript = allPackagesWithTestScripts
   .filter((package) => package.jsonPath.includes("apps"))
-  .map((package) => ({
-    packageName: package.name,
-    packagePath: `apps/${package.jsonPath
-      .split("/apps/")[1]
-      .replace("/package.json", "/**")}`,
-    isApp: true,
-  }));
+  .map((package) => {
+    const isNextApp = fs.existsSync(
+      path.join(package.jsonPath, "../next.config.js")
+    );
+    const isCRAApp = fs.existsSync(
+      path.join(package.jsonPath, "../craco.config.js")
+    );
+    const isAPI = package.jsonPath.includes("APIs");
+    if (!isNextApp && !isCRAApp && !isAPI)
+      throw new Error(
+        "No dockerfile found! is this a new kind of app or is it an API that is placed in the wrong folder?"
+      );
+    const Dockerfile = isAPI
+      ? ".docker/Dockerfile.express"
+      : isCRAApp
+      ? ".docker/Dockerfile.cra"
+      : isNextApp
+      ? ".docker/Dockerfile.next"
+      : ".docker/Dockerfile.proxy-balancer";
+    return {
+      packageName: package.name,
+      packagePath: `apps/${package.jsonPath
+        .split("/apps/")[1]
+        .replace("/package.json", "/**")}`,
+      isApp: true,
+      Dockerfile,
+    };
+  });
 const packagesWithTestScripts = allPackagesWithTestScripts
   .filter((package) => !package.jsonPath.includes("apps"))
   .map((package) => ({
