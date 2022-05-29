@@ -9,10 +9,10 @@
     "start:prod": "node build/index.js",
     "clean": "rimraf build && node ./scripts/postbuild.js",
     "prebuild": "yarn clean && node ./scripts/prebuild.js",
-    "build": "npm run build:types && npm run build:js",
+    "build": "yarn build:js",
     "postbuild": "node ./scripts/postbuild.js",
     "build:js": "babel src --out-dir build --extensions \".ts\"",
-    "build:types": "tsc --emitDeclarationOnly",
+    "build:types": "tsc --emitDeclarationOnly -p tsconfig.prod.json ",
     "test": "jest --coverage",
     "seed": "ts-node src/seed/index.ts",
     "lint": "tsc --noEmit && eslint src --fix"

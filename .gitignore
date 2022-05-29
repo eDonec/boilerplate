@@ -5,7 +5,7 @@ yarn-error.log
 coverage
 dist
 !generators/*/.env
-tsconfig.tsbuildinfo
+*.tsbuildinfo
 **/turbo*
 out
 graph*
