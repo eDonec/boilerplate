@@ -3,7 +3,7 @@
 
   "compilerOptions": {
     "outDir": "build",
-    "module": "ES2022",
+    "module": "CommonJS",
     "sourceMap": false,
     "isolatedModules": true,
     "rootDir": "src",

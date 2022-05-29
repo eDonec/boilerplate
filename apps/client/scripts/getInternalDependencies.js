@@ -6,7 +6,6 @@ const {
   resolveMultipleInternalPackageDirs,
   getAllPackageJsonDepsRecursive,
   getPackageNameFromPath,
-  copyPackage,
 } = require("./lib");
 
 const internalImportedPackageNames =
@@ -22,11 +21,5 @@ const allDependecyTreePackageNames = allDependecyTreeDirs.map((packagePath) =>
   getPackageNameFromPath(packagePath)
 );
 
-console.log({
-  internalImportedPackageNames,
-  internalPackageDirs,
-  allDependecyTreeDirs,
-});
-allDependecyTreeDirs.forEach((dep) => copyPackage(dep));
 // TODO: clean up the deps post build
-module.exports = [];
+module.exports = allDependecyTreePackageNames;

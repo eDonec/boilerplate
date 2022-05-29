@@ -30,4 +30,3 @@ connect(process.env.DATABASE_URI, databaseConfig)
     });
   })
   .catch(console.error);
-export default app;

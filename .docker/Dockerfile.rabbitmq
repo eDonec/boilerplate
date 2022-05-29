@@ -1,5 +1,0 @@
-FROM rabbitmq:3-management-alpine
-
-COPY ./rabbitmq.conf /etc/rabbitmq/conf.d/20-custom.conf
-
-RUN rabbitmq-plugins enable rabbitmq_management

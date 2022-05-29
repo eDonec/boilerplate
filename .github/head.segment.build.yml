@@ -20,8 +20,9 @@ ${{changeCondition}}
         uses: docker/build-push-action@v3
         with:
           context: .
-          file: .docker/Dockerfile.${{packageName}}
+          file: ${{Dockerfile}}
           push: true
+          build-args: MICROSERVICE_NAME=${{packageName}}
           tags: ghcr.io/edonec/boilerplate/${{packageName}}:${{stage}}
           cache-from: type=gha
           cache-to: type=gha,mode=max

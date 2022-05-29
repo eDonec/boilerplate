@@ -1,7 +1,6 @@
 const path = require("path");
 const fs = require("fs");
-const rootDir = path.resolve(__dirname, "../../../../");
-cp = require("cpx");
+const rootDir = path.resolve(__dirname, "../../../");
 const workspaces = require(path.resolve(
   rootDir,
   "package.json"
@@ -97,29 +96,10 @@ const getAllPackageJsonDepsRecursive = (packagePaths) => {
 const getPackageNameFromPath = (packagePath) => {
   return require(path.resolve(packagePath, "package.json")).name;
 };
-const globLayer =
-  "/!(jest.config.js|__test__|__mock*__|coverage|node_modules|package.json|.git|tsconfig*|*.md)**";
-const copyPackage = (packagePath) => {
-  // fs.mkdirSync(path.resolve(__dirname, `../src/${packageName}`));
-  const packageName = getPackageNameFromPath(packagePath);
-  cp.copySync(
-    path.join(packagePath, globLayer),
-    path.resolve(__dirname, `../src/${packageName}`)
-  );
-  cp.copySync(
-    path.join(packagePath, `${globLayer}/${globLayer}`),
-    path.resolve(__dirname, `../src/${packageName}`)
-  );
-  cp.copySync(
-    path.join(packagePath, `${globLayer}/${globLayer}/${globLayer}`),
-    path.resolve(__dirname, `../src/${packageName}`)
-  );
-};
 
 module.exports = {
   extractInternalPackagesFromPackageJson,
   resolveMultipleInternalPackageDirs,
   getAllPackageJsonDepsRecursive,
   getPackageNameFromPath,
-  copyPackage,
 };
