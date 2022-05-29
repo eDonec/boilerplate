@@ -5,6 +5,7 @@
   "dependencies": {
     "core-ui": "*",
     "core-utils": "*",
+    "data-table": "*",
     "next": "12.1.5",
     "react": "18.1.0"
   },
