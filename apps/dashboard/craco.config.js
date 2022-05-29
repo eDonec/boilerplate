@@ -3,6 +3,7 @@
 const path = require("path");
 const { getLoader, loaderByName } = require("@craco/craco");
 const packages = require("./scripts/getInternalDependencyDirs");
+
 /** @type {import('@craco/craco').CracoConfig} */
 module.exports = {
   jest: {

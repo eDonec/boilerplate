@@ -25,6 +25,7 @@ export default function HomePage() {
   const { isLoading, dispatch, classicDispatch } = useLoadingDispatch();
   const { t } = useTranslation();
   const router = useRouter();
+
   const increment = () => {
     classicDispatch(incrementCounter());
   };

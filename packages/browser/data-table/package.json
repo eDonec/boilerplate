@@ -1,23 +1,23 @@
 {
-  "name": "core-cra-components",
-  "version": "0.1.0",
-  "main": "./index.tsx",
-  "types": "./index.tsx",
+  "name": "data-table",
+  "version": "0.0.1",
+  "main": "./index.ts",
+  "types": "./index.ts",
   "license": "MIT",
   "devDependencies": {
     "@types/react": "18.0.8",
     "@types/react-dom": "18.0.0",
-    "config": "*",
     "tsconfig": "*",
-    "react-router-dom": "6.3.0"
+    "config": "*"
   },
   "dependencies": {
     "core-utils": "*",
+    "core-ui": "*",
+    "forms": "*",
+    "shared-types": "*",
     "react": "18.1.0",
     "react-dom": "18.1.0",
-    "react-helmet-async": "^1.3.0",
-    "shared-types": "*",
-    "data-table": "*"
+    "core-hooks": "*"
   },
   "scripts": {
     "test": "jest --coverage --passWithNoTests",

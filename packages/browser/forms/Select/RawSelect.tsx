@@ -7,6 +7,7 @@ import SelectOptions from "./SelectOptions";
 import { ISelectOption } from "./types";
 import { useSelectInput } from "./useSelectInput";
 
+// TODO : Fix generic type
 export interface RawSelectProps<T = string> {
   options: ISelectOption<T>[];
   onChange: (value: ISelectOption<T>) => void;
@@ -49,46 +50,42 @@ const Select = forwardRef<LegacyRef<HTMLDivElement>, RawSelectProps>(
             "border-red-600 text-red-900 dark:border-red-500 dark:text-red-900"
         )}
       >
-        <div className="mb-6">
-          {label && (
-            <label
-              className={clsx(
-                "mb-2 block text-sm font-medium text-gray-900 dark:text-gray-300",
-                error && "text-red-600 dark:text-red-500"
-              )}
-            >
-              {label}
-            </label>
-          )}
+        {label && (
+          <label
+            className={clsx(
+              "mb-2 block text-sm font-medium text-gray-900 dark:text-gray-300",
+              error && "text-red-600 dark:text-red-500"
+            )}
+          >
+            {label}
+          </label>
+        )}
 
-          <OptionHeader
-            isOpen={isOpen}
-            placeholder={placeholder}
-            value={value}
-            toggleOpenSelectOptions={toggleOpenSelectOptions}
-            error={error}
+        <OptionHeader
+          isOpen={isOpen}
+          placeholder={placeholder}
+          value={value}
+          toggleOpenSelectOptions={toggleOpenSelectOptions}
+          error={error}
+        />
+
+        {error && (
+          <p className="mt-2 text-sm text-red-600 dark:text-red-500">{error}</p>
+        )}
+        {isOpen && (
+          <div
+            className={clsx([
+              "fixed",
+              "top-0 left-0 -z-0",
+              "min-h-screen min-w-[100vw]",
+              "bg-transparent",
+            ])}
+            onClick={toggleOpenSelectOptions}
           />
-
-          {error && (
-            <p className="mt-2 text-sm text-red-600 dark:text-red-500">
-              {error}
-            </p>
-          )}
-          {isOpen && (
-            <div
-              className={clsx([
-                "fixed",
-                "top-0 left-0 -z-0",
-                "min-h-screen min-w-[100vw]",
-                "bg-transparent",
-              ])}
-              onClick={toggleOpenSelectOptions}
-            />
-          )}
-          {isOpen && (
-            <SelectOptions onChange={handleSelectionChange} options={options} />
-          )}
-        </div>
+        )}
+        {isOpen && (
+          <SelectOptions onChange={handleSelectionChange} options={options} />
+        )}
       </div>
     );
   }
