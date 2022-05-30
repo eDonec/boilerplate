@@ -26,6 +26,8 @@ export const signIn = createAsyncThunk(
       if (isApiError(error)) {
         return rejectWithValue(error.response?.data);
       }
+
+      return rejectWithValue(error);
     }
   }
 );
