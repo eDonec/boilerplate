@@ -2,6 +2,7 @@ import ButtonLink from "core-cra-components/ButtonLink";
 
 import SearchIcon from "components/Icons/SearchIcon";
 
+import DarkModeButton from "./DarkModeButton";
 import ProfileAvatar from "./ProfileAvatar";
 
 const Navbar = () => (
@@ -29,6 +30,7 @@ const Navbar = () => (
           />
         </div>
         <ProfileAvatar />
+        <DarkModeButton />
       </div>
     </div>
   </nav>
