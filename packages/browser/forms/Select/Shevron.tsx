@@ -1,9 +1,9 @@
 import { clsx } from "core-utils";
 
-const Shevron: React.FC<{ isUp: boolean; error?: string }> = ({
-  isUp,
-  error,
-}) => (
+const Shevron: React.FC<{
+  isUp?: boolean;
+  error?: string;
+}> = ({ isUp = false, error }) => (
   <div
     className={clsx([
       "mx-3 border-l pl-2",

@@ -12,16 +12,17 @@
     "tsconfig": "*"
   },
   "dependencies": {
+    "@radix-ui/react-dropdown-menu": "^0.1.6",
+    "bucket-sdk": "*",
+    "bucket-types": "*",
+    "core-ui": "*",
     "core-utils": "*",
     "date-fns": "2.28.0",
     "field-validator": "*",
     "react": "18.1.0",
     "react-dom": "18.1.0",
     "react-dropzone": "12.1.0",
-    "react-hook-form": "7.30.0",
-    "bucket-types": "*",
-    "bucket-sdk": "*",
-    "core-ui": "*"
+    "react-hook-form": "7.30.0"
   },
   "peerDependencies": {
     "field-validator": "*"

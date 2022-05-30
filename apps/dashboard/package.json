@@ -10,6 +10,7 @@
     "@types/react-dom": "18.0.0",
     "auth-sdk": "*",
     "auth-types": "*",
+    "core-cra-components": "*",
     "core-hooks": "*",
     "core-ui": "*",
     "core-utils": "*",
@@ -23,9 +24,9 @@
     "react-i18next": "11.16.7",
     "react-redux": "8.0.1",
     "react-router-dom": "6.3.0",
-    "core-cra-components": "*",
     "server-sdk": "*",
     "shared-types": "*",
+    "tailwindcss-radix": "^2.2.0",
     "web-vitals": "2.1.4"
   },
   "scripts": {

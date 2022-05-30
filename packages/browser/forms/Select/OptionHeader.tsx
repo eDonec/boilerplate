@@ -7,7 +7,7 @@ export interface IProps {
   initialValue?: ISelectOption;
   placeholder?: string;
   value?: ISelectOption;
-  toggleOpenSelectOptions: () => void;
+  toggleOpenSelectOptions: (value: boolean) => void;
   isOpen: boolean;
   error?: string;
 }
@@ -30,7 +30,7 @@ export const OptionHeader: React.FC<IProps> = ({
       error &&
         "dark:border-red-400 dark:bg-red-100 dark:text-red-700 dark:focus:border-red-500 ",
     ])}
-    onClick={toggleOpenSelectOptions}
+    onClick={() => toggleOpenSelectOptions(!isOpen)}
   >
     <p className="py-3 pl-3 text-sm leading-3 tracking-normal">
       {value?.label || initialValue?.label || placeholder}

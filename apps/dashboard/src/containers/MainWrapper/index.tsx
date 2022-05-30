@@ -63,10 +63,12 @@ const MainWrapper: React.FC<Props> = ({
           </Sidebar>
           <div className="h-full w-full md:max-w-[calc(100vw-18rem)]">
             <Navbar />
-            <PageWrapperHeader
-              customIcon={CustomIcon || Icon}
-              {...restOfPageWrapperHeaderProps}
-            />
+            <div className="mb-3 bg-gray-200 pb-3 shadow-2xl dark:bg-gray-700">
+              <PageWrapperHeader
+                customIcon={CustomIcon || Icon}
+                {...restOfPageWrapperHeaderProps}
+              />
+            </div>
             <div className="max:w-4/5 max:md:w-11/12 container mx-auto w-4/5 md:w-11/12">
               {children}
             </div>
