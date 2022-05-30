@@ -21,12 +21,12 @@ const PageWrapperHeader: React.FC<PageWrapperHeaderProps> = ({
       <div className="flex">
         <div>
           {Icon && (
-            <Icon className="stroke-primary-600 dark:stroke-primary-900 dark:fill-primary-900 fill-primary-600 bg-primary-100 h-20 w-20 rounded-full p-4" />
+            <Icon className="stroke-primary-600 dark:stroke-primary-900 dark:fill-primary-900 fill-primary-600 bg-primary-200 h-20 w-20 rounded-full p-4" />
           )}
         </div>
         <div className="my-auto table-cell pl-5 align-middle dark:text-gray-200">
           <h1 className="text-2xl font-medium">{toPropperCase(title)}</h1>
-          <p className="text-sm text-gray-400 dark:text-gray-300">
+          <p className="text-sm text-gray-500 dark:text-gray-300">
             {description}
           </p>
         </div>

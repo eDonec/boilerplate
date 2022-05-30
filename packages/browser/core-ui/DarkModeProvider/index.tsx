@@ -1,10 +1,6 @@
 import React from "react";
 
-import {
-  DarkModeContext,
-  useDarkMode,
-  useDarkModeContext,
-} from "./useDarkMode";
+import { DarkModeContext, useDarkModeContext } from "./useDarkMode";
 
 const DarkModeProvider: React.FC<
   React.PropsWithChildren<{ className?: string }>
@@ -23,14 +19,6 @@ export default DarkModeProvider;
 const DarkModeWrapper: React.FC<
   React.PropsWithChildren<{ className?: string }>
 > = ({
-  className = "dark:bg-dark bg-gray-50 min-h-screen transition-[background-color] duration-700",
+  className = "min-h-screen transition-[background-color]",
   children,
-}) => {
-  const { theme } = useDarkMode();
-
-  return (
-    <main className={theme}>
-      <div className={className}>{children}</div>
-    </main>
-  );
-};
+}) => <main className={className}>{children}</main>;
