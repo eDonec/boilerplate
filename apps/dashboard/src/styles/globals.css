@@ -1,7 +1,4 @@
 @tailwind base;
-@tailwind components;
-@tailwind utilities;
-
 :root {
   /* #region  /**=========== Primary Color =========== */
   /* !STARTERCONF Customize these variable, copy and paste from /styles/colors.css for list of colors */
@@ -144,7 +141,9 @@
       U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212,
       U+2215, U+FEFF, U+FFFD;
   }
-
+  body {
+    @apply !pr-0;
+  }
   /* #region  /**=========== Typography =========== */
   .h0 {
     @apply font-primary text-3xl font-bold md:text-5xl;
@@ -190,7 +189,43 @@
   .min-h-main {
     @apply min-h-[calc(100vh-56px)];
   }
+
+  html {
+    @apply bg-gray-50;
+    scrollbar-color: #00000080 transparent;
+    scrollbar-width: auto;
+    transition-property: background-color;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 150ms;
+  }
+
+  html[class*="dark"] {
+    @apply bg-dark;
+    scrollbar-color: #110404b3 transparent;
+    scrollbar-width: auto;
+  }
+
+  ::-webkit-scrollbar {
+    height: 10px;
+    width: 10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-gray-300 dark:bg-gray-900;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply rounded-full bg-black/50 dark:bg-white/70;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-black/60 dark:hover:bg-white/80;
+  }
+  :root {
+    @apply scroll-smooth antialiased;
+  }
 }
+
 @layer utilities {
   .scrollbar::-webkit-scrollbar {
     -webkit-appearance: none;
@@ -200,7 +235,6 @@
 
   .scrollbar::-webkit-scrollbar-track {
     background: var(--color-gray-800);
-
     border-radius: 0;
   }
 
@@ -216,3 +250,16 @@
     background: var(--color-gray-400);
   }
 }
+button {
+  /* Disables tap highlight color on Chrome */
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Input darkmode fix for checkbox / radio */
+.dark [type="checkbox"]:checked,
+.dark [type="radio"]:checked {
+  background-color: currentColor;
+}
+
+@tailwind components;
+@tailwind utilities;

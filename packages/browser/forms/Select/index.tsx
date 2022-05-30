@@ -17,7 +17,7 @@ export interface SelectProps
   name: string;
 }
 
-const Select: React.FC<SelectProps> = ({ validate, ...props }) => {
+const Select: React.FC<SelectProps> = ({ validate, className, ...props }) => {
   const { control, getValues } = useFormContext();
 
   const { errors } = useFormState();
@@ -32,6 +32,7 @@ const Select: React.FC<SelectProps> = ({ validate, ...props }) => {
       render={({ field: { onChange, value, ref } }) => (
         <RawSelect
           onChange={onChange}
+          className={`w-100 mb-6 ${className}`}
           {...props}
           ref={ref}
           initialValue={getValues(props.name)}

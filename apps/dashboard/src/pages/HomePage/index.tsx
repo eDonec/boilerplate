@@ -126,6 +126,7 @@ const HomePage = () => {
             <Checkbox name="check" label="check box for test" defaultChecked />
             <Select
               name="select"
+              initialValue={{ label: "English", value: "en" }}
               validate={[{ rule: "exists" }]}
               options={[
                 { label: "English", value: "en" },

@@ -3,20 +3,13 @@ import { clsx } from "core-utils";
 import { ISelectOption } from "./types";
 
 interface IProps {
-  onChange: (option: ISelectOption) => void;
   isFirst: boolean;
   isLast: boolean;
   option: ISelectOption;
   error?: string;
 }
 
-const Option: React.FC<IProps> = ({
-  option,
-  isFirst,
-  isLast,
-  onChange,
-  error,
-}) => (
+const Option: React.FC<IProps> = ({ option, isFirst, isLast, error }) => (
   <li
     className={clsx([
       "py-3 px-3",
@@ -27,7 +20,6 @@ const Option: React.FC<IProps> = ({
       " hover:bg-primary-200 dark:hover:bg-primary-800 dark:text-gray-200 ",
       error && "text-red-600 dark:text-red-500",
     ])}
-    onClick={() => onChange(option)}
   >
     {option.label}
   </li>

@@ -1,25 +1,27 @@
-import { forwardRef, LegacyRef } from "react";
+import { forwardRef } from "react";
 
-import { clsx } from "core-utils";
+import * as DropdownMenuPrimitive from "@radix-ui/react-dropdown-menu";
+import clsx from "core-utils/clsx";
 
-import OptionHeader from "./OptionHeader";
-import SelectOptions from "./SelectOptions";
+import Shevron from "./Shevron";
 import { ISelectOption } from "./types";
 import { useSelectInput } from "./useSelectInput";
 
-// TODO : Fix generic type
 export interface RawSelectProps<T = string> {
   options: ISelectOption<T>[];
-  onChange: (value: ISelectOption<T>) => void;
-  initialValue?: ISelectOption<T>;
+  onChange?: (value: ISelectOption<T>) => void;
+  initialValue?: this["options"][number];
   label?: string;
   placeholder?: string;
   error?: string;
-  value: ISelectOption<T> | undefined;
+  value?: ISelectOption<T> | undefined;
   className?: string;
+  itemClassName?: string;
+  trigger?: JSX.Element;
+  renderChildren?: (value: ISelectOption<T>) => JSX.Element;
 }
 
-const Select = forwardRef<LegacyRef<HTMLDivElement>, RawSelectProps>(
+const RawSelect = forwardRef<HTMLButtonElement, RawSelectProps>(
   (
     {
       options,
@@ -30,6 +32,9 @@ const Select = forwardRef<LegacyRef<HTMLDivElement>, RawSelectProps>(
       error,
       className,
       placeholder,
+      trigger,
+      renderChildren,
+      itemClassName,
     },
     ref
   ) => {
@@ -41,55 +46,72 @@ const Select = forwardRef<LegacyRef<HTMLDivElement>, RawSelectProps>(
       });
 
     return (
-      <div
-        ref={ref as LegacyRef<HTMLDivElement>}
-        className={clsx(
-          className,
-          "border-gray-400 text-gray-600",
-          error &&
-            "border-red-600 text-red-900 dark:border-red-500 dark:text-red-900"
-        )}
-      >
+      <DropdownMenuPrimitive.Root onOpenChange={toggleOpenSelectOptions}>
         {label && (
-          <label
-            className={clsx(
-              "mb-2 block text-sm font-medium text-gray-900 dark:text-gray-300",
-              error && "text-red-600 dark:text-red-500"
-            )}
-          >
-            {label}
-          </label>
+          <DropdownMenuPrimitive.Label>{label}</DropdownMenuPrimitive.Label>
         )}
+        <DropdownMenuPrimitive.Trigger ref={ref} asChild>
+          {trigger || (
+            <button
+              className={clsx([
+                className,
+                "flex",
+                "cursor-pointer",
+                "items-center justify-between",
+                "rounded border",
+                !error &&
+                  "dark:border-gray-500 dark:bg-gray-700 dark:text-gray-200",
+                error && "border-red-500 bg-red-50 text-red-600 ",
+                error &&
+                  "dark:border-red-400 dark:bg-red-100 dark:text-red-700 dark:focus:border-red-500 ",
+              ])}
+              onClick={() => toggleOpenSelectOptions(!isOpen)}
+            >
+              <p className="py-3 pl-3 text-sm leading-3 tracking-normal">
+                {value?.label || initialValue?.label || placeholder}
+              </p>
 
-        <OptionHeader
-          isOpen={isOpen}
-          placeholder={placeholder}
-          value={value}
-          toggleOpenSelectOptions={toggleOpenSelectOptions}
-          error={error}
-        />
+              <Shevron isUp={isOpen} error={error} />
+            </button>
+          )}
+          {/* <Button primary>{label}</Button> */}
+        </DropdownMenuPrimitive.Trigger>
 
-        {error && (
-          <p className="mt-2 text-sm text-red-600 dark:text-red-500">{error}</p>
-        )}
-        {isOpen && (
-          <div
-            className={clsx([
-              "fixed",
-              "top-0 left-0 -z-0",
-              "min-h-screen min-w-[100vw]",
-              "bg-transparent",
-            ])}
-            onClick={toggleOpenSelectOptions}
-          />
-        )}
-        {isOpen && (
-          <SelectOptions onChange={handleSelectionChange} options={options} />
-        )}
-      </div>
+        <DropdownMenuPrimitive.Content
+          align="end"
+          sideOffset={5}
+          className={clsx(
+            "radix-side-top:animate-slide-up radix-side-bottom:animate-slide-down",
+            "min-w-[9rem] rounded-lg px-1.5 py-1 shadow-md",
+            "bg-white dark:bg-gray-700"
+          )}
+        >
+          {options.map((option) => (
+            <DropdownMenuPrimitive.Item
+              onSelect={() => handleSelectionChange(option)}
+              key={option.value}
+              className={clsx(
+                itemClassName || [
+                  "flex cursor-default select-none items-center rounded-md px-2 py-2 text-xs outline-none",
+                  "focus:bg-primary-200 dark:focus:bg-primary-800  text-gray-400 dark:text-gray-500",
+                  option.value === value?.value &&
+                    "dark:bg-primary-900 bg-gray-300",
+                ]
+              )}
+            >
+              {renderChildren ? (
+                renderChildren(option)
+              ) : (
+                <span className="flex-grow text-sm text-gray-700 dark:text-gray-300">
+                  {option.label}
+                </span>
+              )}
+            </DropdownMenuPrimitive.Item>
+          ))}
+        </DropdownMenuPrimitive.Content>
+      </DropdownMenuPrimitive.Root>
     );
   }
 );
 
-export default Select;
-export * from "./types";
+export default RawSelect;

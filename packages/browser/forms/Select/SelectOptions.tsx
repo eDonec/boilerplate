@@ -1,3 +1,4 @@
+import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 import { clsx } from "core-utils";
 
 import Option from "./Option";
@@ -10,7 +11,6 @@ interface IProps {
 const SelectOptions: React.FC<IProps> = ({ options, onChange }) => (
   <ul
     className={clsx([
-      "absolute mt-1 w-48",
       "rounded border",
       "duration-300 ",
       " bg-white dark:bg-gray-700",
@@ -18,13 +18,26 @@ const SelectOptions: React.FC<IProps> = ({ options, onChange }) => (
     ])}
   >
     {options.map((option, index) => (
-      <Option
+      <DropdownMenu.Item
+        onSelect={() => onChange(option)}
         key={option.value}
-        option={option}
-        onChange={onChange}
-        isFirst={index === 0}
-        isLast={index === options.length - 1}
-      />
+        asChild
+        className={clsx([
+          "py-3 px-3",
+          "cursor-pointer",
+          index === 0 && "rounded-t",
+          index === options.length - 1 && "rounded-b-sm",
+          "text-sm font-normal leading-3 tracking-normal",
+          " hover:bg-primary-200 dark:hover:bg-primary-800 dark:text-gray-200 ",
+          false && "text-red-600 dark:text-red-500",
+        ])}
+      >
+        <Option
+          option={option}
+          isFirst={index === 0}
+          isLast={index === options.length - 1}
+        />
+      </DropdownMenu.Item>
     ))}
   </ul>
 );

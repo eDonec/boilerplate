@@ -15,8 +15,8 @@ const Breadcrumbs = () => {
   //   );
 
   return (
-    <nav className="mt-4 mb-6 font-bold" aria-label="Breadcrumb">
-      <ol className=" inline-flex list-none items-center justify-between p-0 text-xs font-normal text-gray-500 transition-colors dark:text-gray-200">
+    <nav className="mt-4 mb-2 font-bold" aria-label="Breadcrumb">
+      <ol className=" inline-flex list-none items-center justify-between p-0 text-xs font-normal text-gray-700 transition-colors dark:text-gray-100">
         <li className="flex items-center">
           <Link
             className="hover:text-primary-900 dark:hover:text-primary-600"
@@ -29,7 +29,7 @@ const Breadcrumbs = () => {
         {pathList.map((path) => (
           <li key={path} className="flex items-center">
             <Link
-              className="hover:text-primary-900 dark:hover:text-primary-600"
+              className="hover:text-primary-900 dark:hover:text-primary-800"
               to={path}
             >
               {linkTranslator[path]}
@@ -38,7 +38,10 @@ const Breadcrumbs = () => {
           </li>
         ))}
         <li>
-          <span className="font-normal text-gray-400" aria-current="page">
+          <span
+            className="font-normal text-gray-500 dark:text-gray-400"
+            aria-current="page"
+          >
             {linkTranslator[currentPath] || toPropperCase(currentPath)}
           </span>
         </li>
