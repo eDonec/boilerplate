@@ -20,6 +20,7 @@ try {
 
 if (!process.env.DATABASE_URI)
   throw new Error("Missing .env key : DATABASE_URI");
+
 app.use("/api/v1/auth", router);
 
 connect(process.env.DATABASE_URI, databaseConfig)
