@@ -1,6 +1,5 @@
 // eslint-disable-next-line simple-import-sort/imports
 import "dotenv/config";
-/* eslint-disable no-console */
 import { json } from "body-parser";
 import producer from "events/producer";
 import Server from "http-server";
@@ -14,6 +13,13 @@ server.use(json());
 if (!process.env.DATABASE_URI)
   throw new Error("Missing .env key : DATABASE_URI");
 
-export default server.app;
+server.app.get("/api/v1/auth/health", (_, res) => {
+  res.send({
+    uptime: process.uptime(),
+    health: "OK",
+    microServiceName: process.env.MICROSERVICE_NAME,
+    currentTime: new Date().toISOString(),
+  });
+});
 
-// eslint-disable-next-line prefer-destructuring
+export default server.app;
