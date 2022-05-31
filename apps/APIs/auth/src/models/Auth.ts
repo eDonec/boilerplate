@@ -1,4 +1,4 @@
-import { AuthDocument, AuthModel } from "auth-types/models/Auth";
+import { AuthType } from "auth-types/models/Auth";
 import { model, Schema } from "mongoose";
 import {
   ACCESS_TYPE,
@@ -9,7 +9,7 @@ import {
 
 import { hashPassword } from "helpers/hashPassword";
 
-const schema = new Schema<AuthDocument>({
+const schema = new Schema<AuthType>({
   email: String,
   userName: String,
   authType: {
@@ -95,4 +95,4 @@ const schema = new Schema<AuthDocument>({
   lastTrialSince: Date,
 });
 
-export default model<AuthDocument, AuthModel>("Auth", schema);
+export default model("Auth", schema);
