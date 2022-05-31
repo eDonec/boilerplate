@@ -22,7 +22,15 @@ server.use(json());
 if (!process.env.DATABASE_URI)
   throw new Error("Missing .env key : DATABASE_URI");
 
+server.app.get("/api/v1/bucket/health", (_, res) => {
+  res.send({
+    uptime: process.uptime(),
+    health: "OK",
+    microServiceName: process.env.MICROSERVICE_NAME,
+    currentTime: new Date().toISOString(),
+  });
+});
+
 export default server.app;
 
-// eslint-disable-next-line prefer-destructuring
-export const Router = server.Router;
+export const { Router } = server;
