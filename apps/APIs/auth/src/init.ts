@@ -1,6 +1,5 @@
 // eslint-disable-next-line simple-import-sort/imports
 import "dotenv/config";
-/* eslint-disable no-console */
 import { json } from "body-parser";
 import producer from "events/producer";
 import Server from "http-server";
