@@ -6,7 +6,7 @@ type ChevronProps = {
 
 const Chevron: React.FC<ChevronProps> = ({ className }) => (
   <svg
-    className={clsx("h-4 w-4 min-w-fit", className)}
+    className={clsx("h-4 w-4", className)}
     width="24"
     height="24"
     viewBox="0 0 24 24"
