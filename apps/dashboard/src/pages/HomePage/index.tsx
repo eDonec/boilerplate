@@ -142,8 +142,8 @@ const HomePage = () => {
               submit
             </Button>
             <AlertDialog
-              title="titre"
-              message="Etes-vous sur de vouloir continuer?"
+              title="Are you absolutely sure?"
+              message="This action cannot be undone. This will permanently delete your account and remove your data from our servers."
               confirmMessage="Confirmer"
               cancelMessage="Annuler"
               {...submitModalProps}
@@ -166,7 +166,7 @@ const HomePage = () => {
                 {t("api.notFound")}
               </Button>
             </div>
-            <Button outline onClick={setAsync} isLoading={isLoading}>
+            <Button gray outline onClick={setAsync} isLoading={isLoading}>
               {t("api.updated")}
             </Button>
           </div>
