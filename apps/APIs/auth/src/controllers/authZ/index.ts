@@ -53,7 +53,7 @@ export const getUploadToken: IAuthServerMiddleware<
   res.status(StatusCodes.Created).send(uploadToken.token);
 };
 
-export const addRessourceAccess: IAuthServerMiddleware<
+export const checkRessourceAccess: IAuthServerMiddleware<
   Request<
     unknown,
     unknown,

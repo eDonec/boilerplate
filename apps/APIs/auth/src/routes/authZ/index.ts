@@ -20,6 +20,7 @@ router.get(`${BASE_ROUTE}/upload-token`, authZController.getUploadToken);
 
 router.post(
   `${BASE_ROUTE}/ressource-access`,
+  authZValidators.checkRessourceAccess,
   authNValidators.tokenValidator(false),
   getAuthByAccessToken,
   (req, res, next) => {
@@ -27,8 +28,7 @@ router.post(
 
     routeProtection(ressource, privileges)(req, res, next);
   },
-  authZValidators.addRessourceAccess,
-  authZController.addRessourceAccess
+  authZController.checkRessourceAccess
 );
 
 export default router;
