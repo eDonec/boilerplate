@@ -47,7 +47,7 @@ RUN yarn build --filter=${MICROSERVICE_NAME}
 # Create an image for the build
 FROM node:18-alpine AS runner
 ARG MICROSERVICE_NAME
-
+ENV MICROSERVICE_NAME=${MICROSERVICE_NAME}
 RUN apk update
 WORKDIR /app
 COPY --from=builder /app/apps/APIs/${MICROSERVICE_NAME}/build .

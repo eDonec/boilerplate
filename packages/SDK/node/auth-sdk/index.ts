@@ -1,4 +1,5 @@
 import { AuthNRouteTypes } from "auth-types/routes/authN";
+import { AuthZRouteTypes } from "auth-types/routes/authZ";
 import ServerSDK from "server-sdk/sdk";
 import ServerSDKTypes from "server-sdk/types";
 import { IToken } from "shared-types";
@@ -111,6 +112,20 @@ export default class AuthSDK extends ServerSDK {
     const { data } = await this.api.get<
       AuthNRouteTypes["/n/me"]["GET"]["response"]
     >(`${baseUrl}/n/me`);
+
+    return data;
+  }
+
+  public async addRessourceAccess({
+    body,
+  }: {
+    body: AuthZRouteTypes["/z/ressource-access"]["POST"]["body"];
+    query?: never;
+    params?: never;
+  }) {
+    const { data } = await this.api.post<
+      AuthZRouteTypes["/z/ressource-access"]["POST"]["response"]
+    >(`${baseUrl}/z/ressource-access`, body);
 
     return data;
   }

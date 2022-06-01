@@ -1,4 +1,4 @@
-import { Document, LeanDocument, Model } from "mongoose";
+import { HydratedDocument, LeanDocument } from "mongoose";
 import { ACCESS, ACCESS_TYPE, AUTH_PROVIDERS } from "shared-types";
 
 import { RoleType } from "../Role";
@@ -25,6 +25,5 @@ export type AuthType = {
   numberOfUnsuccessfulTrials: number;
   lastTrialSince: Date;
 };
-export type AuthDocument = AuthType & Document<string>;
+export type AuthDocument = HydratedDocument<AuthType>;
 export type LeanAuthDocument = LeanDocument<AuthDocument>;
-export type AuthModel = Model<AuthDocument>;
