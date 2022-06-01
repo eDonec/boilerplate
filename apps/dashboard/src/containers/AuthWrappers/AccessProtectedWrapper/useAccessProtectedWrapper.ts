@@ -4,7 +4,7 @@ import { useAppSelector } from "hooks/reduxHooks";
 
 export const useAccessProtectedWrapper = (
   ressource?: ACCESS_RESSOURCES,
-  previlages?: PRIVILEGE | PRIVILEGE[]
+  previlages?: PRIVILEGE
 ) => {
   const access = useAppSelector(({ auth }) => auth.access);
 
@@ -16,22 +16,18 @@ export const useAccessProtectedWrapper = (
 export const accessMatcher = (
   access?: ACCESS[],
   ressource?: ACCESS_RESSOURCES,
-  previlages?: PRIVILEGE | PRIVILEGE[]
+  previlages?: PRIVILEGE
 ) => {
   if (!ressource) return true;
   if (!access?.length) return false;
 
-  const userAccess = access.find(
-    (a) => a.ressource === ressource || a.ressource === "*"
-  );
+  const userAccess = access
+    // this is here to make sure that we hit the god ressource before any other ressource
+    .sort((a) => (a.ressource === "*" ? 1 : -1))
+    .find((a) => a.ressource === ressource || a.ressource === "*");
 
   if (!userAccess) return false;
-  if (!previlages) return true;
-  if (!Array.isArray(previlages)) {
-    return userAccess.privileges.includes(previlages);
-  }
+  if (previlages == null) return true;
 
-  if (previlages.length === 0) return true;
-
-  return previlages.every((p) => userAccess.privileges.includes(p));
+  return userAccess.privileges >= previlages;
 };

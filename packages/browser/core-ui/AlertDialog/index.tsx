@@ -18,10 +18,7 @@ export const AlertDialog: React.FC<DialogAlertProps> = ({
   isOpen,
   handleClose,
 }) => (
-  <Modal isOpen={isOpen} handleClose={handleClose}>
-    <h2 className="text-sm font-medium text-gray-900 dark:text-gray-100">
-      {title}
-    </h2>
+  <Modal isOpen={isOpen} title={title} handleClose={handleClose}>
     <p className="mt-2 text-sm font-normal text-gray-700 dark:text-gray-400">
       {message}
     </p>

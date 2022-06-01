@@ -1,49 +1,36 @@
 /* eslint-disable no-console */
 import app from "init.testSetup";
-import Auth from "models/Auth";
-import Role from "models/Role";
 import { seed } from "seed/seed";
-import { generateAuthResponse } from "services/authN/helpers";
-import {
-  ACCESS_RESSOURCES,
-  ACCESS_TYPE,
-  AUTH_PROVIDERS,
-  PRIVILEGE,
-  StatusCodes,
-} from "shared-types";
+import { ACCESS_RESSOURCES, PRIVILEGE, StatusCodes } from "shared-types";
 import supertest from "supertest";
-
-import { PUBLIC_ROLE } from "constants/defaultRoles";
 
 const BASE_URL = "/api/v1/auth";
 
-let token: string;
-
 beforeEach(async () => {
   try {
-    await seed();
-    const publicRole = await Role.findOne({ name: PUBLIC_ROLE.name });
-
-    const auth = await Auth.create({
-      email: "test@email.com",
-      password: "password",
-      role: publicRole,
-      authType: ACCESS_TYPE.USER,
-      authProvider: [AUTH_PROVIDERS.CLASSIC],
-    });
-
-    token = (await generateAuthResponse(auth)).token.accessToken;
+    await seed(false);
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.error("Seeding is not available");
   }
 });
+
 describe("POST /z/ressource-access", () => {
   describe("validation tests", () => {
     it("should respond successfully (1)", async () => {
+      // console.log(signUpResponse);
+      const signUpBody = { email: "test1@example.com", password: "password" };
+      const signUpResponse = await supertest(app)
+        .post(`${BASE_URL}/n/classic`)
+        .send(signUpBody);
+
+      const token = signUpResponse.body.token.accessToken;
+
       const body = {
         ressource: ACCESS_RESSOURCES.PUBLIC,
-        privileges: PRIVILEGE.READ_SELF,
+        privileges: PRIVILEGE.REVOKE,
       };
+
       const response = await supertest(app)
         .post(`${BASE_URL}/z/ressource-access`)
         .set("Authorization", `Bearer ${token}`)
@@ -52,11 +39,41 @@ describe("POST /z/ressource-access", () => {
       expect(response.status).toEqual(StatusCodes.Accepted);
     });
 
-    it("should throw a validation error (2)", async () => {
-      const body = { ressource: 9090909, privileges: 9090909 };
+    it("should not throw a validation error but throw forbidden error", async () => {
+      const signUpBody = { email: "test1@example.com", password: "password" };
+      const signUpResponse = await supertest(app)
+        .post(`${BASE_URL}/n/classic`)
+        .send(signUpBody);
+
+      const token = signUpResponse.body.token.accessToken;
+      const body = { ressource: "9090909", privileges: 6 };
       const response = await supertest(app)
         .post(`${BASE_URL}/z/ressource-access`)
         .set("Authorization", `Bearer ${token}`)
+        .send(body);
+
+      expect(response.status).toEqual(StatusCodes.Forbidden);
+    });
+
+    it("should throw a validation error", async () => {
+      const body = { ressource: 9090909, privileges: 9090909 };
+      const signUpBody = { email: "test1@example.com", password: "password" };
+      const signUpResponse = await supertest(app)
+        .post(`${BASE_URL}/n/classic`)
+        .send(signUpBody);
+
+      const token = signUpResponse.body.token.accessToken;
+      const response = await supertest(app)
+        .post(`${BASE_URL}/z/ressource-access`)
+        .set("Authorization", `Bearer ${token}`)
+        .send(body);
+
+      expect(response.status).toEqual(StatusCodes["Bad Request"]);
+    });
+    it("should throw a token error when not passed", async () => {
+      const body = { ressource: "9090909", privileges: 3 };
+      const response = await supertest(app)
+        .post(`${BASE_URL}/z/ressource-access`)
         .send(body);
 
       expect(response.status).toEqual(StatusCodes.Forbidden);

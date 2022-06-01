@@ -13,5 +13,5 @@ if (!process.env.DATABASE_URI)
   throw new Error("Missing .env key : DATABASE_URI");
 
 connect(process.env.DATABASE_URI, databaseConfig)
-  .then(seed)
+  .then(() => seed())
   .catch(console.error);

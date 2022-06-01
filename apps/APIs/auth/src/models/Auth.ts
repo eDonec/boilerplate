@@ -54,12 +54,10 @@ const schema = new Schema<AuthType>({
     type: [
       {
         ressource: String,
-        privileges: [
-          {
-            type: String,
-            enum: PRIVILEGE,
-          },
-        ],
+        privileges: {
+          type: String,
+          enum: PRIVILEGE,
+        },
       },
     ],
     default: [{ ressource: "PUBLIC", privileges: FULL_ACCESS }],

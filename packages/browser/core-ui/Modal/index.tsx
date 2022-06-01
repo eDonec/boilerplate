@@ -6,11 +6,13 @@ import { useModal } from "./useModal";
 
 export interface ModalProps extends ReactChildrenProps {
   isOpen: boolean;
+  title: string;
   handleClose: () => void;
 }
 export const Modal: React.FC<ModalProps> = ({
   isOpen,
   handleClose,
+  title,
   children,
 }) => {
   useModal({ handleClose });
@@ -34,7 +36,7 @@ export const Modal: React.FC<ModalProps> = ({
         className={clsx(
           { "pointer-events-none": !isOpen },
           // "relative",
-          // "mx-auto w-full max-w-3xl",
+          "mx-auto w-full max-w-3xl",
           // "flex flex-col",
           // "rounded-lg  border-0",
           // "bg-white shadow-lg dark:bg-gray-700",
@@ -45,12 +47,15 @@ export const Modal: React.FC<ModalProps> = ({
           "overflow-auto transition-opacity",
           "duration-150 ease-in-out",
           "fixed z-50",
-          "w-[95vw] max-w-md rounded-lg p-4 md:w-full",
+          "w-[95vw] rounded-lg p-4 md:w-full",
           "top-[50%] left-[50%] -translate-x-[50%] -translate-y-[50%]",
           "bg-white dark:bg-gray-800",
           "focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75"
         )}
       >
+        <h2 className="text-sm font-medium text-gray-900 dark:text-gray-100">
+          {title}
+        </h2>
         <CloseButton handleClose={handleClose} />
         {children}
       </div>

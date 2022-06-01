@@ -5,7 +5,7 @@ import { useAccessProtectedWrapper } from "./useAccessProtectedWrapper";
 
 export type Privileges = {
   ressource?: ACCESS_RESSOURCES;
-  privileges?: PRIVILEGE | PRIVILEGE[];
+  privileges?: PRIVILEGE;
   // TODO: Do something about meta values inside the access object by sending a function or something
 };
 type IProps = ReactChildrenProps & Privileges;
