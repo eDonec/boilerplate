@@ -3,7 +3,7 @@ import { AuthZRouteTypes } from "auth-types/routes/authZ";
 import { Request, Response } from "http-server";
 import { IMiddleware } from "shared-types";
 
-export const addRessourceAccess: IMiddleware<
+export const checkRessourceAccess: IMiddleware<
   Request<
     unknown,
     unknown,
