@@ -4,15 +4,19 @@ import { compareSync } from "bcrypt";
 import { ObjectValidationError, UnauthorizedError } from "custom-error";
 import add from "date-fns/add";
 import isAfter from "date-fns/isAfter";
+import { Request } from "http-server";
 import Auth from "models/Auth";
 import * as authZServices from "services/authZ";
 import { AUTH_PROVIDERS, IMiddleware } from "shared-types";
 
-export const signInClassicValidator: IMiddleware = async (req, res, next) => {
-  const {
-    email,
-    userName,
-  }: AuthNRouteTypes["/n/sign-in/classic"]["POST"]["body"] = req.body;
+export const signInClassicValidator: IMiddleware<
+  Request<
+    unknown,
+    unknown,
+    AuthNRouteTypes["/n/sign-in/classic"]["POST"]["body"]
+  >
+> = async (req, res, next) => {
+  const { email, userName } = req.body;
 
   const authUsersByUserNameOrEmail = await Auth.findOne(
     userName

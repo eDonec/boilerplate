@@ -1,5 +1,6 @@
 import IAuthServerMiddleware from "auth-types/IAuthServerMiddleware";
 import { AuthNRouteTypes } from "auth-types/routes/authN";
+import { AuthZRouteTypes } from "auth-types/routes/authZ";
 import { Request } from "http-server";
 import { StatusCodes } from "shared-types";
 import TokenGenerator from "token/TokenGenerator";
@@ -50,4 +51,16 @@ export const getUploadToken: IAuthServerMiddleware<
   );
 
   res.status(StatusCodes.Created).send(uploadToken.token);
+};
+
+export const addRessourceAccess: IAuthServerMiddleware<
+  Request<
+    unknown,
+    unknown,
+    AuthZRouteTypes["/z/ressource-access"]["POST"]["body"],
+    unknown
+  >,
+  AuthZRouteTypes["/z/ressource-access"]["POST"]["response"]
+> = async (_, res) => {
+  res.status(StatusCodes.Accepted).send("OK");
 };
