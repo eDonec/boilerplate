@@ -2,12 +2,12 @@ import { UncontrolledDataTable } from "core-next-components";
 import {
   DataTableColumn,
   FetchFunction,
-  PaginatedResponse,
 } from "core-next-components/UncontrolledDataTable/types";
 import {
   extractQueryParams,
   isSortDirection,
 } from "core-next-components/UncontrolledDataTable/utils";
+import { IPaginatedResult } from "shared-types/IPaginatedResult";
 
 import { GetServerSideProps } from "next";
 
@@ -47,7 +47,7 @@ const users: User[] = [
   },
 ];
 
-const paginatedUsers: PaginatedResponse<User> = {
+const paginatedUsers: IPaginatedResult<User> = {
   items: users,
   totalItems: 200,
   totalPages: 2,
@@ -127,7 +127,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 };
 
 type DataTablePageProps = {
-  initialDatatableData?: PaginatedResponse<User>;
+  initialDatatableData?: IPaginatedResult<User>;
 };
 
 const DataTablePage = ({ initialDatatableData }: DataTablePageProps) => {

@@ -4,8 +4,8 @@ import UncontrolledDataTable from "core-cra-components/UncontrolledDataTable";
 import {
   DataTableColumn,
   FetchFunction,
-  PaginatedResponse,
 } from "core-cra-components/UncontrolledDataTable/types";
+import { IPaginatedResult } from "shared-types/IPaginatedResult";
 
 import PrivateWrapper from "containers/AuthWrappers/PrivateWrapper";
 import MainWrapper from "containers/MainWrapper";
@@ -93,7 +93,7 @@ const users: User[] = [
   },
 ];
 
-const paginatedUsers: PaginatedResponse<User> = {
+const paginatedUsers: IPaginatedResult<User> = {
   items: users,
   totalItems: 100,
   totalPages: 10,

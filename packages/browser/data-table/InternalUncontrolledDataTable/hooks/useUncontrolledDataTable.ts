@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 
 import { useFirstMount } from "core-hooks";
+import { IPaginatedResult } from "shared-types/IPaginatedResult";
 
 import {
   emptyPaginationResponse,
@@ -8,10 +9,7 @@ import {
 } from "../constants";
 import { InternalUncontrolledDataTableProps } from "../types";
 import { extractQueryParams, isSortDirection } from "../utils";
-import {
-  PaginatedResponse,
-  SortDirection,
-} from "../../ControlledDataTable/types";
+import { SortDirection } from "../../ControlledDataTable/types";
 
 export const useUncontrolledDataTable = <T>({
   fetchFunction,
@@ -27,7 +25,7 @@ export const useUncontrolledDataTable = <T>({
   | "onFetchError"
   | "initialValue"
 >) => {
-  const [data, setData] = useState<PaginatedResponse<T>>(
+  const [data, setData] = useState<IPaginatedResult<T>>(
     initialValue || emptyPaginationResponse
   );
   const [loading, setLoading] = useState(!initialValue);
