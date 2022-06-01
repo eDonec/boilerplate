@@ -14,9 +14,11 @@ const DEFAULT_USER = {
   isActive: true,
 };
 
-export const seed = async () => {
-  console.log(`Connected to database`);
-  console.log(`Seeding Started...`);
+export const seed = async (withLogs = true) => {
+  if (withLogs) {
+    console.log(`Connected to database`);
+    console.log(`Seeding Started...`);
+  }
   try {
     await Role.init();
     const promises = seedRoles.map((role) =>
@@ -41,11 +43,13 @@ export const seed = async () => {
       }
     );
 
-    console.log(`Seeded and updated ${seedRoles.length} roles`);
-    console.log(
-      `Seeded and updated default user with email ${newRootUser.email} with role "GOD"`
-    );
-    console.log(`Seeding Completed...`);
+    if (withLogs) {
+      console.log(`Seeded and updated ${seedRoles.length} roles`);
+      console.log(
+        `Seeded and updated default user with email ${newRootUser.email} with role "GOD"`
+      );
+      console.log(`Seeding Completed...`);
+    }
   } catch (error) {
     console.log("seeding unavailable");
   }
