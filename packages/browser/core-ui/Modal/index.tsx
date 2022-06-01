@@ -24,10 +24,8 @@ export const Modal: React.FC<ModalProps> = ({
       <div
         className={clsx(
           { "pointer-events-none": !isOpen },
-          "fixed inset-0",
-          "bg-black",
+          "fixed inset-0 z-20 bg-black/50",
           isOpen ? "opacity-50" : " opacity-0",
-          "z-0",
           "transition-opacity duration-150 ease-in-out"
         )}
         onClick={handleClose}
@@ -35,29 +33,26 @@ export const Modal: React.FC<ModalProps> = ({
       <div
         className={clsx(
           { "pointer-events-none": !isOpen },
-          "relative",
-          "mx-auto w-full max-w-3xl",
-          "flex flex-col",
-          "rounded-lg  border-0",
-          "bg-white shadow-lg dark:bg-gray-700",
+          // "relative",
+          // "mx-auto w-full max-w-3xl",
+          // "flex flex-col",
+          // "rounded-lg  border-0",
+          // "bg-white shadow-lg dark:bg-gray-700",
           isOpen ? "opacity-100" : " opacity-0",
           isOpen ? "translate-y-0 scale-[1]" : "translate-y-[-4%] scale-[.96]",
           "transition-transform duration-150 ease-in-out",
-          "max-h-[85vh] md:max-h-[75vh]",
+          // "max-h-[85vh] md:max-h-[75vh]",
           "overflow-auto transition-opacity",
-          "duration-150 ease-in-out"
+          "duration-150 ease-in-out",
+          "fixed z-50",
+          "w-[95vw] max-w-md rounded-lg p-4 md:w-full",
+          "top-[50%] left-[50%] -translate-x-[50%] -translate-y-[50%]",
+          "bg-white dark:bg-gray-800",
+          "focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75"
         )}
       >
         <CloseButton handleClose={handleClose} />
-        <div
-          className={clsx([
-            "my-4 mx-3  p-5",
-            "text-lg leading-relaxed",
-            "text-gray-600 dark:text-gray-200",
-          ])}
-        >
-          {children}
-        </div>
+        {children}
       </div>
     </div>
   );
