@@ -25,6 +25,8 @@
   "linksNames": {
     "dashboard": "Dashboard",
     "add": "Create",
-    "edit": "Edit"
+    "edit": "Edit",
+    "authenticatedClients": "List of authenticated clients",
+    "roles": "List of roles"
   }
 }

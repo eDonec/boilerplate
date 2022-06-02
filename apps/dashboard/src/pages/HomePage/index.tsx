@@ -1,5 +1,4 @@
 /* eslint-disable max-lines */
-import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { Link, useLocation } from "react-router-dom";
@@ -8,7 +7,6 @@ import MediaFormContext from "contexts/MediaFormContext";
 import ButtonLink from "core-cra-components/ButtonLink";
 import { Button, useDarkMode } from "core-ui";
 import AlertDialog, { useAlertDialog } from "core-ui/AlertDialog";
-import Modal from "core-ui/Modal";
 import clsx from "core-utils/clsx";
 import { Checkbox, Input, RadioButton, Select } from "forms";
 import FilePicker from "forms/FilePicker";
@@ -51,7 +49,6 @@ const HomePage = () => {
     console.log(value);
   };
   const [submitModalProps, handleSubmit] = useAlertDialog(onSubmit);
-  const [isOpen, setIsOpen] = useState(false);
 
   return (
     <>
@@ -59,36 +56,30 @@ const HomePage = () => {
         title="dashboard"
         description="Overview of your store"
         customButton={
-          <ButtonLink to="edit" onClick={() => setIsOpen(!isOpen)} soft primary>
+          <ButtonLink to="edit" soft primary>
             Create
           </ButtonLink>
         }
       >
         <div className="mx-auto flex min-h-screen flex-col items-center justify-center dark:text-gray-200">
           <LanguageSelector />
-          <Modal
-            title="Test modal"
-            isOpen={isOpen}
-            handleClose={() => setIsOpen(false)}
-          >
-            <h1 className="mb-4">
-              CRA + Tailwind CSS + TypeScript + Redux Toolkit
-            </h1>
-            <p className="mt-2 text-sm text-gray-700 dark:text-gray-200">
-              <a
-                className={clsx(
-                  "inline-flex items-center rounded px-4 py-2 font-semibold",
-                  "focus-visible:ring-primary-500 focus:outline-none focus-visible:ring",
-                  "shadow-sm",
-                  "transition-colors duration-75"
-                )}
-                href="/"
-              >
-                Go to client {process.env.REACT_APP_HELLO || "hello World"}
-              </a>
-            </p>
-            this is a modal
-          </Modal>
+          <h1 className="mb-4">
+            CRA + Tailwind CSS + TypeScript + Redux Toolkit
+          </h1>
+          <p className="mt-2 text-sm text-gray-700 dark:text-gray-200">
+            <a
+              className={clsx(
+                "inline-flex items-center rounded px-4 py-2 font-semibold",
+                "focus-visible:ring-primary-500 focus:outline-none focus-visible:ring",
+                "shadow-sm",
+                "transition-colors duration-75"
+              )}
+              href="/"
+            >
+              Go to client {process.env.REACT_APP_HELLO || "hello World"}
+            </a>
+          </p>
+          this is a modal
           <p className="mt-2 text-sm text-gray-700 dark:text-gray-200">
             <Link
               className={clsx(
