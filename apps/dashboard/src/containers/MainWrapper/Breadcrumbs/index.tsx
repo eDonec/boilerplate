@@ -1,18 +1,12 @@
 import { Link } from "react-router-dom";
 
-import { toPropperCase } from "helpers/toProperCase";
-
 import Seperator from "./Seperator";
 import { useBreadcrumbs } from "./useBreadcrumbs";
 
 const Breadcrumbs = () => {
-  const { linkTranslator, firstPath, pathList, currentPath } = useBreadcrumbs();
+  const { firstPath, pathList, currentPath } = useBreadcrumbs();
 
   if (!currentPath) return null;
-  // if (!linkTranslator[currentPath] && process.env.NODE_ENV === "development")
-  //   throw new Error(
-  //     "Link is not defined in linkTranslator, containers/MainWrapper/Breadcrumbs/useBreadcrumbs.ts"
-  //   );
 
   return (
     <nav className="mt-4 mb-2 font-bold" aria-label="Breadcrumb">
@@ -20,19 +14,19 @@ const Breadcrumbs = () => {
         <li className="flex items-center">
           <Link
             className="hover:text-primary-900 dark:hover:text-primary-600"
-            to={firstPath}
+            to={firstPath.path}
           >
-            {linkTranslator[firstPath]}
+            {firstPath.name}
           </Link>
           <Seperator />
         </li>
         {pathList.map((path) => (
-          <li key={path} className="flex items-center">
+          <li key={path.path} className="flex items-center">
             <Link
               className="hover:text-primary-900 dark:hover:text-primary-800"
-              to={path}
+              to={path.path}
             >
-              {linkTranslator[path]}
+              {path.name}
             </Link>
             <Seperator />
           </li>
@@ -42,7 +36,7 @@ const Breadcrumbs = () => {
             className="font-normal text-gray-500 dark:text-gray-400"
             aria-current="page"
           >
-            {linkTranslator[currentPath] || toPropperCase(currentPath)}
+            {currentPath.name}
           </span>
         </li>
       </ol>

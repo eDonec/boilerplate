@@ -1,22 +1,58 @@
 import { useTranslation } from "react-i18next";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
+import { toPropperCase } from "helpers/toProperCase";
+
+export type LinkTranslator = {
+  "/": string;
+  "/edit": string;
+  "/add": string;
+  "/authenticated-clients": string;
+  "/roles": string;
+};
 export const useBreadcrumbs = () => {
   const [t] = useTranslation();
-  const linkTranslator = {
+  const linkTranslator: LinkTranslator = {
     "/": t("linksNames.dashboard"),
-    edit: t("linksNames.edit"),
-    add: t("linksNames.add"),
+    "/edit": t("linksNames.edit"),
+    "/add": t("linksNames.add"),
+    "/authenticated-clients": t("linksNames.authenticatedClients"),
+    "/roles": t("linksNames.roles"),
   };
   const { pathname } = useLocation();
+  const navigate = useNavigate();
 
-  // TODO: FIX THIS STUPID THING
-  const pathList = pathname
-    .split("/")
-    .filter((path) => path !== "") as (keyof typeof linkTranslator)[];
+  const pathList = (
+    pathname
+      .split("/")
+      .filter((path) => path !== "")
+      .map((p) => `/${p}`) as (keyof typeof linkTranslator)[]
+  ).reduce<
+    { path: string; name: typeof linkTranslator[keyof typeof linkTranslator] }[]
+  >((pathOutputAcc, currentPath) => {
+    if (!linkTranslator[currentPath] && process.env.NODE_ENV === "development")
+      // eslint-disable-next-line no-console
+      console.error(
+        `@eDonec Error (Please do not ship to production!): /${currentPath} Link is not defined in linkTranslator, apps/dashboard/src/containers/MainWrapper/Breadcrumbs/useBreadcrumbs.ts`
+      );
+
+    const pathFinder = {
+      name:
+        linkTranslator[currentPath] ||
+        toPropperCase(currentPath.replace("/", "")),
+      path: `${
+        pathOutputAcc[pathOutputAcc.length - 1]?.path || ""
+      }/${currentPath}`,
+    };
+
+    return [...pathOutputAcc, pathFinder];
+  }, []);
 
   const currentPath = pathList.pop();
-  const firstPath: keyof typeof linkTranslator = "/";
+  const firstPath = {
+    name: linkTranslator["/"],
+    path: "/",
+  };
 
-  return { firstPath, pathList, currentPath, linkTranslator };
+  return { firstPath, pathList, currentPath, linkTranslator, navigate };
 };

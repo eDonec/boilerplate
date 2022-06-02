@@ -3,6 +3,8 @@ import { ACCESS_RESSOURCES, PRIVILEGE } from "shared-types";
 import DashboardIcon from "components/Icons/DashboardIcon";
 import { Privileges } from "containers/AuthWrappers/AccessProtectedWrapper";
 
+import { LinkTranslator } from "./Breadcrumbs/useBreadcrumbs";
+
 export const routes: Routes = [
   {
     title: "Dashboard",
@@ -53,7 +55,7 @@ export type Routes = {
   privileges?: Privileges;
   links: {
     title: string;
-    to: string;
+    to: keyof LinkTranslator;
     privileges?: Privileges;
     Icon: typeof DashboardIcon;
   }[];
