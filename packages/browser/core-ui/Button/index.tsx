@@ -7,7 +7,6 @@ import { getVariantsClsx } from "../helpers/getVariantsClsx";
 
 export enum ButtonVariant {
   "primary" = "primary",
-  "outline" = "outline",
   "ghost" = "ghost",
   "gray" = "gray",
   "light" = "light",
@@ -27,6 +26,7 @@ type TButtonVariant = RequireOnlyOne<
 export type ButtonProps = {
   isLoading?: boolean;
   soft?: boolean;
+  outline?: boolean;
 } & TButtonVariant &
   React.ComponentPropsWithRef<"button">;
 
@@ -61,7 +61,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         className={clsx(
           "inline-flex items-center rounded px-4 py-2 font-semibold",
           "focus-visible:ring-primary-500 focus:outline-none focus-visible:ring",
-          "shadow-sm",
+          "text-sm shadow-sm",
           "bg",
           "transition-colors duration-75",
           "disabled:cursor-not-allowed",
@@ -78,7 +78,6 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
           ],
           getVariantsClsx(
             {
-              outline,
               ghost,
               light,
               success,
@@ -87,7 +86,8 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
               danger,
               info,
             },
-            !!soft
+            !!soft,
+            !!outline
           ),
           className
         )}

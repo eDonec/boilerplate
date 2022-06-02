@@ -38,7 +38,6 @@ const ButtonLink = React.forwardRef<HTMLAnchorElement, ButtonLinkProps>(
           getVariantsClsx(
             {
               primary,
-              outline,
               ghost,
               light,
               success,
@@ -47,7 +46,8 @@ const ButtonLink = React.forwardRef<HTMLAnchorElement, ButtonLinkProps>(
               gray,
               info,
             },
-            !!soft
+            !!soft,
+            !!outline
           ),
           "disabled:cursor-not-allowed",
           className

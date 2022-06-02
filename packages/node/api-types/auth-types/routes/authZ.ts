@@ -9,7 +9,7 @@ export type AuthZRouteTypes = {
     POST: {
       body: {
         ressource: ACCESS_RESSOURCES;
-        privileges: PRIVILEGE | PRIVILEGE[];
+        privileges: PRIVILEGE;
       };
 
       response: string;

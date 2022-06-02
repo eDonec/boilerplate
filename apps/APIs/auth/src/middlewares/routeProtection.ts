@@ -7,35 +7,27 @@ import { constructRoleArray } from "helpers/constructRoleArray";
 export const routeProtection =
   (
     ressource: ACCESS_RESSOURCES,
-    privileges: PRIVILEGE | PRIVILEGE[]
+    privileges: PRIVILEGE
   ): IAuthServerMiddleware =>
   (_, res, next) => {
     const { currentAuth } = res.locals;
 
-    const ErrorToThrow = new UnauthorizedError({
-      message: "Unauthorized Ressource Acccess",
-      ressource,
-      reason: "Access denied to this ressource with these privileges",
-    });
     const access = constructRoleArray(
       currentAuth.role,
       currentAuth.customAccessList
     );
-    const userAccess = access.find(
-      (a) => a.ressource === ressource || a.ressource === "*"
-    );
 
-    if (!userAccess) throw ErrorToThrow;
-    if (!Array.isArray(privileges)) {
-      if (!userAccess.privileges.includes(privileges)) {
-        throw ErrorToThrow;
-      }
+    const userAccess = access
+      // this is here to make sure that we hit the god ressource before any other ressource
+      .sort((a) => (a.ressource === "*" ? 1 : -1))
+      .find((a) => a.ressource === ressource || a.ressource === "*");
 
-      return next();
-    }
-    if (privileges.length === 0) return next();
-    if (privileges.every((p) => userAccess.privileges.includes(p))) {
-      return next();
-    }
-    throw ErrorToThrow;
+    if (!userAccess || userAccess.privileges < privileges)
+      throw new UnauthorizedError({
+        message: "Unauthorized Ressource Acccess",
+        ressource,
+        reason: "Access denied to this ressource with these privileges",
+      });
+
+    return next();
   };

@@ -7,7 +7,7 @@ const BASE_URL = "/api/v1/auth";
 
 beforeEach(async () => {
   try {
-    await seed();
+    await seed(false);
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error("Seeding is not available");

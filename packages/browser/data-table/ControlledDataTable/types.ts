@@ -50,8 +50,8 @@ export type ControlledDataTableProps<T> = Pick<
   onPageChange?: (page: number) => void;
   currentSort?: SelectedSort;
   onSortChange?: (args: { field: string; direction: SortDirection }) => void;
-  limit?: number;
-  limitOptions?: number[];
+  limit?: string;
+  limitOptions?: string[];
   onLimitChange?: (limit: number) => void;
   loading?: boolean;
 };

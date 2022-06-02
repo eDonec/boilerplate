@@ -5,12 +5,12 @@ export const DarkModeContext = createContext<{
   theme: ITheme;
   changeTheme: (newTheme: ITheme) => void;
 }>({
-  theme: "light",
+  theme: "system",
   changeTheme: () => null,
 });
 
 export const useDarkModeContext = () => {
-  const [mode, setMode] = useState<ITheme>("light");
+  const [mode, setMode] = useState<ITheme>("system");
 
   return {
     value: {

@@ -19,13 +19,11 @@ const schema = new Schema<RoleType, RoleModel>(
           type: String,
           required: true,
         },
-        privileges: [
-          {
-            type: String,
-            enum: PRIVILEGE,
-            required: true,
-          },
-        ],
+        privileges: {
+          type: Number,
+          enum: PRIVILEGE,
+          required: true,
+        },
         meta: {
           type: Schema.Types.Mixed,
           default: null,
