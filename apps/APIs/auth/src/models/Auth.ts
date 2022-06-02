@@ -1,15 +1,22 @@
-import { AuthType } from "auth-types/models/Auth";
+import {
+  AuthModel,
+  AuthType,
+  AuthTypeSaticMethods,
+  LeanAuthDocument,
+} from "auth-types/models/Auth";
 import { model, Schema } from "mongoose";
 import {
   ACCESS_TYPE,
   AUTH_PROVIDERS,
   FULL_ACCESS,
+  IPaginatedResult,
   PRIVILEGE,
 } from "shared-types";
 
+import { getPaginationAggregation } from "helpers/getPaginationAggregation";
 import { hashPassword } from "helpers/hashPassword";
 
-const schema = new Schema<AuthType>({
+const schema = new Schema<AuthType, AuthModel>({
   email: String,
   userName: String,
   authType: {
@@ -95,4 +102,15 @@ const schema = new Schema<AuthType>({
   lastTrialSince: Date,
 });
 
-export default model("Auth", schema);
+const findPaginatedAuth: AuthTypeSaticMethods["findPaginated"] =
+  async function findPaginatedRoles(this, args, prependedPipelines = []) {
+    const [paginatedResults] = await this.aggregate<
+      IPaginatedResult<LeanAuthDocument>
+    >([...prependedPipelines, ...getPaginationAggregation(args)]);
+
+    return paginatedResults;
+  };
+
+schema.static("findPaginated", findPaginatedAuth);
+
+export default model<AuthType, AuthModel>("Auth", schema);
