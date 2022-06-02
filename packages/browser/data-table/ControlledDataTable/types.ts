@@ -1,19 +1,8 @@
 import React from "react";
 
+import { IPaginatedResult, SortDirection } from "shared-types";
+
 import { FlatListProps } from "../components/FlatList";
-
-export enum SortDirection {
-  ASC = "ASC",
-  DSC = "DSC",
-}
-
-export type PaginatedResponse<T> = {
-  page: number;
-  totalItems: number;
-  hasNextPage: boolean;
-  totalPages: number;
-  items: T[];
-};
 
 export type DataTableColumn<T> = {
   title: string;
@@ -56,13 +45,13 @@ export type ControlledDataTableProps<T> = Pick<
   rowClassName?: string;
   headerClassName?: string;
   footerClassName?: string;
-  data: PaginatedResponse<T>;
+  data: IPaginatedResult<T>;
   columns: DataTableColumn<T>[];
   onPageChange?: (page: number) => void;
   currentSort?: SelectedSort;
   onSortChange?: (args: { field: string; direction: SortDirection }) => void;
-  limit?: number;
-  limitOptions?: number[];
+  limit?: string;
+  limitOptions?: string[];
   onLimitChange?: (limit: number) => void;
   loading?: boolean;
 };

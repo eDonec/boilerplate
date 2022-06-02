@@ -22,7 +22,7 @@ export const routeProtection =
       .sort((a) => (a.ressource === "*" ? 1 : -1))
       .find((a) => a.ressource === ressource || a.ressource === "*");
 
-    if (!userAccess || !(userAccess.privileges <= privileges))
+    if (!userAccess || userAccess.privileges < privileges)
       throw new UnauthorizedError({
         message: "Unauthorized Ressource Acccess",
         ressource,

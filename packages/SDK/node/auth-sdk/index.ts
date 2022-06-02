@@ -116,7 +116,7 @@ export default class AuthSDK extends ServerSDK {
     return data;
   }
 
-  public async addRessourceAccess({
+  public async checkRessourceAccess({
     body,
   }: {
     body: AuthZRouteTypes["/z/ressource-access"]["POST"]["body"];
@@ -126,6 +126,20 @@ export default class AuthSDK extends ServerSDK {
     const { data } = await this.api.post<
       AuthZRouteTypes["/z/ressource-access"]["POST"]["response"]
     >(`${baseUrl}/z/ressource-access`, body);
+
+    return data;
+  }
+
+  public async getRoles({
+    query,
+  }: {
+    body?: never;
+    query: AuthZRouteTypes["/z/roles"]["GET"]["query"];
+    params?: never;
+  }) {
+    const { data } = await this.api.get<
+      AuthZRouteTypes["/z/roles"]["GET"]["response"]
+    >(`${baseUrl}/z/roles`, { params: query });
 
     return data;
   }

@@ -1,15 +1,11 @@
-import {
-  ControlledDataTableProps,
-  PaginatedResponse,
-  SortDirection,
-} from "../ControlledDataTable/types";
+import { IPaginatedResult } from "shared-types/IPaginatedResult";
+import { FetchPaginatedArgs } from "shared-types/IPaginationQuery";
 
-export type FetchFunction<T> = (args: {
-  page?: number;
-  limit?: number;
-  sortDirection?: SortDirection;
-  sortField?: string;
-}) => Promise<PaginatedResponse<T>>;
+import { ControlledDataTableProps } from "../ControlledDataTable/types";
+
+export type FetchFunction<T> = (
+  args: FetchPaginatedArgs
+) => Promise<IPaginatedResult<T>>;
 
 export type InternalUncontrolledDataTableProps<T> = Pick<
   ControlledDataTableProps<T>,

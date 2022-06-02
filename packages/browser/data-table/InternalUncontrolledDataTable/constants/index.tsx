@@ -1,7 +1,7 @@
-import { PaginatedResponse } from "../../ControlledDataTable/types";
+import { IPaginatedResult } from "shared-types/IPaginatedResult";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const emptyPaginationResponse: PaginatedResponse<any> = {
+export const emptyPaginationResponse: IPaginatedResult<any> = {
   items: [],
   totalItems: 0,
   totalPages: 0,

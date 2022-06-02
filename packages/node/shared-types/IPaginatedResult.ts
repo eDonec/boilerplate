@@ -1,8 +1,7 @@
 export interface IPaginatedResult<T> {
   items: T[];
-  page: string;
+  page: number;
   hasNextPage: boolean;
-  hasPreviousPage: boolean;
   totalItems: number;
   totalPages: number;
 }

@@ -1,6 +1,8 @@
 import { useEffect, useMemo, useState } from "react";
 
 import { useFirstMount } from "core-hooks";
+import { IPaginatedResult } from "shared-types/IPaginatedResult";
+import { SortDirection } from "shared-types/SortDirection";
 
 import {
   emptyPaginationResponse,
@@ -8,10 +10,6 @@ import {
 } from "../constants";
 import { InternalUncontrolledDataTableProps } from "../types";
 import { extractQueryParams, isSortDirection } from "../utils";
-import {
-  PaginatedResponse,
-  SortDirection,
-} from "../../ControlledDataTable/types";
 
 export const useUncontrolledDataTable = <T>({
   fetchFunction,
@@ -27,7 +25,7 @@ export const useUncontrolledDataTable = <T>({
   | "onFetchError"
   | "initialValue"
 >) => {
-  const [data, setData] = useState<PaginatedResponse<T>>(
+  const [data, setData] = useState<IPaginatedResult<T>>(
     initialValue || emptyPaginationResponse
   );
   const [loading, setLoading] = useState(!initialValue);
@@ -35,6 +33,7 @@ export const useUncontrolledDataTable = <T>({
     () => extractQueryParams(searchParams),
     [searchParams]
   );
+
   const firstMount = useFirstMount();
 
   useEffect(() => {
@@ -67,7 +66,10 @@ export const useUncontrolledDataTable = <T>({
   };
 
   const onLimitChange = (newLimit: number) => {
+    if (newLimit === Number(limit)) return;
     searchParams.set(UncontrolledDataTableURLParams.LIMIT, `${newLimit}`);
+    searchParams.set(UncontrolledDataTableURLParams.PAGE, "1");
+
     setSearchParams(searchParams);
   };
 

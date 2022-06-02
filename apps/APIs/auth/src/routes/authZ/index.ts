@@ -2,6 +2,7 @@ import * as authZController from "controllers/authZ";
 import { Router } from "init";
 import { getAuthByAccessToken } from "middlewares/currentAuth";
 import { routeProtection } from "middlewares/routeProtection";
+import { ACCESS_RESSOURCES, PRIVILEGE } from "shared-types";
 import * as asyncAuthNValidators from "validators/async/authN";
 import * as authNValidators from "validators/sync/authN";
 import * as authZValidators from "validators/sync/authZ";
@@ -29,6 +30,15 @@ router.post(
     routeProtection(ressource, privileges)(req, res, next);
   },
   authZController.checkRessourceAccess
+);
+
+router.get(
+  `${BASE_ROUTE}/roles`,
+  authNValidators.tokenValidator(),
+  getAuthByAccessToken,
+  routeProtection(ACCESS_RESSOURCES.ROLE, PRIVILEGE.READ),
+  authZValidators.getRoles,
+  authZController.getRoles
 );
 
 export default router;

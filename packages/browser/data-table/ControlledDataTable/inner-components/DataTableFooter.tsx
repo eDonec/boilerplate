@@ -37,8 +37,8 @@ const DataTableFooter = () => {
             onChange={(newLimit) => onLimitChange(Number(newLimit.value))}
           />
           <span>
-            {`${1 + Math.max(page - 1, 0) * limit} - ${Math.min(
-              limit * page,
+            {`${1 + Math.max(page - 1, 0) * Number(limit)} - ${Math.min(
+              Number(limit) * page,
               totalItems
             )} of ${totalItems}`}
           </span>
