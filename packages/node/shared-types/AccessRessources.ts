@@ -3,4 +3,5 @@ export enum ACCESS_RESSOURCES {
   "ROLE" = "ROLE",
   "*" = "*",
   "PUBLIC" = "PUBLIC",
+  "AUTHENTICATED_CLIENTS" = "AUTHENTICATED_CLIENTS",
 }

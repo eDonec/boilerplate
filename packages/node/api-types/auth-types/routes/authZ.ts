@@ -20,8 +20,8 @@ export type AuthZRouteTypes = {
       query: {
         page?: string;
         limit?: string;
-        sortDirection?: SortDirection;
-        sortField?: string;
+        "sort-direction"?: SortDirection;
+        "sort-field"?: string;
       };
       response: IPaginatedResult<LeanRoleDocument>;
     };

@@ -5,8 +5,8 @@ import { SortDirection } from "./SortDirection";
 export type FetchPaginatedArgs = {
   page?: string;
   limit?: string;
-  sortDirection?: SortDirection;
-  sortField?: string;
+  "sort-direction"?: SortDirection;
+  "sort-field"?: string;
 };
 
 export type IPaginationQuery<T> = FetchPaginatedArgs & {

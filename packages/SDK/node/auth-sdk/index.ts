@@ -1,5 +1,6 @@
 import { AuthNRouteTypes } from "auth-types/routes/authN";
 import { AuthZRouteTypes } from "auth-types/routes/authZ";
+import { ClientRouteTypes } from "auth-types/routes/client";
 import ServerSDK from "server-sdk/sdk";
 import ServerSDKTypes from "server-sdk/types";
 import { IToken } from "shared-types";
@@ -140,6 +141,20 @@ export default class AuthSDK extends ServerSDK {
     const { data } = await this.api.get<
       AuthZRouteTypes["/z/roles"]["GET"]["response"]
     >(`${baseUrl}/z/roles`, { params: query });
+
+    return data;
+  }
+
+  public async getAuthenticatedClients({
+    query,
+  }: {
+    body?: never;
+    query: ClientRouteTypes["/clients/"]["GET"]["query"];
+    params?: never;
+  }) {
+    const { data } = await this.api.get<
+      ClientRouteTypes["/clients/"]["GET"]["response"]
+    >(`${baseUrl}/clients`, { params: query });
 
     return data;
   }

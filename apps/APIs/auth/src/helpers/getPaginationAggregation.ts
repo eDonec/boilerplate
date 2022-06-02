@@ -4,8 +4,8 @@ import { IPaginationQuery } from "shared-types/IPaginationQuery";
 import { SortDirection } from "shared-types/SortDirection";
 
 export const getPaginationAggregation = <T>({
-  sortField = "_id",
-  sortDirection = SortDirection.ASC,
+  "sort-field": sortField = "_id",
+  "sort-direction": sortDirection = SortDirection.ASC,
   page,
   limit,
   match = {},

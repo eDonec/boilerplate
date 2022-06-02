@@ -7,3 +7,5 @@ export const urlRegex =
   /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)/;
 export const alphaNumRegex = /^[A-Z0-9]*$/i;
 export const alphaSpaceRegex = /^[A-Z\s]*$/i;
+
+export const snakeCaseRegex = /^[a-z0-9-]+$/g;

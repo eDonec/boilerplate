@@ -1,5 +1,3 @@
-/* eslint-disable max-lines */
-
 import Api from "api";
 import { LeanRoleDocument } from "auth-types/models/Role";
 import UncontrolledDataTable from "core-cra-components/UncontrolledDataTable";

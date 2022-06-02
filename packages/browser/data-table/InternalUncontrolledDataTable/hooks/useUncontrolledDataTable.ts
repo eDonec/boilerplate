@@ -46,8 +46,8 @@ export const useUncontrolledDataTable = <T>({
         const newData = await fetchFunction({
           page,
           limit,
-          sortField: sortField || undefined,
-          sortDirection: isSortDirection(sortDirection)
+          "sort-field": sortField || undefined,
+          "sort-direction": isSortDirection(sortDirection)
             ? sortDirection
             : undefined,
         });
