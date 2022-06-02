@@ -5,6 +5,7 @@ export type RoleType = {
   isDefault: boolean;
   name: string;
   access: ACCESS[];
+  _id: string;
 };
 export type RoleTypeSaticMethods = {
   findPaginated: (

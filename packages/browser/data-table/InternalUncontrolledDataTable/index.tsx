@@ -32,7 +32,7 @@ const InternalUncontrolledDataTable = <T,>({
       onSortChange={onSortChange}
       onLimitChange={onLimitChange}
       currentSort={currentSort}
-      limit={limit}
+      limit={Number(limit)}
       loading={loading}
     />
   );

@@ -33,6 +33,7 @@ export const useUncontrolledDataTable = <T>({
     () => extractQueryParams(searchParams),
     [searchParams]
   );
+
   const firstMount = useFirstMount();
 
   useEffect(() => {
@@ -65,7 +66,10 @@ export const useUncontrolledDataTable = <T>({
   };
 
   const onLimitChange = (newLimit: number) => {
+    if (newLimit === Number(limit)) return;
     searchParams.set(UncontrolledDataTableURLParams.LIMIT, `${newLimit}`);
+    searchParams.set(UncontrolledDataTableURLParams.PAGE, "1");
+
     setSearchParams(searchParams);
   };
 

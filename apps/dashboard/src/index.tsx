@@ -6,7 +6,6 @@ import { BrowserRouter } from "react-router-dom";
 
 import DarkModeProvider from "core-ui/DarkModeProvider";
 import "locales";
-import "./sdks";
 
 import "styles/globals.css";
 import "styles/colors.css";

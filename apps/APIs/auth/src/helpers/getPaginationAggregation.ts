@@ -1,16 +1,7 @@
+import getNumberFromString from "core-utils/getNumberFromString";
 import { PipelineStage } from "mongoose";
 import { IPaginationQuery } from "shared-types/IPaginationQuery";
 import { SortDirection } from "shared-types/SortDirection";
-
-const getSafeNumber = (input?: string, min = 1): number => {
-  const number = Number(input);
-
-  if (Number.isNaN(number)) {
-    return min;
-  }
-
-  return Math.max(number, min);
-};
 
 export const getPaginationAggregation = <T>({
   sortField = "_id",
@@ -20,8 +11,8 @@ export const getPaginationAggregation = <T>({
   match = {},
   projection,
 }: IPaginationQuery<T>): PipelineStage[] => {
-  const limitNumber = getSafeNumber(limit);
-  const pageNumber = getSafeNumber(page);
+  const limitNumber = getNumberFromString(limit);
+  const pageNumber = getNumberFromString(page);
   const skip = (pageNumber - 1) * limitNumber;
 
   return [
