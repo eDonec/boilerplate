@@ -2,7 +2,7 @@ import { IPaginatedResult, SortDirection } from "shared-types";
 import { ACCESS_RESSOURCES } from "shared-types/AccessRessources";
 import { PRIVILEGE } from "shared-types/auth/access";
 
-import { RoleType } from "../models/Role";
+import { LeanRoleDocument } from "../models/Role";
 
 export type AuthZRouteTypes = {
   "/z/ressource-access": {
@@ -23,7 +23,7 @@ export type AuthZRouteTypes = {
         sortDirection?: SortDirection;
         sortField?: string;
       };
-      response: IPaginatedResult<RoleType>;
+      response: IPaginatedResult<LeanRoleDocument>;
     };
   };
   //! GENERATOR-ANCHOR

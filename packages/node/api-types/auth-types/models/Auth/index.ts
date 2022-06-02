@@ -30,6 +30,7 @@ export type AuthType = {
   suspentionReason: string;
   numberOfUnsuccessfulTrials: number;
   lastTrialSince: Date;
+  _id: string;
 };
 
 export type AuthTypeSaticMethods = {

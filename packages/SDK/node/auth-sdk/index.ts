@@ -116,7 +116,7 @@ export default class AuthSDK extends ServerSDK {
     return data;
   }
 
-  public async addRessourceAccess({
+  public async checkRessourceAccess({
     body,
   }: {
     body: AuthZRouteTypes["/z/ressource-access"]["POST"]["body"];
