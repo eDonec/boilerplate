@@ -1,5 +1,11 @@
-import { HydratedDocument, LeanDocument } from "mongoose";
-import { ACCESS, ACCESS_TYPE, AUTH_PROVIDERS } from "shared-types";
+import { HydratedDocument, LeanDocument, Model, PipelineStage } from "mongoose";
+import {
+  ACCESS,
+  ACCESS_TYPE,
+  AUTH_PROVIDERS,
+  IPaginatedResult,
+  IPaginationQuery,
+} from "shared-types";
 
 import { RoleType } from "../Role";
 
@@ -25,5 +31,14 @@ export type AuthType = {
   numberOfUnsuccessfulTrials: number;
   lastTrialSince: Date;
 };
+
+export type AuthTypeSaticMethods = {
+  findPaginated: (
+    this: AuthModel,
+    args: IPaginationQuery<AuthType>,
+    prependedPipelines?: PipelineStage[]
+  ) => Promise<IPaginatedResult<LeanAuthDocument>>;
+};
+export type AuthModel = Model<AuthType> & AuthTypeSaticMethods;
 export type AuthDocument = HydratedDocument<AuthType>;
 export type LeanAuthDocument = LeanDocument<AuthDocument>;

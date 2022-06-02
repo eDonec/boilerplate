@@ -1,8 +1,9 @@
 import { clsx } from "core-utils";
+import { SortDirection } from "shared-types/SortDirection";
 
 import { DEFAULT_DATATABLE_SORT_DIRECTION } from "../defaults";
 import { useDataTableContext } from "../hooks/useDataTableContext";
-import { DataTableHeaderProps, SortDirection } from "../types";
+import { DataTableHeaderProps } from "../types";
 import Chevron from "../../components/Icons/Chevron";
 
 const DataTableHeader = ({ headerItems }: DataTableHeaderProps) => {

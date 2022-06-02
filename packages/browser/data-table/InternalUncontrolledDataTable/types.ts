@@ -1,9 +1,7 @@
 import { IPaginatedResult } from "shared-types/IPaginatedResult";
+import { SortDirection } from "shared-types/SortDirection";
 
-import {
-  ControlledDataTableProps,
-  SortDirection,
-} from "../ControlledDataTable/types";
+import { ControlledDataTableProps } from "../ControlledDataTable/types";
 
 export type FetchFunction<T> = (args: {
   page?: number;

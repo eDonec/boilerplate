@@ -31,4 +31,10 @@ router.post(
   authZController.checkRessourceAccess
 );
 
+router.get(
+  `${BASE_ROUTE}/roles`,
+  authZValidators.getRoles,
+  authZController.getRoles
+);
+
 export default router;

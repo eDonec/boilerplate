@@ -1,6 +1,7 @@
+import { SortDirection } from "shared-types/SortDirection";
+
 import { UncontrolledDataTableURLParams } from "../constants";
 import { DEFAULT_DATATABLE_LIMIT } from "../../ControlledDataTable/defaults";
-import { SortDirection } from "../../ControlledDataTable/types";
 
 export const isSortDirection = (input?: unknown): input is SortDirection =>
   typeof input === "string" &&

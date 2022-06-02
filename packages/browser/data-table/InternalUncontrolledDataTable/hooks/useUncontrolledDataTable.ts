@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 
 import { useFirstMount } from "core-hooks";
 import { IPaginatedResult } from "shared-types/IPaginatedResult";
+import { SortDirection } from "shared-types/SortDirection";
 
 import {
   emptyPaginationResponse,
@@ -9,7 +10,6 @@ import {
 } from "../constants";
 import { InternalUncontrolledDataTableProps } from "../types";
 import { extractQueryParams, isSortDirection } from "../utils";
-import { SortDirection } from "../../ControlledDataTable/types";
 
 export const useUncontrolledDataTable = <T>({
   fetchFunction,

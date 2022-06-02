@@ -1,13 +1,8 @@
 import React from "react";
 
-import { IPaginatedResult } from "shared-types/IPaginatedResult";
+import { IPaginatedResult, SortDirection } from "shared-types";
 
 import { FlatListProps } from "../components/FlatList";
-
-export enum SortDirection {
-  ASC = "ASC",
-  DSC = "DSC",
-}
 
 export type DataTableColumn<T> = {
   title: string;

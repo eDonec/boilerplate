@@ -129,6 +129,20 @@ export default class AuthSDK extends ServerSDK {
 
     return data;
   }
+
+  public async getRoles({
+    query,
+  }: {
+    body?: never;
+    query: AuthZRouteTypes["/z/roles"]["GET"]["query"];
+    params?: never;
+  }) {
+    const { data } = await this.api.get<
+      AuthZRouteTypes["/z/roles"]["GET"]["response"]
+    >(`${baseUrl}/z/roles`, { params: query });
+
+    return data;
+  }
 }
 
 export type AuthSDKTypes = ServerSDKTypes<AuthSDK>;
