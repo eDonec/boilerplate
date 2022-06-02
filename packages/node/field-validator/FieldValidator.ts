@@ -9,6 +9,7 @@ import {
   alphaRegex,
   alphaSpaceRegex,
   emailRegex,
+  snakeCaseRegex,
   urlRegex,
 } from "./regex";
 
@@ -42,6 +43,7 @@ export default class FieldValidator {
   private isStringType(
     field: string | number | Date | undefined = this.fieldToTest
   ): field is string {
+    if (field == null) return false;
     if (typeof field === "string") return true;
 
     this.error = {
@@ -61,6 +63,7 @@ export default class FieldValidator {
   private isDateType(
     field: string | number | Date | undefined = this.fieldToTest
   ): field is Date {
+    if (field == null) return false;
     if (field instanceof Date) return true;
     this.error = {
       message: "Validation error!",
@@ -79,6 +82,7 @@ export default class FieldValidator {
   private isNumberType(
     field: string | number | Date | undefined = this.fieldToTest
   ): field is number {
+    if (field == null) return false;
     if (typeof field === "number") return true;
     if (!Number.isNaN(Number(field))) {
       return true;
@@ -181,6 +185,24 @@ export default class FieldValidator {
     return this;
   }
 
+  isInArrayOfStrings(paramArray: string[]) {
+    if (!this.isStringType(this.fieldToTest)) return this;
+
+    if (!paramArray.includes(this.fieldToTest))
+      this.error = {
+        message: "Validation error!",
+        fields: [
+          ...(this.error?.fields || []),
+          {
+            fieldName: this.fieldName,
+            message: `${this.fieldName} must be a string`,
+          },
+        ],
+      };
+
+    return this;
+  }
+
   isAlpha() {
     if (!this.isStringType(this.fieldToTest)) return this;
     if (!alphaRegex.test(this.fieldToTest))
@@ -191,6 +213,23 @@ export default class FieldValidator {
           {
             fieldName: this.fieldName,
             message: `${this.fieldName} can only contain letters`,
+          },
+        ],
+      };
+
+    return this;
+  }
+
+  isSnakeCase() {
+    if (!this.isStringType(this.fieldToTest)) return this;
+    if (!snakeCaseRegex.test(this.fieldToTest))
+      this.error = {
+        message: "Validation error!",
+        fields: [
+          ...(this.error?.fields || []),
+          {
+            fieldName: this.fieldName,
+            message: `${this.fieldName} can only contain letters and dashes (it should be snake case) "-"`,
           },
         ],
       };

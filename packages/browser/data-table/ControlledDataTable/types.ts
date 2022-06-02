@@ -1,17 +1,25 @@
 import React from "react";
 
-import { IPaginatedResult, SortDirection } from "shared-types";
+import {
+  IPaginatedResult,
+  KeyOfNestedObjectWithoutArray,
+  RequireAtLeastOne,
+  SortDirection,
+} from "shared-types";
 
 import { FlatListProps } from "../components/FlatList";
 
-export type DataTableColumn<T> = {
-  title: string;
-  selector: string;
-  cell?: (item: T) => React.ReactElement;
-  sortCallbackValue?: string;
-  sortable?: boolean;
-  className?: string;
-};
+export type DataTableColumn<T> = RequireAtLeastOne<
+  {
+    title: string;
+    selector: KeyOfNestedObjectWithoutArray<T>;
+    cell?: (item: T) => React.ReactElement;
+    sortCallbackValue?: string;
+    sortable?: boolean;
+    className?: string;
+  },
+  "cell" | "selector"
+>;
 
 export type HeaderItem = {
   label: string;
