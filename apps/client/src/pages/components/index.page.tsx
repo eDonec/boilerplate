@@ -43,7 +43,7 @@ const ComponentsPage = () => {
               <Button onClick={toggleDarkMode} light>
                 Toggle Dark mode
               </Button>
-              <Button isLoading outline onClick={toggleDarkMode}>
+              <Button isLoading outline gray onClick={toggleDarkMode}>
                 Outline
               </Button>
               {/* <Button onClick={randomize}>Randomize CSS Variable</Button> */}

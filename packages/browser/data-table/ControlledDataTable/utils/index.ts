@@ -12,12 +12,12 @@ export const getDataTableHeaderItems = <T>(
     sortable: typeof col.sortable === "boolean" ? col.sortable : true,
   }));
 
-export const formatLimit = (limit: number): ISelectOption<string> => ({
+export const formatLimit = (limit: string): ISelectOption<string> => ({
   label: `${limit}`,
   value: `${limit}`,
 });
 
 export const formatLimitOptions = (
-  limitOptions: number[]
+  limitOptions: string[]
 ): ISelectOption<string>[] =>
-  limitOptions.sort((a, b) => a - b).map(formatLimit);
+  limitOptions.sort((a, b) => Number(a) - Number(b)).map(formatLimit);
