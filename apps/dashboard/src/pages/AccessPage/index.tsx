@@ -1,10 +1,9 @@
 import Api from "api";
 import { LeanRoleDocument } from "auth-types/models/Role";
 import UncontrolledDataTable from "core-cra-components/UncontrolledDataTable";
-import {
-  DataTableColumn,
-  FetchFunction,
-} from "core-cra-components/UncontrolledDataTable/types";
+import { FetchFunction } from "core-cra-components/UncontrolledDataTable/types";
+
+import { DataTableColumn } from "data-table/BaseDataTable/types";
 
 import PrivateWrapper from "containers/AuthWrappers/PrivateWrapper";
 import MainWrapper from "containers/MainWrapper";
