@@ -22,21 +22,3 @@ export const checkRessourceAccess: IMiddleware<
 
   next();
 };
-export const getRoles: IMiddleware<
-  Request<
-    unknown,
-    unknown,
-    unknown,
-    AuthZRouteTypes["/z/roles"]["GET"]["query"]
-  >,
-  Response<AuthZRouteTypes["/z/roles"]["GET"]["response"]>
-> = (req, _, next) =>
-  // const validators = new FieldValidator({ query: req.query });
-
-  // validators.validate.query.page?.isNumber();
-  // validators.validate.query.limit?.isNumber();
-  // validators.validate.query.sortField?.isString();
-
-  // validators.resolveErrors();
-
-  next();
