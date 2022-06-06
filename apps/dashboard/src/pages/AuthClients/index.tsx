@@ -5,7 +5,7 @@ import { FetchFunction } from "core-cra-components/UncontrolledDataTable/types";
 
 import { DataTableColumn } from "data-table/BaseDataTable/types";
 
-import PrivateWrapper from "containers/AuthWrappers/PrivateWrapper";
+import { withPrivateWrapper } from "containers/AuthWrappers/PrivateWrapper";
 import MainWrapper from "containers/MainWrapper";
 
 const dataColumns: DataTableColumn<LeanAuthDocument>[] = [
@@ -38,18 +38,16 @@ const fetchFunction: FetchFunction<LeanAuthDocument> = (args) =>
   Api.authSDK.getAuthenticatedClients({ query: args });
 
 const AuthClients = () => (
-  <PrivateWrapper>
-    <MainWrapper
-      title="Authenticated Clients"
-      description="List of authenticated clients"
-    >
-      <UncontrolledDataTable
-        fetchFunction={fetchFunction}
-        columns={dataColumns}
-        keyExtractor={({ item }) => item._id}
-      />
-    </MainWrapper>
-  </PrivateWrapper>
+  <MainWrapper
+    title="Authenticated Clients"
+    description="List of authenticated clients"
+  >
+    <UncontrolledDataTable
+      fetchFunction={fetchFunction}
+      columns={dataColumns}
+      keyExtractor={({ item }) => item._id}
+    />
+  </MainWrapper>
 );
 
-export default AuthClients;
+export default withPrivateWrapper(AuthClients);
