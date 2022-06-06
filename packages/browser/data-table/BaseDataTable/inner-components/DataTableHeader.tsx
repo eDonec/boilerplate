@@ -2,12 +2,13 @@ import { clsx } from "core-utils";
 import { SortDirection } from "shared-types/SortDirection";
 
 import { DEFAULT_DATATABLE_SORT_DIRECTION } from "../defaults";
-import { useDataTableContext } from "../hooks/useDataTableContext";
+import { useBaseDataTableContext } from "../hooks/useBaseDataTableContext";
 import { DataTableHeaderProps } from "../types";
 import Chevron from "../../components/Icons/Chevron";
 
 const DataTableHeader = ({ headerItems }: DataTableHeaderProps) => {
-  const { currentSort, headerClassName, onSortChange } = useDataTableContext();
+  const { currentSort, headerClassName, onSortChange } =
+    useBaseDataTableContext();
 
   return (
     <tr

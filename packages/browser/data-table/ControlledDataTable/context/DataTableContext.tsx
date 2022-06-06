@@ -8,9 +8,6 @@ export const DataTableContext =
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   createContext<ControlledDataTableProps<any> | null>(null);
 
-export const createDataTableContext = <T,>() =>
-  createContext<ControlledDataTableProps<T> | null>(null);
-
 export const DataTableProvider = <T,>({
   children,
   ...props

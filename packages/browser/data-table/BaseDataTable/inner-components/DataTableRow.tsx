@@ -1,14 +1,10 @@
 import { clsx, get } from "core-utils";
 
-import { useDataTableContext } from "../hooks/useDataTableContext";
+import { useBaseDataTableContext } from "../hooks/useBaseDataTableContext";
 import { DataTableRowProps } from "../types";
 
 const DataTableRow = <T,>({ item, index }: DataTableRowProps<T>) => {
-  const {
-    columns,
-    rowClassName,
-    data: { items },
-  } = useDataTableContext<T>();
+  const { columns, rowClassName, data } = useBaseDataTableContext<T>();
 
   return (
     <tr
@@ -16,7 +12,7 @@ const DataTableRow = <T,>({ item, index }: DataTableRowProps<T>) => {
         rowClassName,
         "bg-white dark:border-gray-700 dark:bg-gray-800",
         {
-          "border-b": index < items.length,
+          "border-b": index < data.length,
         }
       )}
     >
