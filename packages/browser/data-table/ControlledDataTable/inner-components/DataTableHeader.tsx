@@ -16,7 +16,7 @@ const DataTableHeader = ({ headerItems }: DataTableHeaderProps) => {
         "bg-gray-100 text-left text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400"
       )}
     >
-      {headerItems.map((headerItem) => {
+      {headerItems.map((headerItem, keyIndex) => {
         const currentSortDirection =
           headerItem.sortable && currentSort?.field === headerItem.value
             ? currentSort.direction
@@ -24,7 +24,7 @@ const DataTableHeader = ({ headerItems }: DataTableHeaderProps) => {
 
         return (
           <th
-            key={headerItem.value}
+            key={headerItem.value || keyIndex}
             className={clsx(headerItem.className, "cursor-pointer px-6 py-4")}
             onClick={() =>
               headerItem.sortable &&

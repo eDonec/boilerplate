@@ -20,8 +20,11 @@ const DataTableRow = <T,>({ item, index }: DataTableRowProps<T>) => {
         }
       )}
     >
-      {columns.map((col) => (
-        <td className={clsx(col.className, "px-6 py-4")} key={col.selector}>
+      {columns.map((col, keyIndex) => (
+        <td
+          className={clsx(col.className, "px-6 py-4")}
+          key={col.selector || keyIndex}
+        >
           {col.selector ? get(item, col.selector) : col.cell?.(item)}
         </td>
       ))}

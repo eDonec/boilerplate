@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 
 import { useFirstMount } from "core-hooks";
 import { IPaginatedResult } from "shared-types/IPaginatedResult";
@@ -6,6 +6,7 @@ import { SortDirection } from "shared-types/SortDirection";
 
 import {
   emptyPaginationResponse,
+  FIRST_PAGE,
   UncontrolledDataTableURLParams,
 } from "../constants";
 import { InternalUncontrolledDataTableProps } from "../types";
@@ -29,48 +30,51 @@ export const useUncontrolledDataTable = <T>({
     initialValue || emptyPaginationResponse
   );
   const [loading, setLoading] = useState(!initialValue);
-  const { limit, page, sortField, sortDirection } = useMemo(
-    () => extractQueryParams(searchParams),
-    [searchParams]
-  );
 
   const firstMount = useFirstMount();
+  const syncData = async (_searchParams: URLSearchParams) => {
+    const { limit, page, sortField, sortDirection } =
+      extractQueryParams(_searchParams);
 
-  useEffect(() => {
-    (async () => {
-      if (firstMount && initialValue) {
-        return;
-      }
-      try {
-        setLoading(true);
-        const newData = await fetchFunction({
-          page,
-          limit,
-          "sort-field": sortField || undefined,
-          "sort-direction": isSortDirection(sortDirection)
-            ? sortDirection
-            : undefined,
-        });
+    try {
+      setLoading(true);
+      const newData = await fetchFunction({
+        page,
+        limit,
+        "sort-field": sortField || undefined,
+        "sort-direction": isSortDirection(sortDirection)
+          ? sortDirection
+          : undefined,
+      });
 
-        setData(newData);
-      } catch (error) {
-        onFetchError?.(error);
-      }
-      setLoading(false);
-    })();
-  }, [limit, page, sortField, sortDirection]);
+      setData(newData);
+    } catch (error) {
+      onFetchError?.(error);
+    }
+    setLoading(false);
+  };
+
+  if (firstMount && !initialValue) {
+    syncData(searchParams);
+  }
 
   const onPageChange = (newPage: number) => {
     searchParams.set(UncontrolledDataTableURLParams.PAGE, newPage.toString());
     setSearchParams(searchParams);
+    syncData(searchParams);
   };
 
+  const { limit, sortField, sortDirection } = useMemo(
+    () => extractQueryParams(searchParams),
+    [searchParams]
+  );
   const onLimitChange = (newLimit: number) => {
     if (newLimit === Number(limit)) return;
     searchParams.set(UncontrolledDataTableURLParams.LIMIT, `${newLimit}`);
-    searchParams.set(UncontrolledDataTableURLParams.PAGE, "1");
+    searchParams.set(UncontrolledDataTableURLParams.PAGE, FIRST_PAGE);
 
     setSearchParams(searchParams);
+    syncData(searchParams);
   };
 
   const onSortChange = ({
@@ -86,6 +90,7 @@ export const useUncontrolledDataTable = <T>({
     );
     searchParams.set(UncontrolledDataTableURLParams.SORT_FIELD, `${field}`);
     setSearchParams(searchParams);
+    syncData(searchParams);
   };
 
   const currentSort = useMemo(

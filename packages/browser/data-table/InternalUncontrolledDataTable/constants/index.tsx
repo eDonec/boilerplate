@@ -15,3 +15,4 @@ export enum UncontrolledDataTableURLParams {
   SORT_DIRECTION = "sort-direction",
   SORT_FIELD = "sort-field",
 }
+export const FIRST_PAGE = "1";
