@@ -2,7 +2,7 @@ import { IPaginatedResult, SortDirection } from "shared-types";
 
 import { LeanRoleDocument } from "../models/Role";
 
-export type RoleRouteTypes = {
+export type RolesRouteTypes = {
   "/roles/": {
     GET: {
       query: {
@@ -12,6 +12,14 @@ export type RoleRouteTypes = {
         "sort-field"?: string;
       };
       response: IPaginatedResult<LeanRoleDocument>;
+    };
+  };
+  "/roles/:id": {
+    GET: {
+      response: LeanRoleDocument;
+      params: {
+        id: string;
+      };
     };
   };
   //! GENERATOR-ANCHOR

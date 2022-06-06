@@ -1,7 +1,8 @@
+/* eslint-disable max-lines */
 import { AuthNRouteTypes } from "auth-types/routes/authN";
 import { AuthZRouteTypes } from "auth-types/routes/authZ";
 import { ClientRouteTypes } from "auth-types/routes/client";
-import { RoleRouteTypes } from "auth-types/routes/roles";
+import { RolesRouteTypes } from "auth-types/routes/roles";
 import ServerSDK from "server-sdk/sdk";
 import ServerSDKTypes from "server-sdk/types";
 import { IToken } from "shared-types";
@@ -136,11 +137,11 @@ export default class AuthSDK extends ServerSDK {
     query,
   }: {
     body?: never;
-    query: RoleRouteTypes["/roles/"]["GET"]["query"];
+    query: RolesRouteTypes["/roles/"]["GET"]["query"];
     params?: never;
   }) {
     const { data } = await this.api.get<
-      RoleRouteTypes["/roles/"]["GET"]["response"]
+      RolesRouteTypes["/roles/"]["GET"]["response"]
     >(`${baseUrl}/roles`, { params: query });
 
     return data;
@@ -156,6 +157,20 @@ export default class AuthSDK extends ServerSDK {
     const { data } = await this.api.get<
       ClientRouteTypes["/clients/"]["GET"]["response"]
     >(`${baseUrl}/clients`, { params: query });
+
+    return data;
+  }
+
+  public async getRoleById({
+    params,
+  }: {
+    body?: never;
+    query?: never;
+    params: RolesRouteTypes["/roles/:id"]["GET"]["params"];
+  }) {
+    const { data } = await this.api.get<
+      RolesRouteTypes["/roles/:id"]["GET"]["response"]
+    >(`${baseUrl}/roles/${params.id}`);
 
     return data;
   }

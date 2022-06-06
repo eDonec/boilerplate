@@ -19,4 +19,13 @@ router.get(
   rolesController.getRoles
 );
 
+router.get(
+  `${BASE_ROUTE}/:id`,
+  authNValidators.tokenValidator(),
+  getAuthByAccessToken,
+  routeProtection(ACCESS_RESSOURCES.ROLE, PRIVILEGE.READ),
+  rolesValidators.getRoleById,
+  rolesController.getRoleById
+);
+
 export default router;
