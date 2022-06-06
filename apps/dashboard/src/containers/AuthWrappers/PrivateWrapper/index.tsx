@@ -1,4 +1,4 @@
-import React, { ReactNode } from "react";
+import React, { ComponentType, ReactNode } from "react";
 import { Navigate } from "react-router-dom";
 
 import Loader from "core-ui/Loader";
@@ -28,5 +28,14 @@ const PrivateWrapper: React.FC<IProps> = ({ children, fallback }) => {
 
   return <>{children}</>;
 };
+
+export const withPrivateWrapper =
+  <T,>(Component: ComponentType<T>, fallback?: ReactNode) =>
+  (props: T) =>
+    (
+      <PrivateWrapper fallback={fallback}>
+        <Component {...props} />
+      </PrivateWrapper>
+    );
 
 export default PrivateWrapper;
