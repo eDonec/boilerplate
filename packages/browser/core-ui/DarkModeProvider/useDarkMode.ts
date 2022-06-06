@@ -9,8 +9,13 @@ export const DarkModeContext = createContext<{
   changeTheme: () => null,
 });
 
+const initialTheme =
+  typeof window !== "undefined"
+    ? (window?.localStorage.getItem("theme") as ITheme | undefined)
+    : "system";
+
 export const useDarkModeContext = () => {
-  const [mode, setMode] = useState<ITheme>("system");
+  const [mode, setMode] = useState<ITheme>(initialTheme || "system");
 
   return {
     value: {
