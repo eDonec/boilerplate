@@ -9,7 +9,7 @@ import {
   alphaRegex,
   alphaSpaceRegex,
   emailRegex,
-  snakeCaseRegex,
+  kebabCaseRegex,
   urlRegex,
 } from "./regex";
 
@@ -220,16 +220,17 @@ export default class FieldValidator {
     return this;
   }
 
-  isSnakeCase() {
+  isKebabCase() {
     if (!this.isStringType(this.fieldToTest)) return this;
-    if (!snakeCaseRegex.test(this.fieldToTest))
+
+    if (!kebabCaseRegex.test(this.fieldToTest))
       this.error = {
         message: "Validation error!",
         fields: [
           ...(this.error?.fields || []),
           {
             fieldName: this.fieldName,
-            message: `${this.fieldName} can only contain letters and dashes (it should be snake case) "-"`,
+            message: `${this.fieldName} can only contain letters and dashes (it should be Kebab case) "-"`,
           },
         ],
       };

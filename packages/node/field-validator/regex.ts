@@ -9,3 +9,4 @@ export const alphaNumRegex = /^[A-Z0-9]*$/i;
 export const alphaSpaceRegex = /^[A-Z\s]*$/i;
 
 export const snakeCaseRegex = /^[a-z0-9-]+$/g;
+export const kebabCaseRegex = /^[a-z0-9]+(?:-[a-z0-9]+)*$/g;
