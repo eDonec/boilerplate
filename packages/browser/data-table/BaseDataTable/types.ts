@@ -16,6 +16,8 @@ export type DataTableColumn<T> = RequireAtLeastOne<
     sortCallbackValue?: string;
     sortable?: boolean;
     className?: string;
+    hideSortIcon?: boolean;
+    headerRowContainerClassName?: string;
   },
   "cell" | "selector"
 >;
@@ -25,6 +27,8 @@ export type HeaderItem = {
   value: string;
   className?: string;
   sortable?: boolean;
+  hideSortIcon?: boolean;
+  rowContainerClassName?: string;
 };
 export type SelectedSort = {
   field: string;

@@ -8,4 +8,6 @@ export const getDataTableHeaderItems = <T>(
     value: col.sortCallbackValue || col.selector || "",
     className: col.className,
     sortable: typeof col.sortable === "boolean" ? col.sortable : true,
+    hideSortIcon: col.hideSortIcon,
+    rowContainerClassName: col.headerRowContainerClassName,
   }));

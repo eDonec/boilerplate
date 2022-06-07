@@ -26,7 +26,9 @@ const DataTableHeader = ({ headerItems }: DataTableHeaderProps) => {
         return (
           <th
             key={headerItem.value || keyIndex}
-            className={clsx(headerItem.className, "cursor-pointer px-6 py-4")}
+            className={clsx(headerItem.className, "px-6 py-4", {
+              "cursor-pointer": headerItem.sortable,
+            })}
             onClick={() =>
               headerItem.sortable &&
               onSortChange?.({
@@ -42,14 +44,21 @@ const DataTableHeader = ({ headerItems }: DataTableHeaderProps) => {
               })
             }
           >
-            <div className="flex items-center justify-between ">
+            <div
+              className={clsx(
+                "flex items-center justify-between",
+                headerItem.rowContainerClassName
+              )}
+            >
               {headerItem.label}
-              <Chevron
-                className={clsx("ml-3 transition-[opacity,transform]", {
-                  "rotate-180": currentSortDirection === SortDirection.ASC,
-                  "opacity-0": !currentSortDirection,
-                })}
-              />
+              {!headerItem.hideSortIcon && (
+                <Chevron
+                  className={clsx("ml-3 transition-[opacity,transform]", {
+                    "rotate-180": currentSortDirection === SortDirection.ASC,
+                    "opacity-0": !currentSortDirection,
+                  })}
+                />
+              )}
             </div>
           </th>
         );

@@ -1,25 +1,29 @@
-import { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
-import Api from "api";
-import { LeanRoleDocument } from "auth-types/models/Role";
-import { useFirstMount } from "core-hooks";
+import { Button } from "core-ui";
+
+import { BaseDataTable } from "data-table";
 
 import { withPrivateWrapper } from "containers/AuthWrappers/PrivateWrapper";
 import MainWrapper from "containers/MainWrapper";
 
-const RoleDetails = () => {
-  const [role, setRole] = useState<LeanRoleDocument | null>(null);
-  const isFirstMount = useFirstMount();
-  const { id } = useParams<{ id: string }>();
+import { useRoleDetails } from "./useRoleDetails";
 
-  if (isFirstMount && id) {
-    Api.authSDK.getRoleById({ params: { id } }).then(setRole);
-  }
+const RoleDetails = () => {
+  const { ressources, columns } = useRoleDetails();
+  const [t] = useTranslation();
 
   return (
-    <MainWrapper title="Role Details" description="Role Details">
-      {JSON.stringify(role)}
+    <MainWrapper
+      title="Role Details"
+      description="Role Details"
+      customButton={<Button success>{t("misc.save")}</Button>}
+    >
+      <BaseDataTable
+        data={ressources}
+        columns={columns}
+        keyExtractor={({ item }) => item.title}
+      />
     </MainWrapper>
   );
 };

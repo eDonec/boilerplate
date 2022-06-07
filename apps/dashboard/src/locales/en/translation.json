@@ -10,6 +10,13 @@
     "updated": "Set Counter to 300 Async",
     "notFound": "Increment"
   },
+  "misc": {
+    "cancel": "Cancel",
+    "submit": "Submit",
+    "loading": "Loading...",
+    "confirm": "Confirm",
+    "save": "Save"
+  },
   "user": {
     "activation": "Decrement",
     "resetPassword": "Password reset request success",
