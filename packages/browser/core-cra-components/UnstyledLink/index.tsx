@@ -5,11 +5,19 @@ export type UnstyledLinkProps = {
   children: React.ReactNode;
   openNewTab?: boolean;
   className?: string;
+  disabled?: boolean;
 } & Omit<React.ComponentPropsWithRef<"a">, "href"> &
   LinkProps;
 
 const UnstyledLink = React.forwardRef<HTMLAnchorElement, UnstyledLinkProps>(
-  ({ children, to, openNewTab, replace, ...rest }, ref) => {
+  ({ children, disabled, to, openNewTab, replace, ...rest }, ref) => {
+    if (disabled)
+      return (
+        <span className="cursor-not-allowed" ref={ref} {...rest}>
+          {children}
+        </span>
+      );
+
     const isNewTab =
       openNewTab !== undefined
         ? openNewTab

@@ -79,3 +79,60 @@ export const getRoles: IAuthServerMiddleware<
 
   res.status(StatusCodes.OK).send(response);
 };
+
+export const banClient: IAuthServerMiddleware<
+  Request<
+    AuthZRouteTypes["/z/ban-client/:id"]["POST"]["params"],
+    unknown,
+    AuthZRouteTypes["/z/ban-client/:id"]["POST"]["body"],
+    AuthZRouteTypes["/z/ban-client/:id"]["POST"]["response"]
+  >,
+  AuthZRouteTypes["/z/ban-client/:id"]["POST"]["response"]
+> = async (req, res) => {
+  const { currentAuth } = res.locals;
+  const response = await authZService.banClient({
+    bannedByUserId: currentAuth.id,
+    id: req.params.id,
+    ...req.body,
+  });
+
+  res.status(StatusCodes.OK).send(response);
+};
+
+export const suspendClient: IAuthServerMiddleware<
+  Request<
+    AuthZRouteTypes["/z/suspend-client/:id"]["POST"]["params"],
+    unknown,
+    AuthZRouteTypes["/z/suspend-client/:id"]["POST"]["body"],
+    AuthZRouteTypes["/z/suspend-client/:id"]["POST"]["response"]
+  >,
+  AuthZRouteTypes["/z/suspend-client/:id"]["POST"]["response"]
+> = async (req, res) => {
+  const { currentAuth } = res.locals;
+
+  await authZService.suspendClient(req.params.id, {
+    suspendedByUserId: currentAuth.id,
+    suspensionLiftTime: req.body.suspensionLiftTime,
+    suspensionReason: req.body.reason,
+  });
+
+  res.status(StatusCodes.OK).send({ status: "OK" });
+};
+
+export const liftBanAndSuspension: IAuthServerMiddleware<
+  Request<
+    AuthZRouteTypes["/z/lift-ban-suspension/:id"]["GET"]["params"],
+    unknown,
+    unknown,
+    AuthZRouteTypes["/z/lift-ban-suspension/:id"]["GET"]["response"]
+  >,
+  AuthZRouteTypes["/z/lift-ban-suspension/:id"]["GET"]["response"]
+> = async (req, res) => {
+  const { currentAuth } = res.locals;
+  const response = await authZService.liftBanAndSuspension({
+    id: req.params.id,
+    liftedByUserId: currentAuth.id,
+  });
+
+  res.status(StatusCodes.OK).send(response);
+};

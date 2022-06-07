@@ -41,4 +41,31 @@ router.get(
   authZController.getRoles
 );
 
+router.post(
+  `${BASE_ROUTE}/ban-client/:id`,
+  authNValidators.tokenValidator(),
+  getAuthByAccessToken,
+  routeProtection(ACCESS_RESSOURCES.BAN_CLIENTS, PRIVILEGE.WRITE),
+  authZValidators.banClient,
+  authZController.banClient
+);
+
+router.post(
+  `${BASE_ROUTE}/suspend-client/:id`,
+  authNValidators.tokenValidator(),
+  getAuthByAccessToken,
+  routeProtection(ACCESS_RESSOURCES.SUSPEND_CLIENTS, PRIVILEGE.WRITE),
+  authZValidators.suspendClient,
+  authZController.suspendClient
+);
+
+router.get(
+  `${BASE_ROUTE}/lift-ban-suspension/:id`,
+  authNValidators.tokenValidator(),
+  getAuthByAccessToken,
+  routeProtection(ACCESS_RESSOURCES.LIFT_BAN_AND_SUSPENSION, PRIVILEGE.WRITE),
+  authZValidators.liftBanAndSuspension,
+  authZController.liftBanAndSuspension
+);
+
 export default router;

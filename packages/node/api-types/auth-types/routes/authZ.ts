@@ -1,6 +1,6 @@
 import { IPaginatedResult, SortDirection } from "shared-types";
-import { ACCESS_RESSOURCES } from "shared-types/AccessRessources";
 import { PRIVILEGE } from "shared-types/auth/access";
+import { ACCESS_RESSOURCES } from "shared-types/auth/AccessRessources";
 
 import { LeanRoleDocument } from "../models/Role";
 
@@ -24,6 +24,39 @@ export type AuthZRouteTypes = {
         "sort-field"?: string;
       };
       response: IPaginatedResult<LeanRoleDocument>;
+    };
+  };
+  "/z/ban-client/:id": {
+    POST: {
+      body: {
+        reason: string;
+      };
+
+      response: { status: string };
+      params: {
+        id: string;
+      };
+    };
+  };
+  "/z/suspend-client/:id": {
+    POST: {
+      body: {
+        reason: string;
+        suspensionLiftTime: Date;
+      };
+
+      response: { status: string };
+      params: {
+        id: string;
+      };
+    };
+  };
+  "/z/lift-ban-suspension/:id": {
+    GET: {
+      response: { status: string };
+      params: {
+        id: string;
+      };
     };
   };
   //! GENERATOR-ANCHOR

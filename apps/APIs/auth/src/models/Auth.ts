@@ -88,11 +88,11 @@ const schema = new Schema<AuthType, AuthModel>({
     type: Date,
     required: false,
   },
-  suspentionLiftTime: {
+  suspensionLiftTime: {
     type: Date,
     required: false,
   },
-  suspentionReason: {
+  suspensionReason: {
     type: String,
     required: false,
   },
