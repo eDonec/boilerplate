@@ -10,6 +10,13 @@
     "updated": "FR: Set Counter to 300 Async",
     "notFound": "FR: Increment"
   },
+  "misc": {
+    "cancel": "Annuler",
+    "submit": "Valider",
+    "loading": "Chargement...",
+    "confirm": "Confirmer",
+    "save": "Enregistrer"
+  },
   "user": {
     "activation": "FR: Decrement",
     "resetPassword": "Réussite de la demande de réinitialisation du mot de passe",
