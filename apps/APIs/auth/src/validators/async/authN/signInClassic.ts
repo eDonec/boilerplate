@@ -47,11 +47,11 @@ export const checkSuspension: IAuthServerMiddleware = async (
   const { currentAuth } = res.locals;
 
   if (currentAuth.isSuspended) {
-    if (currentAuth.suspentionLiftTime > new Date()) {
+    if (currentAuth.suspensionLiftTime > new Date()) {
       throw new UnauthorizedError({
         message: `User is suspended untill ${
-          currentAuth.suspentionLiftTime
-        } for ${currentAuth.suspentionReason || "an unknown reason"}`,
+          currentAuth.suspensionLiftTime
+        } for ${currentAuth.suspensionReason || "an unknown reason"}`,
         reason: "User suspended",
       });
     }
@@ -105,8 +105,9 @@ export const checkPassword: IAuthServerMiddleware = async (req, res, next) => {
           Number(process.env.NUMBER_OF_AUTH_TRIALS)
         ) {
           await authZServices.suspendClient(currentAuth, {
-            suspentionLiftTime: add(new Date(), { minutes: 10 }),
-            suspentionReason: "Too many unsuccessful trials",
+            suspensionLiftTime: add(new Date(), { minutes: 10 }),
+            suspensionReason: "Too many unsuccessful trials",
+            suspendedByUserId: currentAuth._id,
           });
         }
       } else currentAuth.numberOfUnsuccessfulTrials = 1;

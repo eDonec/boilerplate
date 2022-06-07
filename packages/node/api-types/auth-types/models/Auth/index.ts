@@ -26,8 +26,8 @@ export type AuthType = {
   expirationDate?: Date;
   isBanned: boolean;
   isSuspended: boolean;
-  suspentionLiftTime: Date;
-  suspentionReason: string;
+  suspensionLiftTime: Date;
+  suspensionReason: string;
   numberOfUnsuccessfulTrials: number;
   lastTrialSince: Date;
   _id: string;

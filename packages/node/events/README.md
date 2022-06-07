@@ -122,8 +122,8 @@ export enum AuthEvents {
 export type AuthEventsPayload = {
   [AuthEvents.UserSuspended]: {
     authId: string;
-    suspentionLiftTime: Date;
-    suspentionReason: string;
+    suspensionLiftTime: Date;
+    suspensionReason: string;
   };
   [AuthEvents.UserCreated]: {
     email: string;

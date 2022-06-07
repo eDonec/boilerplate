@@ -3,13 +3,13 @@ import React from "react";
 import {
   IPaginatedResult,
   KeyOfNestedObjectWithoutArray,
-  RequireAtLeastOne,
+  RequireOnlyOne,
   SortDirection,
 } from "shared-types";
 
 import { FlatListProps } from "../components/FlatList";
 
-export type DataTableColumn<T> = RequireAtLeastOne<
+export type DataTableColumn<T> = RequireOnlyOne<
   {
     title: string;
     selector: KeyOfNestedObjectWithoutArray<T>;

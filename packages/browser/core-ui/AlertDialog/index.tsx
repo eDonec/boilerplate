@@ -17,11 +17,13 @@ export const AlertDialog: React.FC<DialogAlertProps> = ({
   onSubmit,
   isOpen,
   handleClose,
+  size = "medium",
 }) => (
-  <Modal isOpen={isOpen} title={title} handleClose={handleClose}>
+  <Modal size={size} isOpen={isOpen} title={title} handleClose={handleClose}>
     <p className="mt-2 text-sm font-normal text-gray-700 dark:text-gray-400">
       {message}
     </p>
+
     <div className="mt-4 flex justify-end space-x-2">
       <Button outline gray type="button" onClick={handleClose}>
         {cancelMessage}
