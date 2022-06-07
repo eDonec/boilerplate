@@ -1,11 +1,9 @@
 /* eslint-disable no-console */
-import app from "init.testSetup";
+import app, { baseUrl } from "init.testSetup";
 import Role from "models/Role";
 import { seed } from "seed/seed";
 import { StatusCodes } from "shared-types";
 import supertest from "supertest";
-
-const BASE_URL = "/api/v1/auth";
 
 let token: string;
 
@@ -17,7 +15,7 @@ beforeEach(async () => {
       password: process.env.ROOT_USER_PASSWORD,
     };
     const signUpResponse = await supertest(app)
-      .post(`${BASE_URL}/n/sign-in/classic`)
+      .post(`${baseUrl}/n/sign-in/classic`)
       .send(signInBody);
 
     token = signUpResponse.body.token.accessToken;
@@ -33,7 +31,7 @@ describe("GET /roles/:id", () => {
       const { id } = (await Role.findOne())!;
 
       const response = await supertest(app)
-        .get(`${BASE_URL}/roles/${id}`)
+        .get(`${baseUrl}/roles/${id}`)
         .set("Authorization", `Bearer ${token}`);
 
       expect(response.status).toEqual(StatusCodes.OK);
@@ -41,7 +39,7 @@ describe("GET /roles/:id", () => {
 
     it("should throw a validation error (2)", async () => {
       const response = await supertest(app)
-        .get(`${BASE_URL}/roles/9090909`)
+        .get(`${baseUrl}/roles/9090909`)
         .set("Authorization", `Bearer ${token}`);
 
       expect(response.status).toEqual(StatusCodes["Bad Request"]);

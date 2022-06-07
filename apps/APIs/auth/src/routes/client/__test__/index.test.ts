@@ -1,11 +1,10 @@
 /* eslint-disable no-console */
-import app from "init.testSetup";
+import app, { baseUrl } from "init.testSetup";
 import { seed } from "seed/seed";
 import { StatusCodes } from "shared-types";
 import supertest from "supertest";
 import "dotenv/config";
 
-const BASE_URL = "/api/v1/auth";
 let token: string;
 
 beforeEach(async () => {
@@ -16,7 +15,7 @@ beforeEach(async () => {
       password: process.env.ROOT_USER_PASSWORD,
     };
     const signUpResponse = await supertest(app)
-      .post(`${BASE_URL}/n/sign-in/classic`)
+      .post(`${baseUrl}/n/sign-in/classic`)
       .send(signInBody);
 
     token = signUpResponse.body.token.accessToken;
@@ -32,7 +31,7 @@ describe("GET /clients/", () => {
         limit: "10",
       };
       const response = await supertest(app)
-        .get(`${BASE_URL}/clients/`)
+        .get(`${baseUrl}/clients/`)
         .set("Authorization", `Bearer ${token}`)
         .query(query);
 
@@ -46,7 +45,7 @@ describe("GET /clients/", () => {
         limit: "generated_string",
       };
       const response = await supertest(app)
-        .get(`${BASE_URL}/clients/`)
+        .get(`${baseUrl}/clients/`)
         .set("Authorization", `Bearer ${token}`)
         .query(query);
 
@@ -60,7 +59,7 @@ describe("GET /clients/", () => {
         limit: "1",
       };
       const response = await supertest(app)
-        .get(`${BASE_URL}/clients/`)
+        .get(`${baseUrl}/clients/`)
         .set("Authorization", `Bearer ${token}`)
         .query(query);
 
@@ -74,7 +73,7 @@ describe("GET /clients/", () => {
         limit: 9090909,
       };
       const response = await supertest(app)
-        .get(`${BASE_URL}/clients/`)
+        .get(`${baseUrl}/clients/`)
         .set("Authorization", `Bearer ${token}`)
         .query(query);
 
@@ -88,7 +87,7 @@ describe("GET /clients/", () => {
         limit: "generated_string",
       };
       const response = await supertest(app)
-        .get(`${BASE_URL}/clients/`)
+        .get(`${baseUrl}/clients/`)
         .set("Authorization", `Bearer ${token}`)
         .query(query);
 
@@ -102,7 +101,7 @@ describe("GET /clients/", () => {
         limit: 9090909,
       };
       const response = await supertest(app)
-        .get(`${BASE_URL}/clients/`)
+        .get(`${baseUrl}/clients/`)
         .set("Authorization", `Bearer ${token}`)
         .query(query);
 
@@ -116,7 +115,7 @@ describe("GET /clients/", () => {
         "sort-field": "generated_string",
       };
       const response = await supertest(app)
-        .get(`${BASE_URL}/clients/`)
+        .get(`${baseUrl}/clients/`)
         .set("Authorization", `Bearer ${token}`)
         .query(query);
 
@@ -131,7 +130,7 @@ describe("GET /clients/", () => {
         limit: 10,
       };
       const response = await supertest(app)
-        .get(`${BASE_URL}/clients/`)
+        .get(`${baseUrl}/clients/`)
         .set("Authorization", `Bearer ${token}`)
         .query(query);
 
@@ -146,7 +145,7 @@ describe("GET /clients/", () => {
         limit: 9090909,
       };
       const response = await supertest(app)
-        .get(`${BASE_URL}/clients/`)
+        .get(`${baseUrl}/clients/`)
         .set("Authorization", `Bearer ${token}`)
         .query(query);
 

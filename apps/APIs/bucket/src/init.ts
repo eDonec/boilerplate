@@ -24,4 +24,4 @@ if (!process.env.DATABASE_URI)
 
 export default server.app;
 
-export const { Router } = server;
+export const { Router, baseUrl } = server;
