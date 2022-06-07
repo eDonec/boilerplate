@@ -1,10 +1,8 @@
 /* eslint-disable no-console */
-import app from "init.testSetup";
+import app, { baseUrl } from "init.testSetup";
 import { seed } from "seed/seed";
 import { ACCESS_RESSOURCES, PRIVILEGE, StatusCodes } from "shared-types";
 import supertest from "supertest";
-
-const BASE_URL = "/api/v1/auth";
 
 beforeEach(async () => {
   try {
@@ -21,7 +19,7 @@ describe("POST /z/ressource-access", () => {
       // console.log(signUpResponse);
       const signUpBody = { email: "test1@example.com", password: "password" };
       const signUpResponse = await supertest(app)
-        .post(`${BASE_URL}/n/classic`)
+        .post(`${baseUrl}/n/classic`)
         .send(signUpBody);
 
       const token = signUpResponse.body.token.accessToken;
@@ -32,7 +30,7 @@ describe("POST /z/ressource-access", () => {
       };
 
       const response = await supertest(app)
-        .post(`${BASE_URL}/z/ressource-access`)
+        .post(`${baseUrl}/z/ressource-access`)
         .set("Authorization", `Bearer ${token}`)
         .send(body);
 
@@ -42,13 +40,13 @@ describe("POST /z/ressource-access", () => {
     it("should not throw a validation error but throw forbidden error", async () => {
       const signUpBody = { email: "test1@example.com", password: "password" };
       const signUpResponse = await supertest(app)
-        .post(`${BASE_URL}/n/classic`)
+        .post(`${baseUrl}/n/classic`)
         .send(signUpBody);
 
       const token = signUpResponse.body.token.accessToken;
       const body = { ressource: "9090909", privileges: 6 };
       const response = await supertest(app)
-        .post(`${BASE_URL}/z/ressource-access`)
+        .post(`${baseUrl}/z/ressource-access`)
         .set("Authorization", `Bearer ${token}`)
         .send(body);
 
@@ -59,12 +57,12 @@ describe("POST /z/ressource-access", () => {
       const body = { ressource: 9090909, privileges: 9090909 };
       const signUpBody = { email: "test1@example.com", password: "password" };
       const signUpResponse = await supertest(app)
-        .post(`${BASE_URL}/n/classic`)
+        .post(`${baseUrl}/n/classic`)
         .send(signUpBody);
 
       const token = signUpResponse.body.token.accessToken;
       const response = await supertest(app)
-        .post(`${BASE_URL}/z/ressource-access`)
+        .post(`${baseUrl}/z/ressource-access`)
         .set("Authorization", `Bearer ${token}`)
         .send(body);
 
@@ -73,7 +71,7 @@ describe("POST /z/ressource-access", () => {
     it("should throw a token error when not passed", async () => {
       const body = { ressource: "9090909", privileges: 3 };
       const response = await supertest(app)
-        .post(`${BASE_URL}/z/ressource-access`)
+        .post(`${baseUrl}/z/ressource-access`)
         .send(body);
 
       expect(response.status).toEqual(StatusCodes.Forbidden);
