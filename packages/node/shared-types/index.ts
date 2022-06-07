@@ -1,5 +1,5 @@
-export * from "./AccessRessources";
 export * from "./auth/access";
+export * from "./auth/AccessRessources";
 export * from "./auth/authProviders";
 export * from "./auth/IToken";
 export * from "./Errors";

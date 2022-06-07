@@ -83,8 +83,8 @@ The full access constant is an array containing all the privileges that can be a
 | expirationDate             | Date                                                                 | an expiration date for app accounts  | true      |
 | isBanned                   | boolean                                                              | self explanatory                     | true      |
 | isSuspended                | boolean                                                              | self explanatory                     | false     |
-| suspentionLiftTime         | Date                                                                 | self explanatory                     | false     |
-| suspentionReason           | string                                                               | self explanatory                     | false     |
+| suspensionLiftTime         | Date                                                                 | self explanatory                     | false     |
+| suspensionReason           | string                                                               | self explanatory                     | false     |
 | numberOfUnsuccessfulTrials | number                                                               | self explanatory                     | false     |
 | lastTrialSince             | Date                                                                 | lastTrialSince                       | true      |
 

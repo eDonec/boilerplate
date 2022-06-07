@@ -19,4 +19,16 @@ export const getAuthenticatedClients = async (
         preserveNullAndEmptyArrays: true,
       },
     },
+    {
+      $match: {
+        "role.name": { $ne: "GOD" },
+      },
+    },
+    {
+      $addFields: {
+        isSuspended: {
+          $gt: ["$suspensionLiftTime", new Date()],
+        },
+      },
+    },
   ]);

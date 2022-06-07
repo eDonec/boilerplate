@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useImperativeHandle, useMemo, useState } from "react";
 
 import { useFirstMount } from "core-hooks";
 import { IPaginatedResult } from "shared-types/IPaginatedResult";
@@ -18,6 +18,7 @@ export const useUncontrolledDataTable = <T>({
   setSearchParams,
   onFetchError,
   initialValue,
+  handle,
 }: Pick<
   InternalUncontrolledDataTableProps<T>,
   | "fetchFunction"
@@ -25,6 +26,7 @@ export const useUncontrolledDataTable = <T>({
   | "setSearchParams"
   | "onFetchError"
   | "initialValue"
+  | "handle"
 >) => {
   const [data, setData] = useState<IPaginatedResult<T>>(
     initialValue || emptyPaginationResponse
@@ -57,6 +59,14 @@ export const useUncontrolledDataTable = <T>({
   if (firstMount && !initialValue) {
     syncData(searchParams);
   }
+
+  useImperativeHandle(
+    handle,
+    () => ({
+      useData: () => [data, setData],
+    }),
+    [data]
+  );
 
   const onPageChange = (newPage: number) => {
     searchParams.set(UncontrolledDataTableURLParams.PAGE, newPage.toString());

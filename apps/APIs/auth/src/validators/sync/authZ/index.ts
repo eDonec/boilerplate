@@ -40,3 +40,60 @@ export const getRoles: IMiddleware<
   // validators.resolveErrors();
 
   next();
+
+export const banClient: IMiddleware<
+  Request<
+    AuthZRouteTypes["/z/ban-client/:id"]["POST"]["params"],
+    unknown,
+    AuthZRouteTypes["/z/ban-client/:id"]["POST"]["body"],
+    unknown
+  >,
+  Response<AuthZRouteTypes["/z/ban-client/:id"]["POST"]["response"]>
+> = (req, _, next) =>
+  // const validators = new FieldValidator({ body: req.body, params: req.params });
+
+  // validators.validate.body.reason.isString();
+
+  // validators.validate.params.id.isString();
+
+  // validators.resolveErrors();
+
+  next();
+
+export const suspendClient: IMiddleware<
+  Request<
+    AuthZRouteTypes["/z/suspend-client/:id"]["POST"]["params"],
+    unknown,
+    AuthZRouteTypes["/z/suspend-client/:id"]["POST"]["body"],
+    unknown
+  >,
+  Response<AuthZRouteTypes["/z/suspend-client/:id"]["POST"]["response"]>
+> = (req, _, next) =>
+  // const validators = new FieldValidator({ body: req.body, params: req.params });
+
+  // validators.validate.body.reason.isString();
+  // validators.validate.body.suspensionLiftTime.isDate();
+
+  // validators.validate.params.id.isString();
+
+  // validators.resolveErrors();
+
+  next();
+
+export const liftBanAndSuspension: IMiddleware<
+  Request<
+    AuthZRouteTypes["/z/lift-ban-suspension/:id"]["GET"]["params"],
+    unknown,
+    unknown,
+    unknown
+  >,
+  Response<AuthZRouteTypes["/z/lift-ban-suspension/:id"]["GET"]["response"]>
+> = (req, _, next) => {
+  const validators = new FieldValidator(req.params);
+
+  validators.validate.id.isString();
+
+  validators.resolveErrors();
+
+  return next();
+};
