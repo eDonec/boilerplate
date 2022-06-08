@@ -13,7 +13,6 @@ import { Checkbox, Input, RadioButton, Select } from "forms";
 import FilePicker from "forms/FilePicker";
 
 import LanguageSelector from "components/LanguageSelector";
-import PrivateWrapper from "containers/AuthWrappers/PrivateWrapper";
 import MainWrapper from "containers/MainWrapper";
 
 import { useAppSelector, useLoadingDispatch } from "hooks/reduxHooks";
@@ -94,16 +93,14 @@ const HomePage = () => {
               Go to sign-in
             </Link>
           </p>
-          <PrivateWrapper>
-            <Button
-              primary
-              onClick={() => {
-                classicDispatch(logout());
-              }}
-            >
-              logout
-            </Button>
-          </PrivateWrapper>
+          <Button
+            primary
+            onClick={() => {
+              classicDispatch(logout());
+            }}
+          >
+            logout
+          </Button>
           <MediaFormContext
             {...methods}
             fetchTokenFunction={fetchUploadToken}
