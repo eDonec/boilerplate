@@ -5,8 +5,7 @@ import AlertDialog from "core-ui/AlertDialog";
 
 import { BaseDataTable } from "data-table";
 
-import { withPrivateWrapper } from "containers/AuthWrappers/PrivateWrapper";
-import MainWrapper from "containers/MainWrapper";
+import { useInitRoute } from "containers/AppRouter/useInitRoute";
 
 import { useRoleDetails } from "./useRoleDetails";
 
@@ -22,11 +21,11 @@ const RoleDetails = () => {
   } = useRoleDetails();
   const [t] = useTranslation();
 
-  return (
-    <MainWrapper
-      title="Role Details"
-      description="Role Details"
-      customButton={
+  useInitRoute(
+    {
+      description: "Role Details",
+      title: "Roles",
+      customButton: (
         <Button
           disabled={!canSubmit}
           isLoading={loading}
@@ -35,8 +34,13 @@ const RoleDetails = () => {
         >
           {t("misc.save")}
         </Button>
-      }
-    >
+      ),
+    },
+    [loading, canSubmit]
+  );
+
+  return (
+    <>
       <BaseDataTable
         conditionalRowClassName={highlightDisabledRoutes}
         data={ressources}
@@ -50,8 +54,8 @@ const RoleDetails = () => {
         cancelMessage={t("misc.cancel")}
         {...submitModalProps}
       />
-    </MainWrapper>
+    </>
   );
 };
 
-export default withPrivateWrapper(RoleDetails);
+export default RoleDetails;

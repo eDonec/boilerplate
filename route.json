@@ -1,25 +1,9 @@
 {
-  "baseUrl": "/",
-  "name": "authenticatedClients",
+  "baseUrl": "/lift-ban-suspension/:id",
+  "name": "liftBanAndSuspension",
   "method": "GET",
-  "query": {
-    "sortDirection": {
-      "$type": "string",
-      "$required": false
-    },
-    "page": {
-      "$type": "string",
-      "$required": false
-    },
-    "sortField": {
-      "$type": "string",
-      "$required": false
-    },
-    "limit": {
-      "$type": "string",
-      "$required": false
-    }
+  "params": {
+    "id": "string"
   },
-
-  "response": "IPaginatedResult<LeanAuthDocument>"
+  "response": "string"
 }

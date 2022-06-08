@@ -72,9 +72,10 @@ const ProfileAvatar = () => {
 
       <AlertDialog
         title="Logout"
-        confirmMessage="Yes"
+        confirmMessage="Confirm"
         cancelMessage="Cancel"
         message="Are you sure you want to logout?"
+        size="small"
         {...modalProps}
       />
     </div>

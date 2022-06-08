@@ -1,7 +1,6 @@
 /* eslint-disable max-lines */
 import isAfter from "date-fns/isAfter";
 import isBefore from "date-fns/isBefore";
-import isDate from "date-fns/isDate";
 import isValid from "date-fns/isValid";
 
 import {
@@ -66,18 +65,24 @@ export default class FieldValidator {
   ): field is Date {
     if (field == null) return false;
     if (field instanceof Date) return true;
-    this.error = {
-      message: "Validation error!",
-      fields: [
-        ...(this.error?.fields || []),
-        {
-          fieldName: this.fieldName,
-          message: `${this.fieldName} is not a Date`,
-        },
-      ],
-    };
+    try {
+      this.fieldToTest = new Date(field);
 
-    return false;
+      return true;
+    } catch (error) {
+      this.error = {
+        message: "Validation error!",
+        fields: [
+          ...(this.error?.fields || []),
+          {
+            fieldName: this.fieldName,
+            message: `${this.fieldName} is not a Date`,
+          },
+        ],
+      };
+
+      return false;
+    }
   }
 
   private isNumberType(
@@ -361,7 +366,7 @@ export default class FieldValidator {
 
   //date
   isDate() {
-    if (!(isDate(this.fieldToTest) && isValid(this.fieldToTest)))
+    if (!(this.isDateType(this.fieldToTest) && isValid(this.fieldToTest)))
       this.error = {
         message: "Validation error!",
         fields: [

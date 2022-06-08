@@ -7,6 +7,7 @@ const InternalUncontrolledDataTable = <T,>({
   searchParams,
   setSearchParams,
   initialValue,
+  handle,
   ...datatableProps
 }: InternalUncontrolledDataTableProps<T>) => {
   const {
@@ -22,6 +23,7 @@ const InternalUncontrolledDataTable = <T,>({
     searchParams,
     setSearchParams,
     initialValue,
+    handle,
   });
 
   return (

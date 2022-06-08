@@ -3,8 +3,7 @@ import { LeanRoleDocument } from "auth-types/models/Role";
 import UncontrolledDataTable from "core-cra-components/UncontrolledDataTable";
 import { FetchFunction } from "core-cra-components/UncontrolledDataTable/types";
 
-import { withPrivateWrapper } from "containers/AuthWrappers/PrivateWrapper";
-import MainWrapper from "containers/MainWrapper";
+import { useInitRoute } from "containers/AppRouter/useInitRoute";
 
 import { useAccessPage } from "./useAccessPage";
 
@@ -12,17 +11,16 @@ const fetchFunction: FetchFunction<LeanRoleDocument> = (args) =>
   Api.authSDK.getRoles({ query: args });
 
 const AccessPage = () => {
+  useInitRoute({ description: "Role management", title: "Roles" });
   const { dataColumns } = useAccessPage();
 
   return (
-    <MainWrapper title="Roles" description="Role management">
-      <UncontrolledDataTable
-        fetchFunction={fetchFunction}
-        columns={dataColumns}
-        keyExtractor={({ item }) => item._id}
-      />
-    </MainWrapper>
+    <UncontrolledDataTable
+      fetchFunction={fetchFunction}
+      columns={dataColumns}
+      keyExtractor={({ item }) => item._id}
+    />
   );
 };
 
-export default withPrivateWrapper(AccessPage);
+export default AccessPage;

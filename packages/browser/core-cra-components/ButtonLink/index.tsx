@@ -21,6 +21,7 @@ const ButtonLink = React.forwardRef<HTMLAnchorElement, ButtonLinkProps>(
       danger,
       gray,
       info,
+      disabled,
       soft,
       ...rest
     },
@@ -29,6 +30,7 @@ const ButtonLink = React.forwardRef<HTMLAnchorElement, ButtonLinkProps>(
     return (
       <UnstyledLink
         ref={ref}
+        disabled={disabled}
         {...rest}
         className={clsx(
           "inline-flex items-center rounded px-4 py-2 font-semibold",
@@ -49,7 +51,7 @@ const ButtonLink = React.forwardRef<HTMLAnchorElement, ButtonLinkProps>(
             !!soft,
             !!outline
           ),
-          "disabled:cursor-not-allowed",
+          disabled && "cursor-not-allowed",
           className
         )}
       >
