@@ -5,7 +5,7 @@ import { IProps } from "./DashboardIcon";
 const EditIcon: React.FC<IProps> = ({ className }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    className={clsx("h-4 w-4 min-w-fit", className)}
+    className={clsx("h-4 w-4", className)}
     viewBox="0 0 24 24"
     stroke="currentColor"
     fill="none"

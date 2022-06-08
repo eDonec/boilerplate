@@ -33,11 +33,14 @@ const privilegesTitleDict: Record<PRIVILEGE, string> = {
 };
 
 const ressourcesTitleDict: Record<ACCESS_RESSOURCES, string> = {
+  [ACCESS_RESSOURCES["*"]]: "*",
   [ACCESS_RESSOURCES.USER]: "Users",
   [ACCESS_RESSOURCES.ROLE]: "Roles",
   [ACCESS_RESSOURCES.AUTHENTICATED_CLIENTS]: "Authenticated Clients",
   [ACCESS_RESSOURCES.PUBLIC]: "Public",
-  [ACCESS_RESSOURCES["*"]]: "*",
+  [ACCESS_RESSOURCES.BAN_CLIENTS]: "Ban Clients",
+  [ACCESS_RESSOURCES.LIFT_BAN_AND_SUSPENSION]: "Lift Ban and Suspension",
+  [ACCESS_RESSOURCES.SUSPEND_CLIENTS]: "Suspend Clients",
 };
 
 const isVisiblePrevilege = (input: unknown): input is PRIVILEGE =>
@@ -201,6 +204,7 @@ export const useRoleDetails = () => {
           body: role,
         });
         baseRole.current = role;
+        toast.success("Role updated successfully");
       } catch (error) {
         if (
           isApiError<{ message: string }>(error) &&

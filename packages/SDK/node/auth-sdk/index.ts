@@ -175,6 +175,21 @@ export default class AuthSDK extends ServerSDK {
     return data;
   }
 
+  public async banClient({
+    body,
+    params,
+  }: {
+    body: AuthZRouteTypes["/z/ban-client/:id"]["POST"]["body"];
+    query?: never;
+    params: AuthZRouteTypes["/z/ban-client/:id"]["POST"]["params"];
+  }) {
+    const { data } = await this.api.post<
+      AuthZRouteTypes["/z/ban-client/:id"]["POST"]["response"]
+    >(`${baseUrl}/z/ban-client/${params.id}`, body);
+
+    return data;
+  }
+
   public async updateRole({
     body,
     params,
@@ -186,6 +201,35 @@ export default class AuthSDK extends ServerSDK {
     const { data } = await this.api.put<
       RolesRouteTypes["/roles/:id"]["PUT"]["response"]
     >(`${baseUrl}/roles/${params.id}`, body);
+
+    return data;
+  }
+
+  public async suspendClient({
+    body,
+    params,
+  }: {
+    body: AuthZRouteTypes["/z/suspend-client/:id"]["POST"]["body"];
+    query?: never;
+    params: AuthZRouteTypes["/z/suspend-client/:id"]["POST"]["params"];
+  }) {
+    const { data } = await this.api.post<
+      AuthZRouteTypes["/z/suspend-client/:id"]["POST"]["response"]
+    >(`${baseUrl}/z/suspend-client/${params.id}`, body);
+
+    return data;
+  }
+
+  public async liftBanAndSuspension({
+    params,
+  }: {
+    body?: never;
+    query?: never;
+    params: AuthZRouteTypes["/z/lift-ban-suspension/:id"]["GET"]["params"];
+  }) {
+    const { data } = await this.api.get<
+      AuthZRouteTypes["/z/lift-ban-suspension/:id"]["GET"]["response"]
+    >(`${baseUrl}/z/lift-ban-suspension/${params.id}`);
 
     return data;
   }

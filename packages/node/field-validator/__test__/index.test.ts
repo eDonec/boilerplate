@@ -16,7 +16,7 @@ const stringsToTest = {
   invalidAlphaNum: "test?",
   invalidAlphaSpace: "test3test",
   invalidPassword: "password",
-  invalidDate: "1995/01/06",
+  invalidDate: "199asd-06",
   invalidNumber: "12aa",
   validNumber: 12,
   validDate: new Date(),

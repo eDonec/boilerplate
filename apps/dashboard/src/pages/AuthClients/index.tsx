@@ -1,53 +1,55 @@
-import Api from "api";
-import { LeanAuthDocument } from "auth-types/models/Auth";
 import UncontrolledDataTable from "core-cra-components/UncontrolledDataTable";
-import { FetchFunction } from "core-cra-components/UncontrolledDataTable/types";
+import AlertDialog from "core-ui/AlertDialog";
+import Modal from "core-ui/Modal";
 
-import { DataTableColumn } from "data-table/BaseDataTable/types";
+import SuspendClientForm from "./SuspendClientForm";
+import { fetchFunction, useAuthClients } from "./uesAuthClients";
 
-import { withPrivateWrapper } from "containers/AuthWrappers/PrivateWrapper";
-import MainWrapper from "containers/MainWrapper";
+const AuthClients = () => {
+  const {
+    dataColumns,
+    dataTableRef,
+    banClientDialogueProps,
+    liftBanAndSuspensionDialogueProps,
+    isSuspensionModalOpen,
+    setSuspensionModalOpen,
+    suspendClient,
+  } = useAuthClients();
 
-const dataColumns: DataTableColumn<LeanAuthDocument>[] = [
-  { selector: "_id", title: "ID" },
-  {
-    selector: "email",
-    title: "Email",
-  },
-  { selector: "userName", title: "User Name" },
-  {
-    selector: "role.name",
-    title: "Role",
-  },
-  {
-    selector: "authType",
-    title: "User or App",
-  },
-  {
-    title: "Banned or suspended?",
-    cell: (item) =>
-      item.isBanned || item.isSuspended ? (
-        <span className="text-red-400">Yes</span>
-      ) : (
-        <span className="text-sm">No</span>
-      ),
-  },
-];
+  return (
+    <>
+      <UncontrolledDataTable
+        fetchFunction={fetchFunction}
+        columns={dataColumns}
+        keyExtractor={({ item }) => item._id}
+        handle={dataTableRef}
+      />
+      <AlertDialog
+        {...banClientDialogueProps}
+        size="small"
+        cancelMessage="Cancel"
+        confirmMessage="Confirm"
+        title="You are about to ban a client! Are you sure?"
+        message="This is a sensitive action please be carefull!"
+      />
+      <AlertDialog
+        {...liftBanAndSuspensionDialogueProps}
+        size="small"
+        cancelMessage="Cancel"
+        confirmMessage="Confirm"
+        title="You are about to reactivate a client! Are you sure?"
+        message="This is a sensitive action please be carefull!"
+      />
+      <Modal
+        isOpen={isSuspensionModalOpen}
+        handleClose={() => setSuspensionModalOpen(false)}
+        title="Suspend Client"
+        size="small"
+      >
+        <SuspendClientForm onSubmit={suspendClient} />
+      </Modal>
+    </>
+  );
+};
 
-const fetchFunction: FetchFunction<LeanAuthDocument> = (args) =>
-  Api.authSDK.getAuthenticatedClients({ query: args });
-
-const AuthClients = () => (
-  <MainWrapper
-    title="Authenticated Clients"
-    description="List of authenticated clients"
-  >
-    <UncontrolledDataTable
-      fetchFunction={fetchFunction}
-      columns={dataColumns}
-      keyExtractor={({ item }) => item._id}
-    />
-  </MainWrapper>
-);
-
-export default withPrivateWrapper(AuthClients);
+export default AuthClients;
