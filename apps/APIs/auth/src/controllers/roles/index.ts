@@ -31,3 +31,21 @@ export const getRoleById: IAuthServerMiddleware<
 
   res.status(StatusCodes.OK).send(response);
 };
+
+export const updateRole: IAuthServerMiddleware<
+  Request<
+    RolesRouteTypes["/roles/:id"]["PUT"]["params"],
+    unknown,
+    RolesRouteTypes["/roles/:id"]["PUT"]["body"],
+    unknown
+  >,
+  RolesRouteTypes["/roles/:id"]["PUT"]["response"]
+> = async (req, res) => {
+  await rolesService.updateRole(
+    req.params.id,
+    req.body,
+    res.locals.currentAuth
+  );
+
+  res.status(StatusCodes.OK).send("OK");
+};

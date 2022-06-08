@@ -17,6 +17,10 @@
     "confirm": "Confirm",
     "save": "Save"
   },
+  "role": {
+    "confirmationTitle": "Save current changes?",
+    "confirmationBody": "Are you sure you want to save the current changes? This action is sensitive and double checking is highly recommended."
+  },
   "user": {
     "activation": "Decrement",
     "resetPassword": "Password reset request success",

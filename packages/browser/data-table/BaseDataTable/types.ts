@@ -61,4 +61,8 @@ export type BaseDatatableProps<T> = Pick<
   columns: DataTableColumn<T>[];
   currentSort?: SelectedSort;
   onSortChange?: (args: { field: string; direction: SortDirection }) => void;
+  conditionalRowClassName?: (args: {
+    item: T;
+    index: number;
+  }) => string | undefined;
 };
