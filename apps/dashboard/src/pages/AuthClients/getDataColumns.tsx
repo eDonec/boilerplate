@@ -34,7 +34,7 @@ export const getDataColumns = (
     cell: (item) =>
       item.isBanned ? (
         <>
-          <span className="text-red-400">Banned indefenetly</span>
+          <span className="text-red-400">Banned indefinitely</span>
         </>
       ) : (
         <span className="text-success-400 text-sm">No</span>

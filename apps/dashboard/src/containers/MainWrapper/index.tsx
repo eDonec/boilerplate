@@ -1,44 +1,47 @@
-import { Link } from "react-router-dom";
+import { useState } from "react";
+import { Link, Outlet } from "react-router-dom";
 
 import SEO from "core-cra-components/SEO";
-import ReactChildrenProps from "shared-types/ReactChildren";
 
+import { IProps } from "components/Icons/DashboardIcon";
 import EDonecLogo from "components/Icons/EDonecLogo";
 import Sidebar from "components/Sidebar";
 import SidebarSearch from "components/Sidebar/SidebarSearch";
+import PrivateWrapper from "containers/AuthWrappers/PrivateWrapper";
 
 import { toPropperCase } from "helpers/toProperCase";
 
 import Navbar from "./Navbar";
-import PageWrapperHeader, { PageWrapperHeaderProps } from "./PageWrapperHeader";
+import PageWrapperHeader from "./PageWrapperHeader";
 import { UnseenNotification } from "./routes";
 import SidebarLinkSection from "./SidebarLinkSection";
 import { useMainWrapper } from "./useMainWrapper";
 
-type Props = {
-  notification?: UnseenNotification[];
-} & PageWrapperHeaderProps &
-  ReactChildrenProps;
-
+export type PageProps = {
+  title: string;
+  description: string;
+  customIcon?: React.FC<IProps> | undefined;
+  customButton?: JSX.Element | undefined;
+};
 // TODO: Add a hook to get the unseen notifications
-const MainWrapper: React.FC<Props> = ({
-  children,
-  notification,
-  customIcon: CustomIcon,
-  ...restOfPageWrapperHeaderProps
-}) => {
+const notification: UnseenNotification[] | undefined = undefined;
+
+const MainWrapper = () => {
+  const [props, initPage] = useState<PageProps>({
+    title: "Dashboard",
+    description: "eDonec Dashboard",
+  });
   const {
     filteredRoutes,
     handleChange,
     currentRouteIcon: Icon,
   } = useMainWrapper();
 
+  const { customIcon: CustomIcon, title, description, customButton } = props;
+
   return (
-    <>
-      <SEO
-        title={toPropperCase(restOfPageWrapperHeaderProps.title)}
-        description={restOfPageWrapperHeaderProps.description}
-      />
+    <PrivateWrapper>
+      <SEO title={toPropperCase(title)} description={description} />
 
       <div className="flex-no-wrap flex">
         <Sidebar>
@@ -62,15 +65,17 @@ const MainWrapper: React.FC<Props> = ({
           <div className="mb-3 bg-gray-200 pb-3 shadow-2xl dark:bg-gray-700">
             <PageWrapperHeader
               customIcon={CustomIcon || Icon}
-              {...restOfPageWrapperHeaderProps}
+              title={title}
+              description={description}
+              customButton={customButton}
             />
           </div>
           <div className="max:w-4/5 max:md:w-11/12 container mx-auto w-4/5 md:w-11/12">
-            {children}
+            <Outlet context={initPage} />
           </div>
         </div>
       </div>
-    </>
+    </PrivateWrapper>
   );
 };
 
