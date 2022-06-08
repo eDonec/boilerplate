@@ -6,7 +6,7 @@ import {
   FetchFunction,
 } from "core-cra-components/UncontrolledDataTable/types";
 
-import MainWrapper from "containers/MainWrapper";
+import { useInitRoute } from "containers/AppRouter/useInitRoute";
 
 const dataColumns: DataTableColumn<LeanRoleDocument>[] = [
   {
@@ -18,14 +18,16 @@ const dataColumns: DataTableColumn<LeanRoleDocument>[] = [
 const fetchFunction: FetchFunction<LeanRoleDocument> = (args) =>
   Api.authSDK.getRoles({ query: args });
 
-const AccessPage = () => (
-  <MainWrapper title="Roles" description="Role management">
+const AccessPage = () => {
+  useInitRoute({ description: "Role management", title: "Roles" });
+
+  return (
     <UncontrolledDataTable
       fetchFunction={fetchFunction}
       columns={dataColumns}
       keyExtractor={({ item }) => item._id}
     />
-  </MainWrapper>
-);
+  );
+};
 
 export default AccessPage;

@@ -1,3 +1,5 @@
+import toast from "react-hot-toast";
+
 import { createSlice } from "@reduxjs/toolkit";
 import Api, { db } from "api";
 import { RoleType } from "auth-types/models/Role";
@@ -25,7 +27,13 @@ const authSlice = createSlice({
   initialState,
   reducers: {
     logout: (state) => {
-      Api.authSDK.logout();
+      (async () => {
+        try {
+          await Api.authSDK.logout();
+        } catch (error) {
+          toast.error("already logged out");
+        }
+      })();
       localStorage.removeItem("authId");
       db.deleteData("auth", state.authId || "");
       state.isLoggedIn = false;
