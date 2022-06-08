@@ -21,6 +21,14 @@ export type RolesRouteTypes = {
         id: string;
       };
     };
+    PUT: {
+      response: string;
+      body: Partial<LeanRoleDocument>;
+      params: {
+        id: string;
+      };
+    };
   };
+
   //! GENERATOR-ANCHOR
 };

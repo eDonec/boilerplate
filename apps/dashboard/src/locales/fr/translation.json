@@ -17,6 +17,10 @@
     "confirm": "Confirmer",
     "save": "Enregistrer"
   },
+  "role": {
+    "confirmationTitle": "Sauvegarder les modifications?",
+    "confirmationBody": "Voulez-vous vraiment enregistrer les modifications actuelles ? Cette action est sensible et une double vérification est fortement recommandée."
+  },
   "user": {
     "activation": "FR: Decrement",
     "resetPassword": "Réussite de la demande de réinitialisation du mot de passe",

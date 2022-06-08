@@ -43,3 +43,21 @@ export const getRoleById: IMiddleware<
 
   return next();
 };
+
+export const updateRole: IMiddleware<
+  Request<
+    RolesRouteTypes["/roles/:id"]["PUT"]["params"],
+    unknown,
+    unknown,
+    unknown
+  >,
+  Response<RolesRouteTypes["/roles/:id"]["PUT"]["response"]>
+> = (req, _, next) => {
+  const validators = new FieldValidator(req.params);
+
+  validators.validate.id.isString().isValidObjectId();
+
+  validators.resolveErrors();
+
+  return next();
+};
