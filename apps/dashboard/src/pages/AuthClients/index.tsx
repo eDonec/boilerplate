@@ -2,8 +2,6 @@ import UncontrolledDataTable from "core-cra-components/UncontrolledDataTable";
 import AlertDialog from "core-ui/AlertDialog";
 import Modal from "core-ui/Modal";
 
-import MainWrapper from "containers/MainWrapper";
-
 import SuspendClientForm from "./SuspendClientForm";
 import { fetchFunction, useAuthClients } from "./uesAuthClients";
 
@@ -19,10 +17,7 @@ const AuthClients = () => {
   } = useAuthClients();
 
   return (
-    <MainWrapper
-      title="Authenticated Clients"
-      description="List of authenticated clients"
-    >
+    <>
       <UncontrolledDataTable
         fetchFunction={fetchFunction}
         columns={dataColumns}
@@ -35,7 +30,7 @@ const AuthClients = () => {
         cancelMessage="Cancel"
         confirmMessage="Confirm"
         title="You are about to ban a client! Are you sure?"
-        message="This is a sencetive action please be carefull!"
+        message="This is a sensitive action please be carefull!"
       />
       <AlertDialog
         {...liftBanAndSuspensionDialogueProps}
@@ -43,7 +38,7 @@ const AuthClients = () => {
         cancelMessage="Cancel"
         confirmMessage="Confirm"
         title="You are about to reactivate a client! Are you sure?"
-        message="This is a sencetive action please be carefull!"
+        message="This is a sensitive action please be carefull!"
       />
       <Modal
         isOpen={isSuspensionModalOpen}
@@ -53,7 +48,7 @@ const AuthClients = () => {
       >
         <SuspendClientForm onSubmit={suspendClient} />
       </Modal>
-    </MainWrapper>
+    </>
   );
 };
 

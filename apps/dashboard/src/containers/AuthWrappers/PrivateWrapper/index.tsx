@@ -1,14 +1,15 @@
 import React, { ReactNode } from "react";
-import { Navigate, Outlet } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 
 import Loader from "core-ui/Loader";
+import ReactChildrenProps from "shared-types/ReactChildren";
 
 import { useAuthState } from "hooks/useAuthState";
 
-type IProps = {
+type IProps = ReactChildrenProps & {
   fallback?: ReactNode;
 };
-const PrivateWrapper: React.FC<IProps> = ({ fallback }) => {
+const PrivateWrapper: React.FC<IProps> = ({ children, fallback }) => {
   const { isLoggedIn, isLoading, roleName } = useAuthState();
 
   if (roleName === "PUBLIC") {
@@ -25,7 +26,7 @@ const PrivateWrapper: React.FC<IProps> = ({ fallback }) => {
       </div>
     );
 
-  return <Outlet />;
+  return <>{children}</>;
 };
 
 export default PrivateWrapper;
