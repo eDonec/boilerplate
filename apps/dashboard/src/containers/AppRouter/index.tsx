@@ -19,7 +19,7 @@ const AppRouter = () => {
       <Route path="/" element={<MainWrapper />}>
         <Route index element={<HomePage />} />
         <Route path="product/:id/edit" element={<HomePage />} />
-        <Route path="/roles/:id" element={<RoleDetails />} />
+        <Route path="roles/:id" element={<RoleDetails />} />
         <Route path="roles" element={<AccessPage />} />
         <Route path="authenticated-clients" element={<AuthClients />} />
       </Route>

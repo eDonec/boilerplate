@@ -29,7 +29,10 @@ export const checkRoleValidity: IAuthServerMiddleware<
 
       if (!currentAuthAccessRessource)
         errorMessage = "Current auth has no access to this ressource";
-      else if (currentAuthAccessRessource.privileges < PRIVILEGE.GRANT)
+      else if (
+        currentAuthAccessRessource.privileges < PRIVILEGE.GRANT &&
+        access.privileges > PRIVILEGE.DELETE_SELF
+      )
         errorMessage = "Current auth has no grant privilege to this ressource";
       else if (
         currentAuthAccessRessource.privileges < PRIVILEGE.REVOKE &&

@@ -48,6 +48,7 @@ const RoleDetails = () => {
         keyExtractor={({ item }) => item.title}
       />
       <AlertDialog
+        size="small"
         title={t("role.confirmationTitle")}
         message={t("role.confirmationBody")}
         confirmMessage={t("misc.confirm")}
