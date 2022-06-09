@@ -6,7 +6,7 @@ import Server from "http-server";
 
 const server = new Server(producer.emit.AuthError);
 
-export const { Router } = server;
+export const { Router, baseUrl } = server;
 
 server.use(json());
 

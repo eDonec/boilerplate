@@ -23,7 +23,7 @@ export const routes: Routes = [
         title: "Authenticated Clients",
         to: "/authenticated-clients",
         privileges: {
-          ressource: ACCESS_RESSOURCES.USER,
+          ressource: ACCESS_RESSOURCES.AUTHENTICATED_CLIENTS,
           privileges: PRIVILEGE.READ,
         },
         Icon: DashboardIcon,

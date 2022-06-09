@@ -2,12 +2,13 @@ import { clsx } from "core-utils";
 import { SortDirection } from "shared-types/SortDirection";
 
 import { DEFAULT_DATATABLE_SORT_DIRECTION } from "../defaults";
-import { useDataTableContext } from "../hooks/useDataTableContext";
+import { useBaseDataTableContext } from "../hooks/useBaseDataTableContext";
 import { DataTableHeaderProps } from "../types";
 import Chevron from "../../components/Icons/Chevron";
 
 const DataTableHeader = ({ headerItems }: DataTableHeaderProps) => {
-  const { currentSort, headerClassName, onSortChange } = useDataTableContext();
+  const { currentSort, headerClassName, onSortChange } =
+    useBaseDataTableContext();
 
   return (
     <tr
@@ -25,7 +26,9 @@ const DataTableHeader = ({ headerItems }: DataTableHeaderProps) => {
         return (
           <th
             key={headerItem.value || keyIndex}
-            className={clsx(headerItem.className, "cursor-pointer px-6 py-4")}
+            className={clsx(headerItem.className, "px-6 py-4", {
+              "cursor-pointer": headerItem.sortable,
+            })}
             onClick={() =>
               headerItem.sortable &&
               onSortChange?.({
@@ -41,14 +44,21 @@ const DataTableHeader = ({ headerItems }: DataTableHeaderProps) => {
               })
             }
           >
-            <div className="flex items-center justify-between ">
+            <div
+              className={clsx(
+                "flex items-center justify-between",
+                headerItem.rowContainerClassName
+              )}
+            >
               {headerItem.label}
-              <Chevron
-                className={clsx("ml-3 transition-[opacity,transform]", {
-                  "rotate-180": currentSortDirection === SortDirection.ASC,
-                  "opacity-0": !currentSortDirection,
-                })}
-              />
+              {!headerItem.hideSortIcon && (
+                <Chevron
+                  className={clsx("ml-3 transition-[opacity,transform]", {
+                    "rotate-180": currentSortDirection === SortDirection.ASC,
+                    "opacity-0": !currentSortDirection,
+                  })}
+                />
+              )}
             </div>
           </th>
         );

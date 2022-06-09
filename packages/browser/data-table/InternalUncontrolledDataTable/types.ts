@@ -16,16 +16,15 @@ export type UncontrolledDataTableHandle<T> = {
   ];
 };
 
-export type InternalUncontrolledDataTableProps<T> = Pick<
+export type InternalUncontrolledDataTableProps<T> = Omit<
   ControlledDataTableProps<T>,
-  | "className"
-  | "rowClassName"
-  | "footerClassName"
-  | "contentContainerClassName"
-  | "headerClassName"
-  | "columns"
-  | "keyExtractor"
-  | "limitOptions"
+  | "data"
+  | "onPageChange"
+  | "onSortChange"
+  | "onLimitChange"
+  | "currentSort"
+  | "limit"
+  | "loading"
 > & {
   fetchFunction: FetchFunction<T>;
   searchParams: URLSearchParams;
