@@ -1,5 +1,6 @@
 import Api from "api";
 import { LeanRoleDocument } from "auth-types/models/Role";
+import ButtonLink from "core-cra-components/ButtonLink";
 import UncontrolledDataTable from "core-cra-components/UncontrolledDataTable";
 import { FetchFunction } from "core-cra-components/UncontrolledDataTable/types";
 
@@ -11,7 +12,15 @@ const fetchFunction: FetchFunction<LeanRoleDocument> = (args) =>
   Api.authSDK.getRoles({ query: args });
 
 const AccessPage = () => {
-  useInitRoute({ description: "Role management", title: "Roles" });
+  useInitRoute({
+    description: "Role management",
+    title: "Roles",
+    customButton: (
+      <ButtonLink to="roles/add-new-role" soft primary>
+        Add New Role
+      </ButtonLink>
+    ),
+  });
   const { dataColumns } = useAccessPage();
 
   return (
