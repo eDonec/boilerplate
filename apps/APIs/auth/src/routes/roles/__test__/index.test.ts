@@ -51,6 +51,7 @@ describe("GET /roles/:id", () => {
 });
 
 const newRoleData: Partial<LeanRoleDocument> = {
+  name: "New Role",
   access: [
     {
       ressource: ACCESS_RESSOURCES.PUBLIC,
@@ -78,10 +79,23 @@ describe("PUT /roles/:id", () => {
       const response = await supertest(app)
         .put(`${baseUrl}/roles/9090909`)
         .send(newRoleData)
-
         .set("Authorization", `Bearer ${token}`);
 
       expect(response.status).toEqual(StatusCodes["Bad Request"]);
     });
+  });
+});
+
+describe("POST /roles/", () => {
+  describe("validation tests", () => {
+    it("should respond successfully (1)", async () => {
+      const response = await supertest(app)
+        .post(`${baseUrl}/roles/`)
+        .send(newRoleData)
+        .set("Authorization", `Bearer ${token}`);
+
+      expect(response.status).toEqual(StatusCodes.Created);
+    });
+    //TODO :  Add test on validation after implementing validation
   });
 });

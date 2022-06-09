@@ -9,6 +9,7 @@ export type RoleFormProps = {
     React.SetStateAction<Partial<LeanRoleDocument> | null>
   >;
   baseRole: React.RefObject<Partial<LeanRoleDocument> | null>;
+  checkErrors?: boolean;
 };
 
 export type RessourceItem = {

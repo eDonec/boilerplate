@@ -18,7 +18,11 @@ const RoleForm = (props: RoleFormProps) => {
         placeholder="Title"
         value={props.role?.name}
         onChange={onTitleChange}
-        error={!props.role?.name?.trim() ? "Title is required" : undefined}
+        error={
+          props.checkErrors && !props.role?.name?.trim()
+            ? "Title is required"
+            : undefined
+        }
       />
       <label className="mb-2 block text-sm font-medium text-gray-900 dark:text-gray-300">
         Access Ressources

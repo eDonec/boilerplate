@@ -61,3 +61,19 @@ export const updateRole: IMiddleware<
 
   return next();
 };
+
+export const addRole: IMiddleware<
+  Request<
+    unknown,
+    unknown,
+    RolesRouteTypes["/roles/"]["POST"]["body"],
+    unknown
+  >,
+  Response<RolesRouteTypes["/roles/"]["POST"]["response"]>
+> = (_req, _res, next) =>
+  // TODO : validate body
+  // const validators = new FieldValidator(req.body);
+
+  // validators.resolveErrors();
+
+  next();
