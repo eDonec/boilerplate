@@ -29,8 +29,7 @@
     "server-sdk": "*",
     "shared-types": "*",
     "tailwindcss-radix": "^2.2.0",
-    "web-vitals": "2.1.4",
-    "data-table": "*"
+    "web-vitals": "2.1.4"
   },
   "scripts": {
     "start": "craco start",
