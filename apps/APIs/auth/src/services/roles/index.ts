@@ -87,7 +87,28 @@ export const updateRole = async (
         });
     });
 
-  await role.updateOne(data);
+  const { name, access } = data;
+
+  if (name) role.name = name;
+  if (access) {
+    const newRessources = access.filter(
+      (el) => !role.access.find((a) => a.ressource === el.ressource)
+    );
+
+    role.access = [
+      ...role.access.map((el) => {
+        const newAccess = access.find((a) => a.ressource === el.ressource);
+
+        if (newAccess) return { ...el, ...newAccess };
+
+        return el;
+      }),
+      ...newRessources,
+    ];
+  }
+
+  await role.save();
 };
 
-export const addRole = (data: Partial<LeanRoleDocument>) => Role.create(data);
+export const addRole = (data: Partial<LeanRoleDocument>) =>
+  Role.create({ ...data, isDefault: false });

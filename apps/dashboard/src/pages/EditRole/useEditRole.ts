@@ -8,12 +8,13 @@ import { useFirstMount } from "core-hooks";
 import { useAlertDialog } from "core-ui/AlertDialog";
 import { isApiError } from "server-sdk";
 
+import { pruneRole } from "./utils";
+
 export const useEditRole = () => {
   const isFirstMount = useFirstMount();
   const [role, setRole] = useState<Partial<LeanRoleDocument> | null>(null);
   const baseRole = useRef<Partial<LeanRoleDocument> | null>(null);
   const [loading, setLoading] = useState(false);
-
   const { id } = useParams<{ id: string }>();
 
   if (!baseRole.current && role) baseRole.current = role;
@@ -23,13 +24,15 @@ export const useEditRole = () => {
     role?.name?.trim();
 
   const onSubmit = async () => {
-    if (role && canSubmit) {
+    if (role?.name && canSubmit) {
+      const body = pruneRole(role, baseRole.current);
+
       setLoading(true);
       try {
         await Api.authSDK.updateRole({
           // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
           params: { id: id! },
-          body: { ...role, name: role.name?.trim() },
+          body,
         });
         baseRole.current = role;
         toast.success("Role updated successfully");
