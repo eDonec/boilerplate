@@ -84,14 +84,22 @@ export const useRoleForm = ({ role, setRole, baseRole }: RoleFormProps) => {
       );
 
       const newAccess = [...prevRole.access];
-      const newPrivilege = checked ? privilege : Math.max(privilege - 1, 0);
+      const newPrivilege = checked
+        ? privilege
+        : Math.max(privilege - 1, PRIVILEGE.DELETE_SELF);
 
-      if (accessIndex !== -1)
-        newAccess[accessIndex] = {
-          ...newAccess[accessIndex],
-          privileges: newPrivilege,
-        };
-      else
+      if (accessIndex !== -1) {
+        if (
+          newPrivilege <= PRIVILEGE.DELETE_SELF &&
+          !baseRole.current?.access?.find((el) => el.ressource === ressource)
+        )
+          newAccess.splice(accessIndex, 1);
+        else
+          newAccess[accessIndex] = {
+            ...newAccess[accessIndex],
+            privileges: newPrivilege,
+          };
+      } else
         newAccess.push({
           ressource,
           privileges: privilege,
