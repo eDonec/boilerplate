@@ -13,6 +13,10 @@ export type RolesRouteTypes = {
       };
       response: IPaginatedResult<LeanRoleDocument>;
     };
+    POST: {
+      body: Partial<LeanRoleDocument>;
+      response: string;
+    };
   };
   "/roles/:id": {
     GET: {
@@ -29,6 +33,5 @@ export type RolesRouteTypes = {
       };
     };
   };
-
   //! GENERATOR-ANCHOR
 };

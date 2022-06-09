@@ -7,7 +7,7 @@ import { ACCESS_RESSOURCES, PRIVILEGE } from "shared-types";
 import { constructRoleArray } from "helpers/constructRoleArray";
 
 export const checkRoleValidity: IAuthServerMiddleware<
-  Request<unknown, unknown, LeanRoleDocument>
+  Request<unknown, unknown, Partial<LeanRoleDocument>>
 > = (req, res, next) => {
   const { currentAuth } = res.locals;
   const { access: roleAccess } = req.body;
@@ -19,7 +19,10 @@ export const checkRoleValidity: IAuthServerMiddleware<
     (el) => el.ressource === ACCESS_RESSOURCES["*"]
   );
 
-  if (!godAccountAccess || godAccountAccess.privileges < PRIVILEGE.REVOKE)
+  if (
+    roleAccess?.length &&
+    (!godAccountAccess || godAccountAccess.privileges < PRIVILEGE.REVOKE)
+  )
     for (let i = 0; i < roleAccess.length; i++) {
       let errorMessage = "";
       const access = roleAccess[i];

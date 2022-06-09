@@ -43,7 +43,14 @@ const EditRole = () => {
 
   return (
     <>
-      {role && <RoleForm baseRole={baseRole} role={role} setRole={setRole} />}
+      {role && (
+        <RoleForm
+          checkErrors
+          baseRole={baseRole}
+          role={role}
+          setRole={setRole}
+        />
+      )}
       <AlertDialog
         size="small"
         title={t("role.confirmationTitle")}

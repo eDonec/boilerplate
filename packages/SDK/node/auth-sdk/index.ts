@@ -233,6 +233,20 @@ export default class AuthSDK extends ServerSDK {
 
     return data;
   }
+
+  public async addRole({
+    body,
+  }: {
+    body: RolesRouteTypes["/roles/"]["POST"]["body"];
+    query?: never;
+    params?: never;
+  }) {
+    const { data } = await this.api.post<
+      RolesRouteTypes["/roles/"]["POST"]["response"]
+    >(`${baseUrl}/roles/`, body);
+
+    return data;
+  }
 }
 
 export type AuthSDKTypes = ServerSDKTypes<AuthSDK>;

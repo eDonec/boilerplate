@@ -89,3 +89,5 @@ export const updateRole = async (
 
   await role.updateOne(data);
 };
+
+export const addRole = (data: Partial<LeanRoleDocument>) => Role.create(data);

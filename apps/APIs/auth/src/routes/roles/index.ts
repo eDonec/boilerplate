@@ -39,4 +39,14 @@ router.put(
   rolesController.updateRole
 );
 
+router.post(
+  `${BASE_ROUTE}`,
+  authNValidators.tokenValidator(),
+  getAuthByAccessToken,
+  routeProtection(ACCESS_RESSOURCES.ROLE, PRIVILEGE.WRITE),
+  rolesMiddlewares.checkRoleValidity,
+  rolesValidators.addRole,
+  rolesController.addRole
+);
+
 export default router;

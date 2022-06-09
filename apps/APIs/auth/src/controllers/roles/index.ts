@@ -49,3 +49,17 @@ export const updateRole: IAuthServerMiddleware<
 
   res.status(StatusCodes.OK).send("OK");
 };
+
+export const addRole: IAuthServerMiddleware<
+  Request<
+    unknown,
+    unknown,
+    RolesRouteTypes["/roles/"]["POST"]["body"],
+    unknown
+  >,
+  RolesRouteTypes["/roles/"]["POST"]["response"]
+> = async (req, res) => {
+  await rolesService.addRole(req.body);
+
+  res.status(StatusCodes.Created).send("OK");
+};
