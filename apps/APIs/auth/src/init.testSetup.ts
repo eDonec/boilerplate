@@ -1,8 +1,10 @@
 import "dotenv/config";
 
-import app from "./init";
+import app, { baseUrl } from "./init";
 import router from "./routes";
 
-app.use("/api/v1/auth", router);
+app.use(baseUrl, router);
+
+export { baseUrl };
 
 export default app;

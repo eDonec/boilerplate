@@ -95,7 +95,11 @@ export const liftBanAndSuspension = async ({
   AuthZRouteTypes["/z/lift-ban-suspension/:id"]["GET"]["response"]
 > => {
   try {
-    await Auth.findByIdAndUpdate(id, { isBanned: false, isSuspended: false });
+    await Auth.findByIdAndUpdate(id, {
+      isBanned: false,
+      isSuspended: false,
+      suspensionLiftTime: null,
+    });
     producer.emit.UserBanAndSuspensionLifted({
       authId: id,
       createdAt: new Date(),

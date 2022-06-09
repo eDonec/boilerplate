@@ -1,6 +1,7 @@
 import { LeanAuthDocument } from "auth-types/models/Auth";
-import { DataTableColumn } from "core-cra-components/UncontrolledDataTable/types";
 import { clsx } from "core-utils";
+
+import { DataTableColumn } from "data-table/BaseDataTable/types";
 
 import ClientActions, { CLIENT_ACTION_OPTIONS } from "./ClientActions";
 

@@ -2,6 +2,7 @@
 import { AuthNRouteTypes } from "auth-types/routes/authN";
 import { AuthZRouteTypes } from "auth-types/routes/authZ";
 import { ClientRouteTypes } from "auth-types/routes/client";
+import { RolesRouteTypes } from "auth-types/routes/roles";
 import ServerSDK from "server-sdk/sdk";
 import ServerSDKTypes from "server-sdk/types";
 import { IToken } from "shared-types";
@@ -136,12 +137,12 @@ export default class AuthSDK extends ServerSDK {
     query,
   }: {
     body?: never;
-    query: AuthZRouteTypes["/z/roles"]["GET"]["query"];
+    query: RolesRouteTypes["/roles/"]["GET"]["query"];
     params?: never;
   }) {
     const { data } = await this.api.get<
-      AuthZRouteTypes["/z/roles"]["GET"]["response"]
-    >(`${baseUrl}/z/roles`, { params: query });
+      RolesRouteTypes["/roles/"]["GET"]["response"]
+    >(`${baseUrl}/roles`, { params: query });
 
     return data;
   }
@@ -160,6 +161,20 @@ export default class AuthSDK extends ServerSDK {
     return data;
   }
 
+  public async getRoleById({
+    params,
+  }: {
+    body?: never;
+    query?: never;
+    params: RolesRouteTypes["/roles/:id"]["GET"]["params"];
+  }) {
+    const { data } = await this.api.get<
+      RolesRouteTypes["/roles/:id"]["GET"]["response"]
+    >(`${baseUrl}/roles/${params.id}`);
+
+    return data;
+  }
+
   public async banClient({
     body,
     params,
@@ -171,6 +186,21 @@ export default class AuthSDK extends ServerSDK {
     const { data } = await this.api.post<
       AuthZRouteTypes["/z/ban-client/:id"]["POST"]["response"]
     >(`${baseUrl}/z/ban-client/${params.id}`, body);
+
+    return data;
+  }
+
+  public async updateRole({
+    body,
+    params,
+  }: {
+    body: RolesRouteTypes["/roles/:id"]["PUT"]["body"];
+    query?: never;
+    params: RolesRouteTypes["/roles/:id"]["PUT"]["params"];
+  }) {
+    const { data } = await this.api.put<
+      RolesRouteTypes["/roles/:id"]["PUT"]["response"]
+    >(`${baseUrl}/roles/${params.id}`, body);
 
     return data;
   }
@@ -200,6 +230,20 @@ export default class AuthSDK extends ServerSDK {
     const { data } = await this.api.get<
       AuthZRouteTypes["/z/lift-ban-suspension/:id"]["GET"]["response"]
     >(`${baseUrl}/z/lift-ban-suspension/${params.id}`);
+
+    return data;
+  }
+
+  public async addRole({
+    body,
+  }: {
+    body: RolesRouteTypes["/roles/"]["POST"]["body"];
+    query?: never;
+    params?: never;
+  }) {
+    const { data } = await this.api.post<
+      RolesRouteTypes["/roles/"]["POST"]["response"]
+    >(`${baseUrl}/roles/`, body);
 
     return data;
   }

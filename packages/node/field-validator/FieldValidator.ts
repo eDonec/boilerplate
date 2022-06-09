@@ -9,6 +9,7 @@ import {
   alphaSpaceRegex,
   emailRegex,
   kebabCaseRegex,
+  objectIdHexRegexp,
   urlRegex,
 } from "./regex";
 
@@ -236,6 +237,24 @@ export default class FieldValidator {
           {
             fieldName: this.fieldName,
             message: `${this.fieldName} can only contain letters and dashes (it should be Kebab case) "-"`,
+          },
+        ],
+      };
+
+    return this;
+  }
+
+  isValidObjectId() {
+    if (!this.isStringType(this.fieldToTest)) return this;
+
+    if (!objectIdHexRegexp.test(this.fieldToTest))
+      this.error = {
+        message: "Validation error!",
+        fields: [
+          ...(this.error?.fields || []),
+          {
+            fieldName: this.fieldName,
+            message: `${this.fieldName} is not a valid ObjectId`,
           },
         ],
       };
