@@ -16,7 +16,7 @@ const AccessPage = () => {
     description: "Role management",
     title: "Roles",
     customButton: (
-      <ButtonLink to="roles/add-new-role" soft primary>
+      <ButtonLink to="roles/add" soft primary>
         Add New Role
       </ButtonLink>
     ),

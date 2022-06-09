@@ -87,5 +87,5 @@ export const updateRole = async (
         });
     });
 
-  await role.update(data);
+  await role.updateOne(data);
 };

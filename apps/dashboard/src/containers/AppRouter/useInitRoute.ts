@@ -9,5 +9,8 @@ export const useInitRoute = (props: PageProps, deps?: DependencyList) => {
 
   useEffect(() => {
     initPage?.(props);
+
+    return () =>
+      initPage?.({ title: "Dashboard", description: "eDonec Dashboard" });
   }, deps || []);
 };

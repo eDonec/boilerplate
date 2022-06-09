@@ -3,50 +3,47 @@ import { useTranslation } from "react-i18next";
 import { Button } from "core-ui";
 import AlertDialog from "core-ui/AlertDialog";
 
-import { BaseDataTable } from "data-table";
-
 import { useInitRoute } from "containers/AppRouter/useInitRoute";
+import RoleForm from "containers/RoleForm";
 
-import { useRoleDetails } from "./useRoleDetails";
+import { useEditRole } from "./useEditRole";
 
-const RoleDetails = () => {
-  const {
-    ressources,
-    columns,
-    highlightDisabledRoutes,
-    submitModalProps,
-    handleSubmit,
-    loading,
-    canSubmit,
-  } = useRoleDetails();
+const EditRole = () => {
   const [t] = useTranslation();
+
+  const {
+    loading,
+    baseRole,
+    handleSubmit,
+    canSubmit,
+    role,
+    setRole,
+    submitModalProps,
+  } = useEditRole();
 
   useInitRoute(
     {
-      description: "Role Details",
-      title: "Roles",
+      description: baseRole.current?.name
+        ? `Editing ${baseRole.current.name}`
+        : "Role Details",
+      title: "Edit Role",
       customButton: (
         <Button
-          disabled={!canSubmit}
-          isLoading={loading}
           success
           onClick={handleSubmit}
+          isLoading={loading}
+          disabled={!canSubmit}
         >
           {t("misc.save")}
         </Button>
       ),
     },
-    [loading, canSubmit]
+    [loading, canSubmit, baseRole.current?.name]
   );
 
   return (
     <>
-      <BaseDataTable
-        conditionalRowClassName={highlightDisabledRoutes}
-        data={ressources}
-        columns={columns}
-        keyExtractor={({ item }) => item.title}
-      />
+      {role && <RoleForm baseRole={baseRole} role={role} setRole={setRole} />}
       <AlertDialog
         size="small"
         title={t("role.confirmationTitle")}
@@ -59,4 +56,4 @@ const RoleDetails = () => {
   );
 };
 
-export default RoleDetails;
+export default EditRole;
