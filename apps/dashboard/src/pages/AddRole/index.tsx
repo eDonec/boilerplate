@@ -8,8 +8,10 @@ import { LeanRoleDocument } from "auth-types/models/Role";
 import { Button } from "core-ui";
 import AlertDialog, { useAlertDialog } from "core-ui/AlertDialog";
 import { isApiError } from "server-sdk";
+import { ACCESS_RESSOURCES, PRIVILEGE } from "shared-types";
 
 import { useInitRoute } from "containers/AppRouter/useInitRoute";
+import AccessProtectedWrapper from "containers/AuthWrappers/AccessProtectedWrapper";
 import RoleForm from "containers/RoleForm";
 
 const emptyRole: Partial<LeanRoleDocument> = {
@@ -58,14 +60,19 @@ const AddRole = () => {
       description: "Role Creation",
       title: "Role Creation",
       customButton: (
-        <Button
-          success
-          onClick={handleSubmit}
-          isLoading={loading}
-          disabled={!canSubmit}
+        <AccessProtectedWrapper
+          privileges={PRIVILEGE.WRITE}
+          ressource={ACCESS_RESSOURCES.ROLE}
         >
-          {t("misc.submit")}
-        </Button>
+          <Button
+            success
+            onClick={handleSubmit}
+            isLoading={loading}
+            disabled={!canSubmit}
+          >
+            {t("misc.submit")}
+          </Button>
+        </AccessProtectedWrapper>
       ),
     },
     [loading, canSubmit]

@@ -3,10 +3,12 @@ import { LeanRoleDocument } from "auth-types/models/Role";
 import ButtonLink from "core-cra-components/ButtonLink";
 import UncontrolledDataTable from "core-cra-components/UncontrolledDataTable";
 import { FetchFunction } from "core-cra-components/UncontrolledDataTable/types";
+import { ACCESS_RESSOURCES, PRIVILEGE } from "shared-types";
 
 import { useInitRoute } from "containers/AppRouter/useInitRoute";
+import AccessProtectedWrapper from "containers/AuthWrappers/AccessProtectedWrapper";
 
-import { useAccessPage } from "./useAccessPage";
+import { accessPageColumns } from "./accessPageColumns";
 
 const fetchFunction: FetchFunction<LeanRoleDocument> = (args) =>
   Api.authSDK.getRoles({ query: args });
@@ -16,17 +18,21 @@ const AccessPage = () => {
     description: "Role management",
     title: "Roles",
     customButton: (
-      <ButtonLink to="roles/add" soft primary>
-        Add New Role
-      </ButtonLink>
+      <AccessProtectedWrapper
+        privileges={PRIVILEGE.WRITE}
+        ressource={ACCESS_RESSOURCES.ROLE}
+      >
+        <ButtonLink to="roles/add" soft primary>
+          Add New Role
+        </ButtonLink>
+      </AccessProtectedWrapper>
     ),
   });
-  const { dataColumns } = useAccessPage();
 
   return (
     <UncontrolledDataTable
       fetchFunction={fetchFunction}
-      columns={dataColumns}
+      columns={accessPageColumns}
       keyExtractor={({ item }) => item._id}
     />
   );
