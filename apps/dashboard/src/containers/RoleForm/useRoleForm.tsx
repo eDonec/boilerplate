@@ -18,6 +18,12 @@ import {
 export const useRoleForm = ({ role, setRole, baseRole }: RoleFormProps) => {
   const currentUserAccess = useAppSelector((state) => state.auth.access);
 
+  const isFormReadOnly = !accessMatcher(
+    currentUserAccess,
+    ACCESS_RESSOURCES.ROLE,
+    PRIVILEGE.WRITE
+  );
+
   const ressourceAccessDict = Object.values(ACCESS_RESSOURCES).reduce<
     Record<ACCESS_RESSOURCES, { grant: boolean; revoke: boolean }>
   >((acc, value) => {
@@ -46,12 +52,15 @@ export const useRoleForm = ({ role, setRole, baseRole }: RoleFormProps) => {
           cell: ({ ressource }) => (
             <input
               type="checkbox"
-              disabled={isRessourceCheckboxDisabled({
-                baseRole: baseRole.current,
-                ressource,
-                privilege,
-                ressourceAccessDict,
-              })}
+              disabled={
+                isFormReadOnly ||
+                isRessourceCheckboxDisabled({
+                  baseRole: baseRole.current,
+                  ressource,
+                  privilege,
+                  ressourceAccessDict,
+                })
+              }
               checked={isRessourceCheckboxChecked({
                 role,
                 ressource,
@@ -113,7 +122,8 @@ export const useRoleForm = ({ role, setRole, baseRole }: RoleFormProps) => {
   };
 
   const highlightDisabledRessources = ({ item }: { item: RessourceItem }) => {
-    if (!ressourceAccessDict[item.ressource].grant) return "bg-gray-300";
+    if (!isFormReadOnly && !ressourceAccessDict[item.ressource].grant)
+      return "bg-gray-300";
   };
 
   const onTitleChange = (
@@ -136,5 +146,6 @@ export const useRoleForm = ({ role, setRole, baseRole }: RoleFormProps) => {
     columns,
     highlightDisabledRessources,
     onTitleChange,
+    isFormReadOnly,
   };
 };

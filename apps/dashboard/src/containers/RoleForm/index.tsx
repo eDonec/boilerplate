@@ -6,8 +6,13 @@ import { RoleFormProps } from "./types";
 import { useRoleForm } from "./useRoleForm";
 
 const RoleForm = (props: RoleFormProps) => {
-  const { ressources, columns, highlightDisabledRessources, onTitleChange } =
-    useRoleForm(props);
+  const {
+    ressources,
+    columns,
+    highlightDisabledRessources,
+    onTitleChange,
+    isFormReadOnly,
+  } = useRoleForm(props);
 
   return (
     <>
@@ -18,6 +23,7 @@ const RoleForm = (props: RoleFormProps) => {
         placeholder="Title"
         value={props.role?.name}
         onChange={onTitleChange}
+        disabled={isFormReadOnly}
         error={
           props.checkErrors && !props.role?.name?.trim()
             ? "Title is required"

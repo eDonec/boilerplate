@@ -21,6 +21,7 @@ const AppRouter = () => {
         <Route index element={<HomePage />} />
         <Route path="product/:id/edit" element={<HomePage />} />
         <Route path="roles/add" element={<AddRole />} />
+        <Route path="roles/edit/:id" element={<EditRole />} />
         <Route path="roles/:id" element={<EditRole />} />
         <Route path="roles" element={<AccessPage />} />
         <Route path="authenticated-clients" element={<AuthClients />} />
