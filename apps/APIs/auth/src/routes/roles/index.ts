@@ -20,7 +20,7 @@ router.get(
   rolesController.getRoles
 );
 
-router.get(
+router.getProtected(
   `${BASE_ROUTE}/:id`,
   authNValidators.tokenValidator(),
   getAuthByAccessToken,

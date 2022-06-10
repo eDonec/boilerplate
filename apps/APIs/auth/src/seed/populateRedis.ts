@@ -2,39 +2,49 @@
 /* eslint-disable no-console */
 import { AuthDocument } from "auth-types/models/Auth";
 import Auth from "models/Auth";
-import authRepository, { RAuthAccess } from "models/Redis/Auth";
+import rAuthAccessSchema from "models/Redis/Auth";
+import { connect, ConnectOptions } from "mongoose";
+import { Client } from "redis-om";
+import "dotenv/config";
 
 import { constructRoleArray } from "helpers/constructRoleArray";
 
 export const populateRedis = async () => {
-  console.log("Populating redis...");
+  const client = await new Client().open();
+
+  client.execute(["FLUSHALL"]);
+  const authRepository = client.fetchRepository(rAuthAccessSchema);
+
   await authRepository.createIndex();
+
+  console.log("Populating redis...");
   console.time("Redis Time:");
-  const redisAuthClients = await authRepository.search().return.all();
+  const authClients = await Auth.find(
+    {},
+    {
+      role: {
+        access: {
+          privileges: true,
+          ressource: true,
+        },
+      },
+      customAccessList: true,
+      _id: true,
+    }
+  );
 
-  // redisAuthClients.forEach((o) => authRepository.remove(o.entityId));
-  const authClients = await Auth.find().populate("role");
+  for (let index = 0; index < authClients.length; index++) {
+    const dbAuth = authClients[index];
+    const auth = formatAuth(dbAuth);
 
-  await removeDuplicatesAndRemovedEntries(redisAuthClients, authClients);
-  const redisAuthUnsavedEntries = authClients.map((o) => formatAuth(o)).flat(1);
+    const promises = auth.map((o) => authRepository.createAndSave(o));
 
-  const promises = redisAuthUnsavedEntries.map((redisAuthUnsavedEntry) => {
-    const auth =
-      redisAuthClients.find(
-        (r) =>
-          r.ressource === redisAuthUnsavedEntry.ressource &&
-          r.authId === redisAuthUnsavedEntry.authId
-      ) || authRepository.createEntity();
+    await Promise.all(promises);
+  }
 
-    auth.authId = redisAuthUnsavedEntry.authId;
-    auth.ressource = redisAuthUnsavedEntry.ressource;
-    auth.privilege = redisAuthUnsavedEntry.privilege;
-
-    return authRepository.save(auth);
-  });
-
-  await Promise.all(promises);
   console.timeEnd("Redis Time:");
+
+  client.close();
 };
 
 const formatAuth = (auth: AuthDocument) =>
@@ -44,31 +54,13 @@ const formatAuth = (auth: AuthDocument) =>
     privilege: access.privileges,
   }));
 
-const removeDuplicatesAndRemovedEntries = async (
-  redisAuthClients: RAuthAccess[],
-  authClients: AuthDocument[]
-) => {
-  for (let index = 0; index < redisAuthClients.length; index++) {
-    const redisAuth = redisAuthClients[index];
-
-    if (
-      !authClients.find(
-        (auth) =>
-          auth._id.toString() === redisAuth.authId &&
-          constructRoleArray(auth.role, auth.customAccessList).find(
-            (access) => access.ressource === redisAuth.ressource
-          )
-      )
-    )
-      await authRepository.remove(redisAuth.entityId);
-    else if (
-      redisAuthClients.find(
-        (rAuth, i) =>
-          rAuth.authId === redisAuth.authId &&
-          rAuth.ressource === redisAuth.ressource &&
-          i > index
-      )
-    )
-      await authRepository.remove(redisAuth.entityId);
-  }
+const databaseConfig: ConnectOptions = {
+  user: process.env.DATABASE_USER,
+  pass: process.env.DATABASE_PASSWORD,
 };
+
+if (!process.env.DATABASE_URI)
+  throw new Error("Missing .env key : DATABASE_URI");
+connect(process.env.DATABASE_URI || "", databaseConfig)
+  .then(() => populateRedis())
+  .catch(console.error);

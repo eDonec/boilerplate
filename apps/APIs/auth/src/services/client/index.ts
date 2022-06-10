@@ -6,20 +6,6 @@ export const getAuthenticatedClients = async (
 ): Promise<ClientRouteTypes["/clients/"]["GET"]["response"]> =>
   Auth.findPaginated(query, [
     {
-      $lookup: {
-        from: "roles",
-        localField: "role",
-        foreignField: "_id",
-        as: "role",
-      },
-    },
-    {
-      $unwind: {
-        path: "$role",
-        preserveNullAndEmptyArrays: true,
-      },
-    },
-    {
       $match: {
         "role.name": { $ne: "GOD" },
       },

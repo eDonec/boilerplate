@@ -2,7 +2,6 @@
 import { connect, ConnectOptions } from "mongoose";
 import "dotenv/config";
 
-import { populateRedis } from "./populateRedis";
 import { seed } from "./seed";
 
 const databaseConfig: ConnectOptions = {
@@ -13,9 +12,7 @@ const databaseConfig: ConnectOptions = {
 if (!process.env.DATABASE_URI)
   throw new Error("Missing .env key : DATABASE_URI");
 connect(process.env.DATABASE_URI || "", databaseConfig)
-  .then(() => {
-    seed().then(() => {
-      populateRedis();
-    });
-  })
+  .then(() => seed())
   .catch(console.error);
+
+if (process.env.NODE_ENV === "production") import("./populateRedis");

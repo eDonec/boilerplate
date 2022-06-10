@@ -1,21 +1,38 @@
-import IAuthServerMiddleware from "auth-types/IAuthServerMiddleware";
 import { UnauthorizedError } from "custom-error";
-import { ACCESS_RESSOURCES, PRIVILEGE } from "shared-types";
-
-import { constructRoleArray } from "helpers/constructRoleArray";
+import { Request, Response } from "http-server";
+import { client } from "init";
+import rAuthAccessSchema from "models/Redis/Auth";
+import {
+  ACCESS,
+  ACCESS_RESSOURCES,
+  IMiddleware,
+  PRIVILEGE,
+} from "shared-types";
+import { TokenValidator } from "token";
 
 export const routeProtection =
   (
     ressource: ACCESS_RESSOURCES,
     privileges: PRIVILEGE
-  ): IAuthServerMiddleware =>
-  (_, res, next) => {
-    const { currentAuth } = res.locals;
+  ): IMiddleware<
+    Request<unknown, unknown, unknown, unknown>,
+    Response<unknown, { token: TokenValidator<{ authId: string }> }>
+  > =>
+  async (_, res, next) => {
+    const { token } = res.locals;
+    const authRepository = client.fetchRepository(rAuthAccessSchema);
 
-    const access = constructRoleArray(
-      currentAuth.role,
-      currentAuth.customAccessList
-    );
+    const redisClientAccess = await authRepository
+      .search()
+      .where("authId")
+      .equal(token.decodedToken.payload.authId)
+
+      .return.all();
+
+    const access: ACCESS[] = redisClientAccess.map((o) => ({
+      ressource: o.ressource,
+      privileges: o.privilege,
+    }));
 
     const userAccess = access
       // this is here to make sure that we hit the god ressource before any other ressource

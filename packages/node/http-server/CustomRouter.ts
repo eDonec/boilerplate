@@ -1,14 +1,21 @@
-import { Router, RouterOptions } from "express";
-import { IRouter } from "express-serve-static-core";
+import { IRouter, Router, RouterOptions } from "express";
+// import { Router } from "express-serve-static-core";
 import { IMiddleware } from "shared-types";
 import TCustomErrors from "shared-types/Errors";
 
 import middlewareWithTryCatch from "./errors/middlewareWithTryCatch";
 
+type ExtraMethods = {
+  getProtected: IRouter["get"];
+};
+export type TCustomRouter = Router & ExtraMethods;
+
+type PartialTCustomRouter = Router & Partial<ExtraMethods>;
+
 const CustomRouter =
   (eventSender: (payload: TCustomErrors) => void) =>
   (options?: RouterOptions | undefined) => {
-    const thisRouter: IRouter = Router(options);
+    const thisRouter: PartialTCustomRouter = Router(options);
 
     const { get, put, post, delete: deleter, patch } = thisRouter;
 
@@ -31,8 +38,9 @@ const CustomRouter =
     thisRouter.post = HOFCustomMethod(post) as typeof post;
     thisRouter.patch = HOFCustomMethod(patch) as typeof patch;
     thisRouter.delete = HOFCustomMethod(deleter) as typeof deleter;
+    thisRouter.getProtected = HOFCustomMethod(get) as typeof get;
 
-    return thisRouter;
+    return thisRouter as TCustomRouter;
   };
 
 export default CustomRouter;
