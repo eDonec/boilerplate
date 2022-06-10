@@ -3,7 +3,7 @@ import AlertDialog from "core-ui/AlertDialog";
 import Modal from "core-ui/Modal";
 
 import SuspendClientForm from "./SuspendClientForm";
-import { fetchFunction, useAuthClients } from "./uesAuthClients";
+import { fetchFunction, useAuthClients } from "./useAuthClients";
 
 const AuthClients = () => {
   const {

@@ -4,11 +4,22 @@ import { ACCESS } from "shared-types";
 export const constructRoleArray = (
   roles: RoleType | undefined,
   custumRoles: ACCESS[] = []
-) =>
-  roles?.access?.map((role) => {
-    const customRole = custumRoles.find(
-      (el) => el.ressource === role.ressource
+) => mergeAccessArrays(roles?.access || [], custumRoles);
+
+const mergeAccessArrays = (base: ACCESS[], overRide: ACCESS[]) => {
+  const result = base.slice();
+
+  overRide.forEach((overRideElement) => {
+    const existingElement = result.find(
+      (element) => element.ressource === overRideElement.ressource
     );
 
-    return customRole || role;
-  }) || custumRoles;
+    if (existingElement) {
+      existingElement.privileges = overRideElement.privileges;
+    } else {
+      result.push(overRideElement);
+    }
+  });
+
+  return result;
+};
