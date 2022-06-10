@@ -34,6 +34,13 @@ export type RolesRouteTypes = {
         id: string;
       };
     };
+    DELETE: {
+      response: string;
+      params: {
+        id: string;
+      };
+    };
   };
+
   //! GENERATOR-ANCHOR
 };
