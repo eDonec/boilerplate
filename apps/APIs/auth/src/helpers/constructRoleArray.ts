@@ -3,7 +3,7 @@ import { ACCESS } from "shared-types";
 
 export const constructRoleArray = (
   roles: RoleType | undefined,
-  custumRoles: ACCESS[]
+  custumRoles: ACCESS[] = []
 ) =>
   roles?.access?.map((role) => {
     const customRole = custumRoles.find(
