@@ -1,3 +1,5 @@
+import { ACCESS_RESSOURCES } from "./AccessRessources";
+
 export enum PRIVILEGE {
   "READ_SELF",
   "WRITE_SELF",
@@ -18,7 +20,7 @@ export const FULL_ACCESS = PRIVILEGE.REVOKE;
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type ACCESS<T = any> = {
-  ressource: string;
+  ressource: ACCESS_RESSOURCES;
   privileges: PRIVILEGE;
   meta?: T;
 };

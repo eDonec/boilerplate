@@ -21,7 +21,7 @@ export type AuthType = {
   }[];
   sessions: string[];
   role: RoleType;
-  customAccessList: ACCESS[];
+  customAccessList?: ACCESS[];
   isActive: boolean;
   expirationDate?: Date;
   isBanned: boolean;
