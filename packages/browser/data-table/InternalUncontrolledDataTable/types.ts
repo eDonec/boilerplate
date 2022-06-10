@@ -14,6 +14,7 @@ export type UncontrolledDataTableHandle<T> = {
     data: IPaginatedResult<T>,
     setData: React.Dispatch<React.SetStateAction<IPaginatedResult<T>>>
   ];
+  refresh: () => Promise<void>;
 };
 
 export type InternalUncontrolledDataTableProps<T> = Omit<

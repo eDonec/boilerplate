@@ -49,4 +49,10 @@ router.post(
   rolesController.addRole
 );
 
+router.delete(
+  `${BASE_ROUTE}/:id`,
+  rolesValidators.deleteRole,
+  rolesController.deleteRole
+);
+
 export default router;

@@ -1,3 +1,5 @@
+import { TFunction } from "react-i18next";
+
 import { LeanRoleDocument } from "auth-types/models/Role";
 import ButtonLink from "core-cra-components/ButtonLink";
 import { Button } from "core-ui";
@@ -7,9 +9,17 @@ import { DataTableColumn } from "data-table/BaseDataTable/types";
 
 import AccessProtectedWrapper from "containers/AuthWrappers/AccessProtectedWrapper";
 
-export const accessPageColumns: DataTableColumn<
+export const accessPageColumns = ({
+  onDeleteRole,
+  currentlyDeletingRole,
+  t,
+}: {
+  onDeleteRole: (id: string) => void;
+  currentlyDeletingRole: string | null;
+  t: TFunction;
+}): DataTableColumn<
   Omit<LeanRoleDocument, "access"> & { isDeletable: boolean }
->[] = [
+>[] => [
   {
     selector: "name",
     title: "Role",
@@ -21,19 +31,33 @@ export const accessPageColumns: DataTableColumn<
           privileges={PRIVILEGE.WRITE}
           ressource={ACCESS_RESSOURCES.ROLE}
         >
-          <ButtonLink to={`edit/${_id}`} warning>
-            Edit
+          <ButtonLink
+            disabled={currentlyDeletingRole === _id}
+            to={`edit/${_id}`}
+            warning
+          >
+            {t("misc.edit")}
           </ButtonLink>
         </AccessProtectedWrapper>
-        <ButtonLink to={`${_id}`} primary>
-          View
+        <ButtonLink
+          disabled={currentlyDeletingRole === _id}
+          to={`${_id}`}
+          primary
+        >
+          {t("misc.view")}
         </ButtonLink>
         {!isDefault && isDeletable && (
           <AccessProtectedWrapper
             privileges={PRIVILEGE.DELETE}
             ressource={ACCESS_RESSOURCES.ROLE}
           >
-            <Button danger>Delete</Button>
+            <Button
+              isLoading={currentlyDeletingRole === _id}
+              danger
+              onClick={() => onDeleteRole(_id)}
+            >
+              {t("misc.delete")}
+            </Button>
           </AccessProtectedWrapper>
         )}
       </div>

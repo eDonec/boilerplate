@@ -63,3 +63,17 @@ export const addRole: IAuthServerMiddleware<
 
   res.status(StatusCodes.Created).send("OK");
 };
+
+export const deleteRole: IAuthServerMiddleware<
+  Request<
+    RolesRouteTypes["/roles/:id"]["DELETE"]["params"],
+    unknown,
+    unknown,
+    unknown
+  >,
+  RolesRouteTypes["/roles/:id"]["DELETE"]["response"]
+> = async (req, res) => {
+  await rolesService.deleteRole(req.params.id);
+
+  res.status(StatusCodes.OK).send("OK");
+};

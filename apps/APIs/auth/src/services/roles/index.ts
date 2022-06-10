@@ -142,3 +142,13 @@ export const updateRole = async (
 
 export const addRole = (data: Partial<LeanRoleDocument>) =>
   Role.create({ ...data, isDefault: false });
+
+export const deleteRole = async (id: string) => {
+  if (await Auth.findOne({ role: id }))
+    throw new UnauthorizedError({
+      message: "This role is attributed to an account",
+      ressource: ACCESS_RESSOURCES.ROLE,
+      reason: "This role is attributed to an account",
+    });
+  await Role.deleteOne({ _id: id });
+};

@@ -64,8 +64,9 @@ export const useUncontrolledDataTable = <T>({
     handle,
     () => ({
       useData: () => [data, setData],
+      refresh: () => syncData(searchParams),
     }),
-    [data]
+    [data, searchParams]
   );
 
   const onPageChange = (newPage: number) => {
