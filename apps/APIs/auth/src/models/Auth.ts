@@ -2,7 +2,6 @@ import {
   AuthModel,
   AuthType,
   AuthTypeSaticMethods,
-  LeanAuthDocument,
 } from "auth-types/models/Auth";
 import { model, Schema } from "mongoose";
 import {
@@ -103,7 +102,8 @@ const schema = new Schema<AuthType, AuthModel>({
 const findPaginatedAuth: AuthTypeSaticMethods["findPaginated"] =
   async function findPaginatedRoles(this, args, prependedPipelines = []) {
     const [paginatedResults] = await this.aggregate<
-      IPaginatedResult<LeanAuthDocument>
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      IPaginatedResult<any>
     >([...prependedPipelines, ...getPaginationAggregation(args)]);
 
     return paginatedResults;

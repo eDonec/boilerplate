@@ -1,5 +1,3 @@
-import { useTranslation } from "react-i18next";
-
 import { Button } from "core-ui";
 import AlertDialog from "core-ui/AlertDialog";
 import { ACCESS_RESSOURCES, PRIVILEGE } from "shared-types";
@@ -11,8 +9,6 @@ import RoleForm from "containers/RoleForm";
 import { useEditRole } from "./useEditRole";
 
 const EditRole = () => {
-  const [t] = useTranslation();
-
   const {
     loading,
     baseRole,
@@ -21,6 +17,7 @@ const EditRole = () => {
     role,
     setRole,
     submitModalProps,
+    t,
   } = useEditRole();
 
   useInitRoute(

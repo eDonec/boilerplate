@@ -1,19 +1,17 @@
-import Api from "api";
-import { LeanRoleDocument } from "auth-types/models/Role";
 import ButtonLink from "core-cra-components/ButtonLink";
 import UncontrolledDataTable from "core-cra-components/UncontrolledDataTable";
-import { FetchFunction } from "core-cra-components/UncontrolledDataTable/types";
+import AlertDialog from "core-ui/AlertDialog";
 import { ACCESS_RESSOURCES, PRIVILEGE } from "shared-types";
 
 import { useInitRoute } from "containers/AppRouter/useInitRoute";
 import AccessProtectedWrapper from "containers/AuthWrappers/AccessProtectedWrapper";
 
-import { accessPageColumns } from "./accessPageColumns";
-
-const fetchFunction: FetchFunction<LeanRoleDocument> = (args) =>
-  Api.authSDK.getRoles({ query: args });
+import { useAccessPage } from "./useAccessPage";
 
 const AccessPage = () => {
+  const { t, deleteModalProps, dataTableRef, columns, fetchFunction } =
+    useAccessPage();
+
   useInitRoute({
     description: "Role management",
     title: "Roles",
@@ -23,18 +21,29 @@ const AccessPage = () => {
         ressource={ACCESS_RESSOURCES.ROLE}
       >
         <ButtonLink to="roles/add" soft primary>
-          Add New Role
+          {t("role.addNewRole")}
         </ButtonLink>
       </AccessProtectedWrapper>
     ),
   });
 
   return (
-    <UncontrolledDataTable
-      fetchFunction={fetchFunction}
-      columns={accessPageColumns}
-      keyExtractor={({ item }) => item._id}
-    />
+    <>
+      <UncontrolledDataTable
+        fetchFunction={fetchFunction}
+        columns={columns}
+        keyExtractor={({ item }) => item._id}
+        handle={dataTableRef}
+      />
+      <AlertDialog
+        size="small"
+        title={t("role.deletionTitle")}
+        message={t("role.deletionBody")}
+        confirmMessage={t("misc.confirm")}
+        cancelMessage={t("misc.cancel")}
+        {...deleteModalProps}
+      />
+    </>
   );
 };
 

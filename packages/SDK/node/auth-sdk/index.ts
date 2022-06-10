@@ -247,6 +247,20 @@ export default class AuthSDK extends ServerSDK {
 
     return data;
   }
+
+  public async deleteRole({
+    params,
+  }: {
+    body?: never;
+    query?: never;
+    params: RolesRouteTypes["/roles/:id"]["DELETE"]["params"];
+  }) {
+    const { data } = await this.api.delete<
+      RolesRouteTypes["/roles/:id"]["DELETE"]["response"]
+    >(`${baseUrl}/roles/${params.id}`);
+
+    return data;
+  }
 }
 
 export type AuthSDKTypes = ServerSDKTypes<AuthSDK>;

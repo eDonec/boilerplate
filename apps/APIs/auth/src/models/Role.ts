@@ -1,5 +1,4 @@
 import {
-  LeanRoleDocument,
   RoleModel,
   RoleType,
   RoleTypeSaticMethods,
@@ -39,7 +38,8 @@ const schema = new Schema<RoleType, RoleModel>(
 const findPaginatedRoles: RoleTypeSaticMethods["findPaginated"] =
   async function findPaginatedRoles(this, args, prependedPipelines = []) {
     const [paginatedResults] = await this.aggregate<
-      IPaginatedResult<LeanRoleDocument>
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      IPaginatedResult<any>
     >([...prependedPipelines, ...getPaginationAggregation(args)]);
 
     return paginatedResults;

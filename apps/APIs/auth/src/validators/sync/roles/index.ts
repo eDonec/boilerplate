@@ -77,3 +77,21 @@ export const addRole: IMiddleware<
   // validators.resolveErrors();
 
   next();
+
+export const deleteRole: IMiddleware<
+  Request<
+    RolesRouteTypes["/roles/:id"]["DELETE"]["params"],
+    unknown,
+    unknown,
+    unknown
+  >,
+  Response<RolesRouteTypes["/roles/:id"]["DELETE"]["response"]>
+> = (req, _, next) => {
+  const validators = new FieldValidator(req.params);
+
+  validators.validate.id.isString().isValidObjectId();
+
+  validators.resolveErrors();
+
+  return next();
+};
