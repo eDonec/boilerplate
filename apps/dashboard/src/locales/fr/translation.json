@@ -15,11 +15,21 @@
     "submit": "Valider",
     "loading": "Chargement...",
     "confirm": "Confirmer",
-    "save": "Enregistrer"
+    "save": "Enregistrer",
+    "edit": "Modifier",
+    "delete": "Supprimer",
+    "view": "Afficher",
+    "add": "Créer"
   },
   "role": {
     "confirmationTitle": "Sauvegarder les modifications?",
-    "confirmationBody": "Voulez-vous vraiment enregistrer les modifications actuelles ? Cette action est sensible et une double vérification est fortement recommandée."
+    "confirmationBody": "Voulez-vous vraiment enregistrer les modifications actuelles ? Cette action est sensible et une double vérification est fortement recommandée.",
+    "deletionTitle": "Supprimer le rôle?",
+    "deletionBody": "Voulez-vous vraiment supprimer ce rôle ? Cette action est sensible et une double vérification est fortement recommandée.",
+    "roleDeletedSuccess": "Rôle supprimé avec succès",
+    "roleUpdatedSuccess": "Rôle mis à jour avec succès",
+    "roleCreatedSuccess": "Rôle créé avec succès",
+    "addNewRole": "Ajouter un rôle"
   },
   "user": {
     "activation": "FR: Decrement",
@@ -34,8 +44,6 @@
   },
   "linksNames": {
     "dashboard": "Administration",
-    "add": "Créer",
-    "edit": "Modifer",
     "authenticatedClients": "List des clients authentifiés",
     "roles": "Liste des rôles"
   }

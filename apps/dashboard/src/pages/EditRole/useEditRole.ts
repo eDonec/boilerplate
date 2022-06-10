@@ -1,5 +1,6 @@
 import { useRef, useState } from "react";
 import toast from "react-hot-toast";
+import { useTranslation } from "react-i18next";
 import { useParams } from "react-router-dom";
 
 import Api from "api";
@@ -16,6 +17,7 @@ export const useEditRole = () => {
   const baseRole = useRef<Partial<LeanRoleDocument> | null>(null);
   const [loading, setLoading] = useState(false);
   const { id } = useParams<{ id: string }>();
+  const [t] = useTranslation();
 
   if (!baseRole.current && role) baseRole.current = role;
 
@@ -35,7 +37,7 @@ export const useEditRole = () => {
           body,
         });
         baseRole.current = role;
-        toast.success("Role updated successfully");
+        toast.success(t("role.roleUpdatedSuccess"));
       } catch (error) {
         if (
           isApiError<{ message: string }>(error) &&
@@ -62,5 +64,6 @@ export const useEditRole = () => {
     role,
     setRole,
     submitModalProps,
+    t,
   };
 };

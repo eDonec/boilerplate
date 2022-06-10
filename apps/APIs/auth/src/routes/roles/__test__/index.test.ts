@@ -99,3 +99,32 @@ describe("POST /roles/", () => {
     //TODO :  Add test on validation after implementing validation
   });
 });
+
+describe("DELETE /roles/:id", () => {
+  describe("validation tests", () => {
+    it("should respond successfully (1)", async () => {
+      await supertest(app)
+        .post(`${baseUrl}/roles/`)
+        .send(newRoleData)
+        .set("Authorization", `Bearer ${token}`);
+
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      const { id } = (await Role.findOne({ name: newRoleData.name }))!;
+
+      const response = await supertest(app)
+        .delete(`${baseUrl}/roles/${id}`)
+        .set("Authorization", `Bearer ${token}`);
+
+      expect(response.status).toEqual(StatusCodes.OK);
+      expect(await Role.findOne({ name: newRoleData.name })).not.toBeTruthy();
+    });
+
+    it("should throw a validation error (2)", async () => {
+      const response = await supertest(app)
+        .delete(`${baseUrl}/roles/9090909`)
+        .set("Authorization", `Bearer ${token}`);
+
+      expect(response.status).toEqual(StatusCodes["Bad Request"]);
+    });
+  });
+});

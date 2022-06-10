@@ -14,8 +14,8 @@ export const useBreadcrumbs = () => {
   const [t] = useTranslation();
   const linkTranslator: LinkTranslator = {
     "/": t("linksNames.dashboard"),
-    "/edit": t("linksNames.edit"),
-    "/add": t("linksNames.add"),
+    "/edit": t("misc.edit"),
+    "/add": t("misc.add"),
     "/authenticated-clients": t("linksNames.authenticatedClients"),
     "/roles": t("linksNames.roles"),
   };
