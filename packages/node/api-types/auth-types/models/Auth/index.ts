@@ -34,11 +34,11 @@ export type AuthType = {
 };
 
 export type AuthTypeSaticMethods = {
-  findPaginated: (
+  findPaginated: <Item = LeanAuthDocument>(
     this: AuthModel,
     args: IPaginationQuery<AuthType>,
     prependedPipelines?: PipelineStage[]
-  ) => Promise<IPaginatedResult<LeanAuthDocument>>;
+  ) => Promise<IPaginatedResult<Item>>;
 };
 export type AuthModel = Model<AuthType> & AuthTypeSaticMethods;
 export type AuthDocument = HydratedDocument<AuthType>;

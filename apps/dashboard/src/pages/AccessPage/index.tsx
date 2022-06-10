@@ -10,8 +10,9 @@ import AccessProtectedWrapper from "containers/AuthWrappers/AccessProtectedWrapp
 
 import { accessPageColumns } from "./accessPageColumns";
 
-const fetchFunction: FetchFunction<LeanRoleDocument> = (args) =>
-  Api.authSDK.getRoles({ query: args });
+const fetchFunction: FetchFunction<
+  Omit<LeanRoleDocument, "access"> & { isDeletable: boolean }
+> = (args) => Api.authSDK.getRoles({ query: args });
 
 const AccessPage = () => {
   useInitRoute({
