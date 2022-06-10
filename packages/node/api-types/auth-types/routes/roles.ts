@@ -11,7 +11,9 @@ export type RolesRouteTypes = {
         "sort-direction"?: SortDirection;
         "sort-field"?: string;
       };
-      response: IPaginatedResult<LeanRoleDocument>;
+      response: IPaginatedResult<
+        Omit<LeanRoleDocument, "access"> & { isDeletable: boolean }
+      >;
     };
     POST: {
       body: Partial<LeanRoleDocument>;
