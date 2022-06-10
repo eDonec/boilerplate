@@ -10,3 +10,4 @@ export const alphaSpaceRegex = /^[A-Z\s]*$/i;
 
 export const snakeCaseRegex = /^[a-z0-9-]+$/g;
 export const kebabCaseRegex = /^[a-z0-9]+(?:-[a-z0-9]+)*$/g;
+export const objectIdHexRegexp = /^[0-9A-Fa-f]{24}$/;

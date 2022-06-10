@@ -1,32 +1,49 @@
-import Api from "api";
-import { LeanRoleDocument } from "auth-types/models/Role";
+import ButtonLink from "core-cra-components/ButtonLink";
 import UncontrolledDataTable from "core-cra-components/UncontrolledDataTable";
-import {
-  DataTableColumn,
-  FetchFunction,
-} from "core-cra-components/UncontrolledDataTable/types";
+import AlertDialog from "core-ui/AlertDialog";
+import { ACCESS_RESSOURCES, PRIVILEGE } from "shared-types";
 
 import { useInitRoute } from "containers/AppRouter/useInitRoute";
+import AccessProtectedWrapper from "containers/AuthWrappers/AccessProtectedWrapper";
 
-const dataColumns: DataTableColumn<LeanRoleDocument>[] = [
-  {
-    selector: "name",
-    title: "Role",
-  },
-];
-
-const fetchFunction: FetchFunction<LeanRoleDocument> = (args) =>
-  Api.authSDK.getRoles({ query: args });
+import { useAccessPage } from "./useAccessPage";
 
 const AccessPage = () => {
-  useInitRoute({ description: "Role management", title: "Roles" });
+  const { t, deleteModalProps, dataTableRef, columns, fetchFunction } =
+    useAccessPage();
+
+  useInitRoute({
+    description: "Role management",
+    title: "Roles",
+    customButton: (
+      <AccessProtectedWrapper
+        privileges={PRIVILEGE.WRITE}
+        ressource={ACCESS_RESSOURCES.ROLE}
+      >
+        <ButtonLink to="roles/add" soft primary>
+          {t("role.addNewRole")}
+        </ButtonLink>
+      </AccessProtectedWrapper>
+    ),
+  });
 
   return (
-    <UncontrolledDataTable
-      fetchFunction={fetchFunction}
-      columns={dataColumns}
-      keyExtractor={({ item }) => item._id}
-    />
+    <>
+      <UncontrolledDataTable
+        fetchFunction={fetchFunction}
+        columns={columns}
+        keyExtractor={({ item }) => item._id}
+        handle={dataTableRef}
+      />
+      <AlertDialog
+        size="small"
+        title={t("role.deletionTitle")}
+        message={t("role.deletionBody")}
+        confirmMessage={t("misc.confirm")}
+        cancelMessage={t("misc.cancel")}
+        {...deleteModalProps}
+      />
+    </>
   );
 };
 

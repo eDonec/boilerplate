@@ -3,7 +3,7 @@ import { connect, ConnectOptions } from "mongoose";
 import { Client } from "redis-om";
 import "dotenv/config";
 
-import app from "./init";
+import app, { baseUrl } from "./init";
 import router from "./routes";
 
 const client = new Client();
@@ -26,7 +26,7 @@ try {
 if (!process.env.DATABASE_URI)
   throw new Error("Missing .env key : DATABASE_URI");
 
-app.use("/api/v1/auth", router);
+app.use(baseUrl, router);
 
 connect(process.env.DATABASE_URI, databaseConfig)
   .then(() => {

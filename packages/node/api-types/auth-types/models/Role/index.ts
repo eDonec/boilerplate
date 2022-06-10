@@ -8,11 +8,11 @@ export type RoleType = {
   _id: string;
 };
 export type RoleTypeSaticMethods = {
-  findPaginated: (
+  findPaginated: <Item = LeanRoleDocument>(
     this: RoleModel,
     args: IPaginationQuery<RoleType>,
     prependedPipelines?: PipelineStage[]
-  ) => Promise<IPaginatedResult<LeanRoleDocument>>;
+  ) => Promise<IPaginatedResult<Item>>;
 };
 export type RoleModel = Model<RoleType> & RoleTypeSaticMethods;
 export type RoleDocument = HydratedDocument<RoleType>;

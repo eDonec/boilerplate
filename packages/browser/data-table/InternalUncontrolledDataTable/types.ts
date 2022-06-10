@@ -14,18 +14,18 @@ export type UncontrolledDataTableHandle<T> = {
     data: IPaginatedResult<T>,
     setData: React.Dispatch<React.SetStateAction<IPaginatedResult<T>>>
   ];
+  refresh: () => Promise<void>;
 };
 
-export type InternalUncontrolledDataTableProps<T> = Pick<
+export type InternalUncontrolledDataTableProps<T> = Omit<
   ControlledDataTableProps<T>,
-  | "className"
-  | "rowClassName"
-  | "footerClassName"
-  | "contentContainerClassName"
-  | "headerClassName"
-  | "columns"
-  | "keyExtractor"
-  | "limitOptions"
+  | "data"
+  | "onPageChange"
+  | "onSortChange"
+  | "onLimitChange"
+  | "currentSort"
+  | "limit"
+  | "loading"
 > & {
   fetchFunction: FetchFunction<T>;
   searchParams: URLSearchParams;

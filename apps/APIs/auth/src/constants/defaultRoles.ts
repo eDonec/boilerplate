@@ -1,10 +1,33 @@
 import { RoleType } from "auth-types/models/Role";
-import { ACCESS_RESSOURCES, FULL_ACCESS, PRIVILEGE } from "shared-types";
+import {
+  ACCESS,
+  ACCESS_RESSOURCES,
+  FULL_ACCESS,
+  PRIVILEGE,
+} from "shared-types";
 
-const PUBLIC_ACCESS = [
+const PUBLIC_ACCESS: ACCESS[] = [
   { ressource: ACCESS_RESSOURCES.PUBLIC, privileges: FULL_ACCESS },
   { ressource: ACCESS_RESSOURCES.USER, privileges: PRIVILEGE.DELETE_SELF },
 ];
+
+const mergeAccessArrays = (base: ACCESS[], overRide: ACCESS[]) => {
+  const result = base.slice();
+
+  overRide.forEach((overRideElement) => {
+    const existingElement = result.find(
+      (element) => element.ressource === overRideElement.ressource
+    );
+
+    if (existingElement) {
+      existingElement.privileges = overRideElement.privileges;
+    } else {
+      result.push(overRideElement);
+    }
+  });
+
+  return result;
+};
 
 export const GOD: Omit<RoleType, "_id"> = {
   isDefault: true,
@@ -15,11 +38,10 @@ export const GOD: Omit<RoleType, "_id"> = {
 export const SUPER_ADMIN: Omit<RoleType, "_id"> = {
   isDefault: true,
   name: "SUPER_ADMIN",
-  access: [
-    ...PUBLIC_ACCESS,
+  access: mergeAccessArrays(PUBLIC_ACCESS, [
     { ressource: ACCESS_RESSOURCES.ROLE, privileges: FULL_ACCESS },
     { ressource: ACCESS_RESSOURCES.USER, privileges: FULL_ACCESS },
-  ],
+  ]),
 };
 
 export const PUBLIC_ROLE: Omit<RoleType, "_id"> = {

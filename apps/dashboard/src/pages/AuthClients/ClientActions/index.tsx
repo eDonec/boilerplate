@@ -25,8 +25,8 @@ const ClientActions = ({
 }) => (
   <div className="bg-op flex gap-2">
     <AccessProtectedWrapper
-      ressource={ACCESS_RESSOURCES.USER}
-      privileges={PRIVILEGE.GRANT}
+      ressource={ACCESS_RESSOURCES.AUTHENTICATED_CLIENTS}
+      privileges={PRIVILEGE.WRITE}
     >
       <ButtonLink
         to="access-level/edit/:id"
