@@ -1,9 +1,9 @@
 import IAuthServerMiddleware from "auth-types/IAuthServerMiddleware";
 import { AuthNRouteTypes } from "auth-types/routes/authN";
 import { AuthZRouteTypes } from "auth-types/routes/authZ";
-import { Request } from "http-server";
+import { Request, Response } from "http-server";
 import * as authZService from "services/authZ";
-import { StatusCodes } from "shared-types";
+import { IMiddleware, StatusCodes } from "shared-types";
 import TokenGenerator from "token/TokenGenerator";
 import TokenValidator from "token/TokenValidator";
 
@@ -80,18 +80,21 @@ export const getRoles: IAuthServerMiddleware<
   res.status(StatusCodes.OK).send(response);
 };
 
-export const banClient: IAuthServerMiddleware<
+export const banClient: IMiddleware<
   Request<
     AuthZRouteTypes["/z/ban-client/:id"]["POST"]["params"],
     unknown,
     AuthZRouteTypes["/z/ban-client/:id"]["POST"]["body"],
     AuthZRouteTypes["/z/ban-client/:id"]["POST"]["response"]
   >,
-  AuthZRouteTypes["/z/ban-client/:id"]["POST"]["response"]
+  Response<
+    AuthZRouteTypes["/z/ban-client/:id"]["POST"]["response"],
+    { token: TokenValidator<{ authId: string }> }
+  >
 > = async (req, res) => {
-  const { currentAuth } = res.locals;
+  const { token } = res.locals;
   const response = await authZService.banClient({
-    bannedByUserId: currentAuth.id,
+    bannedByUserId: token.decodedToken.payload.authId,
     id: req.params.id,
     ...req.body,
   });

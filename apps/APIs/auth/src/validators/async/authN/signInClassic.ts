@@ -25,7 +25,7 @@ export const signInClassicValidator: IMiddleware<
           $or: [{ email }, { userName }],
         }
       : { email }
-  ).populate("role");
+  );
 
   if (authUsersByUserNameOrEmail == null) {
     throw new ObjectValidationError({

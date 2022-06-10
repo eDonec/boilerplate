@@ -54,8 +54,25 @@ const schema = new Schema<AuthType, AuthModel>(
     },
     sessions: [String],
     role: {
-      type: Schema.Types.ObjectId,
-      ref: "Role",
+      _id: Schema.Types.ObjectId,
+      name: { type: String, required: true, unique: true },
+      access: [
+        {
+          ressource: {
+            type: String,
+            required: true,
+          },
+          privileges: {
+            type: Number,
+            enum: PRIVILEGE,
+            required: true,
+          },
+          meta: {
+            type: Schema.Types.Mixed,
+            default: null,
+          },
+        },
+      ],
     },
     customAccessList: {
       type: [

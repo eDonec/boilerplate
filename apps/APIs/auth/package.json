@@ -15,6 +15,7 @@
     "build:types": "tsc --emitDeclarationOnly -p tsconfig.prod.json ",
     "test": "jest --coverage --runInBand",
     "seed": "ts-node src/seed/index.ts",
+    "seed:cache": "ts-node src/seed/pupulateRedis.ts",
     "lint": "tsc --noEmit && eslint src --fix"
   },
   "dependencies": {

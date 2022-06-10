@@ -3,12 +3,11 @@ import express, {
   NextFunction,
   Request,
   Response,
-  Router as ExpressRouter,
   RouterOptions,
 } from "express";
 import TCustomErrors from "shared-types/Errors";
 
-import CustomRouter from "./CustomRouter";
+import CustomRouter, { TCustomRouter } from "./CustomRouter";
 
 class Server {
   app: Express;
@@ -19,7 +18,7 @@ class Server {
 
   listen: Express["listen"];
 
-  Router: (options?: RouterOptions | undefined) => ExpressRouter;
+  Router: (options?: RouterOptions | undefined) => TCustomRouter;
 
   constructor(eventEmitter: (payload: TCustomErrors) => void) {
     this.app = express();

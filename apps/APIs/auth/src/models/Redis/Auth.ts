@@ -1,4 +1,4 @@
-import { Client, Entity, Schema } from "redis-om";
+import { Entity, Schema } from "redis-om";
 import { ACCESS_RESSOURCES, PRIVILEGE } from "shared-types";
 
 export interface RAuthAccess {
@@ -14,12 +14,4 @@ const rAuthAccessSchema = new Schema(RAuthAccess, {
   privilege: { type: "number" },
 });
 
-const client = new Client();
-
-const openClientPromise = client.open();
-
-export { openClientPromise };
-
-const authRepository = client.fetchRepository(rAuthAccessSchema);
-
-export default authRepository;
+export default rAuthAccessSchema;

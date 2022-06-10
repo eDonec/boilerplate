@@ -44,7 +44,7 @@ router.get(
 router.post(
   `${BASE_ROUTE}/ban-client/:id`,
   authNValidators.tokenValidator(),
-  getAuthByAccessToken,
+  // getAuthByAccessToken,
   routeProtection(ACCESS_RESSOURCES.BAN_CLIENTS, PRIVILEGE.WRITE),
   authZValidators.banClient,
   authZController.banClient

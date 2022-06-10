@@ -1,14 +1,9 @@
 /* eslint-disable no-console */
 import { connect, ConnectOptions } from "mongoose";
-import { Client } from "redis-om";
 import "dotenv/config";
 
 import app, { baseUrl } from "./init";
 import router from "./routes";
-
-const client = new Client();
-
-client.open("redis://localhost:6379");
 
 const port = process.env.PORT || 4000;
 

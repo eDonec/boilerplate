@@ -37,7 +37,7 @@ export const seed = async (withLogs = true) => {
       },
       {
         ...DEFAULT_USER,
-        role: seededRoles.find((role) => role.name === "GOD")?._id,
+        role: seededRoles.find((role) => role.name === "GOD"),
       },
       {
         upsert: true,
