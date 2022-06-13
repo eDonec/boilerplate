@@ -1,10 +1,4 @@
-import express, {
-  Express,
-  NextFunction,
-  Request,
-  Response,
-  RouterOptions,
-} from "express";
+import express, { Express, RouterOptions } from "express";
 import TCustomErrors from "shared-types/Errors";
 
 import CustomRouter, { TCustomRouter } from "./CustomRouter";
@@ -39,4 +33,5 @@ class Server {
 
 export default Server;
 
-export type { NextFunction, Request, Response };
+export * from "./redisClient";
+export * from "./types";

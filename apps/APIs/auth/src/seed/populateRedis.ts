@@ -1,24 +1,24 @@
 /* eslint-disable no-await-in-loop */
 /* eslint-disable no-console */
 import { AuthDocument } from "auth-types/models/Auth";
+import rAuthAccessSchema from "http-server/RedisModels/Auth";
 import Auth from "models/Auth";
-import rAuthAccessSchema from "models/Redis/Auth";
-import { connect, ConnectOptions } from "mongoose";
 import { Client } from "redis-om";
 import "dotenv/config";
 
 import { constructRoleArray } from "helpers/constructRoleArray";
 
-export const populateRedis = async () => {
+export const populateRedis = async (withLogs = true) => {
   const client = await new Client().open();
 
   client.execute(["FLUSHALL"]);
   const authRepository = client.fetchRepository(rAuthAccessSchema);
 
   await authRepository.createIndex();
-
-  console.log("Populating redis...");
-  console.time("Redis Time:");
+  if (withLogs) {
+    console.log("Populating redis...");
+    console.time("Redis Time:");
+  }
   const authClients = await Auth.find(
     {},
     {
@@ -41,8 +41,7 @@ export const populateRedis = async () => {
 
     await Promise.all(promises);
   }
-
-  console.timeEnd("Redis Time:");
+  if (withLogs) console.timeEnd("Redis Time:");
 
   client.close();
 };
@@ -53,14 +52,3 @@ const formatAuth = (auth: AuthDocument) =>
     ressource: access.ressource,
     privilege: access.privileges,
   }));
-
-const databaseConfig: ConnectOptions = {
-  user: process.env.DATABASE_USER,
-  pass: process.env.DATABASE_PASSWORD,
-};
-
-if (!process.env.DATABASE_URI)
-  throw new Error("Missing .env key : DATABASE_URI");
-connect(process.env.DATABASE_URI || "", databaseConfig)
-  .then(() => populateRedis())
-  .catch(console.error);

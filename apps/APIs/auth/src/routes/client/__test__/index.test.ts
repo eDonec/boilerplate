@@ -1,5 +1,6 @@
 /* eslint-disable no-console */
 import app, { baseUrl } from "init.testSetup";
+import { populateRedis } from "seed/populateRedis";
 import { seed } from "seed/seed";
 import { StatusCodes } from "shared-types";
 import supertest from "supertest";
@@ -10,6 +11,7 @@ let token: string;
 beforeEach(async () => {
   try {
     await seed(false);
+    await populateRedis(false);
     const signInBody = {
       email: process.env.ROOT_USER_EMAIL,
       password: process.env.ROOT_USER_PASSWORD,

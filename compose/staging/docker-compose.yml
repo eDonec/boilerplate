@@ -32,6 +32,11 @@ services:
 
     networks:
       - main-network
+  cache:
+    image: redis/redis-stack-server:6.2.2-v4
+    restart: always
+    networks:
+      - main-network
   proxy-balancer:
     restart: always
     build:
@@ -87,6 +92,7 @@ services:
       - ROOT_USER_EMAIL=${ROOT_USER_EMAIL}
       - ROOT_USER_PASSWORD=${ROOT_USER_PASSWORD}
       - MICROSERVICE_NAME=auth
+      - REDIS_CLIENT=redis://cache:6379
     networks:
       - main-network
     depends_on:
@@ -109,11 +115,13 @@ services:
       - PENDING_DURATION_MINUTES=1440
       - UPLOAD_SECRET_KEY=${UPLOAD_SECRET_KEY}
       - TMP_DIR_NAME=tmp
+      - REDIS_CLIENT=redis://cache:6379
 
     networks:
       - main-network
     depends_on:
       - database
+      - cache
 
   zookeeper:
     restart: always
