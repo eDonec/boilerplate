@@ -53,6 +53,7 @@ export const seed = async (withLogs = true) => {
       console.log(`Seeding Completed...`);
     }
   } catch (error) {
+    console.error(error);
     console.log("seeding unavailable");
   }
   console.timeEnd("Seed Time:");

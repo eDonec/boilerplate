@@ -2,6 +2,7 @@
 import { LeanRoleDocument } from "auth-types/models/Role";
 import app, { baseUrl } from "init.testSetup";
 import Role from "models/Role";
+import { populateRedis } from "seed/populateRedis";
 import { seed } from "seed/seed";
 import { ACCESS_RESSOURCES, PRIVILEGE, StatusCodes } from "shared-types";
 import supertest from "supertest";
@@ -13,6 +14,7 @@ let token: string;
 beforeEach(async () => {
   try {
     await seed(false);
+    await populateRedis(false);
     const signInBody = {
       email: process.env.ROOT_USER_EMAIL,
       password: process.env.ROOT_USER_PASSWORD,

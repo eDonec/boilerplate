@@ -3,6 +3,7 @@ import toast from "react-hot-toast";
 
 import Api from "api";
 import { LeanAuthDocument } from "auth-types/models/Auth";
+import DeepFreeze from "core-utils/deepFreeze";
 
 import { UncontrolledDataTableHandle } from "data-table/InternalUncontrolledDataTable/types";
 
@@ -10,59 +11,60 @@ export const useClientActions = (
   dataTableRef: React.RefObject<UncontrolledDataTableHandle<LeanAuthDocument>>
 ) => {
   const [isLoading, setIsLoading] = useState<boolean | string>(false);
+  const dataRef = dataTableRef.current?.useData?.();
 
   const banClient = async (id: string) => {
-    if (dataTableRef.current) {
-      setIsLoading(id);
-      const [data, setData] = dataTableRef.current.useData();
+    if (!dataRef) return;
+    setIsLoading(id);
+    const [data, setData] = dataRef;
+    const frozenData = new DeepFreeze(data);
 
-      try {
-        setData((prev) => {
-          const newData = [...prev.items];
-          const index = newData.findIndex((item) => item._id === id);
+    try {
+      setData((prev) => {
+        const newData = [...prev.items];
+        const index = newData.findIndex((item) => item._id === id);
 
-          newData[index].isBanned = true;
+        newData[index].isBanned = true;
 
-          return { ...prev, items: newData };
-        });
+        return { ...prev, items: newData };
+      });
 
-        await Api.authSDK.banClient({
-          body: { reason: "I just feel like it" },
-          params: { id },
-        });
-      } catch (error) {
-        setData(data);
-        toast.error((error as Error).message);
-      }
+      await Api.authSDK.banClient({
+        body: { reason: "I just feel like it" },
+        params: { id },
+      });
+    } catch (error) {
+      setData(frozenData.unfreeze());
+      toast.error((error as Error).message);
     }
     setIsLoading(false);
   };
   const liftBanAndSuspension = async (id: string) => {
-    if (dataTableRef.current) {
-      setIsLoading(id);
-      const [data, setData] = dataTableRef.current.useData();
+    if (!dataRef) return;
+    setIsLoading(id);
+    const [data, setData] = dataRef;
+    const frozenData = new DeepFreeze(data);
 
-      try {
-        setData((prev) => {
-          const newData = [...prev.items];
-          const index = newData.findIndex((item) => item._id === id);
+    try {
+      setData((prev) => {
+        const newData = [...prev.items];
+        const index = newData.findIndex((item) => item._id === id);
 
-          newData[index].isBanned = false;
-          newData[index].isSuspended = false;
+        newData[index].isBanned = false;
+        newData[index].isSuspended = false;
 
-          return { ...prev, items: newData };
-        });
+        return { ...prev, items: newData };
+      });
 
-        await Api.authSDK.liftBanAndSuspension({
-          params: { id },
-        });
-        toast.success("Ban and suspension lifted on client!");
-      } catch (error) {
-        setData(data);
-        toast.error((error as Error).message);
-      }
-      setIsLoading(false);
+      await Api.authSDK.liftBanAndSuspension({
+        params: { id },
+      });
+      toast.success("Ban and suspension lifted on client!");
+    } catch (error) {
+      setData(frozenData.unfreeze());
+      toast.error((error as Error).message);
     }
+    setIsLoading(false);
   };
 
   const suspendClient = async (
@@ -70,36 +72,37 @@ export const useClientActions = (
     reason: string,
     suspensionLiftTime: Date
   ) => {
-    if (dataTableRef.current) {
-      setIsLoading(id);
-      const [data, setData] = dataTableRef.current.useData();
+    if (!dataRef) return;
+    setIsLoading(id);
+    const [data, setData] = dataRef;
 
-      try {
-        setData((prev) => {
-          const newData = [...prev.items];
-          const index = newData.findIndex((item) => item._id === id);
+    const frozenData = new DeepFreeze(data);
 
-          newData[index].isSuspended = true;
-          newData[index].suspensionLiftTime = suspensionLiftTime;
-          newData[index].suspensionReason = reason;
+    try {
+      setData((prev) => {
+        const newData = [...prev.items];
+        const index = newData.findIndex((item) => item._id === id);
 
-          return { ...prev, items: newData };
-        });
+        newData[index].isSuspended = true;
+        newData[index].suspensionLiftTime = suspensionLiftTime;
+        newData[index].suspensionReason = reason;
 
-        await Api.authSDK.suspendClient({
-          params: { id },
-          body: {
-            suspensionLiftTime,
-            reason,
-          },
-        });
-        toast.success("User suspended successfuly!");
-      } catch (error) {
-        setData(data);
-        toast.error((error as Error).message);
-      }
-      setIsLoading(false);
+        return { ...prev, items: newData };
+      });
+
+      await Api.authSDK.suspendClient({
+        params: { id },
+        body: {
+          suspensionLiftTime,
+          reason,
+        },
+      });
+      toast.success("User suspended successfuly!");
+    } catch (error) {
+      setData(frozenData.unfreeze());
+      toast.error((error as Error).message);
     }
+    setIsLoading(false);
   };
 
   return {

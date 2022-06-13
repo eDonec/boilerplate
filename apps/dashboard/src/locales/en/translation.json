@@ -25,7 +25,7 @@
     "confirmationTitle": "Save current changes?",
     "confirmationBody": "Are you sure you want to save the current changes? This action is sensitive and double checking is highly recommended.",
     "deletionTitle": "Delete role?",
-    "deletionBody": "Are you sure you want to delete this role? This action is sensitive and double checking is highly recommended.",
+    "deletionBody": "Are you sure you want to delete this role? This action is sensitive and double checking is highly recommended. Plus this operation is likely to take a little more than a minute to complete.",
     "roleDeletedSuccess": "Role deleted successfully",
     "roleUpdatedSuccess": "Role updated successfully",
     "roleCreatedSuccess": "Role created successfully",

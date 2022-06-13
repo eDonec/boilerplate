@@ -12,13 +12,8 @@ import { constructRoleArray } from "helpers/constructRoleArray";
 
 export const getRoles = async (
   query: RolesRouteTypes["/roles/"]["GET"]["query"]
-): Promise<RolesRouteTypes["/roles/"]["GET"]["response"]> => {
-  await Auth.findOne({ email: "0stewartgilbert@rodeomad.com" });
-  await Auth.findOne({ email: "2stewartgilbert@rodeomad.com	" });
-  await Auth.findOne({ email: "3stewartgilbert@rodeomad.com" });
-  await Auth.findOne({ email: ".com" });
-
-  return Role.findPaginated<
+): Promise<RolesRouteTypes["/roles/"]["GET"]["response"]> =>
+  Role.findPaginated<
     Omit<LeanRoleDocument, "access"> & { isDeletable: boolean }
   >(
     {
@@ -31,31 +26,30 @@ export const getRoles = async (
       projection: {
         access: false,
       },
-    }
-    // [
-    //   {
-    //     $lookup: {
-    //       from: Auth.collection.name,
-    //       as: "auths",
-    //       localField: "_id",
-    //       foreignField: "role",
-    //     },
-    //   },
-    //   {
-    //     $addFields: {
-    //       isDeletable: {
-    //         $cond: [{ $gt: [{ $size: "$auths" }, 0] }, false, true],
-    //       },
-    //     },
-    //   },
-    //   {
-    //     $project: {
-    //       auths: false,
-    //     },
-    //   },
-    // ]
+    },
+    [
+      {
+        $lookup: {
+          from: Auth.collection.name,
+          as: "auths",
+          localField: "_id",
+          foreignField: "role._id",
+        },
+      },
+      {
+        $addFields: {
+          isDeletable: {
+            $cond: [{ $gt: [{ $size: "$auths" }, 0] }, false, true],
+          },
+        },
+      },
+      {
+        $project: {
+          auths: false,
+        },
+      },
+    ]
   );
-};
 
 export const getRoleById = async (
   id: string
@@ -142,7 +136,6 @@ export const updateRole = async (
       ...newRessources,
     ];
   }
-
   await role.save();
 };
 

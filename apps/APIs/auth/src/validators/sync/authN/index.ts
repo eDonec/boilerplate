@@ -1,11 +1,9 @@
 /* eslint-disable max-lines */
 import { AuthNRouteTypes } from "auth-types/routes/authN";
-import { UnauthorizedError } from "custom-error";
 import ObjectValidationError from "custom-error/ObjectValidationError";
 import FieldValidator from "field-validator";
 import { Request, Response } from "http-server";
 import { IMiddleware } from "shared-types";
-import TokenValidator from "token/TokenValidator";
 
 export const signUpClassicValidator: IMiddleware<
   Request<unknown, unknown, AuthNRouteTypes["/n/classic"]["POST"]["body"]>,
@@ -88,40 +86,4 @@ export const signInFacebookValidator: IMiddleware<
   return next();
 };
 
-export const tokenValidator =
-  (isRefreshToken = false): IMiddleware =>
-  (req, res, next) => {
-    const token = decodeAndValidateToken(req.headers, isRefreshToken);
-
-    if (token.decodedToken.iss !== "auth")
-      throw new UnauthorizedError({
-        message: "Wrong token issuer!",
-        reason: "Danger! Issuer is unkown!",
-      });
-    if (!token.decodedToken.sid)
-      throw new UnauthorizedError({
-        message: "Token has no session",
-        reason: "missing session on token",
-      });
-
-    res.locals[isRefreshToken ? "refreshToken" : "token"] = token;
-    next();
-  };
-
-const decodeAndValidateToken = <T = { authId: string }>(
-  { authorization: authorizationHeader }: Request["headers"],
-  isRefreshToken = false
-) => {
-  if (typeof authorizationHeader !== "string")
-    throw new UnauthorizedError({
-      message: "No token or token malformed",
-      reason: "Token Decoder",
-    });
-
-  const token = new TokenValidator<T>(
-    authorizationHeader.split(" ")[1],
-    isRefreshToken
-  );
-
-  return token;
-};
+export * from "http-server/middlewares/authN";
