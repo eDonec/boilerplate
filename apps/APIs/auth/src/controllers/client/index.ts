@@ -16,3 +16,17 @@ export const getAuthenticatedClients: IMiddleware<
 
   res.status(StatusCodes.OK).send(response);
 };
+
+export const getClientById: IMiddleware<
+  Request<
+    ClientRouteTypes["/clients/:id"]["GET"]["params"],
+    unknown,
+    unknown,
+    unknown
+  >,
+  Response<ClientRouteTypes["/clients/:id"]["GET"]["response"]>
+> = async (req, res) => {
+  const response = await clientService.getClientById(req.params.id);
+
+  res.status(StatusCodes.OK).send(response);
+};

@@ -261,6 +261,20 @@ export default class AuthSDK extends ServerSDK {
 
     return data;
   }
+
+  public async getClientById({
+    params,
+  }: {
+    body?: never;
+    query?: never;
+    params: ClientRouteTypes["/clients/:id"]["GET"]["params"];
+  }) {
+    const { data } = await this.api.get<
+      ClientRouteTypes["/clients/:id"]["GET"]["response"]
+    >(`${baseUrl}/clients/${params.id}`);
+
+    return data;
+  }
 }
 
 export type AuthSDKTypes = ServerSDKTypes<AuthSDK>;

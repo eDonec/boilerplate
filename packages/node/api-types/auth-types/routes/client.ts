@@ -14,5 +14,12 @@ export type ClientRouteTypes = {
       response: IPaginatedResult<LeanAuthDocument>;
     };
   };
-  //! GENERATOR-ANCHOR
+  "/clients/:id": {
+    GET: {
+      response: LeanAuthDocument;
+      params: {
+        id: string;
+      };
+    };
+  };
 };
