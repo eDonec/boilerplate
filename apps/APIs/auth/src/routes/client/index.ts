@@ -18,4 +18,13 @@ router.get(
   clientController.getAuthenticatedClients
 );
 
+router.get(
+  `${BASE_ROUTE}/:id`,
+  clientValidators.getClientById,
+  authNValidators.tokenValidator(),
+  getAuthByAccessToken,
+  routeProtection(ACCESS_RESSOURCES.AUTHENTICATED_CLIENTS, PRIVILEGE.READ),
+  clientController.getClientById
+);
+
 export default router;

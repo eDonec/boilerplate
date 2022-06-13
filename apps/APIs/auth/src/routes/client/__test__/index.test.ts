@@ -1,3 +1,4 @@
+/* eslint-disable max-lines */
 /* eslint-disable no-console */
 import app, { baseUrl } from "init.testSetup";
 import { seed } from "seed/seed";
@@ -148,6 +149,38 @@ describe("GET /clients/", () => {
         .get(`${baseUrl}/clients/`)
         .set("Authorization", `Bearer ${token}`)
         .query(query);
+
+      expect(response.status).toEqual(StatusCodes["Bad Request"]);
+    });
+  });
+});
+
+describe("GET /clients/:id", () => {
+  let newUserId: string;
+
+  beforeEach(async () => {
+    const body = { email: "test@example.com", password: "password" };
+    const response = await supertest(app)
+      .post(`${baseUrl}/n/classic`)
+      .send(body);
+
+    newUserId = response.body.authID;
+  });
+
+  describe("validation tests", () => {
+    it("should respond successfully (1)", async () => {
+      console.log({ newUserId });
+      const response = await supertest(app)
+        .get(`${baseUrl}/clients/${newUserId}`)
+        .set("Authorization", `Bearer ${token}`);
+
+      expect(response.status).toEqual(StatusCodes.OK);
+    });
+
+    it("should throw a validation error (2)", async () => {
+      const response = await supertest(app)
+        .get(`${baseUrl}/clients/9090909`)
+        .set("Authorization", `Bearer ${token}`);
 
       expect(response.status).toEqual(StatusCodes["Bad Request"]);
     });

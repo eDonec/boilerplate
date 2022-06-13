@@ -17,11 +17,13 @@ const ClientActions = ({
   isSuspended,
   handelClientAction,
   isLoading,
+  authId,
 }: {
   isBanned: boolean;
   isSuspended: boolean;
   isLoading: boolean;
   handelClientAction: (action: CLIENT_ACTION_OPTIONS) => void;
+  authId: string;
 }) => (
   <div className="bg-op flex gap-2">
     <AccessProtectedWrapper
@@ -29,7 +31,7 @@ const ClientActions = ({
       privileges={PRIVILEGE.WRITE}
     >
       <ButtonLink
-        to="access-level/edit/:id"
+        to={`access-level/edit/${authId}`}
         className="text-center"
         soft
         warning

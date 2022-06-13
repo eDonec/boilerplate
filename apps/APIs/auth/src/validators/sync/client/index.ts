@@ -26,3 +26,21 @@ export const getAuthenticatedClients: IMiddleware<
 
   return next();
 };
+
+export const getClientById: IMiddleware<
+  Request<
+    ClientRouteTypes["/clients/:id"]["GET"]["params"],
+    unknown,
+    unknown,
+    unknown
+  >,
+  Response<ClientRouteTypes["/clients/:id"]["GET"]["response"]>
+> = (req, _, next) => {
+  const validators = new FieldValidator(req.params);
+
+  validators.validate.id.isString().isValidObjectId();
+
+  validators.resolveErrors();
+
+  return next();
+};
