@@ -15,7 +15,7 @@ beforeAll(async () => {
       resolve();
     }, 500);
   });
-});
+}, 10000);
 afterEach(async () => {
   await clearMockDB();
 });
