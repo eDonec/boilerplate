@@ -16,11 +16,11 @@ beforeEach(async () => {
       email: process.env.ROOT_USER_EMAIL,
       password: process.env.ROOT_USER_PASSWORD,
     };
-    const signUpResponse = await supertest(app)
+    const signInResponse = await supertest(app)
       .post(`${baseUrl}/n/sign-in/classic`)
       .send(signInBody);
 
-    token = signUpResponse.body.token.accessToken;
+    token = signInResponse.body.token.accessToken;
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error("Seeding is not available");
