@@ -169,7 +169,6 @@ describe("GET /clients/:id", () => {
 
   describe("validation tests", () => {
     it("should respond successfully (1)", async () => {
-      console.log({ newUserId });
       const response = await supertest(app)
         .get(`${baseUrl}/clients/${newUserId}`)
         .set("Authorization", `Bearer ${token}`);

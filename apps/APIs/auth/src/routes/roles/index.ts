@@ -55,4 +55,13 @@ router.delete(
   rolesController.deleteRole
 );
 
+router.get(
+  `${BASE_ROUTE}/grantable/:authId`,
+  rolesValidators.getGrantableRoles,
+  authNValidators.tokenValidator(),
+  getAuthByAccessToken,
+  routeProtection(ACCESS_RESSOURCES.ROLE, PRIVILEGE.GRANT),
+  rolesController.getGrantableRoles
+);
+
 export default router;

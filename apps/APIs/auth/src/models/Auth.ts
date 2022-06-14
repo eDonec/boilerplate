@@ -5,9 +5,9 @@ import {
 } from "auth-types/models/Auth";
 import { model, Schema } from "mongoose";
 import {
+  ACCESS_RESSOURCES,
   ACCESS_TYPE,
   AUTH_PROVIDERS,
-  FULL_ACCESS,
   IPaginatedResult,
   PRIVILEGE,
 } from "shared-types";
@@ -59,14 +59,18 @@ const schema = new Schema<AuthType, AuthModel>({
   customAccessList: {
     type: [
       {
-        ressource: String,
+        ressource: {
+          type: String,
+          required: true,
+          enum: ACCESS_RESSOURCES,
+        },
         privileges: {
           type: Number,
           enum: PRIVILEGE,
+          required: true,
         },
       },
     ],
-    default: [{ ressource: "PUBLIC", privileges: FULL_ACCESS }],
   },
   isActive: {
     type: Boolean,
