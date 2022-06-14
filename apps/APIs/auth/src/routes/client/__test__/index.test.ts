@@ -1,10 +1,19 @@
+/* eslint-disable max-lines */
 /* eslint-disable no-console */
 import app, { baseUrl } from "init.testSetup";
+import Role from "models/Role";
 import { populateRedis } from "seed/populateRedis";
 import { seed } from "seed/seed";
-import { StatusCodes } from "shared-types";
+import {
+  ACCESS,
+  ACCESS_RESSOURCES,
+  PRIVILEGE,
+  StatusCodes,
+} from "shared-types";
 import supertest from "supertest";
 import "dotenv/config";
+
+import { SUPER_ADMIN } from "constants/defaultRoles";
 
 let token: string;
 
@@ -153,6 +162,83 @@ describe("GET /clients/", () => {
         .get(`${baseUrl}/clients/`)
         .set("Authorization", `Bearer ${token}`)
         .query(query);
+
+      expect(response.status).toEqual(StatusCodes["Bad Request"]);
+    });
+  });
+});
+
+describe("GET /clients/:id", () => {
+  let newUserId: string;
+
+  beforeEach(async () => {
+    const body = { email: "test@example.com", password: "password" };
+    const response = await supertest(app)
+      .post(`${baseUrl}/n/classic`)
+      .send(body);
+
+    newUserId = response.body.authID;
+  });
+
+  describe("validation tests", () => {
+    it("should respond successfully (1)", async () => {
+      const response = await supertest(app)
+        .get(`${baseUrl}/clients/${newUserId}`)
+        .set("Authorization", `Bearer ${token}`);
+
+      expect(response.status).toEqual(StatusCodes.OK);
+    });
+
+    it("should throw a validation error (2)", async () => {
+      const response = await supertest(app)
+        .get(`${baseUrl}/clients/9090909`)
+        .set("Authorization", `Bearer ${token}`);
+
+      expect(response.status).toEqual(StatusCodes["Bad Request"]);
+    });
+  });
+});
+
+describe("PUT /clients/clientAccess/:id", () => {
+  let newUserId: string;
+  let roleId: string;
+
+  beforeEach(async () => {
+    const body = { email: "test@example.com", password: "password" };
+    const [response, role] = await Promise.all([
+      supertest(app).post(`${baseUrl}/n/classic`).send(body),
+      Role.findOne({ name: SUPER_ADMIN.name }),
+    ]);
+
+    newUserId = response.body.authID;
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    roleId = role!._id;
+  });
+
+  const access: ACCESS[] = [
+    {
+      ressource: ACCESS_RESSOURCES.PUBLIC,
+      privileges: PRIVILEGE.READ,
+    },
+  ];
+
+  describe("validation tests", () => {
+    it("should respond successfully (1)", async () => {
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+
+      const response = await supertest(app)
+        .put(`${baseUrl}/clients/clientAccess/${newUserId}`)
+        .send({ access, role: roleId })
+        .set("Authorization", `Bearer ${token}`);
+
+      expect(response.status).toEqual(StatusCodes.OK);
+    });
+
+    it("should throw a validation error (2)", async () => {
+      const response = await supertest(app)
+        .put(`${baseUrl}/clients/clientAccess/9090909`)
+        .send({ access, role: roleId })
+        .set("Authorization", `Bearer ${token}`);
 
       expect(response.status).toEqual(StatusCodes["Bad Request"]);
     });

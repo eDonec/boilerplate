@@ -37,10 +37,18 @@ router.postProtected(ACCESS_RESSOURCES.ROLE, PRIVILEGE.WRITE)(
   rolesController.addRole
 );
 
-router.delete(
+router.deleteProtected(ACCESS_RESSOURCES.ROLE, PRIVILEGE.DELETE)(
   `${BASE_ROUTE}/:id`,
   rolesValidators.deleteRole,
+  getAuthByAccessToken,
   rolesController.deleteRole
+);
+
+router.getProtected(ACCESS_RESSOURCES.AUTHENTICATED_CLIENTS, PRIVILEGE.WRITE)(
+  `${BASE_ROUTE}/grantable/:authId`,
+  rolesValidators.getGrantableRoles,
+  getAuthByAccessToken,
+  rolesController.getGrantableRoles
 );
 
 export default router;

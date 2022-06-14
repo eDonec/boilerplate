@@ -5,7 +5,7 @@ import {
 } from "auth-types/models/Role";
 import { model, Schema } from "mongoose";
 import { populateRedis } from "seed/populateRedis";
-import { IPaginatedResult, PRIVILEGE } from "shared-types";
+import { ACCESS_RESSOURCES, IPaginatedResult, PRIVILEGE } from "shared-types";
 
 import { getPaginationAggregation } from "helpers/getPaginationAggregation";
 
@@ -20,6 +20,7 @@ const schema = new Schema<RoleType, RoleModel>(
         ressource: {
           type: String,
           required: true,
+          enum: ACCESS_RESSOURCES,
         },
         privileges: {
           type: Number,

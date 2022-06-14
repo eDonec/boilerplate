@@ -1,5 +1,4 @@
-import { LeanRoleDocument } from "auth-types/models/Role";
-import { ACCESS_RESSOURCES, PRIVILEGE } from "shared-types";
+import { ACCESS, ACCESS_RESSOURCES, PRIVILEGE } from "shared-types";
 
 import { RessourceItem } from "./types";
 
@@ -38,25 +37,25 @@ export const ressources: RessourceItem[] = Object.values(ACCESS_RESSOURCES)
   }));
 
 export const isRessourceCheckboxChecked = ({
-  role,
+  access,
   ressource,
   privilege,
 }: {
-  role: Partial<LeanRoleDocument> | null;
+  access: ACCESS[];
   ressource: ACCESS_RESSOURCES;
   privilege: PRIVILEGE;
 }) =>
-  !!role?.access?.find(
+  !!access.find(
     (el) => el.ressource === ressource && el.privileges >= privilege
   );
 
 export const isRessourceCheckboxDisabled = ({
-  baseRole,
+  baseAccess,
   ressource,
   privilege,
   ressourceAccessDict,
 }: {
-  baseRole: Partial<LeanRoleDocument> | null;
+  baseAccess: ACCESS[] | null;
   ressource: ACCESS_RESSOURCES;
   privilege: PRIVILEGE;
   ressourceAccessDict: Record<
@@ -66,9 +65,14 @@ export const isRessourceCheckboxDisabled = ({
 }) => {
   if (!ressourceAccessDict[ressource].grant) return true;
   if (ressourceAccessDict[ressource].revoke) return false;
-  const isInBaseRole = !baseRole?.access?.find(
-    (el) => el.ressource === ressource && el.privileges < privilege
+
+  const ressourceInBaseRole = baseAccess?.find(
+    (el) => el.ressource === ressource
   );
 
-  return isInBaseRole || privilege > PRIVILEGE.GRANT;
+  if (!ressourceInBaseRole) return privilege > PRIVILEGE.GRANT;
+
+  return (
+    ressourceInBaseRole.privileges >= privilege || privilege > PRIVILEGE.GRANT
+  );
 };
