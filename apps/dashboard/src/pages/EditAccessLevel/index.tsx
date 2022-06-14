@@ -1,4 +1,5 @@
 import { useRef, useState } from "react";
+import toast from "react-hot-toast";
 import { useTranslation } from "react-i18next";
 import { useParams } from "react-router-dom";
 
@@ -8,6 +9,7 @@ import { Button } from "core-ui";
 import AlertDialog, { useAlertDialog } from "core-ui/AlertDialog";
 import { ISelectOption } from "forms/Select";
 import RawSelect from "forms/Select/RawSelect";
+import { isApiError } from "server-sdk";
 import { ACCESS, ACCESS_RESSOURCES, PRIVILEGE } from "shared-types";
 
 import AccessRessourcesDataTable from "containers/AccessRessourcesDataTable";
@@ -21,6 +23,7 @@ const EditAccessLevel = () => {
   const [customAccess, setCustomAccess] = useState<ACCESS[] | null>(null);
   const [grantableRoles, setGrantableRoles] = useState<ISelectOption[]>([]);
   const [selectedRole, setSelectedRole] = useState<ISelectOption>();
+  const [loading, setLoading] = useState(false);
 
   if (isFirstMount && id) {
     Api.authSDK.getClientById({ params: { id } }).then((data) => {
@@ -42,8 +45,29 @@ const EditAccessLevel = () => {
     JSON.stringify(baseAccess.current) !== JSON.stringify(customAccess) ||
     selectedRole?.value !== baseRole.current;
 
-  const onSubmit = () => {
-    //TODO : api call to update authenticated user role and custom access list
+  const onSubmit = async () => {
+    if (!id || !customAccess || !selectedRole) return;
+    try {
+      setLoading(true);
+      await Api.authSDK.updateClientAccess({
+        params: { id },
+        body: { role: selectedRole.value, access: customAccess },
+      });
+      setGrantableRoles(
+        await Api.authSDK.getGrantableRoles({ params: { authId: id } })
+      );
+      baseAccess.current = customAccess;
+      baseRole.current = selectedRole.value;
+      toast.success("Access level updated");
+    } catch (error) {
+      if (
+        isApiError<{ message: string }>(error) &&
+        error.response?.data.message
+      )
+        toast.error(error.response.data.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const [submitModalProps, handleSubmit] = useAlertDialog(onSubmit);
@@ -57,13 +81,18 @@ const EditAccessLevel = () => {
           privileges={PRIVILEGE.WRITE}
           ressource={ACCESS_RESSOURCES.USER}
         >
-          <Button disabled={!canSubmit} success onClick={handleSubmit}>
+          <Button
+            disabled={!canSubmit}
+            isLoading={loading}
+            success
+            onClick={handleSubmit}
+          >
             {t("misc.save")}
           </Button>
         </AccessProtectedWrapper>
       ),
     },
-    [canSubmit]
+    [canSubmit, loading]
   );
 
   return (

@@ -44,3 +44,25 @@ export const getClientById: IMiddleware<
 
   return next();
 };
+
+export const updateClientAccess: IMiddleware<
+  Request<
+    ClientRouteTypes["/clients/clientAccess/:id"]["PUT"]["params"],
+    unknown,
+    ClientRouteTypes["/clients/clientAccess/:id"]["PUT"]["body"],
+    unknown
+  >,
+  Response<ClientRouteTypes["/clients/clientAccess/:id"]["PUT"]["response"]>
+> = (req, _, next) => {
+  const roleValidator = new FieldValidator({ role: req.body.role });
+  const paramsValidator = new FieldValidator(req.params);
+
+  roleValidator.validate.role.isString().isValidObjectId();
+
+  paramsValidator.validate.id.isString().isValidObjectId();
+
+  roleValidator.resolveErrors();
+  paramsValidator.resolveErrors();
+
+  return next();
+};

@@ -289,6 +289,21 @@ export default class AuthSDK extends ServerSDK {
 
     return data;
   }
+
+  public async updateClientAccess({
+    body,
+    params,
+  }: {
+    body: ClientRouteTypes["/clients/clientAccess/:id"]["PUT"]["body"];
+    query?: never;
+    params: ClientRouteTypes["/clients/clientAccess/:id"]["PUT"]["params"];
+  }) {
+    const { data } = await this.api.put<
+      ClientRouteTypes["/clients/clientAccess/:id"]["PUT"]["response"]
+    >(`${baseUrl}/clients/clientAccess/${params.id}`, body);
+
+    return data;
+  }
 }
 
 export type AuthSDKTypes = ServerSDKTypes<AuthSDK>;

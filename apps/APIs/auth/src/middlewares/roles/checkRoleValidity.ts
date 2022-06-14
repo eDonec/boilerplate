@@ -1,13 +1,12 @@
 import IAuthServerMiddleware from "auth-types/IAuthServerMiddleware";
-import { LeanRoleDocument } from "auth-types/models/Role";
 import { UnauthorizedError } from "custom-error";
 import { Request } from "http-server";
-import { ACCESS_RESSOURCES, PRIVILEGE } from "shared-types";
+import { ACCESS, ACCESS_RESSOURCES, PRIVILEGE } from "shared-types";
 
 import { constructRoleArray } from "helpers/constructRoleArray";
 
 export const checkRoleValidity: IAuthServerMiddleware<
-  Request<unknown, unknown, Partial<LeanRoleDocument>>
+  Request<unknown, unknown, Partial<{ access: ACCESS[] }>>
 > = (req, res, next) => {
   const { currentAuth } = res.locals;
   const { access: roleAccess } = req.body;

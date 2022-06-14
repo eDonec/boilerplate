@@ -154,7 +154,7 @@ export const deleteRole = async (id: string) => {
   await Role.deleteOne({ _id: id });
 };
 
-const getAccessDict = (access: ACCESS[]) =>
+export const getAccessDict = (access: ACCESS[]) =>
   access.reduce((prev, cur) => {
     prev[cur.ressource] = cur.privileges;
 
@@ -182,37 +182,52 @@ export const getGrantableRoles = async (
   return roles
     .filter((role) => {
       if (role.id === selectedAuth.role._id.toString()) return true;
-
       const roleAccessDict = getAccessDict(role.access);
-      const accumulator = Object.keys(ACCESS_RESSOURCES).reduce((prev, cur) => {
-        prev[cur as ACCESS_RESSOURCES] = {
-          roleAccess:
-            roleAccessDict[ACCESS_RESSOURCES["*"]] ??
-            roleAccessDict[cur as ACCESS_RESSOURCES] ??
-            0,
-          authAccess:
-            selectedAuthAccessDict[ACCESS_RESSOURCES["*"]] ??
-            selectedAuthAccessDict[cur as ACCESS_RESSOURCES] ??
-            0,
-          userAccess:
-            userAccessDict[ACCESS_RESSOURCES["*"]] ??
-            userAccessDict[cur as ACCESS_RESSOURCES] ??
-            0,
-        };
 
-        return prev;
-      }, {} as Record<ACCESS_RESSOURCES, { roleAccess: number; authAccess: number; userAccess: number }>);
-
-      return Object.values(accumulator).every(
-        ({ userAccess, authAccess, roleAccess }) => {
-          if (userAccess === 0 && authAccess === 0 && roleAccess === 0)
-            return true;
-          if (userAccess < PRIVILEGE.GRANT) return false;
-          if (userAccess >= PRIVILEGE.REVOKE) return true;
-
-          return authAccess - roleAccess <= 0 && roleAccess <= PRIVILEGE.GRANT;
-        }
-      );
+      return isRoleGrantableToClient({
+        roleAccessDict,
+        selectedAuthAccessDict,
+        userAccessDict,
+      });
     })
     .map((el) => ({ label: el.name, value: el._id }));
+};
+
+export const isRoleGrantableToClient = ({
+  roleAccessDict,
+  selectedAuthAccessDict,
+  userAccessDict,
+}: {
+  roleAccessDict: Record<ACCESS_RESSOURCES, PRIVILEGE>;
+  selectedAuthAccessDict: Record<ACCESS_RESSOURCES, PRIVILEGE>;
+  userAccessDict: Record<ACCESS_RESSOURCES, PRIVILEGE>;
+}) => {
+  const accumulator = Object.keys(ACCESS_RESSOURCES).reduce((prev, cur) => {
+    prev[cur as ACCESS_RESSOURCES] = {
+      roleAccess:
+        roleAccessDict[ACCESS_RESSOURCES["*"]] ??
+        roleAccessDict[cur as ACCESS_RESSOURCES] ??
+        0,
+      authAccess:
+        selectedAuthAccessDict[ACCESS_RESSOURCES["*"]] ??
+        selectedAuthAccessDict[cur as ACCESS_RESSOURCES] ??
+        0,
+      userAccess:
+        userAccessDict[ACCESS_RESSOURCES["*"]] ??
+        userAccessDict[cur as ACCESS_RESSOURCES] ??
+        0,
+    };
+
+    return prev;
+  }, {} as Record<ACCESS_RESSOURCES, { roleAccess: number; authAccess: number; userAccess: number }>);
+
+  return Object.values(accumulator).every(
+    ({ userAccess, authAccess, roleAccess }) => {
+      if (userAccess === 0 && authAccess === 0 && roleAccess === 0) return true;
+      if (userAccess < PRIVILEGE.GRANT) return false;
+      if (userAccess >= PRIVILEGE.REVOKE) return true;
+
+      return authAccess - roleAccess <= 0 && roleAccess <= PRIVILEGE.GRANT;
+    }
+  );
 };
