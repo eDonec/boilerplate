@@ -57,7 +57,10 @@ jobs:
         if: |
           steps.cache-yarn-cache.outputs.cache-hit != 'true' ||
           steps.cache-node-modules.outputs.cache-hit != 'true'
-
+${{isPackage}}      - name: Start Redis
+${{isPackage}}        uses: supercharge/redis-github-action@1.4.0
+${{isPackage}}        with:
+${{isPackage}}          redis-version: 6
       - name: Run lint
         run: yarn lint --filter=${{packageName}}
 
