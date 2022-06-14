@@ -45,7 +45,10 @@ export const getClientById = async (
   const client = await Auth.findOne({
     _id: id,
     role: { $ne: godRole?.id },
-  }).lean();
+  })
+    .populate({ path: "role", select: "name" })
+    .select("-password -sessions")
+    .lean();
 
   if (!client)
     throw new NotFoundError({

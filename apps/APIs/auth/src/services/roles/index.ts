@@ -181,14 +181,23 @@ export const getGrantableRoles = async (
 
   return roles
     .filter((role) => {
-      if (role.id === selectedAuth.role._id) return false;
+      if (role.id === selectedAuth.role._id.toString()) return true;
 
       const roleAccessDict = getAccessDict(role.access);
       const accumulator = Object.keys(ACCESS_RESSOURCES).reduce((prev, cur) => {
         prev[cur as ACCESS_RESSOURCES] = {
-          roleAccess: roleAccessDict[cur as ACCESS_RESSOURCES] ?? 0,
-          authAccess: selectedAuthAccessDict[cur as ACCESS_RESSOURCES] ?? 0,
-          userAccess: userAccessDict[cur as ACCESS_RESSOURCES] ?? 0,
+          roleAccess:
+            roleAccessDict[ACCESS_RESSOURCES["*"]] ??
+            roleAccessDict[cur as ACCESS_RESSOURCES] ??
+            0,
+          authAccess:
+            selectedAuthAccessDict[ACCESS_RESSOURCES["*"]] ??
+            selectedAuthAccessDict[cur as ACCESS_RESSOURCES] ??
+            0,
+          userAccess:
+            userAccessDict[ACCESS_RESSOURCES["*"]] ??
+            userAccessDict[cur as ACCESS_RESSOURCES] ??
+            0,
         };
 
         return prev;

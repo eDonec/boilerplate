@@ -1,18 +1,13 @@
 import Input from "forms/Input/RawInput";
 
-import { BaseDataTable } from "data-table";
+import AccessRessourcesDataTable from "containers/AccessRessourcesDataTable";
 
 import { RoleFormProps } from "./types";
 import { useRoleForm } from "./useRoleForm";
 
 const RoleForm = (props: RoleFormProps) => {
-  const {
-    ressources,
-    columns,
-    highlightDisabledRessources,
-    onTitleChange,
-    isFormReadOnly,
-  } = useRoleForm(props);
+  const { onTitleChange, isFormReadOnly, onAccessChange, baseAccess } =
+    useRoleForm(props);
 
   return (
     <>
@@ -30,14 +25,11 @@ const RoleForm = (props: RoleFormProps) => {
             : undefined
         }
       />
-      <label className="mb-2 block text-sm font-medium text-gray-900 dark:text-gray-300">
-        Access Ressources
-      </label>
-      <BaseDataTable
-        conditionalRowClassName={highlightDisabledRessources}
-        data={ressources}
-        columns={columns}
-        keyExtractor={({ item }) => item.title}
+      <AccessRessourcesDataTable
+        label="Access Ressources"
+        access={props.role?.access || []}
+        onAccessChange={onAccessChange}
+        baseAccess={baseAccess}
       />
     </>
   );
