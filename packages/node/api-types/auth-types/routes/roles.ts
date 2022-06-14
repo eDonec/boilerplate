@@ -41,6 +41,15 @@ export type RolesRouteTypes = {
       };
     };
   };
-
-  //! GENERATOR-ANCHOR
+  "/roles/grantable/:authId": {
+    GET: {
+      response: Array<{
+        label: string;
+        value: string;
+      }>;
+      params: {
+        authId: string;
+      };
+    };
+  };
 };

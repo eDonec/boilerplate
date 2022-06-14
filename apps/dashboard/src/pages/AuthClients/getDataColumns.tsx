@@ -64,6 +64,7 @@ export const getDataColumns = (
     title: "Actions",
     cell: ({ _id, isSuspended, isBanned }) => (
       <ClientActions
+        authId={_id}
         handelClientAction={clientActions(_id)}
         isBanned={isBanned}
         isSuspended={isSuspended}
