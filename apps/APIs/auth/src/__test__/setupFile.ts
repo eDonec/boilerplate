@@ -9,7 +9,7 @@ import {
 
 beforeAll(async () => {
   global.crypto = new Crypto();
-  await connectToMockDB();
+  connectToMockDB();
 });
 afterEach(async () => {
   await clearMockDB();
