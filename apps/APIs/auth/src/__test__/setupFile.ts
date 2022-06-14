@@ -9,7 +9,12 @@ import {
 
 beforeAll(async () => {
   global.crypto = new Crypto();
-  connectToMockDB();
+  await connectToMockDB();
+  await new Promise<void>((resolve) => {
+    setTimeout(() => {
+      resolve();
+    }, 500);
+  });
 });
 afterEach(async () => {
   await clearMockDB();
