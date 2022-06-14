@@ -66,9 +66,14 @@ export const isRessourceCheckboxDisabled = ({
 }) => {
   if (!ressourceAccessDict[ressource].grant) return true;
   if (ressourceAccessDict[ressource].revoke) return false;
-  const isInBaseRole = !baseRole?.access?.find(
-    (el) => el.ressource === ressource && el.privileges < privilege
+
+  const ressourceInBaseRole = baseRole?.access?.find(
+    (el) => el.ressource === ressource
   );
 
-  return isInBaseRole || privilege > PRIVILEGE.GRANT;
+  if (!ressourceInBaseRole) return privilege > PRIVILEGE.GRANT;
+
+  return (
+    ressourceInBaseRole.privileges >= privilege || privilege > PRIVILEGE.GRANT
+  );
 };

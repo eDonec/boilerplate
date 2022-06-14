@@ -128,3 +128,34 @@ describe("DELETE /roles/:id", () => {
     });
   });
 });
+
+describe("GET /roles/grantable/:authId", () => {
+  let newUserId: string;
+
+  beforeEach(async () => {
+    const body = { email: "test@example.com", password: "password" };
+    const response = await supertest(app)
+      .post(`${baseUrl}/n/classic`)
+      .send(body);
+
+    newUserId = response.body.authID;
+  });
+
+  describe("validation tests", () => {
+    it("should respond successfully (1)", async () => {
+      const response = await supertest(app)
+        .get(`${baseUrl}/roles/grantable/${newUserId}`)
+        .set("Authorization", `Bearer ${token}`);
+
+      expect(response.status).toEqual(StatusCodes.OK);
+    });
+
+    it("should throw a validation error (2)", async () => {
+      const response = await supertest(app)
+        .get(`${baseUrl}/roles/grantable/9090909`)
+        .set("Authorization", `Bearer ${token}`);
+
+      expect(response.status).toEqual(StatusCodes["Bad Request"]);
+    });
+  });
+});
