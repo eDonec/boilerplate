@@ -58,9 +58,9 @@ jobs:
           steps.cache-yarn-cache.outputs.cache-hit != 'true' ||
           steps.cache-node-modules.outputs.cache-hit != 'true'
 ${{isPackage}}      - name: Start Redis
-${{isPackage}}        uses: supercharge/redis-github-action@1.4.0
-${{isPackage}}        with:
-${{isPackage}}          redis-version: 6
+${{isPackage}}        run: |
+${{isPackage}}          docker run -d --name redis-stack-server -p 6379:6379 redis/redis-stack-server:latest
+
       - name: Run lint
         run: yarn lint --filter=${{packageName}}
 
