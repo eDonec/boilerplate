@@ -6,8 +6,8 @@ import supertest from "supertest";
 
 beforeEach(async () => {
   try {
-    await seed(false);
-    await populateRedis(false);
+    await seed();
+    await populateRedis();
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error("Seeding is not available");

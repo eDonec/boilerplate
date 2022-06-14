@@ -19,8 +19,8 @@ let toBeBannedId: string;
 
 beforeEach(async () => {
   try {
-    await seed(false);
-    await populateRedis(false);
+    await seed();
+    await populateRedis();
     const signInResponse = await supertest(app)
       .post(`${BASE_URL}/n/sign-in/classic`)
       .set("Authorization", `Bearer ${token}`)
