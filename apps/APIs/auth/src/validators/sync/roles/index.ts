@@ -95,3 +95,21 @@ export const deleteRole: IMiddleware<
 
   return next();
 };
+
+export const getGrantableRoles: IMiddleware<
+  Request<
+    RolesRouteTypes["/roles/grantable/:authId"]["GET"]["params"],
+    unknown,
+    unknown,
+    unknown
+  >,
+  Response<RolesRouteTypes["/roles/grantable/:authId"]["GET"]["response"]>
+> = (req, _, next) => {
+  const validators = new FieldValidator(req.params);
+
+  validators.validate.authId.isString().isValidObjectId();
+
+  validators.resolveErrors();
+
+  return next();
+};

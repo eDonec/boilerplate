@@ -19,7 +19,7 @@ export const routeProtection =
 
     const userAccess = access
       // this is here to make sure that we hit the god ressource before any other ressource
-      .sort((a) => (a.ressource === "*" ? 1 : -1))
+      .sort((a) => (a.ressource === "*" ? -1 : 1))
       .find((a) => a.ressource === ressource || a.ressource === "*");
 
     if (!userAccess || userAccess.privileges < privileges)

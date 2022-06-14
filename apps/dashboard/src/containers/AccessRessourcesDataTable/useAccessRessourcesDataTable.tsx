@@ -3,10 +3,11 @@ import { ACCESS_RESSOURCES, PRIVILEGE } from "shared-types";
 import { DataTableColumn } from "data-table/BaseDataTable/types";
 
 import { accessMatcher } from "containers/AuthWrappers/AccessProtectedWrapper/useAccessProtectedWrapper";
+import { RessourceItem } from "containers/RoleForm/types";
 
 import { useAppSelector } from "hooks/reduxHooks";
 
-import { RessourceItem, RoleFormProps } from "./types";
+import { AccessRessourceDataTableProps } from "./types";
 import {
   isRessourceCheckboxChecked,
   isRessourceCheckboxDisabled,
@@ -15,7 +16,11 @@ import {
   ressources,
 } from "./utils";
 
-export const useRoleForm = ({ role, setRole, baseRole }: RoleFormProps) => {
+export const useAccessRessourcesDataTable = ({
+  access,
+  onAccessChange,
+  baseAccess,
+}: AccessRessourceDataTableProps) => {
   const currentUserAccess = useAppSelector((state) => state.auth.access);
 
   const isFormReadOnly = !accessMatcher(
@@ -55,14 +60,14 @@ export const useRoleForm = ({ role, setRole, baseRole }: RoleFormProps) => {
               disabled={
                 isFormReadOnly ||
                 isRessourceCheckboxDisabled({
-                  baseRole: baseRole.current,
+                  baseAccess: baseAccess.current,
                   ressource,
                   privilege,
                   ressourceAccessDict,
                 })
               }
               checked={isRessourceCheckboxChecked({
-                role,
+                access,
                 ressource,
                 privilege,
               })}
@@ -84,41 +89,31 @@ export const useRoleForm = ({ role, setRole, baseRole }: RoleFormProps) => {
     privilege: PRIVILEGE,
     checked: boolean
   ) => {
-    setRole((prevRole) => {
-      if (!prevRole?.access) {
-        return prevRole;
-      }
-      const accessIndex = prevRole.access.findIndex(
-        (el) => el.ressource === ressource
-      );
+    const accessIndex = access.findIndex((el) => el.ressource === ressource);
 
-      const newAccess = [...prevRole.access];
-      const newPrivilege = checked
-        ? privilege
-        : Math.max(privilege - 1, PRIVILEGE.DELETE_SELF);
+    const newAccess = [...access];
+    const newPrivilege = checked
+      ? privilege
+      : Math.max(privilege - 1, PRIVILEGE.DELETE_SELF);
 
-      if (accessIndex !== -1) {
-        if (
-          newPrivilege <= PRIVILEGE.DELETE_SELF &&
-          !baseRole.current?.access?.find((el) => el.ressource === ressource)
-        )
-          newAccess.splice(accessIndex, 1);
-        else
-          newAccess[accessIndex] = {
-            ...newAccess[accessIndex],
-            privileges: newPrivilege,
-          };
-      } else
-        newAccess.push({
-          ressource,
-          privileges: privilege,
-        });
+    if (accessIndex !== -1) {
+      if (
+        newPrivilege <= PRIVILEGE.DELETE_SELF &&
+        !baseAccess.current?.find((el) => el.ressource === ressource)
+      )
+        newAccess.splice(accessIndex, 1);
+      else
+        newAccess[accessIndex] = {
+          ...newAccess[accessIndex],
+          privileges: newPrivilege,
+        };
+    } else
+      newAccess.push({
+        ressource,
+        privileges: privilege,
+      });
 
-      return {
-        ...prevRole,
-        access: newAccess,
-      };
-    });
+    onAccessChange(newAccess);
   };
 
   const highlightDisabledRessources = ({ item }: { item: RessourceItem }) => {
@@ -126,26 +121,9 @@ export const useRoleForm = ({ role, setRole, baseRole }: RoleFormProps) => {
       return "bg-gray-300";
   };
 
-  const onTitleChange = (
-    e: React.ChangeEvent<HTMLInputElement & HTMLTextAreaElement>
-  ) => {
-    setRole((prevRole) => {
-      if (!prevRole) {
-        return prevRole;
-      }
-
-      return {
-        ...prevRole,
-        name: e.target.value,
-      };
-    });
-  };
-
   return {
     ressources,
     columns,
     highlightDisabledRessources,
-    onTitleChange,
-    isFormReadOnly,
   };
 };
