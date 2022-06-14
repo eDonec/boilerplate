@@ -13,8 +13,8 @@ let token: string;
 
 beforeEach(async () => {
   try {
-    await seed();
-    await populateRedis();
+    await seed(false);
+    await populateRedis(false);
     const signInBody = {
       email: process.env.ROOT_USER_EMAIL,
       password: process.env.ROOT_USER_PASSWORD,

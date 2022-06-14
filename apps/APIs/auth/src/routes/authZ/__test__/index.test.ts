@@ -19,8 +19,8 @@ let toBeBannedId: string;
 
 beforeEach(async () => {
   try {
-    await seed();
-    await populateRedis();
+    await seed(false);
+    await populateRedis(false);
     const signInResponse = await supertest(app)
       .post(`${BASE_URL}/n/sign-in/classic`)
       .set("Authorization", `Bearer ${token}`)
@@ -35,8 +35,6 @@ beforeEach(async () => {
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error("Seeding is not available");
-    // eslint-disable-next-line no-console
-    console.error(error);
   }
 });
 
