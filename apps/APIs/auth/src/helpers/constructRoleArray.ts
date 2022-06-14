@@ -3,7 +3,7 @@ import { ACCESS } from "shared-types";
 
 export const constructRoleArray = (
   roles: RoleType | undefined,
-  custumRoles: ACCESS[]
+  custumRoles: ACCESS[] = []
 ) => mergeAccessArrays(roles?.access || [], custumRoles);
 
 const mergeAccessArrays = (base: ACCESS[], overRide: ACCESS[]) => {

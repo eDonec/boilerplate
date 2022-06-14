@@ -1,4 +1,4 @@
-import { IPaginatedResult, SortDirection } from "shared-types";
+import { ACCESS, IPaginatedResult, SortDirection } from "shared-types";
 
 import { LeanAuthDocument } from "../models/Auth";
 
@@ -14,5 +14,25 @@ export type ClientRouteTypes = {
       response: IPaginatedResult<LeanAuthDocument>;
     };
   };
-  //! GENERATOR-ANCHOR
+  "/clients/:id": {
+    GET: {
+      response: LeanAuthDocument;
+      params: {
+        id: string;
+      };
+    };
+  };
+  "/clients/clientAccess/:id": {
+    PUT: {
+      body: {
+        role: string;
+        access: ACCESS[];
+      };
+
+      response: string;
+      params: {
+        id: string;
+      };
+    };
+  };
 };

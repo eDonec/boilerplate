@@ -261,6 +261,49 @@ export default class AuthSDK extends ServerSDK {
 
     return data;
   }
+
+  public async getClientById({
+    params,
+  }: {
+    body?: never;
+    query?: never;
+    params: ClientRouteTypes["/clients/:id"]["GET"]["params"];
+  }) {
+    const { data } = await this.api.get<
+      ClientRouteTypes["/clients/:id"]["GET"]["response"]
+    >(`${baseUrl}/clients/${params.id}`);
+
+    return data;
+  }
+
+  public async getGrantableRoles({
+    params,
+  }: {
+    body?: never;
+    query?: never;
+    params: RolesRouteTypes["/roles/grantable/:authId"]["GET"]["params"];
+  }) {
+    const { data } = await this.api.get<
+      RolesRouteTypes["/roles/grantable/:authId"]["GET"]["response"]
+    >(`${baseUrl}/roles/grantable/${params.authId}`);
+
+    return data;
+  }
+
+  public async updateClientAccess({
+    body,
+    params,
+  }: {
+    body: ClientRouteTypes["/clients/clientAccess/:id"]["PUT"]["body"];
+    query?: never;
+    params: ClientRouteTypes["/clients/clientAccess/:id"]["PUT"]["params"];
+  }) {
+    const { data } = await this.api.put<
+      ClientRouteTypes["/clients/clientAccess/:id"]["PUT"]["response"]
+    >(`${baseUrl}/clients/clientAccess/${params.id}`, body);
+
+    return data;
+  }
 }
 
 export type AuthSDKTypes = ServerSDKTypes<AuthSDK>;

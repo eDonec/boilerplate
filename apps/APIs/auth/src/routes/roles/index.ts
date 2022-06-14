@@ -52,7 +52,19 @@ router.post(
 router.delete(
   `${BASE_ROUTE}/:id`,
   rolesValidators.deleteRole,
+  authNValidators.tokenValidator(),
+  getAuthByAccessToken,
+  routeProtection(ACCESS_RESSOURCES.ROLE, PRIVILEGE.DELETE),
   rolesController.deleteRole
+);
+
+router.get(
+  `${BASE_ROUTE}/grantable/:authId`,
+  rolesValidators.getGrantableRoles,
+  authNValidators.tokenValidator(),
+  getAuthByAccessToken,
+  routeProtection(ACCESS_RESSOURCES.AUTHENTICATED_CLIENTS, PRIVILEGE.WRITE),
+  rolesController.getGrantableRoles
 );
 
 export default router;

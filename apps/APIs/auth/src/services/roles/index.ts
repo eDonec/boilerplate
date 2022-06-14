@@ -1,10 +1,11 @@
+/* eslint-disable max-lines */
 import { AuthDocument } from "auth-types/models/Auth";
 import { LeanRoleDocument } from "auth-types/models/Role";
 import { RolesRouteTypes } from "auth-types/routes/roles";
 import { NotFoundError, UnauthorizedError } from "custom-error";
 import Auth from "models/Auth";
 import Role from "models/Role";
-import { ACCESS_RESSOURCES, PRIVILEGE } from "shared-types";
+import { ACCESS, ACCESS_RESSOURCES, PRIVILEGE } from "shared-types";
 
 import { GOD } from "constants/defaultRoles";
 
@@ -151,4 +152,82 @@ export const deleteRole = async (id: string) => {
       reason: "This role is attributed to an account",
     });
   await Role.deleteOne({ _id: id });
+};
+
+export const getAccessDict = (access: ACCESS[]) =>
+  access.reduce((prev, cur) => {
+    prev[cur.ressource] = cur.privileges;
+
+    return prev;
+  }, {} as Record<ACCESS_RESSOURCES, PRIVILEGE>);
+
+export const getGrantableRoles = async (
+  access: ACCESS[],
+  authId: string
+): Promise<RolesRouteTypes["/roles/grantable/:authId"]["GET"]["response"]> => {
+  const [roles, selectedAuth] = await Promise.all([
+    Role.find({ name: { $ne: GOD.name } }),
+    Auth.findById(authId).populate("role"),
+  ]);
+
+  if (!selectedAuth)
+    throw new NotFoundError({
+      message: "Authenticated client not found",
+      ressource: ACCESS_RESSOURCES.AUTHENTICATED_CLIENTS,
+    });
+
+  const userAccessDict = getAccessDict(access);
+  const selectedAuthAccessDict = getAccessDict(selectedAuth.role.access);
+
+  return roles
+    .filter((role) => {
+      if (role.id === selectedAuth.role._id.toString()) return true;
+      const roleAccessDict = getAccessDict(role.access);
+
+      return isRoleGrantableToClient({
+        roleAccessDict,
+        selectedAuthAccessDict,
+        userAccessDict,
+      });
+    })
+    .map((el) => ({ label: el.name, value: el._id }));
+};
+
+export const isRoleGrantableToClient = ({
+  roleAccessDict,
+  selectedAuthAccessDict,
+  userAccessDict,
+}: {
+  roleAccessDict: Record<ACCESS_RESSOURCES, PRIVILEGE>;
+  selectedAuthAccessDict: Record<ACCESS_RESSOURCES, PRIVILEGE>;
+  userAccessDict: Record<ACCESS_RESSOURCES, PRIVILEGE>;
+}) => {
+  const accumulator = Object.keys(ACCESS_RESSOURCES).reduce((prev, cur) => {
+    prev[cur as ACCESS_RESSOURCES] = {
+      roleAccess:
+        roleAccessDict[ACCESS_RESSOURCES["*"]] ??
+        roleAccessDict[cur as ACCESS_RESSOURCES] ??
+        0,
+      authAccess:
+        selectedAuthAccessDict[ACCESS_RESSOURCES["*"]] ??
+        selectedAuthAccessDict[cur as ACCESS_RESSOURCES] ??
+        0,
+      userAccess:
+        userAccessDict[ACCESS_RESSOURCES["*"]] ??
+        userAccessDict[cur as ACCESS_RESSOURCES] ??
+        0,
+    };
+
+    return prev;
+  }, {} as Record<ACCESS_RESSOURCES, { roleAccess: number; authAccess: number; userAccess: number }>);
+
+  return Object.values(accumulator).every(
+    ({ userAccess, authAccess, roleAccess }) => {
+      if (userAccess === 0 && authAccess === 0 && roleAccess === 0) return true;
+      if (userAccess < PRIVILEGE.GRANT) return false;
+      if (userAccess >= PRIVILEGE.REVOKE) return true;
+
+      return authAccess - roleAccess <= 0 && roleAccess <= PRIVILEGE.GRANT;
+    }
+  );
 };
