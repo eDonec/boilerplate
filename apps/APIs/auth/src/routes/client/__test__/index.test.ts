@@ -22,7 +22,10 @@ beforeEach(async () => {
 
     token = signUpResponse.body.token.accessToken;
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.error("Seeding is not available");
+    // eslint-disable-next-line no-console
+    console.error(error);
   }
 });
 describe("GET /clients/", () => {

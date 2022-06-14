@@ -11,6 +11,8 @@ beforeEach(async () => {
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error("Seeding is not available");
+    // eslint-disable-next-line no-console
+    console.error(error);
   }
 });
 
