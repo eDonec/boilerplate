@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { client } from "http-server";
 import * as mongoose from "mongoose";
 
 export const clearMockDB = async () => {
@@ -17,5 +16,5 @@ export const connectToMockDB = async () => {
 export const closeMockDB = async () => {
   await mongoose.connection.dropDatabase();
   await mongoose.connection.close();
-  await client.close();
+  // await client.close();
 };

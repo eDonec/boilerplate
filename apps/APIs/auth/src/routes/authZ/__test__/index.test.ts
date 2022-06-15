@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import app from "init.testSetup";
-import { populateRedis } from "seed/populateRedis";
+// import { populateRedis } from "seed/populateRedis";
 import { seed } from "seed/seed";
 import { StatusCodes } from "shared-types";
 import supertest from "supertest";
@@ -20,7 +20,7 @@ let toBeBannedId: string;
 beforeEach(async () => {
   try {
     await seed(false);
-    await populateRedis(false);
+    // await populateRedis(false);
     const signInResponse = await supertest(app)
       .post(`${BASE_URL}/n/sign-in/classic`)
       .set("Authorization", `Bearer ${token}`)
