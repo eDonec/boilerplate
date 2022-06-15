@@ -31,7 +31,6 @@ beforeEach(async () => {
     console.error(error);
   }
 });
-
 describe("GET /roles/:id", () => {
   describe("validation tests", () => {
     it("should respond successfully (1)", async () => {
