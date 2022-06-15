@@ -17,7 +17,6 @@ import { SUPER_ADMIN } from "constants/defaultRoles";
 
 let token: string;
 
-jest.setTimeout(10000);
 beforeEach(async () => {
   try {
     await seed(false);
