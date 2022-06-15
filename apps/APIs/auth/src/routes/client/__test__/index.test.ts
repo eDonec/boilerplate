@@ -2,7 +2,7 @@
 /* eslint-disable no-console */
 import app, { baseUrl } from "init.testSetup";
 import Role from "models/Role";
-import { populateRedis } from "seed/populateRedis";
+// import { populateRedis } from "seed/populateRedis";
 import { seed } from "seed/seed";
 import {
   ACCESS,
@@ -20,7 +20,7 @@ let token: string;
 beforeEach(async () => {
   try {
     await seed(false);
-    await populateRedis(false);
+    // await populateRedis(false);
     const signInBody = {
       email: process.env.ROOT_USER_EMAIL,
       password: process.env.ROOT_USER_PASSWORD,
