@@ -1,9 +1,9 @@
 import IAuthServerMiddleware from "auth-types/IAuthServerMiddleware";
 import { AuthNRouteTypes } from "auth-types/routes/authN";
 import { AuthZRouteTypes } from "auth-types/routes/authZ";
-import { Request } from "http-server";
+import { Request, Response } from "http-server";
 import * as authZService from "services/authZ";
-import { StatusCodes } from "shared-types";
+import { IMiddleware, StatusCodes } from "shared-types";
 import TokenGenerator from "token/TokenGenerator";
 import TokenValidator from "token/TokenValidator";
 
@@ -80,18 +80,21 @@ export const getRoles: IAuthServerMiddleware<
   res.status(StatusCodes.OK).send(response);
 };
 
-export const banClient: IAuthServerMiddleware<
+export const banClient: IMiddleware<
   Request<
     AuthZRouteTypes["/z/ban-client/:id"]["POST"]["params"],
     unknown,
     AuthZRouteTypes["/z/ban-client/:id"]["POST"]["body"],
     AuthZRouteTypes["/z/ban-client/:id"]["POST"]["response"]
   >,
-  AuthZRouteTypes["/z/ban-client/:id"]["POST"]["response"]
+  Response<
+    AuthZRouteTypes["/z/ban-client/:id"]["POST"]["response"],
+    { token: TokenValidator<{ authId: string }> }
+  >
 > = async (req, res) => {
-  const { currentAuth } = res.locals;
+  const { token } = res.locals;
   const response = await authZService.banClient({
-    bannedByUserId: currentAuth.id,
+    bannedByUserId: token.decodedToken.payload.authId,
     id: req.params.id,
     ...req.body,
   });
@@ -99,19 +102,22 @@ export const banClient: IAuthServerMiddleware<
   res.status(StatusCodes.OK).send(response);
 };
 
-export const suspendClient: IAuthServerMiddleware<
+export const suspendClient: IMiddleware<
   Request<
     AuthZRouteTypes["/z/suspend-client/:id"]["POST"]["params"],
     unknown,
     AuthZRouteTypes["/z/suspend-client/:id"]["POST"]["body"],
     AuthZRouteTypes["/z/suspend-client/:id"]["POST"]["response"]
   >,
-  AuthZRouteTypes["/z/suspend-client/:id"]["POST"]["response"]
+  Response<
+    AuthZRouteTypes["/z/suspend-client/:id"]["POST"]["response"],
+    { token: TokenValidator<{ authId: string }> }
+  >
 > = async (req, res) => {
-  const { currentAuth } = res.locals;
+  const { token } = res.locals;
 
   await authZService.suspendClient(req.params.id, {
-    suspendedByUserId: currentAuth.id,
+    suspendedByUserId: token.decodedToken.payload.authId,
     suspensionLiftTime: req.body.suspensionLiftTime,
     suspensionReason: req.body.reason,
   });
@@ -119,19 +125,22 @@ export const suspendClient: IAuthServerMiddleware<
   res.status(StatusCodes.OK).send({ status: "OK" });
 };
 
-export const liftBanAndSuspension: IAuthServerMiddleware<
+export const liftBanAndSuspension: IMiddleware<
   Request<
     AuthZRouteTypes["/z/lift-ban-suspension/:id"]["GET"]["params"],
     unknown,
     unknown,
     AuthZRouteTypes["/z/lift-ban-suspension/:id"]["GET"]["response"]
   >,
-  AuthZRouteTypes["/z/lift-ban-suspension/:id"]["GET"]["response"]
+  Response<
+    AuthZRouteTypes["/z/lift-ban-suspension/:id"]["GET"]["response"],
+    { token: TokenValidator<{ authId: string }> }
+  >
 > = async (req, res) => {
-  const { currentAuth } = res.locals;
+  const { token } = res.locals;
   const response = await authZService.liftBanAndSuspension({
     id: req.params.id,
-    liftedByUserId: currentAuth.id,
+    liftedByUserId: token.decodedToken.payload.authId,
   });
 
   res.status(StatusCodes.OK).send(response);

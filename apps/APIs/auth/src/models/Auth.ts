@@ -15,93 +15,109 @@ import {
 import { getPaginationAggregation } from "helpers/getPaginationAggregation";
 import { hashPassword } from "helpers/hashPassword";
 
-const schema = new Schema<AuthType, AuthModel>({
-  email: String,
-  userName: String,
-  authType: {
-    type: String,
-    enum: ACCESS_TYPE,
-    required: true,
-  },
-  password: {
-    type: String,
-    set: (value: string) => {
-      if (!value) return undefined;
-
-      return hashPassword(value);
+const schema = new Schema<AuthType, AuthModel>(
+  {
+    email: String,
+    userName: String,
+    authType: {
+      type: String,
+      enum: ACCESS_TYPE,
+      required: true,
     },
-  },
-  authProvider: {
-    type: [String],
-    enum: AUTH_PROVIDERS,
-    required: true,
-  },
-  providerId: {
-    type: [
-      {
-        provider: {
-          type: String,
-          enum: AUTH_PROVIDERS,
-          required: true,
-        },
-        id: {
-          type: String,
-          required: true,
-        },
+    password: {
+      type: String,
+      set: (value: string) => {
+        if (!value) return undefined;
+
+        return hashPassword(value);
       },
-    ],
-  },
-  sessions: [String],
-  role: {
-    type: Schema.Types.ObjectId,
-    ref: "Role",
-  },
-  customAccessList: {
-    type: [
-      {
-        ressource: {
-          type: String,
-          required: true,
-          enum: ACCESS_RESSOURCES,
+    },
+    authProvider: {
+      type: [String],
+      enum: AUTH_PROVIDERS,
+      required: true,
+    },
+    providerId: {
+      type: [
+        {
+          provider: {
+            type: String,
+            enum: AUTH_PROVIDERS,
+            required: true,
+          },
+          id: {
+            type: String,
+            required: true,
+          },
         },
-        privileges: {
-          type: Number,
-          enum: PRIVILEGE,
-          required: true,
+      ],
+    },
+    sessions: [String],
+    role: {
+      _id: Schema.Types.ObjectId,
+      name: { type: String, required: true, unique: true },
+      access: [
+        {
+          ressource: {
+            type: String,
+            required: true,
+          },
+          privileges: {
+            type: Number,
+            enum: PRIVILEGE,
+            required: true,
+          },
+          meta: {
+            type: Schema.Types.Mixed,
+            default: null,
+          },
         },
-      },
-    ],
+      ],
+    },
+    customAccessList: {
+      type: [
+        {
+          ressource: { type: String, enum: ACCESS_RESSOURCES, required: true },
+          privileges: {
+            type: Number,
+            enum: PRIVILEGE,
+            required: true,
+          },
+        },
+      ],
+    },
+    isActive: {
+      type: Boolean,
+      required: true,
+      default: false,
+    },
+    isBanned: {
+      type: Boolean,
+      required: true,
+      default: false,
+    },
+    isSuspended: {
+      type: Boolean,
+      required: true,
+      default: false,
+    },
+    expirationDate: {
+      type: Date,
+      required: false,
+    },
+    suspensionLiftTime: {
+      type: Date,
+      required: false,
+    },
+    suspensionReason: {
+      type: String,
+      required: false,
+    },
+    numberOfUnsuccessfulTrials: { type: Number, default: 0 },
+    lastTrialSince: Date,
   },
-  isActive: {
-    type: Boolean,
-    required: true,
-    default: false,
-  },
-  isBanned: {
-    type: Boolean,
-    required: true,
-    default: false,
-  },
-  isSuspended: {
-    type: Boolean,
-    required: true,
-    default: false,
-  },
-  expirationDate: {
-    type: Date,
-    required: false,
-  },
-  suspensionLiftTime: {
-    type: Date,
-    required: false,
-  },
-  suspensionReason: {
-    type: String,
-    required: false,
-  },
-  numberOfUnsuccessfulTrials: { type: Number, default: 0 },
-  lastTrialSince: Date,
-});
+  { timestamps: true }
+);
 
 const findPaginatedAuth: AuthTypeSaticMethods["findPaginated"] =
   async function findPaginatedRoles(this, args, prependedPipelines = []) {

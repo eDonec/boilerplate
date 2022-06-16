@@ -13,6 +13,7 @@ export type RoleTypeSaticMethods = {
     args: IPaginationQuery<RoleType>,
     prependedPipelines?: PipelineStage[]
   ) => Promise<IPaginatedResult<Item>>;
+  UNSAFE_findOneAndUpdate: Model<RoleType>["findOneAndUpdate"];
 };
 export type RoleModel = Model<RoleType> & RoleTypeSaticMethods;
 export type RoleDocument = HydratedDocument<RoleType>;

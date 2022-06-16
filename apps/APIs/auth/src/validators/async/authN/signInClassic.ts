@@ -4,6 +4,7 @@ import { compareSync } from "bcrypt";
 import { ObjectValidationError, UnauthorizedError } from "custom-error";
 import add from "date-fns/add";
 import isAfter from "date-fns/isAfter";
+import producer from "events/producer";
 import { Request } from "http-server";
 import Auth from "models/Auth";
 import * as authZServices from "services/authZ";
@@ -24,7 +25,7 @@ export const signInClassicValidator: IMiddleware<
           $or: [{ email }, { userName }],
         }
       : { email }
-  ).populate("role");
+  );
 
   if (authUsersByUserNameOrEmail == null) {
     throw new ObjectValidationError({
@@ -46,18 +47,22 @@ export const checkSuspension: IAuthServerMiddleware = async (
 ) => {
   const { currentAuth } = res.locals;
 
-  if (currentAuth.isSuspended) {
-    if (currentAuth.suspensionLiftTime > new Date()) {
-      throw new UnauthorizedError({
-        message: `User is suspended untill ${
-          currentAuth.suspensionLiftTime
-        } for ${currentAuth.suspensionReason || "an unknown reason"}`,
-        reason: "User suspended",
-      });
-    }
-    currentAuth.isSuspended = false;
-    await currentAuth.save();
+  if (!currentAuth.isSuspended) return next();
+  if (currentAuth.suspensionLiftTime > new Date()) {
+    throw new UnauthorizedError({
+      message: `User is suspended untill ${
+        currentAuth.suspensionLiftTime
+      } for ${currentAuth.suspensionReason || "an unknown reason"}`,
+      reason: "User suspended",
+    });
   }
+  currentAuth.isSuspended = false;
+  producer.emit.UserBanAndSuspensionLifted({
+    authId: currentAuth._id,
+    createdAt: new Date(),
+    liftedByUserId: "suspension time over",
+  });
+  currentAuth.save();
   next();
 };
 

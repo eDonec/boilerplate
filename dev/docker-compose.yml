@@ -23,6 +23,14 @@ services:
       - IMGPROXY_MAX_SRC_RESOLUTION=9999
     networks:
       - main-network
+  cache:
+    image: redis/redis-stack-server:6.2.2-v4
+    restart: always
+    ports:
+      - "6379:6379"
+      - "8001:8001"
+    networks:
+      - main-network
   proxy-balancer:
     restart: always
     build:

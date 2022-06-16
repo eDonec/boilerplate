@@ -2,68 +2,52 @@ import * as rolesController from "controllers/roles";
 import { Router } from "init";
 import { getAuthByAccessToken } from "middlewares/currentAuth";
 import * as rolesMiddlewares from "middlewares/roles";
-import { routeProtection } from "middlewares/routeProtection";
 import { ACCESS_RESSOURCES, PRIVILEGE } from "shared-types";
-import * as authNValidators from "validators/sync/authN";
 import * as rolesValidators from "validators/sync/roles";
 
 const router = Router();
 
 const BASE_ROUTE = "/roles";
 
-router.get(
+router.getProtected(ACCESS_RESSOURCES.ROLE, PRIVILEGE.READ)(
   `${BASE_ROUTE}`,
-  authNValidators.tokenValidator(),
-  getAuthByAccessToken,
-  routeProtection(ACCESS_RESSOURCES.ROLE, PRIVILEGE.READ),
   rolesValidators.getRoles,
   rolesController.getRoles
 );
 
-router.get(
+router.getProtected(ACCESS_RESSOURCES.ROLE, PRIVILEGE.READ)(
   `${BASE_ROUTE}/:id`,
-  authNValidators.tokenValidator(),
-  getAuthByAccessToken,
-  routeProtection(ACCESS_RESSOURCES.ROLE, PRIVILEGE.READ),
   rolesValidators.getRoleById,
   rolesController.getRoleById
 );
 
-router.put(
+router.putProtected(ACCESS_RESSOURCES.ROLE, PRIVILEGE.WRITE)(
   `${BASE_ROUTE}/:id`,
-  authNValidators.tokenValidator(),
   getAuthByAccessToken,
-  routeProtection(ACCESS_RESSOURCES.ROLE, PRIVILEGE.WRITE),
   rolesMiddlewares.checkRoleValidity,
   rolesValidators.updateRole,
   rolesController.updateRole
 );
 
-router.post(
+router.postProtected(ACCESS_RESSOURCES.ROLE, PRIVILEGE.WRITE)(
   `${BASE_ROUTE}`,
-  authNValidators.tokenValidator(),
   getAuthByAccessToken,
-  routeProtection(ACCESS_RESSOURCES.ROLE, PRIVILEGE.WRITE),
   rolesMiddlewares.checkRoleValidity,
   rolesValidators.addRole,
   rolesController.addRole
 );
 
-router.delete(
+router.deleteProtected(ACCESS_RESSOURCES.ROLE, PRIVILEGE.DELETE)(
   `${BASE_ROUTE}/:id`,
   rolesValidators.deleteRole,
-  authNValidators.tokenValidator(),
   getAuthByAccessToken,
-  routeProtection(ACCESS_RESSOURCES.ROLE, PRIVILEGE.DELETE),
   rolesController.deleteRole
 );
 
-router.get(
+router.getProtected(ACCESS_RESSOURCES.AUTHENTICATED_CLIENTS, PRIVILEGE.WRITE)(
   `${BASE_ROUTE}/grantable/:authId`,
   rolesValidators.getGrantableRoles,
-  authNValidators.tokenValidator(),
   getAuthByAccessToken,
-  routeProtection(ACCESS_RESSOURCES.AUTHENTICATED_CLIENTS, PRIVILEGE.WRITE),
   rolesController.getGrantableRoles
 );
 

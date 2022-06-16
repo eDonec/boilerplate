@@ -17,7 +17,7 @@ export const getAuthByAccessToken: IMiddleware<
 
   const currentAuth = await Auth.findOne({
     _id: token.decodedToken.payload.authId,
-  }).populate("role");
+  });
 
   if (!currentAuth)
     throw new NotFoundError({

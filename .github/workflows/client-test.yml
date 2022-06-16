@@ -57,6 +57,9 @@ jobs:
         if: |
           steps.cache-yarn-cache.outputs.cache-hit != 'true' ||
           steps.cache-node-modules.outputs.cache-hit != 'true'
+      - name: Start Redis
+        run: |
+          make compose-dev
 
       - name: Run lint
         run: yarn lint --filter=client

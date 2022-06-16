@@ -34,7 +34,7 @@ export const getRoles = async (
           from: Auth.collection.name,
           as: "auths",
           localField: "_id",
-          foreignField: "role",
+          foreignField: "role._id",
         },
       },
       {
@@ -137,7 +137,6 @@ export const updateRole = async (
       ...newRessources,
     ];
   }
-
   await role.save();
 };
 
