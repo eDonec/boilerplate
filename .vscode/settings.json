@@ -28,7 +28,7 @@
   "typescript.referencesCodeLens.enabled": true,
   "appService.zipIgnorePattern": [".vscode{,/**}"],
   "appService.deploySubpath": "",
-  "files.excslude": {
+  "files.exclude": {
     "**/coverage": true,
     "**/.eslintrc.js": true,
     ".sdocker": true,

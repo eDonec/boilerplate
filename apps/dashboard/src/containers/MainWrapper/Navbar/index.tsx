@@ -17,15 +17,15 @@ const Navbar = () => (
           Visiter le site
         </ButtonLink>
       </div>
-      <div className="my-auto flex justify-center transition-[flex-grow] focus-within:flex-grow ">
-        <div className="relative hidden flex-grow md:block">
+      <div className="my-auto flex flex-1 justify-end ">
+        <div className="relative ml-auto hidden transition-all focus-within:flex-1 md:flex">
           <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
             <SearchIcon className="text-gray-500" />
           </div>
           <input
             type="text"
             id="search-navbar"
-            className="block rounded-lg border border-gray-600 bg-gray-700 p-2 pl-10  text-gray-50 placeholder-gray-400 transition-[width] focus:w-full focus:border-gray-400 focus:ring-gray-400 sm:text-sm"
+            className="block flex-1 rounded-lg border border-gray-600 bg-gray-700 p-2 pl-10  text-gray-50 placeholder-gray-400 focus:border-gray-400 focus:ring-gray-400 sm:text-sm"
             placeholder="Rechercher un produit..."
           />
         </div>
