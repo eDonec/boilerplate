@@ -6,7 +6,7 @@ import DarkModeButton from "./DarkModeButton";
 import ProfileAvatar from "./ProfileAvatar";
 
 const Navbar = () => (
-  <nav className="min-h-16 sticky top-0 left-0 right-0 bottom-0 bg-gray-900 py-3 shadow-md sm:px-4">
+  <nav className=" min-h-16 sticky top-0 left-0 right-0  z-[999] bg-gray-900 py-3 shadow-md sm:px-4">
     <div className="max:w-4/5 max:md:w-11/12 flex-no-wrap container mx-auto flex w-4/5 items-end justify-between md:w-11/12">
       <div className="dark my-auto  pr-5">
         <ButtonLink
