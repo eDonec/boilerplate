@@ -57,6 +57,9 @@ jobs:
         if: |
           steps.cache-yarn-cache.outputs.cache-hit != 'true' ||
           steps.cache-node-modules.outputs.cache-hit != 'true'
+${{isPackage}}      - name: Start Redis
+${{isPackage}}        run: |
+${{isPackage}}          make compose-dev
 
       - name: Run lint
         run: yarn lint --filter=${{packageName}}

@@ -2,6 +2,7 @@
 /* eslint-disable no-console */
 import app, { baseUrl } from "init.testSetup";
 import Role from "models/Role";
+import { populateRedis } from "seed/populateRedis";
 import { seed } from "seed/seed";
 import {
   ACCESS,
@@ -19,17 +20,21 @@ let token: string;
 beforeEach(async () => {
   try {
     await seed(false);
+    await populateRedis(false);
     const signInBody = {
       email: process.env.ROOT_USER_EMAIL,
       password: process.env.ROOT_USER_PASSWORD,
     };
-    const signUpResponse = await supertest(app)
+    const signInResponse = await supertest(app)
       .post(`${baseUrl}/n/sign-in/classic`)
       .send(signInBody);
 
-    token = signUpResponse.body.token.accessToken;
+    token = signInResponse.body.token.accessToken;
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.error("Seeding is not available");
+    // eslint-disable-next-line no-console
+    console.error(error);
   }
 });
 describe("GET /clients/", () => {

@@ -1,4 +1,5 @@
 import app, { baseUrl } from "init.testSetup";
+import { populateRedis } from "seed/populateRedis";
 import { seed } from "seed/seed";
 import { StatusCodes } from "shared-types";
 import supertest from "supertest";
@@ -6,9 +7,12 @@ import supertest from "supertest";
 beforeEach(async () => {
   try {
     await seed(false);
+    await populateRedis(false);
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error("Seeding is not available");
+    // eslint-disable-next-line no-console
+    console.error(error);
   }
 });
 

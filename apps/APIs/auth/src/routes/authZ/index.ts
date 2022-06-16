@@ -1,7 +1,7 @@
 import * as authZController from "controllers/authZ";
 import { Router } from "init";
 import { getAuthByAccessToken } from "middlewares/currentAuth";
-import { routeProtection } from "middlewares/routeProtection";
+import { routeProtectionFallback } from "middlewares/routeProtectionFallback";
 import { ACCESS_RESSOURCES, PRIVILEGE } from "shared-types";
 import * as asyncAuthNValidators from "validators/async/authN";
 import * as authNValidators from "validators/sync/authN";
@@ -19,51 +19,35 @@ router.get(
 );
 router.get(`${BASE_ROUTE}/upload-token`, authZController.getUploadToken);
 
+router.getProtected(ACCESS_RESSOURCES.ROLE, PRIVILEGE.READ)(
+  `${BASE_ROUTE}/roles`,
+  authZValidators.getRoles,
+  authZController.getRoles
+);
 router.post(
   `${BASE_ROUTE}/ressource-access`,
   authZValidators.checkRessourceAccess,
   authNValidators.tokenValidator(false),
   getAuthByAccessToken,
-  (req, res, next) => {
-    const { privileges, ressource } = req.body;
-
-    routeProtection(ressource, privileges)(req, res, next);
-  },
+  routeProtectionFallback,
   authZController.checkRessourceAccess
 );
 
-router.get(
-  `${BASE_ROUTE}/roles`,
-  authNValidators.tokenValidator(),
-  getAuthByAccessToken,
-  routeProtection(ACCESS_RESSOURCES.ROLE, PRIVILEGE.READ),
-  authZValidators.getRoles,
-  authZController.getRoles
-);
-
-router.post(
+router.postProtected(ACCESS_RESSOURCES.BAN_CLIENTS, PRIVILEGE.WRITE)(
   `${BASE_ROUTE}/ban-client/:id`,
-  authNValidators.tokenValidator(),
-  getAuthByAccessToken,
-  routeProtection(ACCESS_RESSOURCES.BAN_CLIENTS, PRIVILEGE.WRITE),
   authZValidators.banClient,
   authZController.banClient
 );
 
-router.post(
+router.postProtected(ACCESS_RESSOURCES.SUSPEND_CLIENTS, PRIVILEGE.WRITE)(
   `${BASE_ROUTE}/suspend-client/:id`,
-  authNValidators.tokenValidator(),
   getAuthByAccessToken,
-  routeProtection(ACCESS_RESSOURCES.SUSPEND_CLIENTS, PRIVILEGE.WRITE),
   authZValidators.suspendClient,
   authZController.suspendClient
 );
 
-router.get(
+router.getProtected(ACCESS_RESSOURCES.LIFT_BAN_AND_SUSPENSION, PRIVILEGE.WRITE)(
   `${BASE_ROUTE}/lift-ban-suspension/:id`,
-  authNValidators.tokenValidator(),
-  getAuthByAccessToken,
-  routeProtection(ACCESS_RESSOURCES.LIFT_BAN_AND_SUSPENSION, PRIVILEGE.WRITE),
   authZValidators.liftBanAndSuspension,
   authZController.liftBanAndSuspension
 );

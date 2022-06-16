@@ -1,3 +1,4 @@
+/* eslint-disable no-await-in-loop */
 /* eslint-disable no-console */
 import Auth from "models/Auth";
 import Role from "models/Role";
@@ -16,6 +17,7 @@ const DEFAULT_USER = {
 
 export const seed = async (withLogs = true) => {
   if (withLogs) {
+    console.time("Seed Time:");
     console.log(`Connected to database`);
     console.log(`Seeding Started...`);
   }
@@ -35,7 +37,7 @@ export const seed = async (withLogs = true) => {
       },
       {
         ...DEFAULT_USER,
-        role: seededRoles.find((role) => role.name === "GOD")?._id,
+        role: seededRoles.find((role) => role.name === "GOD"),
       },
       {
         upsert: true,
@@ -46,11 +48,13 @@ export const seed = async (withLogs = true) => {
     if (withLogs) {
       console.log(`Seeded and updated ${seedRoles.length} roles`);
       console.log(
-        `Seeded and updated default user with email ${newRootUser.email} with role "GOD"`
+        `Seeded and updated default user with email ${newRootUser.email} with role "GOD" `
       );
       console.log(`Seeding Completed...`);
     }
   } catch (error) {
+    console.error(error);
     console.log("seeding unavailable");
   }
+  console.timeEnd("Seed Time:");
 };

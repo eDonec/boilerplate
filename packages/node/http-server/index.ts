@@ -1,14 +1,7 @@
-import express, {
-  Express,
-  NextFunction,
-  Request,
-  Response,
-  Router as ExpressRouter,
-  RouterOptions,
-} from "express";
+import express, { Express, RouterOptions } from "express";
 import TCustomErrors from "shared-types/Errors";
 
-import CustomRouter from "./CustomRouter";
+import CustomRouter, { TCustomRouter } from "./CustomRouter";
 
 class Server {
   app: Express;
@@ -19,7 +12,7 @@ class Server {
 
   listen: Express["listen"];
 
-  Router: (options?: RouterOptions | undefined) => ExpressRouter;
+  Router: (options?: RouterOptions | undefined) => TCustomRouter;
 
   constructor(eventEmitter: (payload: TCustomErrors) => void) {
     this.app = express();
@@ -40,4 +33,5 @@ class Server {
 
 export default Server;
 
-export type { NextFunction, Request, Response };
+export * from "./redisClient";
+export * from "./types";
