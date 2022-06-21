@@ -1,6 +1,7 @@
 import { AuthDocument } from "auth-types/models/Auth";
 import { ClientRouteTypes } from "auth-types/routes/client";
 import { NotFoundError, UnauthorizedError } from "custom-error";
+import { updateRedisClientAccess } from "http-server/RedisServices/updateClientAuth";
 import Auth from "models/Auth";
 import Role from "models/Role";
 import { getAccessDict, isRoleGrantableToClient } from "services/roles";
@@ -95,6 +96,6 @@ export const updateClientAccess = async (
 
   client.role = role;
   client.customAccessList = access;
-
+  updateRedisClientAccess(authId, constructRoleArray(role, access));
   await client.save();
 };

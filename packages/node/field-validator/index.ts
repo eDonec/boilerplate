@@ -13,6 +13,7 @@ export default class Validator<T extends Record<any, unknown>> {
   validate: TValidate<T>;
 
   constructor(objectToValidate: T) {
+
     if (!Object.keys(objectToValidate).length)
       throw new Error("At least one field should be passed");
 

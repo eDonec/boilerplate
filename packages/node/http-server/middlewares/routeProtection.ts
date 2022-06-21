@@ -21,6 +21,7 @@ export const routeProtection =
   > =>
   async (_, res, next) => {
     const { token } = res.locals;
+
     const authRepository = client.fetchRepository(rAuthAccessSchema);
 
     const redisClientAccess = await authRepository
@@ -28,15 +29,11 @@ export const routeProtection =
       .where("authId")
       .equal(token.decodedToken.payload.authId)
       .return.all();
-
     const access: ACCESS[] = redisClientAccess.map((o) => ({
       ressource: o.ressource,
       privileges: o.privilege,
     }));
 
-    // if(process.env.NODE_ENV === "test") {
-    //   const auth =
-    // }
     const userAccess = access
       // this is here to make sure that we hit the god ressource before any other ressource
       .sort((a) => (a.ressource === "*" ? 1 : -1))

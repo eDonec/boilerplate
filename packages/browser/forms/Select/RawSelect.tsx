@@ -48,7 +48,14 @@ const RawSelect = forwardRef<HTMLButtonElement, RawSelectProps>(
     return (
       <DropdownMenuPrimitive.Root onOpenChange={toggleOpenSelectOptions}>
         {label && (
-          <DropdownMenuPrimitive.Label>{label}</DropdownMenuPrimitive.Label>
+          <DropdownMenuPrimitive.Label
+            className={clsx(
+              "mb-2 block text-sm font-medium text-gray-900 dark:text-gray-300",
+              error && "text-red-600 dark:text-red-500"
+            )}
+          >
+            {label}
+          </DropdownMenuPrimitive.Label>
         )}
         <DropdownMenuPrimitive.Trigger ref={ref} asChild>
           {trigger || (

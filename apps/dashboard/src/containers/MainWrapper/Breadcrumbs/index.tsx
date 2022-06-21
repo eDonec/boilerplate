@@ -3,8 +3,28 @@ import { Link } from "react-router-dom";
 import Seperator from "./Seperator";
 import { useBreadcrumbs } from "./useBreadcrumbs";
 
-const Breadcrumbs = () => {
-  const { firstPath, pathList, currentPath } = useBreadcrumbs();
+interface Props {
+  overrideBreadcrumbs?: { name: string; path: string }[];
+}
+
+/**
+ * Description JSDOC
+ * @param {Props} props
+ * @param {Props["overrideBreadcrumbs"]} props.overrideBreadcrumbs - Optional array of breadcrumbs to override. MUST be ordered
+ * @memberof MainWrapper/Breadcrumbs
+ * @example
+ * <Breadcrumbs />
+ * @example
+ * <Breadcrumbs overrideBreadcrumbs={[{ name: 'Home', path: '/' }]} />
+ * @example
+ * <Breadcrumbs overrideBreadcrumbs={[{ name: 'Home', path: '/' }, { name: 'About', path: '/about' }]} />
+ * @example
+ * <Breadcrumbs overrideBreadcrumbs={[{ name: 'Home', path: '/' }, { name: 'About', path: '/about' }, { name: 'Contact', path: '/contact' }]} />
+ * @example
+ */
+const Breadcrumbs: React.FC<Props> = ({ overrideBreadcrumbs }) => {
+  const { firstPath, pathList, currentPath } =
+    useBreadcrumbs(overrideBreadcrumbs);
 
   if (!currentPath) return null;
 

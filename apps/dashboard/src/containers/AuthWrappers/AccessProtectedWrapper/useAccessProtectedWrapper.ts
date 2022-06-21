@@ -31,3 +31,6 @@ export const accessMatcher = (
 
   return userAccess.privileges >= previlages;
 };
+
+export const getPrivilegeName = (privilage?: PRIVILEGE): string =>
+  privilage ? PRIVILEGE[privilage] : "";
