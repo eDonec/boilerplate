@@ -20,14 +20,13 @@ export const useAccessRessourcesDataTable = ({
   access,
   onAccessChange,
   baseAccess,
+  isFormReadOnly: readonly,
 }: AccessRessourceDataTableProps) => {
   const currentUserAccess = useAppSelector((state) => state.auth.access);
 
-  const isFormReadOnly = !accessMatcher(
-    currentUserAccess,
-    ACCESS_RESSOURCES.ROLE,
-    PRIVILEGE.WRITE
-  );
+  const isFormReadOnly =
+    readonly ||
+    !accessMatcher(currentUserAccess, ACCESS_RESSOURCES.ROLE, PRIVILEGE.WRITE);
 
   const ressourceAccessDict = Object.values(ACCESS_RESSOURCES).reduce<
     Record<ACCESS_RESSOURCES, { grant: boolean; revoke: boolean }>

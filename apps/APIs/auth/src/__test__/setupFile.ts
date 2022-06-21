@@ -1,5 +1,6 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
-import { Crypto } from "@peculiar/webcrypto";
+import { client } from "http-server";
+import { populateRedis } from "seed/populateRedis";
+import { seed } from "seed/seed";
 
 import {
   clearMockDB,
@@ -8,18 +9,20 @@ import {
 } from "./utils/memoryServer/utils";
 
 beforeAll(async () => {
-  global.crypto = new Crypto();
   await connectToMockDB();
-  await new Promise<void>((resolve) => {
-    setTimeout(() => {
-      resolve();
-    }, 500);
-  });
+  try {
+    await seed(false);
+    await populateRedis(false);
+    await client.open();
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.error("Seeding is not available");
+    // eslint-disable-next-line no-console
+    console.error(error);
+  }
 }, 10000);
-afterEach(async () => {
-  await clearMockDB();
-});
 
 afterAll(async () => {
+  await clearMockDB();
   await closeMockDB();
 });

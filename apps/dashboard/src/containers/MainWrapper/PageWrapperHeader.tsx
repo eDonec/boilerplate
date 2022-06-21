@@ -9,15 +9,17 @@ export type PageWrapperHeaderProps = {
   description: string;
   customIcon?: React.FC<IProps>;
   customButton?: JSX.Element;
+  overrideBreadcrumbs?: { name: string; path: string }[];
 };
 const PageWrapperHeader: React.FC<PageWrapperHeaderProps> = ({
   customIcon: Icon,
   title,
   description,
   customButton,
+  overrideBreadcrumbs,
 }) => (
-  <div className="mx-auto flex w-4/5 justify-between pt-4 md:w-11/12">
-    <div>
+  <div className="mx-auto w-4/5 pt-4 md:w-11/12">
+    <div className="flex justify-between">
       <div className="flex">
         <div>
           {Icon && (
@@ -31,9 +33,9 @@ const PageWrapperHeader: React.FC<PageWrapperHeaderProps> = ({
           </p>
         </div>
       </div>
-      <Breadcrumbs />
+      <div className="flex-col self-center align-middle">{customButton}</div>
     </div>
-    <div className="flex-col self-center align-middle">{customButton}</div>
+    <Breadcrumbs overrideBreadcrumbs={overrideBreadcrumbs} />
   </div>
 );
 

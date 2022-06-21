@@ -26,6 +26,7 @@ const RoleForm = (props: RoleFormProps) => {
         }
       />
       <AccessRessourcesDataTable
+        isFormReadOnly={isFormReadOnly}
         label="Access Ressources"
         access={props.role?.access || []}
         onAccessChange={onAccessChange}

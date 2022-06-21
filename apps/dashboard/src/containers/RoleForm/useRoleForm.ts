@@ -8,13 +8,15 @@ import { useAppSelector } from "hooks/reduxHooks";
 
 import { RoleFormProps } from "./types";
 
-export const useRoleForm = ({ setRole, baseRole }: RoleFormProps) => {
+export const useRoleForm = ({
+  setRole,
+  baseRole,
+  isFormReadOnly: readonly,
+}: RoleFormProps) => {
   const currentUserAccess = useAppSelector((state) => state.auth.access);
-  const isFormReadOnly = !accessMatcher(
-    currentUserAccess,
-    ACCESS_RESSOURCES.ROLE,
-    PRIVILEGE.WRITE
-  );
+  const isFormReadOnly =
+    readonly ||
+    !accessMatcher(currentUserAccess, ACCESS_RESSOURCES.ROLE, PRIVILEGE.WRITE);
 
   const baseAccess = useRef<ACCESS[] | null>(null);
 
