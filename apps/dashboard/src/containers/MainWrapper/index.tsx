@@ -22,6 +22,7 @@ export type PageProps = {
   description: string;
   customIcon?: React.FC<IProps> | undefined;
   customButton?: JSX.Element | undefined;
+  overrideBreadcrumbs?: { name: string; path: string }[];
 };
 // TODO: Add a hook to get the unseen notifications
 const notification: UnseenNotification[] | undefined = undefined;
@@ -37,7 +38,13 @@ const MainWrapper = () => {
     currentRouteIcon: Icon,
   } = useMainWrapper();
 
-  const { customIcon: CustomIcon, title, description, customButton } = props;
+  const {
+    customIcon: CustomIcon,
+    title,
+    description,
+    customButton,
+    overrideBreadcrumbs,
+  } = props;
 
   return (
     <PrivateWrapper>
@@ -64,13 +71,14 @@ const MainWrapper = () => {
           <Navbar />
           <div className="mb-3 bg-gray-200 pb-3 shadow-2xl dark:bg-gray-700">
             <PageWrapperHeader
+              overrideBreadcrumbs={overrideBreadcrumbs}
               customIcon={CustomIcon || Icon}
               title={title}
               description={description}
               customButton={customButton}
             />
           </div>
-          <div className="max:w-4/5 max:md:w-11/12 container mx-auto w-4/5 md:w-11/12">
+          <div className="max:w-4/5 max:md:w-11/12 container mx-auto w-4/5 pb-20 md:w-11/12">
             <Outlet context={initPage} />
           </div>
         </div>

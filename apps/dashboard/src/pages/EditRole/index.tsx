@@ -18,15 +18,16 @@ const EditRole = () => {
     setRole,
     submitModalProps,
     t,
+    isFormReadOnly,
   } = useEditRole();
 
   useInitRoute(
     {
       description: baseRole.current?.name
-        ? `Editing ${baseRole.current.name}`
+        ? `${isFormReadOnly ? "Viewing" : "Editing"} ${baseRole.current.name}`
         : "Role Details",
-      title: "Edit Role",
-      customButton: (
+      title: `${isFormReadOnly ? "View" : "Edit"} Role`,
+      customButton: isFormReadOnly ? undefined : (
         <AccessProtectedWrapper
           privileges={PRIVILEGE.WRITE}
           ressource={ACCESS_RESSOURCES.ROLE}
@@ -41,6 +42,18 @@ const EditRole = () => {
           </Button>
         </AccessProtectedWrapper>
       ),
+      overrideBreadcrumbs: [
+        {
+          name: t("linksNames.roles"),
+          path: "/roles",
+        },
+        {
+          name: `${isFormReadOnly ? "" : t("misc.edit")} "${
+            baseRole.current?.name ?? "loading..."
+          }"`,
+          path: "/roles/edit",
+        },
+      ],
     },
     [loading, canSubmit, baseRole.current?.name]
   );
@@ -49,6 +62,7 @@ const EditRole = () => {
     <>
       {role && (
         <RoleForm
+          isFormReadOnly={isFormReadOnly}
           checkErrors
           baseRole={baseRole}
           role={role}

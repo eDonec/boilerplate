@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 import toast from "react-hot-toast";
 import { useTranslation } from "react-i18next";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 
 import Api from "api";
 import { useFirstMount } from "core-hooks";
@@ -21,14 +21,19 @@ const EditAccessLevel = () => {
   const { id } = useParams<{ id: string }>();
   const isFirstMount = useFirstMount();
   const [customAccess, setCustomAccess] = useState<ACCESS[] | null>(null);
+  const [clientReadableRef, setClientReadableRef] = useState<string | null>(
+    null
+  );
   const [grantableRoles, setGrantableRoles] = useState<ISelectOption[]>([]);
   const [selectedRole, setSelectedRole] = useState<ISelectOption>();
   const [loading, setLoading] = useState(false);
+  const { pathname } = useLocation();
 
   if (isFirstMount && id) {
     Api.authSDK.getClientById({ params: { id } }).then((data) => {
       setCustomAccess(data.customAccessList || []);
       setSelectedRole({ label: data.role.name, value: data.role._id });
+      setClientReadableRef(data.userName || data.email || null);
     });
     Api.authSDK
       .getGrantableRoles({ params: { authId: id } })
@@ -91,8 +96,18 @@ const EditAccessLevel = () => {
           </Button>
         </AccessProtectedWrapper>
       ),
+      overrideBreadcrumbs: [
+        {
+          name: t("linksNames.authenticatedClients"),
+          path: "/authenticated-clients",
+        },
+        {
+          name: `${t("misc.edit")} "${clientReadableRef ?? "loading..."}"`,
+          path: pathname,
+        },
+      ],
     },
-    [canSubmit, loading]
+    [canSubmit, loading, clientReadableRef, pathname]
   );
 
   return (

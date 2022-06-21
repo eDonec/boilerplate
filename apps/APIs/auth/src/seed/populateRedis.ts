@@ -11,7 +11,7 @@ import { constructRoleArray } from "helpers/constructRoleArray";
 export const populateRedis = async (withLogs = true) => {
   const client = await new Client().open();
 
-  client.execute(["FLUSHALL"]);
+  await client.execute(["FLUSHALL"]);
   const authRepository = client.fetchRepository(rAuthAccessSchema);
 
   await authRepository.createIndex();
@@ -43,7 +43,7 @@ export const populateRedis = async (withLogs = true) => {
   }
   if (withLogs) console.timeEnd("Redis Time:");
 
-  client.close();
+  await client.close();
 };
 
 const formatAuth = (auth: AuthDocument) =>

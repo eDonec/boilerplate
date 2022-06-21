@@ -55,7 +55,7 @@ const schema = new Schema<AuthType, AuthModel>(
     sessions: [String],
     role: {
       _id: Schema.Types.ObjectId,
-      name: { type: String, required: true, unique: true },
+      name: { type: String, required: true },
       access: [
         {
           ressource: {
