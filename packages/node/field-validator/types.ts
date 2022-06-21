@@ -1,4 +1,5 @@
 import FieldValidator from "./FieldValidator";
+import { Primitives } from "./validationTypes";
 
 export type TFiledValidatorAvailableRulesWithStringParam = keyof Pick<
   FieldValidator,
@@ -54,3 +55,9 @@ export type TRule =
       param: { min: number; max: number };
     }
   | { rule: TFiledValidatorAvailableRulesWithNoParam; param?: undefined };
+
+export type TValidate<T> = {
+  [key in keyof T]: T[key] extends Primitives
+    ? FieldValidator
+    : TValidate<T[key]>;
+};

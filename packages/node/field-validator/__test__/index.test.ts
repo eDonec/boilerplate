@@ -4,25 +4,6 @@ import sub from "date-fns/sub";
 
 import Validator from "..";
 
-const stringsToTest = {
-  invalidEmail: "email@testcom",
-  validEmail: "email@test.com",
-  shortPassword: "1234",
-  longPassword: "12345678",
-  emptyString: "",
-  invalidAlpha: "test1",
-  invalidUrl: "test",
-  validUrl: "https://www.edonec.com/",
-  invalidAlphaNum: "test?",
-  invalidAlphaSpace: "test3test",
-  invalidPassword: "password",
-  invalidDate: "199asd-06",
-  invalidNumber: "12aa",
-  validNumber: 12,
-  validDate: new Date(),
-};
-let validators: Validator;
-
 describe("Test Or validation", () => {
   it("should work on number and string", () => {
     const optionalValidators = new Validator({ field: "validAlphaString" });
@@ -51,7 +32,7 @@ describe("should work with undefined values", () => {
       userName: undefined,
     };
 
-    validators = new Validator(valuesUndefined);
+    const validators = new Validator(valuesUndefined);
 
     validators.validate.email.exists().isString().isEmail();
     validators.validate.password.exists().isString().minLength(8);
@@ -63,6 +44,25 @@ describe("should work with undefined values", () => {
 });
 
 describe("string Validators to initialize", () => {
+  const stringsToTest = {
+    invalidEmail: "email@testcom",
+    validEmail: "email@test.com",
+    shortPassword: "1234",
+    longPassword: "12345678",
+    emptyString: "",
+    invalidAlpha: "test1",
+    invalidUrl: "test",
+    validUrl: "https://www.edonec.com/",
+    invalidAlphaNum: "test?",
+    invalidAlphaSpace: "test3test",
+    invalidPassword: "password",
+    invalidDate: "199asd-06",
+    invalidNumber: "12aa",
+    validNumber: 12,
+    validDate: new Date(),
+  };
+  let validators: Validator<typeof stringsToTest>;
+
   beforeEach(() => {
     validators = new Validator(stringsToTest);
   });
@@ -179,5 +179,34 @@ describe("string Validators to initialize", () => {
       validators.validate.validNumber.isLessThanNumber(-100).error?.message
     ).toBeTruthy();
     expect(() => validators.resolveErrors()).toThrow("Validation error!");
+  });
+});
+
+describe("should be valid for complex objects", () => {
+  it("should accept an array of objects", () => {
+    const arrayType = {
+      a: "a",
+      test2: ["a", "b", "c"],
+      simple: {
+        st1: "string1",
+        st2: "string2",
+      },
+      test: [
+        {
+          name: {
+            firstName: 1,
+          },
+          age: "3",
+        },
+      ],
+    };
+
+    const complexValidators = new Validator(arrayType);
+
+    complexValidators.validate.test[0].name.firstName.isString();
+    complexValidators.validate.simple.st1.isNumber();
+    expect(() => complexValidators.resolveErrors()).toThrow(
+      "Validation error!"
+    );
   });
 });

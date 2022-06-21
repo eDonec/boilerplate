@@ -1,33 +1,25 @@
-import ObjectValidationError from "custom-error/ObjectValidationError";
-import { IObjectValidationError } from "shared-types/Errors";
+import { get } from "core-utils";
+import { ObjectValidationError } from "custom-error";
+import IObjectValidationError from "custom-error/ObjectValidationError";
 
 import FieldValidator from "./FieldValidator";
+import { TValidate } from "./types";
+import { isPrimitive } from "./utils";
 
-export default class Validator<
-  T extends Record<string, string | number | Date | undefined> = Record<
-    string,
-    string | number | Date | undefined
-  >
-> {
-  fields: (keyof T)[] = [];
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export default class Validator<T extends Record<any, unknown>> {
+  fields: string[] = [];
 
-  validate: { [key in keyof T]: FieldValidator };
+  validate: TValidate<T>;
 
   constructor(objectToValidate: T) {
     if (!Object.keys(objectToValidate).length)
       throw new Error("At least one field should be passed");
 
-    const { typeErrors, fields, validate } =
-      extractFieldValidatorsFromObject(objectToValidate);
-
-    if (typeErrors.length)
-      throw new ObjectValidationError({
-        message: "All fields must be strings, numbers or Dates",
-        fields: typeErrors,
-      });
-
-    this.fields = fields;
-    this.validate = validate;
+    this.validate = extractFieldValidatorsFromObject({
+      input: objectToValidate,
+      fields: this.fields,
+    }) as TValidate<T>;
   }
 
   resolveErrors() {
@@ -38,22 +30,21 @@ export default class Validator<
 
     this.fields.forEach((field) => {
       if (!this.validate) return;
-      if (this.validate[field].fieldHasMultipleValidators) {
-        if (
-          !this.validate[field].oneOfValidatorsIsClean &&
-          this.validate[field].error
-        ) {
+
+      const currentField = get(this.validate, field);
+
+      if (currentField.fieldHasMultipleValidators) {
+        if (!currentField.oneOfValidatorsIsClean && currentField.error) {
           errors.push(
-            (this.validate[field].multipleValidatorsError ||
-              this.validate[field].error) as {
+            (currentField.multipleValidatorsError || currentField.error) as {
               fields: ObjectValidationError["fields"];
               message: string;
             }
           );
         }
-      } else if (this.validate[field].error)
+      } else if (currentField.error)
         errors.push(
-          this.validate[field].error as {
+          currentField.error as {
             fields: ObjectValidationError["fields"];
             message: string;
           }
@@ -71,34 +62,43 @@ export default class Validator<
   }
 }
 
-const extractFieldValidatorsFromObject = <
-  T extends Record<string, string | number | Date | undefined>
->(
-  objectToValidate: T
-) => {
-  const typeErrors: { fieldName: string; message: string }[] = [];
-  const validate = {} as { [key in keyof T]: FieldValidator };
-  const fields = [] as (keyof T)[];
+export const extractFieldValidatorsFromObject = <
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  T
+>({
+  input,
+  key = "",
+  fields = [],
+}: {
+  input: T;
+  key?: string;
+  fields?: string[];
+}): FieldValidator | TValidate<T>[] | TValidate<T> => {
+  const output = {} as Record<string | number | symbol, unknown>;
 
-  (Object.keys(objectToValidate) as (keyof T)[]).forEach((key) => {
-    if (
-      objectToValidate[key] &&
-      typeof objectToValidate[key] !== "string" &&
-      typeof objectToValidate[key] !== "number" &&
-      !(objectToValidate[key] instanceof Date)
-    )
-      typeErrors.push({
-        fieldName: key as string,
-        message: `${String(key)} must be a string, number or Date`,
-      });
-    validate[key] = new FieldValidator(objectToValidate[key], key as string);
-
+  if (isPrimitive(input)) {
     fields.push(key);
-  });
 
-  return {
-    validate,
-    fields,
-    typeErrors,
-  };
+    return new FieldValidator(input, key);
+  }
+  if (input instanceof Array) {
+    return input.map((el, i) =>
+      extractFieldValidatorsFromObject({
+        input: el,
+        key: `${key ? `${key}.` : ""}${i}`,
+        fields,
+      })
+    ) as TValidate<T>[];
+  }
+
+  if (typeof input === "object")
+    Object.entries(input).forEach(([objectKey, value]) => {
+      output[objectKey] = extractFieldValidatorsFromObject({
+        input: value,
+        key: `${key ? `${key}.` : ""}${objectKey}`,
+        fields,
+      });
+    });
+
+  return output as TValidate<T>;
 };
