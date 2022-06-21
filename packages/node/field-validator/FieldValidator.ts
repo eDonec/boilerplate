@@ -12,9 +12,10 @@ import {
   objectIdHexRegexp,
   urlRegex,
 } from "./regex";
+import { Primitives } from "./validationTypes";
 
 export default class FieldValidator {
-  private fieldToTest?: string | number | Date;
+  private fieldToTest?: Primitives;
 
   private fieldName: string;
 
@@ -32,17 +33,12 @@ export default class FieldValidator {
     fields: { fieldName: string; message: string }[];
   } = undefined;
 
-  constructor(
-    fieldToTest: string | number | Date | undefined,
-    fieldName: string
-  ) {
+  constructor(fieldToTest: Primitives, fieldName: string) {
     this.fieldToTest = fieldToTest;
     this.fieldName = fieldName;
   }
 
-  private isStringType(
-    field: string | number | Date | undefined = this.fieldToTest
-  ): field is string {
+  private isStringType(field: Primitives = this.fieldToTest): field is string {
     if (field == null) return false;
     if (typeof field === "string") return true;
 
@@ -60,10 +56,8 @@ export default class FieldValidator {
     return false;
   }
 
-  private isDateType(
-    field: string | number | Date | undefined = this.fieldToTest
-  ): field is Date {
-    if (field == null) return false;
+  private isDateType(field: Primitives = this.fieldToTest): field is Date {
+    if (field == null || typeof field === "boolean") return false;
     if (field instanceof Date) return true;
     try {
       this.fieldToTest = new Date(field);
@@ -85,9 +79,7 @@ export default class FieldValidator {
     }
   }
 
-  private isNumberType(
-    field: string | number | Date | undefined = this.fieldToTest
-  ): field is number {
+  private isNumberType(field: Primitives = this.fieldToTest): field is number {
     if (field == null) return false;
     if (typeof field === "number") return true;
     if (!Number.isNaN(Number(field))) {
