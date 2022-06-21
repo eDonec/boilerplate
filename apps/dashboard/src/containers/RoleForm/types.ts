@@ -10,6 +10,7 @@ export type RoleFormProps = {
   >;
   baseRole: React.RefObject<Partial<LeanRoleDocument> | null>;
   checkErrors?: boolean;
+  isFormReadOnly?: boolean;
 };
 
 export type RessourceItem = {

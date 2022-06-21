@@ -8,6 +8,7 @@ export type AccessRessourceDataTableProps = {
   onAccessChange: (access: ACCESS[]) => void;
   baseAccess: React.RefObject<ACCESS[] | null>;
   label?: string;
+  isFormReadOnly?: boolean;
 };
 
 export type RessourceItem = {

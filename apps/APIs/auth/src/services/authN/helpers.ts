@@ -7,6 +7,7 @@ import {
   AuthResponseRoutes,
 } from "auth-types/routes/authN";
 import producer from "events/producer";
+import { updateRedisClientAccess } from "http-server/RedisServices/updateClientAuth";
 import Auth from "models/Auth";
 import Role from "models/Role";
 import { nanoid } from "nanoid";
@@ -21,6 +22,12 @@ export const generateAuthResponse = async (
   authClient: AuthDocument
 ): Promise<AuthNRouteTypes[AuthResponseRoutes]["POST"]["response"]> => {
   const { accessToken, refreshToken } = await createNewSession(authClient);
+  const access = constructRoleArray(
+    authClient.role,
+    authClient.customAccessList
+  );
+
+  updateRedisClientAccess(authClient.id, access);
 
   return {
     authID: authClient.id,
@@ -29,7 +36,7 @@ export const generateAuthResponse = async (
       refreshToken: refreshToken.token,
     },
     role: authClient.role,
-    access: constructRoleArray(authClient.role, authClient.customAccessList),
+    access,
   };
 };
 

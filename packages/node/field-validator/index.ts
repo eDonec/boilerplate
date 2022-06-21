@@ -14,9 +14,6 @@ export default class Validator<
   validate: { [key in keyof T]: FieldValidator };
 
   constructor(objectToValidate: T) {
-    if (!Object.keys(objectToValidate).length)
-      throw new Error("At least one field should be passed");
-
     const { typeErrors, fields, validate } =
       extractFieldValidatorsFromObject(objectToValidate);
 

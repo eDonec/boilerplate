@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 import toast from "react-hot-toast";
 import { useTranslation } from "react-i18next";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 
 import Api from "api";
 import { LeanRoleDocument } from "auth-types/models/Role";
@@ -18,6 +18,7 @@ export const useEditRole = () => {
   const [loading, setLoading] = useState(false);
   const { id } = useParams<{ id: string }>();
   const [t] = useTranslation();
+  const isFormReadOnly = !useLocation().pathname.includes("/edit");
 
   if (!baseRole.current && role) baseRole.current = role;
 
@@ -65,5 +66,6 @@ export const useEditRole = () => {
     setRole,
     submitModalProps,
     t,
+    isFormReadOnly,
   };
 };

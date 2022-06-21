@@ -1,6 +1,9 @@
 import UncontrolledDataTable from "core-cra-components/UncontrolledDataTable";
 import AlertDialog from "core-ui/AlertDialog";
 import Modal from "core-ui/Modal";
+import { ACCESS_RESSOURCES, PRIVILEGE } from "shared-types";
+
+import AccessProtectedWrapper from "containers/AuthWrappers/AccessProtectedWrapper";
 
 import SuspendClientForm from "./SuspendClientForm";
 import { fetchFunction, useAuthClients } from "./useAuthClients";
@@ -17,7 +20,11 @@ const AuthClients = () => {
   } = useAuthClients();
 
   return (
-    <>
+    <AccessProtectedWrapper
+      isExplicit
+      privileges={PRIVILEGE.READ}
+      ressource={ACCESS_RESSOURCES.AUTHENTICATED_CLIENTS}
+    >
       <UncontrolledDataTable
         fetchFunction={fetchFunction}
         columns={dataColumns}
@@ -48,7 +55,7 @@ const AuthClients = () => {
       >
         <SuspendClientForm onSubmit={suspendClient} />
       </Modal>
-    </>
+    </AccessProtectedWrapper>
   );
 };
 
