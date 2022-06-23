@@ -14,5 +14,6 @@ export enum UncontrolledDataTableURLParams {
   LIMIT = "limit",
   SORT_DIRECTION = "sort-direction",
   SORT_FIELD = "sort-field",
+  KEYWORD = "keyword",
 }
 export const FIRST_PAGE = "1";

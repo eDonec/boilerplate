@@ -11,13 +11,17 @@ import { GOD } from "constants/defaultRoles";
 
 import { constructRoleArray } from "helpers/constructRoleArray";
 
-export const getAuthenticatedClients = async (
-  query: ClientRouteTypes["/clients/"]["GET"]["query"]
-): Promise<ClientRouteTypes["/clients/"]["GET"]["response"]> =>
+export const getAuthenticatedClients = async ({
+  keyword = "",
+  ...query
+}: ClientRouteTypes["/clients/"]["GET"]["query"]): Promise<
+  ClientRouteTypes["/clients/"]["GET"]["response"]
+> =>
   Auth.findPaginated(query, [
     {
       $match: {
         "role.name": { $ne: "GOD" },
+        email: { $regex: keyword, $options: "i" },
       },
     },
     {

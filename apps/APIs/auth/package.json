@@ -14,7 +14,7 @@
     "build:js": "babel src --out-dir build --extensions \".ts\"",
     "build:types": "tsc --emitDeclarationOnly -p tsconfig.prod.json ",
     "test": "jest --coverage --runInBand --detectOpenHandles --forceExit",
-    "seed": "ts-node ./src/seed/index.ts",
+    "seed": "NODE_ENV=production ts-node ./src/seed/index.ts",
     "seed:cache": "ts-node ./src/seed/populateRedis.ts",
     "lint": "tsc --noEmit && eslint src --fix"
   },

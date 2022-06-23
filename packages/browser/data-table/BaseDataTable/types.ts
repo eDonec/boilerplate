@@ -60,6 +60,9 @@ export type BaseDatatableProps<T> = Pick<
   data: T[];
   columns: DataTableColumn<T>[];
   currentSort?: SelectedSort;
+  keyword?: string | null;
+  showSearch?: boolean;
+  onKeywordChange?: (keyword: string) => void;
   onSortChange?: (args: { field: string; direction: SortDirection }) => void;
   conditionalRowClassName?: (args: {
     item: T;

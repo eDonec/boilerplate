@@ -18,6 +18,8 @@ const InternalUncontrolledDataTable = <T,>({
     currentSort,
     limit,
     loading,
+    keyword,
+    onKeywordChange,
   } = useUncontrolledDataTable({
     fetchFunction,
     searchParams,
@@ -29,6 +31,8 @@ const InternalUncontrolledDataTable = <T,>({
   return (
     <ControlledDataTable
       {...datatableProps}
+      keyword={keyword}
+      onKeywordChange={onKeywordChange}
       data={data}
       onPageChange={onPageChange}
       onSortChange={onSortChange}

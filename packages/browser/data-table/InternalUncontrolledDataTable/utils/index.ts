@@ -23,4 +23,6 @@ export const extractQueryParams = (searchParams: URLSearchParams) => ({
   sortDirection: searchParams.get(
     UncontrolledDataTableURLParams.SORT_DIRECTION
   ),
+  keyword:
+    searchParams.get(UncontrolledDataTableURLParams.KEYWORD) ?? undefined,
 });
