@@ -1,5 +1,6 @@
 /* eslint-disable no-console */
 import app from "init.testSetup";
+import { seed } from "seed/seed";
 import { StatusCodes } from "shared-types";
 import supertest from "supertest";
 
@@ -15,8 +16,9 @@ const signUpToBeBannedBody = {
 };
 let toBeBannedId: string;
 
-beforeAll(async () => {
+beforeEach(async () => {
   try {
+    await seed(false);
     const signInResponse = await supertest(app)
       .post(`${BASE_URL}/n/sign-in/classic`)
       .set("Authorization", `Bearer ${token}`)

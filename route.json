@@ -1,9 +1,22 @@
 {
-  "baseUrl": "/lift-ban-suspension/:id",
-  "name": "liftBanAndSuspension",
+  "baseUrl": "/:name",
+  "name": "microserviceStatusHistoryByName",
   "method": "GET",
-  "params": {
-    "id": "string"
+  "query": {
+    "page": "string",
+    "limit": "string"
   },
-  "response": "string"
+  "params": {
+    "name": "string"
+  },
+  "response": {
+    "microserviceName": "string",
+    "status": "string",
+    "history": [
+      {
+        "status": "string",
+        "sampleTime": "Date"
+      }
+    ]
+  }
 }
