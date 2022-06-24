@@ -22,6 +22,7 @@ export const ressourcesTitleDict: Record<ACCESS_RESSOURCES, string> = {
   [ACCESS_RESSOURCES.BAN_CLIENTS]: "Ban Clients",
   [ACCESS_RESSOURCES.LIFT_BAN_AND_SUSPENSION]: "Lift Ban and Suspension",
   [ACCESS_RESSOURCES.SUSPEND_CLIENTS]: "Suspend Clients",
+  [ACCESS_RESSOURCES.MICROSERVICE_STATUS]: "View Microservice Status",
 };
 
 export const isVisiblePrevilege = (input: unknown): input is PRIVILEGE =>

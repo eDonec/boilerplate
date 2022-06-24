@@ -5,6 +5,8 @@ import AddRole from "pages/AddRole";
 import AuthClients from "pages/AuthClients";
 import EditAccessLevel from "pages/EditAccessLevel";
 import EditRole from "pages/EditRole";
+import Health from "pages/Health";
+import HealthHistory from "pages/Health/HealthHistory";
 import HomePage from "pages/HomePage";
 import { SignIn } from "pages/SignIn";
 
@@ -26,6 +28,9 @@ const AppRouter = () => {
         <Route path="roles/:id" element={<EditRole />} />
         <Route path="roles" element={<AccessPage />} />
         <Route path="authenticated-clients" element={<AuthClients />} />
+        <Route path="health" element={<Health />}>
+          <Route path=":name" element={<HealthHistory />} />
+        </Route>
         <Route
           path="authenticated-clients/access-level/edit/:id"
           element={<EditAccessLevel />}

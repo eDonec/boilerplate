@@ -33,5 +33,4 @@ class Server {
 
 export default Server;
 
-export * from "./redisClient";
 export * from "./types";

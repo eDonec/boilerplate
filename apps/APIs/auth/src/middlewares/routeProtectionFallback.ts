@@ -2,7 +2,7 @@ import { AuthDocument } from "auth-types/models/Auth";
 import { AuthZRouteTypes } from "auth-types/routes/authZ";
 import { UnauthorizedError } from "custom-error";
 import { Request, Response } from "http-server";
-import { IMiddleware } from "shared-types";
+import { ACCESS, IMiddleware } from "shared-types";
 import { TokenValidator } from "token";
 
 import { constructRoleArray } from "helpers/constructRoleArray";
@@ -16,7 +16,10 @@ export const routeProtectionFallback: IMiddleware<
   >,
   Response<
     AuthZRouteTypes["/z/ressource-access"]["POST"]["response"],
-    { token: TokenValidator<{ authId: string }>; currentAuth: AuthDocument }
+    {
+      token: TokenValidator<{ authId: string; access: ACCESS[] }>;
+      currentAuth: AuthDocument;
+    }
   >
 > = (req, res, next) => {
   const { currentAuth } = res.locals;
