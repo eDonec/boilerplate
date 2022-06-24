@@ -77,9 +77,7 @@
     "**/.docker": true,
     "**/.internal": true,
     "**/.markdownlint.json": true,
-    "**/.gitlab-ci.yml": true,
-    "compose": true,
-    "dev": true
+    "**/.gitlab-ci.yml": true
   },
   "explorerExclude.backup": null,
   "typescript.tsdk": "node_modules/typescript/lib",
