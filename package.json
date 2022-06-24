@@ -11,7 +11,7 @@
     "build:packages:esm": "yarn clean --filter=\"./packages/**\" && turbo run build:esm --token=tym4TfVTD5qGG7s9MudjhmCwQ9g20BV2 --filter=\"./packages/**\" && yarn resolve:packages:modules",
     "build": "turbo run build --token=tym4TfVTD5qGG7s9MudjhmCwQ9g20BV2",
     "resolve:packages:modules": "node ./.internal/postbuild.js",
-    "release": "npx standard-version -- --release-as minor && yarn postcommit",
+    "release": "npx standard-version -- --release-as minor &&  yarn postcommit",
     "lint": "turbo run lint",
     "format": "turbo run format",
     "seed": "turbo run seed",
