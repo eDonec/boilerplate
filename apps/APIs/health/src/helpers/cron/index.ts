@@ -4,6 +4,15 @@ import MicroserviceStatus from "models/MicroserviceStatus";
 import { scheduleJob } from "node-schedule";
 import { MICROSERVICE_LIST } from "shared-types";
 
+scheduleJob("0 * * * * *", async () => {
+  const deprecatedHistory = await MicroserviceStasusHistory.find({
+    createdAt: { $lt: new Date(Date.now() - 1000 * 60 * 60 * 24) },
+  });
+
+  deprecatedHistory.forEach(async (history) => {
+    await MicroserviceStasusHistory.deleteOne({ _id: history._id });
+  });
+});
 scheduleJob("* * * * *", async () => {
   const promises = Object.values(MICROSERVICE_LIST).map(
     async (microservice) => {
