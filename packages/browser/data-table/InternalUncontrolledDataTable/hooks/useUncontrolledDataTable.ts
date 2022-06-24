@@ -35,12 +35,13 @@ export const useUncontrolledDataTable = <T>({
 
   const firstMount = useFirstMount();
   const syncData = async (_searchParams: URLSearchParams) => {
-    const { limit, page, sortField, sortDirection } =
+    const { limit, page, sortField, sortDirection, keyword } =
       extractQueryParams(_searchParams);
 
     try {
       setLoading(true);
       const newData = await fetchFunction({
+        keyword,
         page,
         limit,
         "sort-field": sortField || undefined,
@@ -71,6 +72,14 @@ export const useUncontrolledDataTable = <T>({
 
   const onPageChange = (newPage: number) => {
     searchParams.set(UncontrolledDataTableURLParams.PAGE, newPage.toString());
+    setSearchParams(searchParams);
+    syncData(searchParams);
+  };
+
+  const onKeywordChange = (keyword: string) => {
+    if (keyword.trim())
+      searchParams.set(UncontrolledDataTableURLParams.KEYWORD, keyword);
+    else searchParams.delete(UncontrolledDataTableURLParams.KEYWORD);
     setSearchParams(searchParams);
     syncData(searchParams);
   };
@@ -123,5 +132,7 @@ export const useUncontrolledDataTable = <T>({
     currentSort,
     limit,
     loading,
+    onKeywordChange,
+    keyword: searchParams.get(UncontrolledDataTableURLParams.KEYWORD),
   };
 };
