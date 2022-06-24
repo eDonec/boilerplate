@@ -249,6 +249,40 @@
   .scrollbar::-webkit-scrollbar-thumb:hover {
     background: var(--color-gray-400);
   }
+
+  .animate-status-dot {
+    width: 24px;
+    height: 24px;
+    display: inline-block;
+    border-radius: 50%;
+    position: relative;
+    -ms-transform: none;
+    transform: none;
+  }
+  .animate-status-dot:after {
+    content: "";
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    background: currentColor;
+    animation: status-dot 2s infinite;
+    opacity: 1;
+    border-radius: 50%;
+    top: 0;
+    left: 0;
+  }
+  @keyframes status-dot {
+    0% {
+      opacity: 0.5;
+    }
+    70% {
+      opacity: 0;
+      transform: scale(2.5);
+    }
+    100% {
+      opacity: 0;
+    }
+  }
 }
 button {
   /* Disables tap highlight color on Chrome */

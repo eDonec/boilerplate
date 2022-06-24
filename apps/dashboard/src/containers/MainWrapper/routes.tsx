@@ -41,6 +41,15 @@ export const routes: Routes = [
         },
         Icon: DashboardIcon,
       },
+      {
+        title: "Health checks",
+        to: "/health",
+        Icon: DashboardIcon,
+        privileges: {
+          ressource: ACCESS_RESSOURCES.MICROSERVICE_STATUS,
+          privileges: PRIVILEGE.READ,
+        },
+      },
     ],
   },
 ];
