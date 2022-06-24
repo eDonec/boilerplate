@@ -7,6 +7,7 @@ export * from "./IMiddleware";
 export * from "./IPaginatedResult";
 export * from "./IPaginationQuery";
 export * from "./IWithDBDocument";
+export * from "./MicroserviceList";
 export * from "./SortDirection";
 export { default as StatusCodes } from "./StatusCodes";
 export * from "./utils";

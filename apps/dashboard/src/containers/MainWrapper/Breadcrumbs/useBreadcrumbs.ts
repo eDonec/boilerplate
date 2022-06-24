@@ -11,6 +11,7 @@ export type LinkTranslator = {
   "/add": string;
   "/authenticated-clients": string;
   "/roles": string;
+  "/health": string;
 };
 export const useBreadcrumbs = (
   overrideBreadcrumbs?: { name: string; path: string }[]
@@ -22,6 +23,7 @@ export const useBreadcrumbs = (
     "/add": t("misc.add"),
     "/authenticated-clients": t("linksNames.authenticatedClients"),
     "/roles": t("linksNames.roles"),
+    "/health": t("linksNames.health"),
   };
   const { pathname } = useLocation();
   const navigate = useNavigate();

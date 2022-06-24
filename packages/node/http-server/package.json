@@ -17,7 +17,6 @@
     "dotenv": "16.0.0",
     "express": "4.17.1",
     "mongoose": "6.3.1",
-    "redis-om": "^0.3.4",
     "token": "*",
     "shared-types": "*",
     "custom-error": "*"

@@ -4,7 +4,6 @@ import {
   RoleTypeSaticMethods,
 } from "auth-types/models/Role";
 import { model, Schema } from "mongoose";
-import { populateRedis } from "seed/populateRedis";
 import { ACCESS_RESSOURCES, IPaginatedResult, PRIVILEGE } from "shared-types";
 
 import { getPaginationAggregation } from "helpers/getPaginationAggregation";
@@ -81,7 +80,6 @@ schema.post("save", async (doc) => {
       },
     }
   );
-  await populateRedis();
 });
 
 export default model<RoleType, RoleModel>("Role", schema);

@@ -3,7 +3,7 @@ import { AuthDocument } from "auth-types/models/Auth";
 import { AuthNRouteTypes } from "auth-types/routes/authN";
 import { Request, Response } from "http-server";
 import * as authNService from "services/authN";
-import { IMiddleware, StatusCodes } from "shared-types";
+import { ACCESS, IMiddleware, StatusCodes } from "shared-types";
 import TokenValidator from "token/TokenValidator";
 
 export const signUpClassic: IMiddleware<
@@ -48,7 +48,10 @@ export const getAuthByAccessToken: IMiddleware<
   Request<unknown, unknown, unknown, unknown>,
   Response<
     AuthNRouteTypes["/n/me"]["GET"]["response"],
-    { token: TokenValidator<{ authId: string }>; currentAuth: AuthDocument }
+    {
+      token: TokenValidator<{ authId: string; access: ACCESS[] }>;
+      currentAuth: AuthDocument;
+    }
   >
 > = async (req, res) => {
   const response = authNService.getAuthByAccessToken(

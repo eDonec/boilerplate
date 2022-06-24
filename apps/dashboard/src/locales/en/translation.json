@@ -46,6 +46,7 @@
   "linksNames": {
     "dashboard": "Dashboard",
     "authenticatedClients": "List of authenticated clients",
-    "roles": "List of roles"
+    "roles": "List of roles",
+    "health": "Microservices health"
   }
 }
