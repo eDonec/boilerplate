@@ -2,6 +2,7 @@
 /* eslint-disable no-console */
 import app, { baseUrl } from "init.testSetup";
 import Role from "models/Role";
+import { seed } from "seed/seed";
 import {
   ACCESS,
   ACCESS_RESSOURCES,
@@ -15,8 +16,9 @@ import { SUPER_ADMIN } from "constants/defaultRoles";
 
 let token: string;
 
-beforeAll(async () => {
+beforeEach(async () => {
   try {
+    await seed(false);
     const signInBody = {
       email: process.env.ROOT_USER_EMAIL,
       password: process.env.ROOT_USER_PASSWORD,
@@ -167,8 +169,8 @@ describe("GET /clients/", () => {
 describe("GET /clients/:id", () => {
   let newUserId: string;
 
-  beforeAll(async () => {
-    const body = { email: "randomtest@example.com", password: "password" };
+  beforeEach(async () => {
+    const body = { email: "test@example.com", password: "password" };
     const response = await supertest(app)
       .post(`${baseUrl}/n/classic`)
       .send(body);
@@ -199,8 +201,8 @@ describe("PUT /clients/clientAccess/:id", () => {
   let newUserId: string;
   let roleId: string;
 
-  beforeAll(async () => {
-    const body = { email: "randomtest2@example.com", password: "password" };
+  beforeEach(async () => {
+    const body = { email: "test@example.com", password: "password" };
     const [response, role] = await Promise.all([
       supertest(app).post(`${baseUrl}/n/classic`).send(body),
       Role.findOne({ name: SUPER_ADMIN.name }),

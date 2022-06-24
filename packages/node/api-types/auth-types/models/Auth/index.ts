@@ -30,7 +30,6 @@ export type AuthType = {
   suspensionReason: string;
   numberOfUnsuccessfulTrials: number;
   lastTrialSince: Date;
-  redisCacheIds?: string[];
   _id: string;
 };
 

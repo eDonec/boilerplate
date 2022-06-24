@@ -3,9 +3,11 @@ import { AuthNRouteTypes } from "auth-types/routes/authN";
 import { AuthZRouteTypes } from "auth-types/routes/authZ";
 import { Request, Response } from "http-server";
 import * as authZService from "services/authZ";
-import { IMiddleware, StatusCodes } from "shared-types";
+import { ACCESS, IMiddleware, StatusCodes } from "shared-types";
 import TokenGenerator from "token/TokenGenerator";
 import TokenValidator from "token/TokenValidator";
+
+import { constructRoleArray } from "helpers/constructRoleArray";
 
 export const refreshAccessToken: IAuthServerMiddleware<
   Request,
@@ -15,13 +17,17 @@ export const refreshAccessToken: IAuthServerMiddleware<
   }
 > = async (_, res) => {
   const { currentAuth, refreshToken } = res.locals;
-
+  const access = constructRoleArray(
+    currentAuth.role,
+    currentAuth.customAccessList
+  );
   const accessToken = new TokenGenerator({
     aud: "all",
     iss: "auth",
     sid: refreshToken.decodedToken.sid,
     payload: {
-      authId: currentAuth.id,
+      authId: currentAuth._id.toString(),
+      access,
     },
   });
 
@@ -89,7 +95,7 @@ export const banClient: IMiddleware<
   >,
   Response<
     AuthZRouteTypes["/z/ban-client/:id"]["POST"]["response"],
-    { token: TokenValidator<{ authId: string }> }
+    { token: TokenValidator<{ authId: string; access: ACCESS[] }> }
   >
 > = async (req, res) => {
   const { token } = res.locals;
@@ -111,7 +117,7 @@ export const suspendClient: IMiddleware<
   >,
   Response<
     AuthZRouteTypes["/z/suspend-client/:id"]["POST"]["response"],
-    { token: TokenValidator<{ authId: string }> }
+    { token: TokenValidator<{ authId: string; access: ACCESS[] }> }
   >
 > = async (req, res) => {
   const { token } = res.locals;
@@ -134,7 +140,7 @@ export const liftBanAndSuspension: IMiddleware<
   >,
   Response<
     AuthZRouteTypes["/z/lift-ban-suspension/:id"]["GET"]["response"],
-    { token: TokenValidator<{ authId: string }> }
+    { token: TokenValidator<{ authId: string; access: ACCESS[] }> }
   >
 > = async (req, res) => {
   const { token } = res.locals;

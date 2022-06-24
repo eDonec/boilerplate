@@ -7,11 +7,10 @@ import {
   AuthResponseRoutes,
 } from "auth-types/routes/authN";
 import producer from "events/producer";
-import { updateRedisClientAccess } from "http-server/RedisServices/updateClientAuth";
 import Auth from "models/Auth";
 import Role from "models/Role";
 import { nanoid } from "nanoid";
-import { ACCESS_TYPE, AUTH_PROVIDERS } from "shared-types";
+import { ACCESS, ACCESS_TYPE, AUTH_PROVIDERS } from "shared-types";
 import TokenGenerator from "token/TokenGenerator";
 
 import { PUBLIC_ROLE } from "constants/defaultRoles";
@@ -21,16 +20,17 @@ import { constructRoleArray } from "helpers/constructRoleArray";
 export const generateAuthResponse = async (
   authClient: AuthDocument
 ): Promise<AuthNRouteTypes[AuthResponseRoutes]["POST"]["response"]> => {
-  const { accessToken, refreshToken } = await createNewSession(authClient);
   const access = constructRoleArray(
     authClient.role,
     authClient.customAccessList
   );
-
-  updateRedisClientAccess(authClient.id, access);
+  const { accessToken, refreshToken } = await createNewSession(
+    authClient,
+    access
+  );
 
   return {
-    authID: authClient.id,
+    authID: authClient._id.toString(),
     token: {
       accessToken: accessToken.token,
       refreshToken: refreshToken.token,
@@ -68,7 +68,7 @@ export const generateThirdPartyAuth = async ({
       authClient.providerId?.push({ provider, id });
       await authClient.save();
       producer.emit.UserLinkedAccountToOAuth2({
-        authId: authClient.id,
+        authId: authClient._id.toString(),
         provider,
         providerId: id,
         createdAt: new Date(),
@@ -93,7 +93,7 @@ export const generateThirdPartyAuth = async ({
   return generateAuthResponse(authClient);
 };
 
-const createNewSession = async (authClient: AuthDocument) => {
+const createNewSession = async (authClient: AuthDocument, access: ACCESS[]) => {
   const sessionId = nanoid();
   const refreshToken = new TokenGenerator(
     {
@@ -101,7 +101,7 @@ const createNewSession = async (authClient: AuthDocument) => {
       iss: "auth",
       sid: sessionId,
       payload: {
-        authId: authClient.id,
+        authId: authClient._id.toString(),
       },
     },
     true
@@ -110,17 +110,19 @@ const createNewSession = async (authClient: AuthDocument) => {
   authClient.sessions.push(sessionId);
 
   await authClient.save();
+
   const accessToken = new TokenGenerator({
     aud: "all",
     iss: "auth",
     sid: sessionId,
     payload: {
-      authId: authClient.id,
+      authId: authClient._id.toString(),
+      access,
     },
   });
 
   producer.emit.UserCreatedNewSession({
-    authId: authClient.id,
+    authId: authClient._id.toString(),
     sessionId,
     createdAt: new Date(),
   });

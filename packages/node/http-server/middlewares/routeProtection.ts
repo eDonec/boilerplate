@@ -7,8 +7,6 @@ import {
 } from "shared-types";
 import { TokenValidator } from "token";
 
-import { client } from "../redisClient";
-import rAuthAccessSchema from "../RedisModels/Auth";
 import { Request, Response } from "../types";
 
 export const routeProtection =
@@ -17,23 +15,15 @@ export const routeProtection =
     privileges: PRIVILEGE
   ): IMiddleware<
     Request<unknown, unknown, unknown, unknown>,
-    Response<unknown, { token: TokenValidator<{ authId: string }> }>
+    Response<
+      unknown,
+      { token: TokenValidator<{ authId: string; access: ACCESS[] }> }
+    >
   > =>
   async (_, res, next) => {
     const { token } = res.locals;
 
-    const authRepository = client.fetchRepository(rAuthAccessSchema);
-
-    const redisClientAccess = await authRepository
-      .search()
-      .where("authId")
-      .equal(token.decodedToken.payload.authId)
-      .return.all();
-    const access: ACCESS[] = redisClientAccess.map((o) => ({
-      ressource: o.ressource,
-      privileges: o.privilege,
-    }));
-
+    const { access } = token.decodedToken.payload;
     const userAccess = access
       // this is here to make sure that we hit the god ressource before any other ressource
       .sort((a) => (a.ressource === "*" ? 1 : -1))
