@@ -10,6 +10,7 @@ export type ClientRouteTypes = {
         page?: string;
         "sort-field"?: string;
         limit?: string;
+        keyword?: string;
       };
       response: IPaginatedResult<LeanAuthDocument>;
     };

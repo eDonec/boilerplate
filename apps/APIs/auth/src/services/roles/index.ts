@@ -11,9 +11,12 @@ import { GOD } from "constants/defaultRoles";
 
 import { constructRoleArray } from "helpers/constructRoleArray";
 
-export const getRoles = async (
-  query: RolesRouteTypes["/roles/"]["GET"]["query"]
-): Promise<RolesRouteTypes["/roles/"]["GET"]["response"]> =>
+export const getRoles = async ({
+  keyword = "",
+  ...query
+}: RolesRouteTypes["/roles/"]["GET"]["query"]): Promise<
+  RolesRouteTypes["/roles/"]["GET"]["response"]
+> =>
   Role.findPaginated<
     Omit<LeanRoleDocument, "access"> & { isDeletable: boolean }
   >(
@@ -22,6 +25,8 @@ export const getRoles = async (
       match: {
         name: {
           $ne: GOD.name,
+          $regex: keyword,
+          $options: "i",
         },
       },
       projection: {
