@@ -166,7 +166,7 @@ export const getGrantableRoles = async (
 ): Promise<RolesRouteTypes["/roles/grantable/:authId"]["GET"]["response"]> => {
   const [roles, selectedAuth] = await Promise.all([
     Role.find({ name: { $ne: GOD.name } }),
-    Auth.findById(authId).populate("role"),
+    Auth.findById(authId),
   ]);
 
   if (!selectedAuth)

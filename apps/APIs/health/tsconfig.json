@@ -1,0 +1,14 @@
+{
+  "extends": "tsconfig/server.json",
+
+  "compilerOptions": {
+    "outDir": "build",
+    "module": "CommonJS",
+    "sourceMap": false,
+    "isolatedModules": true,
+    "rootDir": "src",
+    "baseUrl": "./src"
+  },
+  "include": ["src"],
+  "exclude": ["node_modules", ".turbo", "coverage", "dist"]
+}

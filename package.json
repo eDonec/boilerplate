@@ -16,7 +16,7 @@
     "format": "turbo run format",
     "seed": "turbo run seed",
     "postcommit": "git push --follow-tags origin master",
-    "test": "turbo run test",
+    "test": "turbo run test --concurrency=1",
     "sync:workflows": "node .internal/sync-workflows.js"
   },
   "workspaces": [

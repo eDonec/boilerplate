@@ -1,4 +1,5 @@
 import { Secret, sign } from "jsonwebtoken";
+import { stringify } from "zipson/lib";
 import "dotenv/config";
 
 import TokenValidator, {
@@ -29,7 +30,7 @@ export default class TokenGenerator<
     exp?: string | number
   ) {
     const generatedToken = sign(
-      token,
+      { ...token, payload: stringify(token.payload) },
       getTokenSecretKey(isRefreshToken, secret),
       {
         expiresIn:

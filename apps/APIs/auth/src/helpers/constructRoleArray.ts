@@ -21,5 +21,9 @@ const mergeAccessArrays = (base: ACCESS[], overRide: ACCESS[]) => {
     }
   });
 
-  return result;
+  return result.map((element) => ({
+    ressource: element.ressource,
+    privileges: element.privileges,
+    meta: element.meta,
+  }));
 };

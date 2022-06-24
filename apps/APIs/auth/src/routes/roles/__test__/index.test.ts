@@ -1,8 +1,8 @@
-/* eslint-disable max-lines */
 /* eslint-disable no-console */
 import { LeanRoleDocument } from "auth-types/models/Role";
 import app, { baseUrl } from "init.testSetup";
 import Role from "models/Role";
+import { seed } from "seed/seed";
 import { ACCESS_RESSOURCES, PRIVILEGE, StatusCodes } from "shared-types";
 import supertest from "supertest";
 
@@ -10,8 +10,9 @@ import { PUBLIC_ROLE } from "constants/defaultRoles";
 
 let token: string;
 
-beforeAll(async () => {
+beforeEach(async () => {
   try {
+    await seed(false);
     const signInBody = {
       email: process.env.ROOT_USER_EMAIL,
       password: process.env.ROOT_USER_PASSWORD,
@@ -61,15 +62,6 @@ const newRoleData: Partial<LeanRoleDocument> = {
   ],
 };
 
-describe("GET /roles", () => {
-  it("should respond with a list of available roles", async () => {
-    const response = await supertest(app)
-      .get(`${baseUrl}/roles?page=1&limit=10`)
-      .set("Authorization", `Bearer ${token}`);
-
-    expect(response.body.items.length).toBeGreaterThanOrEqual(2);
-  });
-});
 // TODO : add more tests
 describe("PUT /roles/:id", () => {
   describe("validation tests", () => {
@@ -79,7 +71,7 @@ describe("PUT /roles/:id", () => {
 
       const response = await supertest(app)
         .put(`${baseUrl}/roles/${id}`)
-        .send({ access: newRoleData.access })
+        .send(newRoleData)
         .set("Authorization", `Bearer ${token}`);
 
       expect(response.status).toEqual(StatusCodes.OK);
@@ -142,8 +134,8 @@ describe("DELETE /roles/:id", () => {
 describe("GET /roles/grantable/:authId", () => {
   let newUserId: string;
 
-  beforeAll(async () => {
-    const body = { email: "roletest1@example.com", password: "password" };
+  beforeEach(async () => {
+    const body = { email: "test@example.com", password: "password" };
     const response = await supertest(app)
       .post(`${baseUrl}/n/classic`)
       .send(body);

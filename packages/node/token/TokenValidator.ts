@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import UnauthorizedError from "custom-error/UnauthorizedError";
 import { decode, Secret, verify } from "jsonwebtoken";
+import { parse } from "zipson/lib";
 import "dotenv/config";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -54,7 +55,11 @@ export default class TokenValidator<T = string | object | Buffer> {
   }
 
   public desirializeToken(token?: string) {
-    this.decodedToken = decode(token || this.token) as IDecodedToken<T>;
+    const zippedToken = decode(token || this.token) as IDecodedToken<T> & {
+      payload: string;
+    };
+
+    this.decodedToken = { ...zippedToken, payload: parse(zippedToken.payload) };
 
     return this.decodedToken;
   }
