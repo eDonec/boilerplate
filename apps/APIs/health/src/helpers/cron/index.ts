@@ -13,6 +13,7 @@ scheduleJob("0 * * * * *", async () => {
     await MicroserviceStasusHistory.deleteOne({ _id: history._id });
   });
 });
+
 scheduleJob("* * * * *", async () => {
   const promises = Object.values(MICROSERVICE_LIST).map(
     async (microservice) => {

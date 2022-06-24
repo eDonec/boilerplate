@@ -97,6 +97,30 @@ services:
       - main-network
     depends_on:
       - database
+  health:
+    image: ghcr.io/edonec/boilerplate/health:staging
+    restart: always
+    command: node /app/index.js
+    environment:
+      - PORT=${PORT}
+      - DATABASE_URI=mongodb://database:27017/health?authSource=admin
+      - ACCESS_TOKEN_SECRET_KEY=${ACCESS_TOKEN_SECRET_KEY}
+      - REFRESH_TOKEN_SECRET_KEY=${REFRESH_TOKEN_SECRET_KEY}
+      - DATABASE_USER=${DATABASE_USER}
+      - DATABASE_PASSWORD=${DATABASE_PASSWORD}
+      - TOKEN_EXPIRES_IN=${TOKEN_EXPIRES_IN}
+      - REFRESH_TOKEN_EXPIRES_IN=${REFRESH_TOKEN_EXPIRES_IN}
+      - NUMBER_OF_AUTH_TRIALS=5
+      - KAFKA_BROKERS=broker:9092
+      - UPLOAD_SECRET_KEY=${UPLOAD_SECRET_KEY}
+      - ROOT_USER_EMAIL=${ROOT_USER_EMAIL}
+      - ROOT_USER_PASSWORD=${ROOT_USER_PASSWORD}
+      - MICROSERVICE_NAME=auth
+      - REDIS_CLIENT=redis://cache:6379
+    networks:
+      - main-network
+    depends_on:
+      - database
 
   bucket:
     image: ghcr.io/edonec/boilerplate/bucket:staging
