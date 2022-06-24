@@ -50,8 +50,7 @@ const Input = forwardRef<HTMLInputElement, RawInputProps>(
                   "dark:border-gray-600 dark:bg-gray-600 dark:text-gray-400",
                   error && "border-red-500 bg-red-100 text-red-900",
                   error &&
-                    "dark:border-red-400 dark:bg-red-200 dark:text-red-900",
-                  className
+                    "dark:border-red-400 dark:bg-red-200 dark:text-red-900"
                 )}
               >
                 {leftIcon}
@@ -66,6 +65,8 @@ const Input = forwardRef<HTMLInputElement, RawInputProps>(
                 "block w-full rounded border",
                 leftIcon && "rounded-l-none border-l-0",
                 rightIcon && "rounded-r-none border-r-0",
+
+                className,
                 "border-gray-300 bg-gray-50 dark:border-gray-600 dark:bg-gray-700",
                 "p-2.5 text-sm",
                 "text-gray-900 dark:text-white dark:placeholder-gray-400",

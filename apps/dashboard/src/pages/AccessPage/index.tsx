@@ -30,6 +30,7 @@ const AccessPage = () => {
   return (
     <>
       <UncontrolledDataTable
+        showSearch
         fetchFunction={fetchFunction}
         columns={columns}
         keyExtractor={({ item }) => item._id}

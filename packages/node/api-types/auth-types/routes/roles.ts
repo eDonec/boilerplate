@@ -10,6 +10,7 @@ export type RolesRouteTypes = {
         limit?: string;
         "sort-direction"?: SortDirection;
         "sort-field"?: string;
+        keyword?: string;
       };
       response: IPaginatedResult<
         Omit<LeanRoleDocument, "access"> & { isDeletable: boolean }
