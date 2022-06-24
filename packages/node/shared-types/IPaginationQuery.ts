@@ -7,6 +7,7 @@ export type FetchPaginatedArgs = {
   limit?: string;
   "sort-direction"?: SortDirection;
   "sort-field"?: string;
+  keyword?: string;
 };
 
 export type IPaginationQuery<T> = FetchPaginatedArgs & {

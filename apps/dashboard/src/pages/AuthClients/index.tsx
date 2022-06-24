@@ -26,6 +26,7 @@ const AuthClients = () => {
       ressource={ACCESS_RESSOURCES.AUTHENTICATED_CLIENTS}
     >
       <UncontrolledDataTable
+        showSearch
         fetchFunction={fetchFunction}
         columns={dataColumns}
         keyExtractor={({ item }) => item._id}
