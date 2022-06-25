@@ -102,8 +102,9 @@ services:
     restart: always
     command: node /app/index.js
     environment:
-      - PORT=${PORT}
+      - MICROSERVICE_NAME=health
       - DATABASE_URI=mongodb://database:27017/health?authSource=admin
+      - PORT=${PORT}
       - ACCESS_TOKEN_SECRET_KEY=${ACCESS_TOKEN_SECRET_KEY}
       - REFRESH_TOKEN_SECRET_KEY=${REFRESH_TOKEN_SECRET_KEY}
       - DATABASE_USER=${DATABASE_USER}
@@ -115,7 +116,6 @@ services:
       - UPLOAD_SECRET_KEY=${UPLOAD_SECRET_KEY}
       - ROOT_USER_EMAIL=${ROOT_USER_EMAIL}
       - ROOT_USER_PASSWORD=${ROOT_USER_PASSWORD}
-      - MICROSERVICE_NAME=auth
       - REDIS_CLIENT=redis://cache:6379
     networks:
       - main-network
