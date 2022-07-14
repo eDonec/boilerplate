@@ -32,11 +32,14 @@ services:
 
     networks:
       - main-network
+  cache:
+    image: redis/redis-stack-server:6.2.2-v4
+    restart: always
+    networks:
+      - main-network
   proxy-balancer:
     restart: always
-    build:
-      context: ./.docker
-      dockerfile: Dockerfile.proxy-balancer
+    image: proxy-balancer
     depends_on:
       - client
       - dashboard
@@ -46,14 +49,9 @@ services:
       - imgproxy
     ports:
       - "80:80"
-      - "443:443"
     networks:
       - main-network
-  cache:
-    image: redis/redis-stack-server:6.2.2-v4
-    restart: always
-    networks:
-      - main-network
+
   client:
     image: client
     environment:
@@ -75,8 +73,9 @@ services:
   auth:
     image: auth
     restart: always
-    command: yarn workspace auth start:prod
+    command: node /app/index.js
     environment:
+      - NODE_ENV=${NODE_ENV}
       - PORT=${PORT}
       - DATABASE_URI=mongodb://database:27017/auth?authSource=admin
       - ACCESS_TOKEN_SECRET_KEY=${ACCESS_TOKEN_SECRET_KEY}
@@ -96,12 +95,12 @@ services:
       - main-network
     depends_on:
       - database
-      - cache
   health:
     image: health
     restart: always
-    command: yarn workspace health start:prod
+    command: node /app/index.js
     environment:
+      - NODE_ENV=${NODE_ENV}
       - MICROSERVICE_NAME=health
       - DATABASE_URI=mongodb://database:27017/health?authSource=admin
       - PORT=${PORT}
@@ -121,13 +120,13 @@ services:
       - main-network
     depends_on:
       - database
-      - cache
 
   bucket:
     image: bucket
     restart: always
-    command: yarn workspace bucket start:prod
+    command: node /app/index.js
     environment:
+      - NODE_ENV=${NODE_ENV}
       - PORT=${PORT}
       - DATABASE_URI=mongodb://database:27017/bucket?authSource=admin
       - DATABASE_USER=${DATABASE_USER}

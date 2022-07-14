@@ -78,6 +78,7 @@ services:
     restart: always
     command: node /app/index.js
     environment:
+      - NODE_ENV=${NODE_ENV}
       - PORT=${PORT}
       - DATABASE_URI=mongodb://database:27017/auth?authSource=admin
       - ACCESS_TOKEN_SECRET_KEY=${ACCESS_TOKEN_SECRET_KEY}
@@ -102,6 +103,7 @@ services:
     restart: always
     command: node /app/index.js
     environment:
+      - NODE_ENV=${NODE_ENV}
       - MICROSERVICE_NAME=health
       - DATABASE_URI=mongodb://database:27017/health?authSource=admin
       - PORT=${PORT}
@@ -127,6 +129,7 @@ services:
     restart: always
     command: node /app/index.js
     environment:
+      - NODE_ENV=${NODE_ENV}
       - PORT=${PORT}
       - DATABASE_URI=mongodb://database:27017/bucket?authSource=admin
       - DATABASE_USER=${DATABASE_USER}
