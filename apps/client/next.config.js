@@ -18,8 +18,8 @@ const nextConfig = {
 
   reactStrictMode: true,
   pageExtensions: ["page.tsx"],
+  output: "standalone",
   experimental: {
-    outputStandalone: true,
     outputFileTracingRoot: path.join(__dirname, "../../"),
   },
   // Uncoment to add domain whitelist
