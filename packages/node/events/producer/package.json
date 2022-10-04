@@ -14,7 +14,7 @@
     "lint": "tsc --noEmit && eslint --fix"
   },
   "dependencies": {
-    "kafkajs": "1.16.0",
+    "kafkajs": "2.2.0",
     "dotenv": "16.0.0"
   },
   "devDependencies": {

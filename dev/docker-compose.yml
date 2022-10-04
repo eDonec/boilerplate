@@ -75,6 +75,21 @@ services:
     networks:
       - main-network
 
+  kafdrop:
+    image: obsidiandynamics/kafdrop
+    restart: "no"
+    ports:
+      - "9000:9000"
+    environment:
+      KAFKA_BROKERCONNECT: "localhost:9092,broker:29092"
+      JVM_OPTS: "-Xms16M -Xmx48M -Xss180K -XX:-TieredCompilation -XX:+UseStringDeduplication -noverify"
+    depends_on:
+      - broker
+      - proxy-balancer
+      - zookeeper
+    networks:
+      - main-network
+
 networks:
   main-network:
     driver: bridge
