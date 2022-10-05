@@ -24,9 +24,6 @@
     "react-dropzone": "12.1.0",
     "react-hook-form": "7.30.0"
   },
-  "peerDependencies": {
-    "field-validator": "*"
-  },
   "scripts": {
     "test": "jest --coverage",
     "lint": "tsc --noEmit && eslint --fix"

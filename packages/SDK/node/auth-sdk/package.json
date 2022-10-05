@@ -13,10 +13,10 @@
     "test": "jest --coverage --passWithNoTests"
   },
   "dependencies": {
+    "auth-types": "*",
     "axios": "0.27.2",
     "react": "18.1.0",
     "server-sdk": "*",
-    "shared-types": "*",
-    "auth-types": "*"
+    "shared-types": "*"
   }
 }
