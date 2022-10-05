@@ -14,10 +14,10 @@
     "lint": "tsc --noEmit && eslint --fix"
   },
   "dependencies": {
+    "consumer": "*",
     "dotenv": "16.0.0",
-    "producer": "*",
     "health-types": "*",
-    "consumer": "*"
+    "producer": "*"
   },
   "devDependencies": {
     "@types/express": "4.17.13"

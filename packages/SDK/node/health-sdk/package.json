@@ -14,9 +14,9 @@
   },
   "dependencies": {
     "axios": "0.27.2",
+    "health-types": "*",
     "react": "18.1.0",
     "server-sdk": "*",
-    "shared-types": "*",
-    "health-types": "*"
+    "shared-types": "*"
   }
 }

@@ -14,10 +14,10 @@
     "lint": "tsc --noEmit && eslint --fix --max-warnings=0"
   },
   "dependencies": {
+    "core-utils": "*",
     "custom-error": "*",
     "date-fns": "2.28.0",
-    "shared-types": "*",
-    "core-utils": "*"
+    "shared-types": "*"
   },
   "devDependencies": {}
 }
