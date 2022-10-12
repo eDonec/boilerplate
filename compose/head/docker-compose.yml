@@ -68,6 +68,7 @@ services:
     restart: always
     environment:
       - NODE_ENV=${NODE_ENV}
+      - REACT_APP_BASE_URL=/dashboard
       - PORT=${PORT}
     networks:
       - main-network
@@ -151,6 +152,7 @@ services:
       - database
       - cache
 
+  #  NEW_MICROSERVICE_PLACEHOLDER
   zookeeper:
     restart: always
     image: confluentinc/cp-zookeeper:7.0.1

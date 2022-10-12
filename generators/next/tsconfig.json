@@ -6,6 +6,11 @@
       "~/*": ["../public/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "src/__mocks__/svgrMock.js"
+  ],
   "exclude": ["node_modules"]
 }

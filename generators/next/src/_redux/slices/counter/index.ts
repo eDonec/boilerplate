@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 import { setCounterAsync } from "./thunk";
 
-type CounterState = {
+export type CounterState = {
   count: number;
 };
 

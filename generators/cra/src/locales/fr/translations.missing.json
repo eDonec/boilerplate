@@ -1,0 +1,20 @@
+{
+  "api": {
+    "deleted": "api.deleted",
+    "unauthorized": "api.unauthorized"
+  },
+  "form": {
+    "signUpFirestnameInput": "form.signUpFirestnameInput",
+    "signUpEmailInput": "form.signUpEmailInput",
+    "password": "form.password",
+    "signUpCountryInput": "form.signUpCountryInput",
+    "signUpLastnameInput": "form.signUpLastnameInput",
+    "signUpPhoneInput": "form.signUpPhoneInput",
+    "confirmPassword": "form.confirmPassword",
+    "signUpAdressInput": "form.signUpAdressInput",
+    "PhotoDeProfil": "form.PhotoDeProfil"
+  },
+  "siteProtection": {
+    "Go!": "siteProtection.Go!"
+  }
+}

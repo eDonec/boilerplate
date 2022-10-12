@@ -1,25 +1,87 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "name": "Dashboard",
   "icons": [
     {
-      "src": "favicon.ico",
-      "sizes": "64x64 32x32 24x24 16x16",
-      "type": "image/x-icon"
+      "rel": "apple-touch-icon",
+      "sizes": "57x57",
+      "src": "/favicon/apple-icon-57x57.png",
+      "density": "1.0"
     },
     {
-      "src": "logo192.png",
-      "type": "image/png",
-      "sizes": "192x192"
+      "rel": "apple-touch-icon",
+      "sizes": "60x60",
+      "src": "/favicon/apple-icon-60x60.png",
+      "density": "1.0"
     },
     {
-      "src": "logo512.png",
+      "rel": "apple-touch-icon",
+      "sizes": "72x72",
+      "src": "/favicon/apple-icon-72x72.png",
+      "density": "1.5"
+    },
+    {
+      "rel": "apple-touch-icon",
+      "sizes": "76x76",
+      "src": "/favicon/apple-icon-76x76.png",
+      "density": "1.5"
+    },
+    {
+      "rel": "apple-touch-icon",
+      "sizes": "114x114",
+      "src": "/favicon/apple-icon-114x114.png",
+      "density": "3.0"
+    },
+    {
+      "rel": "apple-touch-icon",
+      "sizes": "120x120",
+      "src": "/favicon/apple-icon-120x120.png",
+      "density": "3.0"
+    },
+    {
+      "rel": "apple-touch-icon",
+      "sizes": "144x144",
+      "src": "/favicon/apple-icon-144x144.png",
+      "density": "3.0"
+    },
+    {
+      "rel": "apple-touch-icon",
+      "sizes": "152x152",
+      "src": "/favicon/apple-icon-152x152.png",
+      "density": "3.0"
+    },
+    {
+      "rel": "apple-touch-icon",
+      "sizes": "180x180",
+      "src": "/favicon/apple-icon-180x180.png",
+      "density": "4.0"
+    },
+    {
+      "rel": "icon",
       "type": "image/png",
-      "sizes": "512x512"
+      "sizes": "192x192",
+      "src": "/favicon/android-icon-192x192.png",
+      "density": "4.0"
+    },
+    {
+      "rel": "icon",
+      "type": "image/png",
+      "sizes": "32x32",
+      "density": "0.75",
+      "src": "/favicon/favicon-32x32.png"
+    },
+    {
+      "rel": "icon",
+      "type": "image/png",
+      "sizes": "96x96",
+      "src": "/favicon/favicon-96x96.png",
+      "density": "2.0"
+    },
+    {
+      "rel": "icon",
+      "type": "image/png",
+      "sizes": "16x16",
+      "src": "/favicon/favicon-16x16.png",
+      "density": "0.5"
     }
-  ],
-  "start_url": ".",
-  "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
+  ]
 }

@@ -1,45 +1,49 @@
 {
   "dependencies": {
     "@reduxjs/toolkit": "1.8.1",
+    "auth-sdk": "*",
+    "auth-types": "*",
     "core-hooks": "*",
     "core-next-components": "*",
     "core-ui": "*",
-    "shared-types": "*",
     "core-utils": "*",
+    "forms": "*",
     "next": "12.1.5",
     "react": "18.1.0",
     "react-dom": "18.1.0",
-    "react-redux": "8.0.1"
+    "react-hook-form": "7.30.0",
+    "react-redux": "8.0.1",
+    "shared-types": "*"
   },
   "devDependencies": {
     "@svgr/webpack": "6.2.1",
     "@types/react": "18.0.8",
     "@types/tailwindcss": "3.0.10",
     "autoprefixer": "10.4.5",
+    "i18next": "21.6.16",
     "next-sitemap": "2.5.20",
     "next-transpile-modules": "9.0.0",
     "postcss": "8.4.12",
     "prettier": "2.6.2",
     "prettier-plugin-tailwindcss": "0.1.10",
-    "standard-version": "9.3.2"
+    "react-i18next": "11.16.7"
   },
-  "name": "next",
+  "name": "NAME_PLACEHOLDER",
   "private": true,
   "scripts": {
-    "build": "next build",
+    "clean": "rimraf build",
+    "build": "yarn clean && next build",
     "format": "prettier -w .",
     "format:check": "prettier -c .",
-    "lint": "next lint",
+    "lint": "tsc --noEmit && next lint",
     "lint:fix": "eslint src --fix && yarn format",
     "lint:strict": "eslint --max-warnings=0 src",
     "postbuild": "next-sitemap",
-    "push-release": "git push --follow-tags origin master",
-    "release": "standard-version",
-    "start": "next dev -p {PORT}",
+    "start": "next dev -p PORT_PLACEHOLDER",
     "start:prod": "next start",
     "test": "jest --coverage",
     "test:watch": "jest --watch",
     "typecheck": "tsc --noEmit --incremental false"
   },
-  "version": "1.0.0"
+  "version": "1.2.0"
 }

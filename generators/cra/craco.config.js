@@ -2,15 +2,15 @@
 
 const path = require("path");
 const { getLoader, loaderByName } = require("@craco/craco");
+const packages = require("./scripts/getInternalDependencyDirs");
 
-const modules = ["core-hooks", "core-ui", "core-utils"];
-const packages = [];
-
-packages.push(
-  ...modules.map((module) => path.join(__dirname, "../../packages", module))
-);
-
+/** @type {import('@craco/craco').CracoConfig} */
 module.exports = {
+  jest: {
+    configure: {
+      ...require("config/jest/jest-cra"),
+    },
+  },
   webpack: {
     configure: (webpackConfig) => {
       const { isFound, match } = getLoader(
@@ -25,7 +25,6 @@ module.exports = {
 
         match.loader.include = include.concat(packages);
       }
-
       return webpackConfig;
     },
   },
