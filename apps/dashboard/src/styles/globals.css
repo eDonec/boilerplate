@@ -1,4 +1,7 @@
 @tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 :root {
   /* #region  /**=========== Primary Color =========== */
   /* !STARTERCONF Customize these variable, copy and paste from /styles/colors.css for list of colors */
@@ -295,5 +298,43 @@ button {
   background-color: currentColor;
 }
 
-@tailwind components;
-@tailwind utilities;
+.lds-dual-ring {
+  position: absolute;
+  display: inline-block;
+  width: 80px;
+  height: 80px;
+  left: calc(50% - 32px);
+  top: calc(50% - 32px);
+}
+.lds-dual-ring:after {
+  content: " ";
+  display: block;
+  position: absolute;
+  width: 64px;
+  height: 64px;
+  margin: 8px;
+  border-radius: 50%;
+  border: 2px solid #fff;
+  border-color: #fff transparent #fff transparent;
+  animation: lds-dual-ring 1.9s linear infinite;
+}
+.lds-dual-ring:before {
+  content: " ";
+  display: block;
+  position: absolute;
+  width: 64px;
+  height: 64px;
+  margin: 8px;
+  border-radius: 50%;
+  border: 2px solid #fff;
+  border-color: #fff #fff #fff transparent;
+  animation: lds-dual-ring 1.3s ease-in-out infinite;
+}
+@keyframes lds-dual-ring {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

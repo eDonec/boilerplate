@@ -17,7 +17,7 @@ const nextConfig = {
   },
 
   reactStrictMode: true,
-  pageExtensions: ["page.tsx"],
+  pageExtensions: ["page.tsx", "page.ts"],
   output: "standalone",
   experimental: {
     outputFileTracingRoot: path.join(__dirname, "../../"),

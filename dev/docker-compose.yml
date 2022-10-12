@@ -30,7 +30,7 @@ services:
       - "6379:6379"
       - "8001:8001"
     networks:
-      - main-network`
+      - main-network
   proxy-balancer:
     restart: always
     build:
@@ -74,7 +74,6 @@ services:
       KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
     networks:
       - main-network
-
   kafdrop:
     image: obsidiandynamics/kafdrop
     restart: "no"
@@ -89,7 +88,6 @@ services:
       - zookeeper
     networks:
       - main-network
-
 networks:
   main-network:
     driver: bridge

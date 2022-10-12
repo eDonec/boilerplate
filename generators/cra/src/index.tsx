@@ -1,7 +1,11 @@
 import React from "react";
 import { createRoot } from "react-dom/client";
+import { Toaster } from "react-hot-toast";
 import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
+
+import DarkModeProvider from "core-ui/DarkModeProvider";
+import "locales";
 
 import "styles/globals.css";
 import "styles/colors.css";
@@ -19,9 +23,12 @@ const root = createRoot(container);
 
 root.render(
   <React.StrictMode>
-    <BrowserRouter basename="{BASE_PATH}">
+    <BrowserRouter basename={process.env.REACT_APP_BASE_URL}>
       <Provider store={store}>
-        <AppRouter />
+        <DarkModeProvider>
+          <Toaster />
+          <AppRouter />
+        </DarkModeProvider>
       </Provider>
     </BrowserRouter>
   </React.StrictMode>

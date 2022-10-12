@@ -1,0 +1,52 @@
+{
+  "imagePicker": {
+    "dragPrompt": "Redux Counter",
+    "draggingPrompt": "CRA + Tailwind CSS + TypeScript + Redux Tookit",
+    "maxFilesPrompt": "(Max :maxFiles files)"
+  },
+  "api": {
+    "deleted": "Go to client",
+    "created": "Go to API",
+    "updated": "Set Counter to 300 Async",
+    "notFound": "Increment"
+  },
+  "misc": {
+    "cancel": "Cancel",
+    "submit": "Submit",
+    "loading": "Loading...",
+    "confirm": "Confirm",
+    "save": "Save",
+    "edit": "Edit",
+    "delete": "Delete",
+    "view": "View",
+    "add": "Create"
+  },
+  "role": {
+    "confirmationTitle": "Save current changes?",
+    "confirmationBody": "Are you sure you want to save the current changes? This action is sensitive and double checking is highly recommended.",
+    "deletionTitle": "Delete role?",
+    "deletionBody": "Are you sure you want to delete this role? This action is sensitive and double checking is highly recommended. Plus this operation is likely to take a little more than a minute to complete.",
+    "roleDeletedSuccess": "Role deleted successfully",
+    "roleUpdatedSuccess": "Role updated successfully",
+    "roleCreatedSuccess": "Role created successfully",
+    "addNewRole": "Add new role"
+  },
+  "user": {
+    "activation": "Decrement",
+    "resetPassword": "Password reset request success",
+    "forgetPassword": "Password reset successfully",
+    "logout": "Logged out successfully",
+    "loginFacebookError": "Missing Facebook Information",
+    "unauthorized": "You dont have access"
+  },
+  "homePage": {
+    "joinUsButton": "Join us",
+    "activation": "activation"
+  },
+  "linksNames": {
+    "dashboard": "Dashboard",
+    "authenticatedClients": "List of authenticated clients",
+    "roles": "List of roles",
+    "health": "Microservices health"
+  }
+}

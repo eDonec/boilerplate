@@ -23,7 +23,7 @@ const root = createRoot(container);
 
 root.render(
   <React.StrictMode>
-    <BrowserRouter basename="/dashboard">
+    <BrowserRouter basename={process.env.REACT_APP_BASE_URL}>
       <Provider store={store}>
         <DarkModeProvider>
           <Toaster />
