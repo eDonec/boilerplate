@@ -1,5 +1,5 @@
 {
-  "name": "dashboard",
+  "name": "NAME_PLACEHOLDER",
   "version": "0.2.0",
   "private": true,
   "dependencies": {
@@ -41,7 +41,7 @@
     "eject": "craco eject",
     "lint": "tsc --noEmit && eslint src --fix"
   },
-  "homepage": "/dashboard",
+  "homepage": "BASE_URL_PLACEHOLDER",
   "browserslist": {
     "production": [
       ">0.2%",
