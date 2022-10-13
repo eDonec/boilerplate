@@ -23,7 +23,7 @@ class AuthConsumer {
   subscribeToAll;
 
   constructor() {
-    this.consumer = new Consumer(BucketEvents, "auth");
+    this.consumer = new Consumer(BucketEvents, "bucket");
     const sub: Subscribers | Record<string, unknown> = {};
 
     for (let index = 0; index < events.length; index++) {

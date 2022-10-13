@@ -1,0 +1,25 @@
+{
+  "name": "MICROSERVICE_NAME_PLACEHOLDER-events",
+  "version": "0.1.0",
+  "private": true,
+  "files": [
+    "/build/cjs",
+    "/build/esm"
+  ],
+  "scripts": {
+    "clean": "rimraf build",
+    "build:esm": "tsc -p tsconfig.prod.json --module ES2022 --outDir build/esm",
+    "build:cjs": "tsc -p tsconfig.prod.json --module commonjs --outDir build/cjs",
+    "test": "jest --coverage --passWithNoTests",
+    "lint": "tsc --noEmit && eslint --fix"
+  },
+  "dependencies": {
+    "consumer": "*",
+    "dotenv": "16.0.0",
+    "MICROSERVICE_NAME_PLACEHOLDER-types": "*",
+    "producer": "*"
+  },
+  "devDependencies": {
+    "@types/express": "4.17.13"
+  }
+}
