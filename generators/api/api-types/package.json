@@ -1,0 +1,16 @@
+{
+  "name": "MICROSERVICE_NAME_PLACEHOLDER-types",
+  "version": "0.0.1",
+  "license": "MIT",
+  "files": [
+    "."
+  ],
+  "scripts": {
+    "build:esm": "tsc --module ES2022 --outDir build/esm",
+    "build:cjs": "tsc --module commonjs --outDir build/cjs"
+  },
+  "dependencies": {
+    "mongoose": "6.3.1",
+    "shared-types": "*"
+  }
+}
