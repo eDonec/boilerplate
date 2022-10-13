@@ -5,6 +5,7 @@ const withTM = require("next-transpile-modules")(internalModules);
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  basePath: "BASE_URL_PLACEHOLDER",
   outputFileTracing: true,
   distDir: "build",
   eslint: {
