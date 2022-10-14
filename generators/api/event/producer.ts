@@ -9,7 +9,7 @@ type TSender<EventName extends MICROSERVICE_NAME_UPPERCACE_PLACEHOLDEREvents> = 
 type EventSenders = {
   [eventName in MICROSERVICE_NAME_UPPERCACE_PLACEHOLDEREvents]: TSender<eventName>;
 };
-class AuthProducer {
+class MICROSERVICE_NAME_UPPERCACE_PLACEHOLDEREProducer {
   private producer: Producer<typeof MICROSERVICE_NAME_UPPERCACE_PLACEHOLDEREvents>;
 
   emit: EventSenders;
@@ -32,4 +32,4 @@ class AuthProducer {
   }
 }
 
-export default AuthProducer;
+export default MICROSERVICE_NAME_UPPERCACE_PLACEHOLDEREProducer;
