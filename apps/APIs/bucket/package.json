@@ -30,7 +30,7 @@
     "field-validator": "*",
     "fs-extra": "^10.1.0",
     "http-server": "*",
-    "mongoose": "6.3.1",
+    "mongoose": "6.4.6",
     "multer": "^1.4.4",
     "node-schedule": "^2.1.0",
     "shared-types": "*",
