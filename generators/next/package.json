@@ -28,7 +28,7 @@
     "prettier-plugin-tailwindcss": "0.1.10",
     "react-i18next": "11.16.7"
   },
-  "name": "NAME_PLACEHOLDER",
+  "name": "MICROSERVICE_NAME_PLACEHOLDER",
   "private": true,
   "scripts": {
     "clean": "rimraf build",
