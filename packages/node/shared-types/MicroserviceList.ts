@@ -3,4 +3,5 @@ export enum MICROSERVICE_LIST {
   "bucket" = "bucket",
   "health" = "health",
   "client" = "client",
+  // #MICROSERVICE_LIST
 }
