@@ -1,5 +1,5 @@
 {
-  "name": "NAME_PLACEHOLDER",
+  "name": "MICROSERVICE_NAME_PLACEHOLDER",
   "version": "0.2.0",
   "private": true,
   "dependencies": {
