@@ -144,7 +144,7 @@ The following was needed to be added to the `package.json` file:
 +    "build:esm": "tsc -p tsconfig.prod.json --module ES2022 --outDir build/esm",
 +    "build:cjs": "tsc -p tsconfig.prod.json --module commonjs --outDir build/cjs",
     "test": "jest --coverage",
-    "lint": "tsc --noEmit && eslint --fix"
+    "lint": "tsc --noEmit && eslint . --fix"
   },
 ```
 

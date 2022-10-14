@@ -18,6 +18,6 @@
   },
   "scripts": {
     "test": "jest --coverage",
-    "lint": "tsc --noEmit && eslint --fix"
+    "lint": "tsc --noEmit && eslint . --fix"
   }
 }

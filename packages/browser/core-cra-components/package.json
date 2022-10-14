@@ -21,6 +21,6 @@
   },
   "scripts": {
     "test": "jest --coverage --passWithNoTests",
-    "lint": "tsc --noEmit && eslint --fix"
+    "lint": "tsc --noEmit && eslint . --fix"
   }
 }
