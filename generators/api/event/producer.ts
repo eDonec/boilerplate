@@ -1,21 +1,27 @@
-import { MICROSERVICE_NAME_UPPERCACE_PLACEHOLDEREvents, MICROSERVICE_NAME_UPPERCACE_PLACEHOLDEREventsPayload } from "MICROSERVICE_NAME_PLACEHOLDER-types/events";
+import {
+  MICROSERVICE_NAME_UPPERCASE_PLACEHOLDEREvents,
+  MICROSERVICE_NAME_UPPERCASE_PLACEHOLDEREventsPayload,
+} from "MICROSERVICE_NAME_PLACEHOLDER-types/events";
 import Producer from "producer";
 
-const events = Object.values(MICROSERVICE_NAME_UPPERCACE_PLACEHOLDEREvents);
+const events = Object.values(MICROSERVICE_NAME_UPPERCASE_PLACEHOLDEREvents);
 
-type TSender<EventName extends MICROSERVICE_NAME_UPPERCACE_PLACEHOLDEREvents> = (
-  payload: MICROSERVICE_NAME_UPPERCACE_PLACEHOLDEREventsPayload[EventName]
-) => Promise<void>;
+type TSender<EventName extends MICROSERVICE_NAME_UPPERCASE_PLACEHOLDEREvents> =
+  (
+    payload: MICROSERVICE_NAME_UPPERCASE_PLACEHOLDEREventsPayload[EventName]
+  ) => Promise<void>;
 type EventSenders = {
-  [eventName in MICROSERVICE_NAME_UPPERCACE_PLACEHOLDEREvents]: TSender<eventName>;
+  [eventName in MICROSERVICE_NAME_UPPERCASE_PLACEHOLDEREvents]: TSender<eventName>;
 };
-class MICROSERVICE_NAME_UPPERCACE_PLACEHOLDEREProducer {
-  private producer: Producer<typeof MICROSERVICE_NAME_UPPERCACE_PLACEHOLDEREvents>;
+class MICROSERVICE_NAME_UPPERCASE_PLACEHOLDEREProducer {
+  private producer: Producer<
+    typeof MICROSERVICE_NAME_UPPERCASE_PLACEHOLDEREvents
+  >;
 
   emit: EventSenders;
 
   constructor() {
-    this.producer = new Producer(MICROSERVICE_NAME_UPPERCACE_PLACEHOLDEREvents);
+    this.producer = new Producer(MICROSERVICE_NAME_UPPERCASE_PLACEHOLDEREvents);
 
     const emiter: EventSenders | Record<string, unknown> = {};
 
@@ -23,7 +29,7 @@ class MICROSERVICE_NAME_UPPERCACE_PLACEHOLDEREProducer {
       const eventName = events[index];
 
       emiter[eventName] = async (
-        payload: MICROSERVICE_NAME_UPPERCACE_PLACEHOLDEREventsPayload[typeof eventName]
+        payload: MICROSERVICE_NAME_UPPERCASE_PLACEHOLDEREventsPayload[typeof eventName]
       ) => {
         await this.producer.send(payload, eventName);
       };
@@ -32,4 +38,4 @@ class MICROSERVICE_NAME_UPPERCACE_PLACEHOLDEREProducer {
   }
 }
 
-export default MICROSERVICE_NAME_UPPERCACE_PLACEHOLDEREProducer;
+export default MICROSERVICE_NAME_UPPERCASE_PLACEHOLDEREProducer;
