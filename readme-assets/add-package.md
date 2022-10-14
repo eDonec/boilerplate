@@ -27,7 +27,7 @@ To add the `shared-types` package to an app, add `"shared-types" : "*"` to the d
   "license": "MIT",
   "private": true,
   "scripts": {
-    "lint": "tsc --noEmit && eslint --fix",
+    "lint": "tsc --noEmit && eslint . --fix",
     "test": "jest --coverage"
   },
   "dependencies": {

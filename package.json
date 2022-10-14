@@ -36,11 +36,11 @@
       "prettier -w"
     ],
     "apps/!(proxy|scripts)/**/!(*.config|*.setup|*rc|next-sitemap|postbuild|prebuild).{ts,tsx,}": [
-      "eslint --fix --max-warnings=0",
+      "eslint . --fix --max-warnings=0",
       "prettier -w"
     ],
     "packages/!(config)/**/!(*.config|*.setup|*rc|next-sitemap|postbuild).{ts,tsx,}": [
-      "eslint --fix --max-warnings=0",
+      "eslint . --fix --max-warnings=0",
       "prettier -w"
     ],
     "*.json": [

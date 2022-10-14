@@ -1,4 +1,4 @@
-import { HealthRouteTypes } from "MICROSERVICE_NAME_PLACEHOLDER-types/routes/status";
+import { HealthRouteTypes } from "MICROSERVICE_NAME_PLACEHOLDER-types/routes/health";
 import ServerSDK from "server-sdk/sdk";
 
 const baseUrl = "/v1/MICROSERVICE_NAME_PLACEHOLDER";
