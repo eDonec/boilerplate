@@ -15,7 +15,7 @@ type TSubscriber<EventName extends MICROSERVICE_NAME_UPPERCACE_PLACEHOLDEREvents
 type Subscribers = {
   [eventName in MICROSERVICE_NAME_UPPERCACE_PLACEHOLDEREvents]: TSubscriber<eventName>;
 };
-class MICROSERVICE_NAME_UPPERCACE_PLACEHOLDEREConsumer {
+class MICROSERVICE_NAME_UPPERCACE_PLACEHOLDERConsumer {
   private consumer: Consumer<typeof MICROSERVICE_NAME_UPPERCACE_PLACEHOLDEREvents>;
 
   subscribe: Subscribers;
@@ -44,4 +44,4 @@ class MICROSERVICE_NAME_UPPERCACE_PLACEHOLDEREConsumer {
   }
 }
 
-export default MICROSERVICE_NAME_UPPERCACE_PLACEHOLDEREConsumer;
+export default MICROSERVICE_NAME_UPPERCACE_PLACEHOLDERConsumer;
