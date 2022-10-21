@@ -1,4 +1,4 @@
-import { IPaginatedResult, SortDirection } from "shared-types";
+import { IPaginatedResult } from "shared-types";
 import { PRIVILEGE } from "shared-types/auth/access";
 import { ACCESS_RESSOURCES } from "shared-types/auth/AccessRessources";
 
@@ -20,7 +20,7 @@ export type AuthZRouteTypes = {
       query: {
         page?: string;
         limit?: string;
-        "sort-direction"?: SortDirection;
+        "sort-direction"?: string;
         "sort-field"?: string;
       };
       response: IPaginatedResult<LeanRoleDocument>;
