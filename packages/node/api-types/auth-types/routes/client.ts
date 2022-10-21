@@ -1,4 +1,4 @@
-import { ACCESS, IPaginatedResult, SortDirection } from "shared-types";
+import { ACCESS, IPaginatedResult } from "shared-types";
 
 import { LeanAuthDocument } from "../models/Auth";
 
@@ -6,7 +6,7 @@ export type ClientRouteTypes = {
   "/clients/": {
     GET: {
       query: {
-        "sort-direction"?: SortDirection;
+        "sort-direction"?: string;
         page?: string;
         "sort-field"?: string;
         limit?: string;

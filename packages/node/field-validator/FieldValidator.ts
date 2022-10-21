@@ -183,6 +183,22 @@ export default class FieldValidator {
     return this;
   }
 
+  isBoolean() {
+    if (typeof this.fieldToTest !== "boolean")
+      this.error = {
+        message: "Validation error!",
+        fields: [
+          ...(this.error?.fields || []),
+          {
+            fieldName: this.fieldName,
+            message: `${this.fieldName} must be a boolean`,
+          },
+        ],
+      };
+
+    return this;
+  }
+
   isInArrayOfStrings(paramArray: string[]) {
     if (!this.isStringType(this.fieldToTest)) return this;
 

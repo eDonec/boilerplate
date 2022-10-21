@@ -1,4 +1,4 @@
-import { IPaginatedResult, SortDirection } from "shared-types";
+import { IPaginatedResult } from "shared-types";
 
 import { LeanRoleDocument } from "../models/Role";
 
@@ -8,7 +8,7 @@ export type RolesRouteTypes = {
       query: {
         page?: string;
         limit?: string;
-        "sort-direction"?: SortDirection;
+        "sort-direction"?: string;
         "sort-field"?: string;
         keyword?: string;
       };
