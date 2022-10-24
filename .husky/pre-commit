@@ -1,4 +1,4 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
-npx yarn-deduplicate yarn.lock && yarn sync:workflows && npx lint-staged && yarn test
+npx yarn-deduplicate yarn.lock && yarn sync:workflows && npx lint-staged && yarn lint && yarn test
