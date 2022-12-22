@@ -1,6 +1,7 @@
 import { AbortController } from "@aws-sdk/abort-controller";
 import { BucketFileDocument } from "bucket-types/models/BucketFile";
 import { FileRouteTypes } from "bucket-types/routes/file";
+import { NotFoundError } from "custom-error";
 import producer from "events/producer";
 import fs from "fs-extra";
 import BucketFile from "models/BucketFile";
@@ -9,6 +10,7 @@ import {
   getBucketFileStream,
   uploadBucketFile,
 } from "s3Client";
+import { ACCESS_RESSOURCES } from "shared-types";
 
 import { assertFileType } from "helpers/assertFiletype";
 
@@ -97,11 +99,64 @@ export const deleteFile = async (bucketFile: BucketFileDocument) => {
   await bucketFile.delete();
 };
 
-// ! Instant Delete
-// (async () => {
-//   (
-//     await BucketFile.find({
-//       isPersisted: { $ne: true },
-//     })
-//   ).forEach(deleteFile);
-// })();
+export const deleteFileByKey = async (key: string) => {
+  const bucketFile = await BucketFile.findOne({ key });
+
+  if (!bucketFile)
+    throw new NotFoundError({
+      message: "File not found",
+      ressource: ACCESS_RESSOURCES.FILES,
+    });
+
+  await deleteFile(bucketFile);
+};
+
+export const deleteFileByEndOfUrl = async (endOfUrl: string) => {
+  const bucketFile = await BucketFile.findOne({
+    url: {
+      $regex: new RegExp(`/${endOfUrl}$`),
+    },
+  });
+
+  if (!bucketFile)
+    throw new NotFoundError({
+      message: "File not found",
+      ressource: ACCESS_RESSOURCES.FILES,
+    });
+
+  await deleteFile(bucketFile);
+};
+
+export const persistFileByKey = async (key: string) => {
+  const bucketFile = await BucketFile.findOneAndUpdate(
+    { key },
+    { $set: { isPersisted: true, invalidateAt: null } }
+  );
+
+  if (!bucketFile)
+    throw new NotFoundError({
+      message: "File not found",
+      ressource: ACCESS_RESSOURCES.FILES,
+    });
+
+  producer.emit.FilePersisted(formatBucketFileResponse(bucketFile));
+};
+
+export const persistFileByEndOfUrl = async (endOfUrl: string) => {
+  const bucketFile = await BucketFile.findOneAndUpdate(
+    {
+      url: {
+        $regex: new RegExp(`/${endOfUrl}$`),
+      },
+    },
+    { $set: { isPersisted: true, invalidateAt: null } }
+  );
+
+  if (!bucketFile)
+    throw new NotFoundError({
+      message: "File not found",
+      ressource: ACCESS_RESSOURCES.FILES,
+    });
+
+  producer.emit.FilePersisted(formatBucketFileResponse(bucketFile));
+};

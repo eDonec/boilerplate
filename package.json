@@ -36,15 +36,13 @@
       "prettier -w"
     ],
     "apps/!(proxy|scripts)/**/!(*.config|*.setup|*rc|next-sitemap|postbuild|prebuild).{ts,tsx,}": [
-      "eslint . --fix --max-warnings=0",
       "prettier -w"
     ],
     "packages/!(config)/**/!(*.config|*.setup|*rc|next-sitemap|postbuild).{ts,tsx,}": [
-      "eslint . --fix --max-warnings=0",
       "prettier -w"
     ],
     "*.json": [
-      "prettier --write"
+      "prettier -w"
     ]
   },
   "engines": {
@@ -54,7 +52,8 @@
   "dependencies": {
     "@commitlint/config-conventional": "16.2.1",
     "@craco/craco": "6.4.3",
-    "@edonec/generator": "1.2.4",
+    "@edonec/generator": "latest",
+    "@edonec/route-generator": "latest",
     "@manypkg/cli": "^0.19.2",
     "@testing-library/jest-dom": "5.16.4",
     "@testing-library/react": "13.1.1",

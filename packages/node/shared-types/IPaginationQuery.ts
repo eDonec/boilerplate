@@ -1,11 +1,9 @@
 import { FilterQuery, PipelineStage } from "mongoose";
 
-import { SortDirection } from "./SortDirection";
-
 export type FetchPaginatedArgs = {
   page?: string;
   limit?: string;
-  "sort-direction"?: SortDirection;
+  "sort-direction"?: string;
   "sort-field"?: string;
   keyword?: string;
 };
