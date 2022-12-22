@@ -6,6 +6,9 @@ const packages = require("./scripts/getInternalDependencyDirs");
 
 /** @type {import('@craco/craco').CracoConfig} */
 module.exports = {
+  eslint: {
+    enable: false,
+  },
   jest: {
     configure: {
       ...require("config/jest/jest-cra"),

@@ -15,7 +15,17 @@ export type RawInputProps = {
 
 const Input = forwardRef<HTMLInputElement, RawInputProps>(
   (
-    { label, error, name, leftIcon, rightIcon, type, className, ...rest },
+    {
+      label,
+      error,
+      name,
+      leftIcon,
+      rightIcon,
+      type,
+      className,
+      required,
+      ...rest
+    },
     ref
   ) => {
     const isPassword = type === "password";
@@ -38,6 +48,7 @@ const Input = forwardRef<HTMLInputElement, RawInputProps>(
               )}
             >
               {label}
+              {required && <span className="text-red-600">*</span>}
             </label>
           )}
           <div className="flex">

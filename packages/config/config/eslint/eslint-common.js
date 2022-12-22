@@ -21,7 +21,6 @@ module.exports = {
     "no-unused-vars": "off",
     "newline-after-var": "warn",
     "newline-before-return": "warn",
-    "max-lines": ["warn", 165],
     "no-underscore-dangle": "off",
     "no-var": "error",
     "no-plusplus": "off",

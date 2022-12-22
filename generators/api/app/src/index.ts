@@ -20,6 +20,7 @@ app.use(baseUrl, router);
 connect(process.env.DATABASE_URI, databaseConfig)
   .then(() => {
     app.listen(port, () => {
+      import("events/listeners");
       console.log(`🚀 Server listening at http://localhost:${port}`);
     });
   })

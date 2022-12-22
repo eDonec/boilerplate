@@ -3,7 +3,7 @@ import { FieldValues, FormProvider, FormProviderProps } from "react-hook-form";
 
 import MediaFromContext from "./context";
 
-export type RawMediaFormContextProviderProps<TFieldValues> =
+export type RawMediaFormContextProviderProps<TFieldValues extends FieldValues> =
   FormProviderProps<TFieldValues> & {
     fetchTokenFunction: () => Promise<string>;
     onFetchTokenFailure?: (error: Error) => void;

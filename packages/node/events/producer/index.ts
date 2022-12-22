@@ -3,6 +3,7 @@ import {
   CompressionTypes,
   Kafka,
   KafkaConfig,
+  Partitioners,
   Producer as KafkaProducer,
 } from "kafkajs";
 
@@ -34,6 +35,7 @@ class Producer<E extends { [eventName: string]: string }> {
       brokers: [process.env.KAFKA_BROKERS],
     });
     this.producer = this.kafka.producer({
+      createPartitioner: Partitioners.DefaultPartitioner,
       allowAutoTopicCreation: true,
     });
   }

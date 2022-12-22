@@ -1,4 +1,4 @@
-import ApiSDK from ".";
+import ApiSDK from "./index";
 
 export default abstract class ServerSDK {
   protected api: ApiSDK["api"];

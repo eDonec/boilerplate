@@ -16,10 +16,10 @@ interface ISEOProps {
 }
 
 const SEO: React.FC<ISEOProps> = ({
-  title = "eDonec Ultimate boilerplate",
-  siteName = "eDonec Ultimate boilerplate",
+  title = "eDonec Ultimate ludo-monorepo",
+  siteName = "eDonec Ultimate ludo-monorepo",
   author = "eDonec",
-  description = "A boilerplate for eDonec with microservice architecture and stuff",
+  description = "A ludo-monorepo for eDonec with microservice architecture and stuff",
   url = "https://staging.themerchant.site",
   type = "website",
   robots = "follow, index",
