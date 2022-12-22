@@ -1,4 +1,5 @@
 import TCustomErrors from "shared-types/Errors";
+import { UploadedBucketFileResponse } from "shared-types/UploadedBucketFileResponse";
 
 export enum BucketEvents {
   FileUploaded = "FileUploaded",
@@ -8,16 +9,9 @@ export enum BucketEvents {
 }
 
 export type BucketEventsPayload = {
-  [BucketEvents.FileUploaded]: {
-    key: string;
-    type: string;
-    name: string;
-    _id: string;
-  };
+  [BucketEvents.FileUploaded]: UploadedBucketFileResponse;
 
-  [BucketEvents.FilePersisted]: {
-    placeholder: string;
-  };
+  [BucketEvents.FilePersisted]: UploadedBucketFileResponse;
   [BucketEvents.FileDeleted]: {
     placeholder: string;
   };
