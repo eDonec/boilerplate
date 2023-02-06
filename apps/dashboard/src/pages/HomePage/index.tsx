@@ -135,7 +135,7 @@ const HomePage = () => {
           <FilePicker
             name="image"
             label="Click to select image"
-            accept=".jpeg,.jpg,.png"
+            accept={{ "image/png": [".jpeg", ".jpg", ".png"] }}
           />
           <Button type="submit" light>
             submit

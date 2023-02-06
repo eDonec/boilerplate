@@ -5,17 +5,17 @@
   "types": "./index.tsx",
   "license": "MIT",
   "devDependencies": {
-    "@types/react": "18.0.8",
-    "@types/react-dom": "18.0.0",
+    "@types/react": "18.0.27",
+    "@types/react-dom": "18.0.10",
     "config": "*",
-    "react-router-dom": "6.3.0",
+    "react-router-dom": "6.8.0",
     "tsconfig": "*"
   },
   "dependencies": {
     "core-utils": "*",
     "data-table": "*",
-    "react": "18.1.0",
-    "react-dom": "18.1.0",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
     "react-helmet-async": "^1.3.0",
     "shared-types": "*"
   },

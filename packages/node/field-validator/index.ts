@@ -13,7 +13,6 @@ export default class Validator<T extends Record<any, unknown>> {
   validate: TValidate<T>;
 
   constructor(objectToValidate: T) {
-
     if (!Object.keys(objectToValidate).length)
       throw new Error("At least one field should be passed");
 
@@ -92,7 +91,7 @@ export const extractFieldValidatorsFromObject = <
     ) as TValidate<T>[];
   }
 
-  if (typeof input === "object")
+  if (input && typeof input === "object")
     Object.entries(input).forEach(([objectKey, value]) => {
       output[objectKey] = extractFieldValidatorsFromObject({
         input: value,

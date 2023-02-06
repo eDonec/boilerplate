@@ -10,7 +10,7 @@
     "build:cjs": "tsc --module commonjs --outDir build/cjs"
   },
   "dependencies": {
-    "mongoose": "6.3.1",
+    "mongoose": "6.9.0",
     "shared-types": "*"
   }
 }

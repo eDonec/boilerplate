@@ -29,7 +29,7 @@ export default class BucketSDK {
       FileRouteTypes["/file/"]["POST"]["response"]
     >(`/file/`, formData, {
       onUploadProgress: ({ total, loaded }) => {
-        onUploadProgress?.(Math.round((loaded * 100) / total));
+        onUploadProgress?.(total ? Math.round((loaded * 100) / total) : 0);
       },
       signal: abortController?.signal,
     });
@@ -54,7 +54,7 @@ export default class BucketSDK {
       FileRouteTypes["/file/"]["POST"]["response"]
     >(`/file/`, formData, {
       onUploadProgress: ({ total, loaded }) => {
-        onUploadProgress?.(Math.round((loaded * 100) / total));
+        onUploadProgress?.(total ? Math.round((loaded * 100) / total) : 0);
       },
       signal: abortController?.signal,
     });

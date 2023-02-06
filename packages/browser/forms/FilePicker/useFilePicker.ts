@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { FileRejection, useDropzone } from "react-dropzone";
+import { Accept, FileRejection, useDropzone } from "react-dropzone";
 
 import { UploadedFile } from "bucket-types/utils";
 
@@ -10,7 +10,7 @@ export interface IFileWithPreview extends File {
 
 type FilePickerProps = {
   maxFiles: number;
-  accept?: string | string[] | undefined;
+  accept?: Accept;
   onChange?: (files: UploadedFile | UploadedFile[]) => void;
   errors?: (error: FileRejection[]) => void;
   mediaUploadToken: string | null;
