@@ -1,8 +1,7 @@
-import { TFunction } from "react-i18next";
-
 import { LeanRoleDocument } from "auth-types/models/Role";
 import ButtonLink from "core-cra-components/ButtonLink";
 import { Button } from "core-ui";
+import { TFunction } from "i18next";
 import { ACCESS_RESSOURCES, PRIVILEGE } from "shared-types";
 
 import { DataTableColumn } from "data-table/BaseDataTable/types";

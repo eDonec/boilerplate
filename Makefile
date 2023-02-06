@@ -1,9 +1,9 @@
 all:
-	make cra image=dashboard &&\
-	make next image=client &&\
-	make express image=auth &&\
-	make express image=bucket &&\
-	make express image=health &&\
+	make cra image=dashboard &\
+	make next image=client &\
+	make express image=auth &\
+	make express image=bucket &\
+	make express image=health &\
 	make image image=proxy-balancer base=proxy-balancer
 
 image=proxy-balancer
