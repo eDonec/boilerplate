@@ -14,15 +14,15 @@ const expiredToken =
 
 describe("Token Services Class constructor error throwing", () => {
   it("should throw an error when bad token is passed", () => {
-    expect(tokenValidatorClassMock("bad token")).toThrowError("Token invalid");
+    expect(tokenValidatorClassMock("bad token")).toThrow("Token invalid");
   });
   it("should throw an error when No token is passed", () => {
-    expect(tokenValidatorClassMock()).toThrowError("Please Provide a token");
+    expect(tokenValidatorClassMock()).toThrow("Please Provide a token");
   });
   it("should return an invalid token error", () => {
     // const token = new TokenValidator(expiredToken);
 
-    expect(tokenValidatorClassMock(expiredToken)).toThrowError("Token invalid");
+    expect(tokenValidatorClassMock(expiredToken)).toThrow("Token invalid");
   });
 });
 

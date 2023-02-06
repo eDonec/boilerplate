@@ -15,7 +15,6 @@ const nextConfig = {
     defaultLocale: "en",
     localeDetection: false,
   },
-
   reactStrictMode: true,
   pageExtensions: ["page.tsx", "page.ts"],
   output: "standalone",

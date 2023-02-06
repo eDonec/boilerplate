@@ -21,26 +21,21 @@ RUN turbo prune --scope=${MICROSERVICE_NAME} --docker
 
 
 # Create an image with the installed dependacies
-FROM node:18-alpine AS installer
+FROM node:18-alpine AS builder
+ARG MICROSERVICE_NAME
+RUN apk add --no-cache libc6-compat
 RUN apk update
 WORKDIR /app
 COPY --from=pruner /app/out/json/ .
 COPY --from=pruner /app/out/yarn.lock ./yarn.lock
-RUN yarn install --frozen-lockfile --network-timeout 100000
-COPY  .internal ./.internal
+COPY --from=pruner /app/turbo.json ./turbo.json
+RUN yarn install
 
 # Create an image for the build
-FROM node:18-alpine AS builder
-
-RUN apk update
-ARG MICROSERVICE_NAME
-WORKDIR /app
-COPY --from=pruner /app/.git ./.git
-COPY --from=pruner /app/.turbo ./.turbo
-COPY --from=installer /app/ .
 COPY --from=pruner /app/out/full/ .
+COPY  .internal ./.internal
 COPY .gitignore .gitignore
-COPY --from=installer /app/.internal ./.internal
+COPY .turbo .turbo
 ENV NODE_ENV production
 RUN yarn build --filter=${MICROSERVICE_NAME}
 

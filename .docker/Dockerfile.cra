@@ -23,7 +23,7 @@ RUN turbo prune --scope=${MICROSERVICE_NAME} --docker
 
 
 # Create an image with the installed dependacies
-FROM node:18-alpine AS installer
+FROM node:18-alpine AS builder
 ARG MICROSERVICE_NAME
 
 RUN apk update
@@ -36,18 +36,14 @@ COPY nginx ./nginx/.
 COPY ./apps/${MICROSERVICE_NAME}/nginx/default.conf ./nginx/conf.d/default.conf
 
 # Create an image for the build
-FROM node:18-alpine AS builder
 
 RUN apk update
 WORKDIR /app
 COPY --from=pruner /app/.git ./.git
 COPY --from=pruner /app/.turbo ./.turbo
-COPY --from=installer /app/ .
 COPY --from=pruner /app/out/full/ .
 COPY .gitignore .gitignore
 ENV NODE_ENV production
-COPY --from=installer /app/.internal ./.internal
-COPY --from=installer /app/nginx ./nginx
 ARG MICROSERVICE_NAME
 RUN yarn build --filter=${MICROSERVICE_NAME}
 
