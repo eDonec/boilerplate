@@ -1,4 +1,5 @@
 import { forwardRef, useEffect, useRef } from "react";
+import { Accept } from "react-dropzone";
 
 import BucketSDK from "bucket-sdk";
 import { UploadedFile } from "bucket-types/utils";
@@ -10,7 +11,7 @@ import { useFilePicker } from "./useFilePicker";
 
 export interface IProps {
   maxFiles?: number;
-  accept?: string | string[] | undefined;
+  accept?: Accept;
 
   label?: string;
 

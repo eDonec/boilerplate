@@ -8,11 +8,15 @@ module.exports = {
     path.join(__dirname, "setup/jest-jsx-transform.config.js"),
   ],
   collectCoverageFrom: ["**/src/**/*.{js,ts,jsx,tsx}"],
+  moduleDirectories: ["node_modules", "<rootDir>"],
   moduleFileExtensions: ["js", "jsx", "json", "ts", "tsx"],
   transform: {
-    "^.+\\.tsx?$": "esbuild-jest",
+    "^.+\\.tsx?$": "ts-jest",
     "^.+\\.jsx?$": "esbuild-jest",
   },
   coveragePathIgnorePatterns: [],
   coverageThreshold: null,
+  moduleNameMapper: {
+    "^axios$": "axios/dist/axios.js",
+  },
 };

@@ -17,7 +17,11 @@ export default class ApiSDK {
 
   constructor(accessToken?: string, refreshToken?: string) {
     this.api = axios.create({
-      baseURL: `/api`,
+      baseURL:
+        process.env.NODE_ENV === "production"
+          ? //!STARTERCONF change this to your production API URL
+            `https://test.example.com/api`
+          : "http://localhost:3007/api",
     });
     this.initOrReInit(accessToken, refreshToken);
   }

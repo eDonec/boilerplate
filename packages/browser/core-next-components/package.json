@@ -6,8 +6,8 @@
     "core-ui": "*",
     "core-utils": "*",
     "data-table": "*",
-    "next": "12.1.5",
-    "react": "18.1.0"
+    "next": "13.1.6",
+    "react": "18.2.0"
   },
   "scripts": {
     "test": "jest --coverage",
