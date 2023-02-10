@@ -17,10 +17,10 @@
     "custom-error": "*",
     "dotenv": "16.0.3",
     "jsonwebtoken": "9.0.0",
-    "nanoid": "4.0.0",
+    "nanoid": "4.0.1",
     "zipson": "^0.2.12"
   },
   "devDependencies": {
-    "@types/express": "4.17.16"
+    "@types/express": "4.17.17"
   }
 }

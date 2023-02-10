@@ -14,7 +14,7 @@
   "dependencies": {
     "express": "4.18.2",
     "http-server": "*",
-    "mongoose": "6.9.0",
+    "mongoose": "6.9.1",
     "shared-types": "*"
   }
 }

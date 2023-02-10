@@ -23,6 +23,7 @@ RUN turbo prune --scope=${MICROSERVICE_NAME} --docker
 # Create an image with the installed dependacies
 FROM node:18-alpine AS builder
 ARG MICROSERVICE_NAME
+
 RUN apk add --no-cache libc6-compat
 RUN apk update
 WORKDIR /app
