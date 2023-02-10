@@ -1,4 +1,4 @@
-ARG MICROSERVICE_NAME="client"
+ARG MICROSERVICE_NAME="dashboard"
 # Create an image with the necessary files
 FROM alpine AS copier
 WORKDIR /app
@@ -14,9 +14,7 @@ COPY ./yarn.lock ./yarn.lock
 
 # Create an image with the pruned microservice
 FROM nader2560/turborepo-base AS pruner
-
 ARG MICROSERVICE_NAME
-
 WORKDIR /app
 COPY --from=copier /app .
 RUN turbo prune --scope=${MICROSERVICE_NAME} --docker
@@ -24,25 +22,24 @@ RUN turbo prune --scope=${MICROSERVICE_NAME} --docker
 
 # Create an image with the installed dependacies
 FROM node:18-alpine AS builder
+ARG MICROSERVICE_NAME
+
+RUN apk add --no-cache libc6-compat
 RUN apk update
 WORKDIR /app
 COPY --from=pruner /app/out/json/ .
 COPY --from=pruner /app/out/yarn.lock ./yarn.lock
-RUN yarn install --frozen-lockfile --network-timeout 100000
-COPY  .internal ./.internal
+COPY --from=pruner /app/turbo.json ./turbo.json
+RUN yarn install
 
 # Create an image for the build
 
-RUN apk update
-ARG MICROSERVICE_NAME
-WORKDIR /app
-COPY --from=pruner /app/.git ./.git
-COPY --from=pruner /app/.turbo ./.turbo
 COPY --from=pruner /app/out/full/ .
+COPY .internal ./.internal
 COPY .gitignore .gitignore
+COPY .turbo .turbo
+COPY --from=pruner /app/.git ./.git
 ENV NODE_ENV production
-ARG NEXT_PUBLIC_HELLO
-ENV NEXT_PUBLIC_HELLO=${NEXT_PUBLIC_HELLO}
 RUN yarn build --filter=${MICROSERVICE_NAME}
 
 

@@ -1,7 +1,6 @@
 const path = require("path");
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const internalModules = require("./scripts/getInternalDependencies");
-const withTM = require("next-transpile-modules")(internalModules);
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -20,6 +19,7 @@ const nextConfig = {
   reactStrictMode: true,
   pageExtensions: ["page.tsx", "page.ts"],
   output: "standalone",
+  transpilePackages: internalModules,
   experimental: {
     outputFileTracingRoot: path.join(__dirname, "../../"),
   },

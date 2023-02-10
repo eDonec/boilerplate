@@ -11,7 +11,7 @@
     "next": "13.1.6",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "react-hook-form": "7.43.0",
+    "react-hook-form": "7.43.1",
     "react-redux": "8.0.5",
     "shared-types": "*"
   },
@@ -21,12 +21,12 @@
     "@types/tailwindcss": "3.0.11",
     "autoprefixer": "10.4.13",
     "i18next": "22.4.9",
-    "next-sitemap": "3.1.49",
-    "next-transpile-modules": "9.0.0",
+    "next-sitemap": "3.1.52",
     "postcss": "8.4.21",
-    "prettier": "2.8.3",
+    "prettier": "2.8.4",
     "prettier-plugin-tailwindcss": "0.2.2",
-    "react-i18next": "12.1.4"
+    "react-i18next": "12.1.5",
+    "tailwindcss-radix": "^2.7.0"
   },
   "name": "client",
   "private": true,
