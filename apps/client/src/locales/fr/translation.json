@@ -1,3 +1,90 @@
 {
-  "signin": "Connexion"
+  "signin": "Connexion",
+  "reservationPage": {
+    "title": "Rendez-vous médical",
+    "description": "Prendre rendez-vous avec un médecin",
+    "btnReservation": "Prendre rendez-vous",
+    "selectYrTime": "Sélectionnez votre heure préférée",
+    "bookingTitle": "Réserver un rendez-vous",
+    "alertMsg": "Êtes-vous sûr de vouloir prendre un rendez vous pour le  {{selectedDate}} à {{selectedTime}} ?",
+    "form": {
+      "filePickerLabel": "Document de paiement",
+      "transferCodeInput": "Code de transfert"
+    },
+    "chooseDateInfoMsg": "Veuillez choisir la date du rendez-vous",
+    "chooseTimeInfoMsg": "Veuillez choisir l'heure du rendez-vous"
+  },
+  "validateReservations": {
+    "title": "Gestion des réservations",
+    "description": "Gestion de vos Réservations",
+    "scheduleAnAppointment": "Réserver un rendez-vous pour le",
+    "cancel": "Annuler",
+    "reject": "Rejeter",
+    "approuve": "Approuver",
+    "accepted": "Déjà accepté",
+    "onStandBy": "En attente"
+  },
+  "misc": {
+    "cancel": "Annuler",
+    "submit": "Valider",
+    "loading": "Chargement...",
+    "confirm": "Confirmer",
+    "save": "Enregistrer",
+    "edit": "Modifier",
+    "delete": "Supprimer",
+    "view": "Afficher",
+    "add": "Créer"
+  },
+  "calendar": {
+    "days": {
+      "sun": "Dim",
+      "mon": "Lun",
+      "tue": "Mar",
+      "wed": "Mer",
+      "thu": "Jeu",
+      "fri": "Ven",
+      "sat": "Sam"
+    },
+    "fullyReserved": "Entièrement réservé",
+    "noAvailableDatesMsg": "Pas de disponibilités pour le thérapeute"
+  },
+  "payment": {
+    "choosePaymentMsg": "Chosissez votre mode de paiement",
+    "onlinePayment": "Paiement en ligne",
+    "postalPayment": "Paiement par mandat postal",
+    "paymentTransactionPhotoMsg": "Veuillez téléchargez la photo de votre transaction de paiement pour compléter le processus",
+    "reservationSuccessful": "Réservation Créée",
+    "paymentSuccessful": "Paiement Réussi",
+    "paymentConfirmation": "Avant de procéder au paiement, veuillez confirmer la date, l'heure, le service et le prix de votre rendez-vous, car votre paiement confirmera votre rendez-vous.\n\nDate: {{date}}\nHeure: {{hour}}\nService:{{service}}\nPrix: {{price}} DT",
+    "paymentFinalised": "Votre Réservation est achevée!",
+    "paymentFailed": "Echec du paiement",
+    "paymentFailedMessage": "Votre paiement a échoué! Veuillez réessayer avec une autre réservation"
+  },
+  "notFound": {
+    "bouttonBackToHome": "Page d'accueil",
+    "msg": "\nPage introuvable. \nVeuillez retourner sur notre page d'accueil.",
+    "error404": "Erreur 404"
+  },
+  "profil": {
+    "getDirectionLink": "Obtenir un itinéraire",
+    "inPersonVisistsLabel": "Visites en personne",
+    "videoVisits": "Visites vidéo",
+    "aboutTitle": "À propos de {{therapistName}}",
+    "ViewAllLink": "Voire tous",
+    "focusAreaLabel": "Domaines d'intervention",
+    "sessionDetailsLabel": "Détails de la séance",
+    "identityLabel": "Identité",
+    "genderLabel": "Sexe",
+    "languageSpokenLabel": "Langues parlées",
+    "gettingToKnowTitle": "Apprendre à connaître {{therapistName}}",
+    "educationAndBackgroundTitle": "Parcours professionnel et académique",
+    "FAQTitle": "Foire aux questions",
+    "contactTitle": "Contact",
+    "headerLinks": {
+      "about": "À propos",
+      "education": "Éducation",
+      "FAQ": "FAQ",
+      "contact": "contact"
+    }
+  }
 }

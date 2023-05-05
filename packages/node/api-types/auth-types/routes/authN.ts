@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { ACCESS, IToken, RequireOnlyOne } from "shared-types";
+import { ACCESS, AUTH_PROVIDERS, IToken, RequireOnlyOne } from "shared-types";
 
 import { RoleType } from "../models/Role";
+import { UserType } from "../models/User";
 
 export interface ISignUpClassicBody {
   email: string;
@@ -19,11 +20,12 @@ export interface AuthResponse {
   token: IToken;
   role: RoleType;
   access: ACCESS[];
+  email?: string;
+  isActivated: boolean;
+  userName?: string;
+  user: UserType;
+  authProvider: AUTH_PROVIDERS[];
 }
-
-// TODO : Add to generator and docs
-// TODO : Use it :)
-//! TODO : code generation
 export type AuthNRouteTypes = {
   "/n/sign-in/classic": {
     POST: {
@@ -35,6 +37,12 @@ export type AuthNRouteTypes = {
   "/n/classic": {
     POST: {
       body: ISignUpClassicBody;
+      response: AuthResponse;
+    };
+  };
+  "/n/google": {
+    POST: {
+      body: GoogleSignInBody;
       response: AuthResponse;
     };
   };
@@ -64,7 +72,7 @@ export type AuthNRouteTypes = {
     GET: {
       response: string;
       query: {
-        mimeTypes: string[];
+        mimeTypes: string | string[];
       };
     };
   };
@@ -73,7 +81,35 @@ export type AuthNRouteTypes = {
       response: AuthResponse;
     };
   };
-  //! GENERATOR-ANCHOR
+  "/n/update-password": {
+    PUT: {
+      body: {
+        password: string;
+        newPassword: string;
+      };
+      response: string;
+    };
+  };
+  "/n/reset-password": {
+    PUT: {
+      body: {
+        emailOrUsername: string;
+      };
+
+      response: string;
+    };
+  };
+  "/n/reset-password-confirm": {
+    PUT: {
+      body: {
+        newPassword: string;
+      };
+      query: {
+        token: string;
+      };
+      response: string;
+    };
+  };
 };
 
 // Using Pick to throw an error in case a route changes
@@ -89,6 +125,9 @@ export type AppleSignInBody = {
 };
 
 export type FacebookSignInBody = {
+  token: string;
+};
+export type GoogleSignInBody = {
   token: string;
 };
 export interface FacebookUserProfileResponse {

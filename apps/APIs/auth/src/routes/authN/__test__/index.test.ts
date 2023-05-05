@@ -74,3 +74,40 @@ describe("GET /n/me", () => {
     expect(getMeResponse.body.authID).toBe(signUpResponse.body.authID);
   });
 });
+
+describe("PUT /n/update-password", () => {
+  describe("validation tests", () => {
+    it("should respond successfully (1)", async () => {
+      const signUpBody = { email: "test1@example.com", password: "password" };
+      const signUpResponse = await supertest(app)
+        .post(`${baseUrl}/n/classic`)
+        .send(signUpBody);
+
+      const body = {
+        password: "password",
+        newPassword: "new_password",
+      };
+      const response = await supertest(app)
+        .put(`${baseUrl}/n/update-password`)
+        .set("Authorization", `Bearer ${signUpResponse.body.token.accessToken}`)
+        .send(body);
+
+      expect(response.status).toEqual(StatusCodes.OK);
+    });
+
+    it("should throw an error if the old password is incorrect", async () => {
+      const signUpBody = { email: "test1@example.com", password: "password" };
+      const signUpResponse = await supertest(app)
+        .post(`${baseUrl}/n/classic`)
+        .send(signUpBody);
+
+      const body = { password: "wrong_password", newPassword: "new_password" };
+      const response = await supertest(app)
+        .put(`${baseUrl}/n/update-password`)
+        .set("Authorization", `Bearer ${signUpResponse.body.token.accessToken}`)
+        .send(body);
+
+      expect(response.status).toEqual(StatusCodes.Forbidden);
+    });
+  });
+});

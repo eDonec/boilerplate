@@ -19,7 +19,9 @@ import { constructRoleArray } from "helpers/constructRoleArray";
 
 export const generateAuthResponse = async (
   authClient: AuthDocument
-): Promise<AuthNRouteTypes[AuthResponseRoutes]["POST"]["response"]> => {
+): Promise<
+  Omit<AuthNRouteTypes[AuthResponseRoutes]["POST"]["response"], "user">
+> => {
   const access = constructRoleArray(
     authClient.role,
     authClient.customAccessList
@@ -35,7 +37,11 @@ export const generateAuthResponse = async (
       accessToken: accessToken.token,
       refreshToken: refreshToken.token,
     },
+    email: authClient.email,
+    userName: authClient.userName,
     role: authClient.role,
+    isActivated: authClient.isActivated,
+    authProvider: authClient.authProvider,
     access,
   };
 };
@@ -50,7 +56,7 @@ export const generateThirdPartyAuth = async ({
   id: string;
   email?: string;
   userName?: string;
-}): Promise<AuthResponse> => {
+}): Promise<Omit<AuthResponse, "user">> => {
   let authClient = await Auth.findOne({
     authProvider: provider,
     "providerId.id": id,
@@ -58,7 +64,10 @@ export const generateThirdPartyAuth = async ({
 
   if (!authClient) {
     authClient = await Auth.findOne({
-      $or: [{ email }, { userName }],
+      $or: [
+        { $and: [{ email: { $exists: true } }, { email }] },
+        { $and: [{ userName: { $exists: true } }, { userName }] },
+      ],
     });
   }
 

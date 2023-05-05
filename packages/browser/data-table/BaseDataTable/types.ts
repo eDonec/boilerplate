@@ -62,6 +62,7 @@ export type BaseDatatableProps<T> = Pick<
   currentSort?: SelectedSort;
   keyword?: string | null;
   showSearch?: boolean;
+  subHeader?: React.ReactNode;
   onKeywordChange?: (keyword: string) => void;
   onSortChange?: (args: { field: string; direction: SortDirection }) => void;
   conditionalRowClassName?: (args: {

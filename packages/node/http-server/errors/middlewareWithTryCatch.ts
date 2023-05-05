@@ -62,8 +62,9 @@ const sendEventAndResponse = (
   status: (status: keyof typeof StatusCodes) => ({
     send: (body: TCustomErrors) => {
       res.status(StatusCodes[status]).send(body);
-      evenSender(body);
+      if (body.message === "No token or token malformed") return;
       errorLogger(req, body);
+      evenSender(body);
     },
   }),
 });

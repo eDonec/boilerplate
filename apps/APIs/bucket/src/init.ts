@@ -19,8 +19,8 @@ const server = new Server(producer.emit.BucketError);
 
 server.use(json());
 
-if (!process.env.DATABASE_URI)
-  throw new Error("Missing .env key : DATABASE_URI");
+if (!process.env.DATABASE_BASE_URI || !process.env.MICROSERVICE_NAME)
+  throw new Error("Missing .env key : DATABASE_BASE_URI or MICROSERVICE_NAME");
 
 export default server.app;
 

@@ -7,19 +7,15 @@
 ## Table of content
 
 - [Modal](#modal)
-
   - [Table of content](#table-of-content)
   - [Modal](#modal-1)
     - [Import](#import)
     - [Example Usage](#example-usage)
     - [API](#api)
       - [Props](#props)
-    - [Types](#types)
-      - [:camera: Screenshots](#camera-screenshots)
+    - [:camera: Screenshots](#camera-screenshots)
   - [:hammer_and_wrench: Getting Started](#hammer_and_wrench-getting-started)
   - [:microscope: Running project Tests](#microscope-running-project-tests)
-
-  <!-- Modal -->
 
 ## Modal
 
@@ -72,20 +68,18 @@ export default HomePage;
 
 #### Props
 
-| Name        | Type       | Description                      | Required |
-| ----------- | ---------- | -------------------------------- | -------- |
-| isOpen      | boolean    | Open and close the Modal .       | True     |
-| handleClose | function() | fired when the Modal is opening. | True     |
+| Name                 | Type       | Description                                                              | Default   | Required |
+| -------------------- | ---------- | ------------------------------------------------------------------------ | --------- | -------- |
+| isOpen               | boolean    | Open and close the Modal .                                               | undefined | True     |
+| lazyMount            | boolean    | Mounts the childComponents only after the first change of isOpen to true | True      | False    |
+| shouldUnmountOnClose | boolean    | Unmounts the child components when isOpen is false                       | False     | True     |
+| handleClose          | function() | fired when the Modal is opening.                                         | undefined | True     |
 
 <!--  ModalProps-Types -->
 
-### Types
-
-`TRule` : refer to <a href='../../../node/field-validator/README.md'>**this guide**</a>.
-
 <!-- Modal-Screenshots -->
 
-#### :camera: Screenshots
+### :camera: Screenshots
 
 <div  align="center">
 

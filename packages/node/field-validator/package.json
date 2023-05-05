@@ -16,7 +16,7 @@
   "dependencies": {
     "core-utils": "*",
     "custom-error": "*",
-    "date-fns": "2.29.3",
+    "date-fns": "2.30.0",
     "shared-types": "*"
   },
   "devDependencies": {}

@@ -1,10 +1,7 @@
 import { useRef } from "react";
 
+import { useAccessMatcher } from "authenticator";
 import { ACCESS, ACCESS_RESSOURCES, PRIVILEGE } from "shared-types";
-
-import { accessMatcher } from "containers/AuthWrappers/AccessProtectedWrapper/useAccessProtectedWrapper";
-
-import { useAppSelector } from "hooks/reduxHooks";
 
 import { RoleFormProps } from "./types";
 
@@ -13,10 +10,13 @@ export const useRoleForm = ({
   baseRole,
   isFormReadOnly: readonly,
 }: RoleFormProps) => {
-  const currentUserAccess = useAppSelector((state) => state.auth.access);
+  const accessMatcher = useAccessMatcher();
   const isFormReadOnly =
     readonly ||
-    !accessMatcher(currentUserAccess, ACCESS_RESSOURCES.ROLE, PRIVILEGE.WRITE);
+    !accessMatcher({
+      ressource: ACCESS_RESSOURCES.ROLE,
+      privileges: PRIVILEGE.WRITE,
+    });
 
   const baseAccess = useRef<ACCESS[] | null>(null);
 

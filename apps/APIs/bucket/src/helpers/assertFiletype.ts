@@ -1,4 +1,7 @@
-export const assertFileType = async (_file: Express.Multer.File) => true;
+export const assertFileType = async (_file: {
+  path: string;
+  mimetype: string;
+}) => true;
 // /* eslint-disable no-continue */
 // /* eslint-disable no-labels */
 // /* eslint-disable no-restricted-syntax */

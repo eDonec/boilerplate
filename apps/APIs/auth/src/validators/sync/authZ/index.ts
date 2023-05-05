@@ -97,3 +97,24 @@ export const liftBanAndSuspension: IMiddleware<
 
   return next();
 };
+export const updateClientAccess: IMiddleware<
+  Request<
+    AuthZRouteTypes["/z/access/:id"]["PUT"]["params"],
+    unknown,
+    AuthZRouteTypes["/z/access/:id"]["PUT"]["body"],
+    unknown
+  >,
+  Response<AuthZRouteTypes["/z/access/:id"]["PUT"]["response"]>
+> = (req, _, next) => {
+  const roleValidator = new FieldValidator({ role: req.body.role });
+  const paramsValidator = new FieldValidator(req.params);
+
+  roleValidator.validate.role.isString().isValidObjectId();
+
+  paramsValidator.validate.id.isString().isValidObjectId();
+
+  roleValidator.resolveErrors();
+  paramsValidator.resolveErrors();
+
+  return next();
+};

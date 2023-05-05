@@ -21,57 +21,58 @@ const Health = () => {
       ressource={ACCESS_RESSOURCES.MICROSERVICE_STATUS}
       isExplicit
     >
-      <div className="mt-10 flex justify-between">
+      <div className="mt-10 flex flex-wrap">
         {isLoading || !microserviceStatuses ? (
           <div>Loading...</div>
         ) : (
-          <div className="flex h-[300px] flex-wrap justify-center gap-4 dark:text-gray-200 md:justify-start ">
+          <div className="my-10 grid flex-1 grid-cols-[repeat(auto-fit,minmax(15rem,1fr))] gap-4 dark:text-gray-200">
             {microserviceStatuses.map(
               ({ microserviceName, health, _id, uptime, lastHealthCheck }) => (
-                <Link
-                  to={microserviceName}
+                <div
                   key={_id.toString()}
                   className={clsx(
-                    "relative max-w-[100%] rounded border p-4 shadow-lg dark:border-gray-500 dark:shadow-gray-800 md:w-48"
+                    "relative rounded border p-4 shadow-lg dark:border-gray-500 dark:shadow-gray-800 "
                   )}
                 >
-                  <h3 className="pb-4 text-center">
-                    {toPropperCase(microserviceName)}
-                  </h3>
-                  <div className="flex justify-center">
-                    {health === "OK" ? (
-                      <div
-                        className={clsx(
-                          "dark:bg-success-600 dark:text-success-600 text-success-500 bg-success-500 animate-status-dot relative inline-block h-8 w-8 transform-none self-center rounded-full p-2 align-middle"
-                        )}
-                      />
-                    ) : (
-                      <div
-                        className={clsx(
-                          "dark:bg-danger-600 dark:text-danger-600 text-danger-500 bg-danger-500 animate-status-dot relative inline-block h-8 w-8 transform-none self-center rounded-full p-2 align-middle"
-                        )}
-                      />
-                    )}
-                  </div>
-                  <h4 className="pt-4 text-center">{health}</h4>
-                  <h5 className="wrap pt-4 text-center">
-                    {health === "OK" ? (
-                      <>
-                        Service up for:{" "}
-                        <strong className="font-bold">
-                          {formatDuration(uptime * 1000)}
-                        </strong>
-                      </>
-                    ) : (
-                      "Service down"
-                    )}
-                  </h5>
-                  <div className="absolute bottom-0 right-0 m-4 text-right">
-                    Last updated:
-                    <br />
-                    {formatRelative(new Date(lastHealthCheck), new Date())}
-                  </div>
-                </Link>
+                  <Link to={microserviceName}>
+                    <h3 className="mb-4 text-center">
+                      {toPropperCase(microserviceName)}
+                    </h3>
+                    <div className="flex justify-center">
+                      {health === "OK" ? (
+                        <div
+                          className={clsx(
+                            "animate-status-dot relative inline-block h-8 w-8 transform-none self-center rounded-full bg-success-500 p-2 align-middle text-success-500 dark:bg-success-600 dark:text-success-600"
+                          )}
+                        />
+                      ) : (
+                        <div
+                          className={clsx(
+                            "animate-status-dot relative inline-block h-8 w-8 transform-none self-center rounded-full bg-danger-500 p-2 align-middle text-danger-500 dark:bg-danger-600 dark:text-danger-600"
+                          )}
+                        />
+                      )}
+                    </div>
+                    <h4 className="pt-4 text-center">{health}</h4>
+                    <h5 className="wrap pt-4 text-center">
+                      {health === "OK" ? (
+                        <>
+                          Service up for:{" "}
+                          <strong className="font-bold">
+                            {formatDuration(uptime * 1000)}
+                          </strong>
+                        </>
+                      ) : (
+                        "Service down"
+                      )}
+                    </h5>
+                    <div className="mt-4 text-right">
+                      Last updated:
+                      <br />
+                      {formatRelative(new Date(lastHealthCheck), new Date())}
+                    </div>
+                  </Link>
+                </div>
               )
             )}
           </div>

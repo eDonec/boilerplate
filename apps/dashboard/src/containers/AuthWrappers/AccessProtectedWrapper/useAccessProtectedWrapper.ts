@@ -1,35 +1,15 @@
-import { ACCESS, ACCESS_RESSOURCES, PRIVILEGE } from "shared-types";
-
-import { useAppSelector } from "hooks/reduxHooks";
+import { useAccessMatcher } from "authenticator";
+import { ACCESS_RESSOURCES, PRIVILEGE } from "shared-types";
 
 export const useAccessProtectedWrapper = (
   ressource?: ACCESS_RESSOURCES,
-  previlages?: PRIVILEGE
+  privileges?: PRIVILEGE
 ) => {
-  const access = useAppSelector(({ auth }) => auth.access);
+  const accessMatcher = useAccessMatcher();
 
   return {
-    isAccessible: accessMatcher(access, ressource, previlages),
+    isAccessible: accessMatcher({ ressource, privileges }),
   };
-};
-
-export const accessMatcher = (
-  access?: ACCESS[],
-  ressource?: ACCESS_RESSOURCES,
-  previlages?: PRIVILEGE
-) => {
-  if (!ressource) return true;
-  if (!access?.length) return false;
-
-  const userAccess = [...access]
-    // this is here to make sure that we hit the god ressource before any other ressource
-    .sort((a) => (a.ressource === "*" ? -1 : 1))
-    .find((a) => a.ressource === ressource || a.ressource === "*");
-
-  if (!userAccess) return false;
-  if (previlages == null) return true;
-
-  return userAccess.privileges >= previlages;
 };
 
 export const getPrivilegeName = (privilage?: PRIVILEGE): string =>

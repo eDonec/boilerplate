@@ -39,7 +39,7 @@ export const checkSignInStatus = createAsyncThunk<
   },
   void
 >("auth/check-sign-in-status", async () => {
-  const authId = localStorage.getItem("authId");
+  const authId = localStorage.getItem("dashboardAuthId");
 
   if (!authId) return { isLoggedIn: false };
   const authData: IIndexedDBAuthData | undefined = await db.getData(
@@ -76,5 +76,5 @@ const persistAuthClient = (auth: AuthResponse) => {
       refreshToken: auth.token.refreshToken,
     },
   });
-  localStorage.setItem("authId", auth.authID);
+  localStorage.setItem("dashboardAuthId", auth.authID);
 };

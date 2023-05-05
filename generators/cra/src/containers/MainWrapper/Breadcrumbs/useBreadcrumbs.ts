@@ -39,7 +39,7 @@ export const useBreadcrumbs = (
     ).reduce<
       {
         path: string;
-        name: typeof linkTranslator[keyof typeof linkTranslator];
+        name: (typeof linkTranslator)[keyof typeof linkTranslator];
       }[]
     >((pathOutputAcc, currentPath) => {
       if (

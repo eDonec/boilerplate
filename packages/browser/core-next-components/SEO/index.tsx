@@ -16,14 +16,13 @@ interface ISEOProps {
 }
 
 const SEO: React.FC<ISEOProps> = ({
-  title = "eDonec Ultimate ludo-monorepo",
-  siteName = "eDonec Ultimate ludo-monorepo",
-  author = "eDonec",
+  title = "Mr. le Psy",
+  siteName = "Mr. le Psy",
+  author = "Mr. le Psy",
   description = "A ludo-monorepo for eDonec with microservice architecture and stuff",
-  url = "https://staging.themerchant.site",
+  url = "https://mpsy.tn",
   type = "website",
   robots = "follow, index",
-  // !NOTE to self: Create a system that generates images!! inspirations https://github.com/theodorusclarence/og // https://github.com/vercel/og-image#readme
   image = "https://image.freepik.com/photos-gratuite/bagages-jaunes-plat-copie-espace_23-2148786124.jpg",
   date,
 }) => {
@@ -59,13 +58,12 @@ const SEO: React.FC<ISEOProps> = ({
       {favicons.map((linkProps) => (
         <link key={linkProps.href} {...linkProps} />
       ))}
-      {/* // !STARTERCONF Change to the primary color chosen!!! */}
-      <meta name="msapplication-TileColor" content="#ffffff" />
+      <meta name="msapplication-TileColor" content="#c7e4fe" />
       <meta
         name="msapplication-TileImage"
         content="/favicon/ms-icon-144x144.png"
       />
-      <meta name="theme-color" content="#ffffff" />
+      <meta name="theme-color" content="#c7e4fe" />
     </Head>
   );
 };

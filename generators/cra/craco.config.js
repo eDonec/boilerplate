@@ -12,6 +12,10 @@ module.exports = {
   jest: {
     configure: {
       ...require("config/jest/jest-cra"),
+      moduleNameMapper: {
+        "^axios$": "axios/dist/axios.js",
+        "\\.(css|less|sass)$": "config/jest/__mocks__/styleMock.js",
+      },
     },
   },
   webpack: {
@@ -28,6 +32,7 @@ module.exports = {
 
         match.loader.include = include.concat(packages);
       }
+
       return webpackConfig;
     },
   },

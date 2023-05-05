@@ -33,10 +33,10 @@ export const SignIn = () => {
                   validate={[{ rule: "isEmpty" }]}
                   name="password"
                   type="password"
-                  placeholder="*******"
+                  placeholder="••••••••"
                   label="Password"
                 />
-                <div className="mb-6 -mt-4 flex justify-end">
+                <div className="-mt-4 mb-6 flex justify-end">
                   <a href="#" className="text-sm text-blue-600 hover:underline">
                     Forgot password?
                   </a>

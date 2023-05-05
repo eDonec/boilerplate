@@ -7,6 +7,7 @@ describe("Button renderer", () => {
     const { baseElement } = render(
       <RawFilePicker
         mediaUploadToken={null}
+        fetchFunction={null}
         name="Test name"
         label="test label"
       />

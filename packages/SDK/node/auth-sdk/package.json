@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "auth-types": "*",
-    "axios": "1.3.2",
+    "axios": "1.4.0",
     "react": "18.2.0",
     "server-sdk": "*",
     "shared-types": "*"

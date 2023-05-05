@@ -12,31 +12,13 @@ import ApiSDK from "server-sdk";
 // to customize the default configuration.
 import { useRouter } from "next/router";
 
-import { useAppSelector, useLoadingDispatch } from "hooks/reduxHooks";
-
-import { decrementCounter, incrementCounter } from "_redux/slices/counter";
-import { setCounterAsync } from "_redux/slices/counter/thunk";
-
 const api = new ApiSDK();
 const authSDK = new AuthSDK(api);
 
 export default function HomePage() {
-  const count = useAppSelector((state) => state.counter.count);
-  const { isLoading, dispatch, classicDispatch } = useLoadingDispatch();
   const { t } = useTranslation();
   const router = useRouter();
 
-  const increment = () => {
-    classicDispatch(incrementCounter());
-  };
-
-  const decrement = () => {
-    classicDispatch(decrementCounter());
-  };
-
-  const setAsync = () => {
-    dispatch(setCounterAsync(300));
-  };
   const changeLanguage = (locale: string) => {
     router.push(router.pathname, router.asPath, { locale });
   };
@@ -128,24 +110,7 @@ export default function HomePage() {
             <ButtonLink className="mt-6" href="/components" light>
               See all components
             </ButtonLink>
-            <h2 className="my-3">Redux Counter : {count}</h2>
-            <div className="flex flex-col gap-2">
-              <div className="flex gap-2">
-                <Button
-                  info
-                  disabled={count === 0 || isLoading}
-                  onClick={decrement}
-                >
-                  Decrement
-                </Button>
-                <Button info disabled={isLoading} onClick={increment}>
-                  Increment
-                </Button>
-              </div>
-              <Button info onClick={setAsync} isLoading={isLoading}>
-                Set Counter to 300 Async
-              </Button>
-            </div>
+
             <footer className="absolute bottom-2 text-gray-700">
               © {new Date().getFullYear()} By{" "}
               <UnstyledLink href="https://edonec.com">eDonec</UnstyledLink>

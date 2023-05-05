@@ -1,6 +1,7 @@
 import * as authZController from "controllers/authZ";
 import { Router } from "init";
 import { getAuthByAccessToken } from "middlewares/currentAuth";
+import * as rolesMiddlewares from "middlewares/roles";
 import { routeProtectionFallback } from "middlewares/routeProtectionFallback";
 import { ACCESS_RESSOURCES, PRIVILEGE } from "shared-types";
 import * as asyncAuthNValidators from "validators/async/authN";
@@ -50,6 +51,14 @@ router.getProtected(ACCESS_RESSOURCES.LIFT_BAN_AND_SUSPENSION, PRIVILEGE.WRITE)(
   `${BASE_ROUTE}/lift-ban-suspension/:id`,
   authZValidators.liftBanAndSuspension,
   authZController.liftBanAndSuspension
+);
+
+router.putProtected(ACCESS_RESSOURCES.AUTHENTICATED_CLIENTS, PRIVILEGE.WRITE)(
+  `${BASE_ROUTE}/access/:id`,
+  getAuthByAccessToken,
+  rolesMiddlewares.checkRoleValidity,
+  authZValidators.updateClientAccess,
+  authZController.updateClientAccess
 );
 
 export default router;

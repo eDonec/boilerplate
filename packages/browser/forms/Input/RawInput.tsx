@@ -2,14 +2,20 @@ import React, { forwardRef, HTMLInputTypeAttribute, useState } from "react";
 
 import clsx from "core-utils/clsx";
 
+import EyeSlashSvg from "./Icons/EyeSlashSvg";
+import EyeSvg from "./Icons/EyeSvg";
+
 export type RawInputProps = {
   label?: string;
+  labelClassName?: string;
   placeholder: string;
-  type: HTMLInputTypeAttribute | "textarea";
+  type?: HTMLInputTypeAttribute | "textarea";
   error?: string;
   leftIcon?: React.ReactNode;
   rightIcon?: React.ReactNode;
   name: string;
+  innerWrapperClassName?: string;
+  outerWrapperClassName?: string;
 } & React.ComponentPropsWithRef<"input"> &
   React.ComponentPropsWithRef<"textarea">;
 
@@ -17,13 +23,16 @@ const Input = forwardRef<HTMLInputElement, RawInputProps>(
   (
     {
       label,
+      labelClassName,
       error,
       name,
       leftIcon,
       rightIcon,
-      type,
+      type = "text",
       className,
       required,
+      innerWrapperClassName,
+      outerWrapperClassName,
       ...rest
     },
     ref
@@ -37,21 +46,22 @@ const Input = forwardRef<HTMLInputElement, RawInputProps>(
     const fieldType = isPasswordShown ? "text" : type;
 
     return (
-      <div>
-        <div className="mb-6">
+      <div className={clsx(outerWrapperClassName)}>
+        <div className="">
           {label && (
             <label
               htmlFor={name}
               className={clsx(
-                "mb-2 block text-sm font-medium text-gray-900 dark:text-gray-300",
-                error && "text-red-600 dark:text-red-500"
+                "block text-sm font-medium text-gray-900 dark:text-gray-300",
+                error && "text-red-600 dark:text-red-500",
+                labelClassName
               )}
             >
               {label}
               {required && <span className="text-red-600">*</span>}
             </label>
           )}
-          <div className="flex">
+          <div className={clsx("flex", innerWrapperClassName)}>
             {leftIcon && (
               <span
                 className={clsx(
@@ -80,12 +90,12 @@ const Input = forwardRef<HTMLInputElement, RawInputProps>(
                 className,
                 "border-gray-300 bg-gray-50 dark:border-gray-600 dark:bg-gray-700",
                 "p-2.5 text-sm",
-                "text-gray-900 dark:text-white dark:placeholder-gray-400",
+                "dark:placeholder-gray-400",
                 "focus:border-primary-500 focus:ring-primary-500 dark:focus:border-primary-300 dark:focus:ring-primary-300",
                 error &&
                   "border-red-500 bg-red-50 text-red-900 placeholder-red-700 focus:border-red-500 focus:ring-red-500  ",
                 error &&
-                  "dark:border-red-400 dark:bg-red-100 dark:text-red-900 dark:placeholder-red-700 dark:focus:border-red-500 dark:focus:ring-red-500  "
+                  "dark:border-red-400 dark:bg-red-100 dark:text-red-900 dark:placeholder-red-700 dark:focus:border-red-500 dark:focus:ring-red-500"
               )}
               {...rest}
             />
@@ -103,13 +113,22 @@ const Input = forwardRef<HTMLInputElement, RawInputProps>(
                 )}
                 onClick={isPassword ? handletoggleShowPassword : undefined}
               >
-                {isPassword ? "eye" : rightIcon}
+                {/* eslint-disable-next-line no-nested-ternary */}
+                {isPassword ? (
+                  isPasswordShown ? (
+                    <EyeSlashSvg />
+                  ) : (
+                    <EyeSvg />
+                  )
+                ) : (
+                  rightIcon
+                )}
               </span>
             )}
           </div>
           {/* error message */}
           {error && (
-            <p className="mt-2 text-sm text-red-600 dark:text-red-500">
+            <p className="mt-1 text-sm text-red-600 dark:text-red-500">
               {error}
             </p>
           )}

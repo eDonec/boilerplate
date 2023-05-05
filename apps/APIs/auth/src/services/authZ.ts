@@ -1,11 +1,17 @@
 import { AuthDocument } from "auth-types/models/Auth";
 import { AuthZRouteTypes } from "auth-types/routes/authZ";
-import { NotFoundError } from "custom-error";
+import { NotFoundError, UnauthorizedError } from "custom-error";
 import producer from "events/producer";
 import Auth from "models/Auth";
 import Role from "models/Role";
+import { ACCESS_RESSOURCES } from "shared-types";
+import TokenGenerator from "token/TokenGenerator";
 
 import { GOD } from "constants/defaultRoles";
+
+import { constructRoleArray } from "helpers/constructRoleArray";
+
+import { getAccessDict, isRoleGrantableToClient } from "./roles";
 
 export const suspendClient = async (
   authClient: AuthDocument | string,
@@ -112,5 +118,68 @@ export const liftBanAndSuspension = async ({
     });
   }
 
-  return { status: "OK" };
+  return {
+    status: "OK",
+  };
+};
+
+export const getUploadToken = (mimeTypes: string | string[]) =>
+  new TokenGenerator(
+    {
+      aud: "bucket",
+      iss: "auth",
+      sid: "none",
+      payload: {
+        mimeTypes: mimeTypes instanceof Array ? mimeTypes : [mimeTypes],
+      },
+    },
+    false,
+    process.env.UPLOAD_SECRET_KEY,
+    process.env.UPLOAD_TOKEN_EXPIRES_IN
+  );
+
+export const updateClientAccess = async (
+  authId: string,
+  currentAuth: AuthDocument,
+  { role: roleId, access }: AuthZRouteTypes["/z/access/:id"]["PUT"]["body"]
+) => {
+  const [client, role] = await Promise.all([
+    Auth.findById(authId),
+    Role.findById(roleId),
+  ]);
+
+  if (!client)
+    throw new NotFoundError({
+      message: "Client not found",
+      ressource: ACCESS_RESSOURCES.AUTHENTICATED_CLIENTS,
+    });
+
+  if (!role)
+    throw new NotFoundError({
+      message: "Role not found",
+      ressource: ACCESS_RESSOURCES.ROLE,
+    });
+
+  const userAccessDict = getAccessDict(
+    constructRoleArray(currentAuth.role, currentAuth.customAccessList)
+  );
+  const selectedAuthAccessDict = getAccessDict(client.role.access);
+  const roleAccessDict = getAccessDict(role.access);
+
+  if (
+    !isRoleGrantableToClient({
+      roleAccessDict,
+      userAccessDict,
+      selectedAuthAccessDict,
+    })
+  )
+    throw new UnauthorizedError({
+      message: "You are not allowed to grant this role to this client",
+      ressource: ACCESS_RESSOURCES.ROLE,
+      reason: "You are not allowed to grant this role to this client",
+    });
+
+  client.role = role;
+  client.customAccessList = access;
+  await client.save();
 };

@@ -19,13 +19,12 @@ export const signInClassicValidator: IMiddleware<
 > = async (req, res, next) => {
   const { email, userName } = req.body;
 
-  const authUsersByUserNameOrEmail = await Auth.findOne(
-    userName
-      ? {
-          $or: [{ email }, { userName }],
-        }
-      : { email }
-  );
+  const authUsersByUserNameOrEmail = await Auth.findOne({
+    $or: [
+      { $and: [{ email: { $exists: true } }, { email }] },
+      { $and: [{ userName: { $exists: true } }, { userName }] },
+    ],
+  });
 
   if (authUsersByUserNameOrEmail == null) {
     throw new ObjectValidationError({
@@ -119,7 +118,7 @@ export const checkPassword: IAuthServerMiddleware = async (req, res, next) => {
       currentAuth.lastTrialSince = new Date();
       await currentAuth.save();
     });
-    // anser the client here
+    // answer the client here
     throw new UnauthorizedError({
       message: `Password incorrect`,
       reason: "authentication validator auth",

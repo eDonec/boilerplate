@@ -22,7 +22,8 @@
       "outputs": []
     },
     "start": {
-      "outputs": []
+      "outputs": [],
+      "cache": false
     },
     "seed": {
       "cache": false

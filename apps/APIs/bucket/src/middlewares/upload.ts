@@ -23,7 +23,10 @@ export default multer({
     ) => {
       const mimeTypes = req.res?.locals.mimeTypes;
 
-      if (mimeTypes && !mimeTypes.includes(file.mimetype)) {
+      if (
+        mimeTypes &&
+        !mimeTypes.some((type) => file.mimetype.startsWith(type))
+      ) {
         return cb(
           new ObjectValidationError({
             message: `File not accepted`,

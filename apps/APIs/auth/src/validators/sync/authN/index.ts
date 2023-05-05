@@ -87,3 +87,77 @@ export const signInFacebookValidator: IMiddleware<
 };
 
 export * from "http-server/middlewares/authN";
+
+export const googleSignIn: IMiddleware<
+  Request<
+    unknown,
+    unknown,
+    AuthNRouteTypes["/n/google"]["POST"]["body"],
+    unknown
+  >,
+  Response<unknown>
+> = (req, _, next) => {
+  const { token } = req.body;
+  const validators = new FieldValidator({ token });
+
+  validators.validate.token.exists().isString();
+  validators.resolveErrors();
+
+  return next();
+};
+
+export const updatePassword: IMiddleware<
+  Request<
+    unknown,
+    unknown,
+    AuthNRouteTypes["/n/update-password"]["PUT"]["body"],
+    unknown
+  >,
+  Response<AuthNRouteTypes["/n/update-password"]["PUT"]["response"]>
+> = (req, _, next) => {
+  const validators = new FieldValidator({ body: req.body });
+
+  validators.validate.body.password.isString();
+  validators.validate.body.newPassword.isString();
+
+  validators.resolveErrors();
+
+  return next();
+};
+
+export const resetPassword: IMiddleware<
+  Request<
+    unknown,
+    unknown,
+    AuthNRouteTypes["/n/reset-password"]["PUT"]["body"],
+    unknown
+  >,
+  Response<AuthNRouteTypes["/n/reset-password"]["PUT"]["response"]>
+> = (req, _, next) => {
+  const validators = new FieldValidator({ body: req.body });
+
+  validators.validate.body.emailOrUsername.isString();
+
+  validators.resolveErrors();
+
+  return next();
+};
+
+export const resetPasswordConfirm: IMiddleware<
+  Request<
+    unknown,
+    unknown,
+    AuthNRouteTypes["/n/reset-password-confirm"]["PUT"]["body"],
+    AuthNRouteTypes["/n/reset-password-confirm"]["PUT"]["query"]
+  >,
+  Response<AuthNRouteTypes["/n/reset-password-confirm"]["PUT"]["response"]>
+> = (req, _, next) => {
+  const validators = new FieldValidator({ body: req.body, query: req.query });
+
+  validators.validate.body.newPassword.isString();
+  validators.validate.query.token.isString();
+
+  validators.resolveErrors();
+
+  return next();
+};

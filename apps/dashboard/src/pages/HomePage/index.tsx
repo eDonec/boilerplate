@@ -67,24 +67,24 @@ const HomePage = () => {
           CRA + Tailwind CSS + TypeScript + Redux Toolkit
         </h1>
         <p className="mt-2 text-sm text-gray-700 dark:text-gray-200">
-          <a
+          {/* <a
             className={clsx(
               "inline-flex items-center rounded px-4 py-2 font-semibold",
-              "focus-visible:ring-primary-500 focus:outline-none focus-visible:ring",
+              "focus:outline-none focus-visible:ring focus-visible:ring-primary-500",
               "shadow-sm",
               "transition-colors duration-75"
             )}
             href="/"
           >
             Go to client {process.env.REACT_APP_HELLO || "hello World"}
-          </a>
+          </a> */}
         </p>
         this is a modal
         <p className="mt-2 text-sm text-gray-700 dark:text-gray-200">
           <Link
             className={clsx(
               "inline-flex items-center rounded px-4 py-2 font-semibold",
-              "focus-visible:ring-primary-500 focus:outline-none focus-visible:ring",
+              "focus:outline-none focus-visible:ring focus-visible:ring-primary-500",
               "shadow-sm",
               "transition-colors duration-75",
               "disabled:cursor-not-allowed"

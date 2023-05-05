@@ -14,18 +14,25 @@ import RawSelect, { RawSelectProps } from "../Select/RawSelect";
 export interface SelectProps
   extends Omit<RawSelectProps, "onChange" | "value" | "error"> {
   validate?: TRule[];
+  displayName?: string;
   name: string;
 }
 
-const Select: React.FC<SelectProps> = ({ validate, className, ...props }) => {
+const Select: React.FC<SelectProps> = ({
+  validate,
+  className,
+  displayName,
+  ...props
+}) => {
   const { control, getValues } = useFormContext();
-
   const { errors } = useFormState();
   const error = get(errors, props.name) as FieldError | undefined;
 
   return (
     <Controller
-      rules={{ validate: validateForm(props.name, validate || []) }}
+      rules={{
+        validate: validateForm(props.name, validate || [], displayName),
+      }}
       control={control}
       name={props.name}
       defaultValue={props.initialValue || getValues(props.name)}

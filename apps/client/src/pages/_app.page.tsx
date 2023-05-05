@@ -1,41 +1,60 @@
-import { Provider } from "react-redux";
+import { useState } from "react";
+import { Toaster } from "react-hot-toast";
 
-import DarkModeProvider from "core-ui/DarkModeProvider";
+import {
+  Hydrate,
+  QueryClient,
+  QueryClientProvider,
+} from "@tanstack/react-query";
+import Api from "api";
+import { AuthenticatorProvider } from "authenticator";
+import GDPRConsent from "gdpr";
 import i18n from "locales";
 
 import { AppProps } from "next/app";
-import Head from "next/head";
+import { Alexandria } from "next/font/google";
 
-import "styles/globals.css";
-import "styles/colors.css";
+import "config/tailwind/styles/globals.css";
+import "styles/custom.css";
 
+import Navbar from "components/Navbar";
 import TranslationProvider from "components/TranslationProvider";
-
-import store from "_redux/store";
+const alexandria = Alexandria({
+  subsets: ["latin"],
+});
 
 if (!i18n.isInitialized) {
   i18n.init();
 }
 
 function MyApp({ Component, pageProps }: AppProps) {
+  const [queryClient] = useState(() => new QueryClient());
+
   return (
     <>
-      <Head>
-        <link
-          rel="preload"
-          href="/fonts/inter-var-latin.woff2"
-          as="font"
-          type="font/woff2"
-          crossOrigin="anonymous"
-        />
-      </Head>
-      <Provider store={store}>
-        <TranslationProvider>
-          <DarkModeProvider>
-            <Component {...pageProps} />
-          </DarkModeProvider>
-        </TranslationProvider>
-      </Provider>
+      <style jsx global>
+        {`
+          :root {
+            --main-font: ${alexandria.style.fontFamily};
+          }
+        `}
+      </style>
+
+      <AuthenticatorProvider authDomain="client" mainApi={Api.mainApi}>
+        <QueryClientProvider client={queryClient}>
+          <Hydrate state={pageProps.dehydratedState}>
+            <TranslationProvider>
+              <div id="navbar" />
+              <div id="main">
+                <Navbar />
+                <Toaster />
+                <GDPRConsent />
+                <Component {...pageProps} />
+              </div>
+            </TranslationProvider>
+          </Hydrate>
+        </QueryClientProvider>
+      </AuthenticatorProvider>
     </>
   );
 }

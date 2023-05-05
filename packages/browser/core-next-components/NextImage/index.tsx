@@ -1,5 +1,6 @@
 import { useState } from "react";
 
+import { getImageUrl } from "core-utils";
 import clsx from "core-utils/clsx";
 
 import Image, { ImageProps } from "next/image";
@@ -9,10 +10,9 @@ type NextImageProps = {
   imgClassName?: string;
   blurClassName?: string;
   alt: string;
-  width: string | number;
 } & (
   | { width: string | number; height: string | number }
-  | { layout: "fill"; width?: string | number; height?: string | number }
+  | { fill: true; width?: string | number; height?: string | number }
 ) &
   ImageProps;
 
@@ -34,16 +34,21 @@ export default function NextImage({
 }: NextImageProps) {
   const [status, setStatus] = useState(useSkeleton ? "loading" : "complete");
   const widthIsSet = className?.includes("w-") ?? false;
+  const blurData = {
+    placeholder:
+      typeof src === "string" ? ("blur" as const) : ("empty" as const),
+    blurDataURL: typeof src === "string" ? getImageUrl(src, 4, 4) : undefined,
+  };
 
   return (
     <figure
-      style={!widthIsSet ? { width: `${width}px` } : undefined}
+      style={!widthIsSet && width ? { width: `${width}px` } : undefined}
       className={className}
     >
       <Image
         className={clsx(
           imgClassName,
-          (status !== "loading" && "lds-dual-ring") || "",
+          { "lds-dual-ring": status === "loading" },
           blurClassName
         )}
         src={src}
@@ -51,6 +56,7 @@ export default function NextImage({
         loading="lazy"
         height={height}
         alt={alt}
+        {...blurData}
         onLoadingComplete={() => setStatus("complete")}
         {...rest}
       />

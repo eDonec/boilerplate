@@ -11,4 +11,5 @@ export type FetchPaginatedArgs = {
 export type IPaginationQuery<T> = FetchPaginatedArgs & {
   match?: FilterQuery<T>;
   projection?: PipelineStage.Project["$project"];
+  itemTransformer?: PipelineStage.Project["$project"][string];
 };

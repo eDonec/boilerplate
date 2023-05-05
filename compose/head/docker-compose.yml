@@ -1,17 +1,21 @@
 version: "3.9"
 services:
   database:
-    image: mongo
+    image: mongo:6.0.5
     restart: always
     environment:
+      - HOST_URL=${HOST_URL}
+      - NEXT_PUBLIC_HOSTNAME=${HOST_URL}
       - MONGO_INITDB_ROOT_USERNAME=${DATABASE_USER}
       - MONGO_INITDB_ROOT_PASSWORD=${DATABASE_PASSWORD}
     networks:
       - main-network
   imgproxy:
-    image: darthsim/imgproxy:latest
+    image: darthsim/imgproxy:v3.15.0
     restart: always
     environment:
+      - HOST_URL=${HOST_URL}
+      - NEXT_PUBLIC_HOSTNAME=${HOST_URL}
       - IMGPROXY_BIND=:${PORT}
       - IMGPROXY_S3_REGION=${AWS_REGION}
       - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
@@ -49,14 +53,14 @@ services:
       - "443:443"
     networks:
       - main-network
-  cache:
-    image: redis/redis-stack-server:6.2.2-v4
-    restart: always
-    networks:
-      - main-network
+
   client:
     image: ghcr.io/edonec/boilerplate/client:head
     environment:
+      - HOST_URL=${HOST_URL}
+      - NEXT_PUBLIC_GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID}
+      - NEXT_PUBLIC_FACEBOOK_APP_ID=${FACEBOOK_APP_ID}
+      - NEXT_PUBLIC_HOSTNAME=${HOST_URL}
       - NODE_ENV=${NODE_ENV}
     command: node server.js
     restart: always
@@ -67,8 +71,13 @@ services:
     image: ghcr.io/edonec/boilerplate/dashboard:head
     restart: always
     environment:
+      - HOST_URL=${HOST_URL}
+      - NEXT_PUBLIC_HOSTNAME=${HOST_URL}
       - NODE_ENV=${NODE_ENV}
+      - REACT_APP_GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID}
+      - REACT_APP_FACEBOOK_APP_ID=${FACEBOOK_APP_ID}
       - REACT_APP_BASE_URL=/dashboard
+      - REACT_APP_HOSTNAME=${HOST_URL}
       - PORT=${PORT}
     networks:
       - main-network
@@ -78,10 +87,13 @@ services:
     restart: always
     command: node /app/index.js
     environment:
+      - GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID}
+      - FACEBOOK_APP_ID=${FACEBOOK_APP_ID}
+      - DATABASE_BASE_URI=mongodb://database:27017
+      - HOST_URL=${HOST_URL}
       - NODE_ENV=${NODE_ENV}
-      - MICROSERVICE_NAME=health
-      - DATABASE_URI=mongodb://database:27017/auth?authSource=admin
       - PORT=${PORT}
+      - DATABASE_URI=mongodb://database:27017/auth?authSource=admin
       - ACCESS_TOKEN_SECRET_KEY=${ACCESS_TOKEN_SECRET_KEY}
       - REFRESH_TOKEN_SECRET_KEY=${REFRESH_TOKEN_SECRET_KEY}
       - DATABASE_USER=${DATABASE_USER}
@@ -93,20 +105,53 @@ services:
       - UPLOAD_SECRET_KEY=${UPLOAD_SECRET_KEY}
       - ROOT_USER_EMAIL=${ROOT_USER_EMAIL}
       - ROOT_USER_PASSWORD=${ROOT_USER_PASSWORD}
+      - MICROSERVICE_NAME=auth
+      - REDIS_CLIENT=redis://cache:6379
+      - RESET_PASSWORD_SECRET=YIa)XpHNZJ3Zh%LtJFjB)^uzIHhJkan4
+      - RESET_PASSWORD_TOKEN_EXPIRES_IN=1d
+    networks:
+      - main-network
+    depends_on:
+      - database
+  blogs:
+    image: ghcr.io/edonec/boilerplate/blogs:staging
+    restart: always
+    command: node /app/index.js
+    environment:
+      - DATABASE_BASE_URI=mongodb://database:27017
+      - HOST_URL=${HOST_URL}
+      - NODE_ENV=${NODE_ENV}
+      - PORT=${PORT}
+      - DATABASE_URI=mongodb://database:27017/blogs?authSource=admin
+      - ACCESS_TOKEN_SECRET_KEY=${ACCESS_TOKEN_SECRET_KEY}
+      - REFRESH_TOKEN_SECRET_KEY=${REFRESH_TOKEN_SECRET_KEY}
+      - DATABASE_USER=${DATABASE_USER}
+      - DATABASE_PASSWORD=${DATABASE_PASSWORD}
+      - TOKEN_EXPIRES_IN=${TOKEN_EXPIRES_IN}
+      - REFRESH_TOKEN_EXPIRES_IN=${REFRESH_TOKEN_EXPIRES_IN}
+      - NUMBER_OF_AUTH_TRIALS=5
+      - KAFKA_BROKERS=broker:9092
+      - UPLOAD_SECRET_KEY=${UPLOAD_SECRET_KEY}
+      - ROOT_USER_EMAIL=${ROOT_USER_EMAIL}
+      - ROOT_USER_PASSWORD=${ROOT_USER_PASSWORD}
+      - MICROSERVICE_NAME=blogs
       - REDIS_CLIENT=redis://cache:6379
     networks:
       - main-network
     depends_on:
       - database
-      - cache
+
   health:
     image: ghcr.io/edonec/boilerplate/health:head
     restart: always
     command: node /app/index.js
     environment:
+      - DATABASE_BASE_URI=mongodb://database:27017
+      - HOST_URL=${HOST_URL}
       - NODE_ENV=${NODE_ENV}
-      - PORT=${PORT}
+      - MICROSERVICE_NAME=health
       - DATABASE_URI=mongodb://database:27017/health?authSource=admin
+      - PORT=${PORT}
       - ACCESS_TOKEN_SECRET_KEY=${ACCESS_TOKEN_SECRET_KEY}
       - REFRESH_TOKEN_SECRET_KEY=${REFRESH_TOKEN_SECRET_KEY}
       - DATABASE_USER=${DATABASE_USER}
@@ -118,19 +163,19 @@ services:
       - UPLOAD_SECRET_KEY=${UPLOAD_SECRET_KEY}
       - ROOT_USER_EMAIL=${ROOT_USER_EMAIL}
       - ROOT_USER_PASSWORD=${ROOT_USER_PASSWORD}
-      - MICROSERVICE_NAME=health
       - REDIS_CLIENT=redis://cache:6379
     networks:
       - main-network
     depends_on:
       - database
-      - cache
 
   bucket:
     image: ghcr.io/edonec/boilerplate/bucket:head
     restart: always
     command: node /app/index.js
     environment:
+      - DATABASE_BASE_URI=mongodb://database:27017
+      - HOST_URL=${HOST_URL}
       - NODE_ENV=${NODE_ENV}
       - PORT=${PORT}
       - DATABASE_URI=mongodb://database:27017/bucket?authSource=admin
@@ -150,8 +195,75 @@ services:
       - main-network
     depends_on:
       - database
-      - cache
 
+  categories:
+    image: ghcr.io/edonec/boilerplate/categories:staging
+    restart: always
+    command: node /app/index.js
+    environment:
+      - DATABASE_BASE_URI=mongodb://database:27017
+      - HOST_URL=${HOST_URL}
+      - NODE_ENV=${NODE_ENV}
+      - PORT=${PORT}
+      - DATABASE_URI=mongodb://database:27017/boilerplate-categories?authSource=admin
+      - ACCESS_TOKEN_SECRET_KEY=${ACCESS_TOKEN_SECRET_KEY}
+      - REFRESH_TOKEN_SECRET_KEY=${REFRESH_TOKEN_SECRET_KEY}
+      - DATABASE_USER=${DATABASE_USER}
+      - DATABASE_PASSWORD=${DATABASE_PASSWORD}
+      - TOKEN_EXPIRES_IN=${TOKEN_EXPIRES_IN}
+      - REFRESH_TOKEN_EXPIRES_IN=${REFRESH_TOKEN_EXPIRES_IN}
+      - NUMBER_OF_AUTH_TRIALS=5
+      - KAFKA_BROKERS=broker:9092
+      - UPLOAD_SECRET_KEY=${UPLOAD_SECRET_KEY}
+      - ROOT_USER_EMAIL=${ROOT_USER_EMAIL}
+      - ROOT_USER_PASSWORD=${ROOT_USER_PASSWORD}
+      - MICROSERVICE_NAME=categories
+      - REDIS_CLIENT=redis://cache:6379
+    networks:
+      - main-network
+    depends_on:
+      - database
+
+  og-image-generator:
+    image: ghcr.io/edonec/boilerplate/og-image-generator:staging
+    environment:
+      - HOST_URL=${HOST_URL}
+      - NEXT_PUBLIC_HOSTNAME=${HOST_URL}
+      - NODE_ENV=${NODE_ENV}
+      - REACT_APP_BASE_URL=og-image-generator
+    command: node server.js
+    restart: always
+    networks:
+      - main-network
+
+  mailing:
+    image: ghcr.io/edonec/boilerplate/mailing:staging
+    restart: always
+    command: node /app/index.js
+    environment:
+      - DATABASE_BASE_URI=mongodb://database:27017
+      - NODE_ENV=${NODE_ENV}
+      - PORT=${PORT}
+      - DATABASE_URI=mongodb://database:27017/boilerplate-mailing?authSource=admin
+      - ACCESS_TOKEN_SECRET_KEY=${ACCESS_TOKEN_SECRET_KEY}
+      - REFRESH_TOKEN_SECRET_KEY=${REFRESH_TOKEN_SECRET_KEY}
+      - DATABASE_USER=${DATABASE_USER}
+      - DATABASE_PASSWORD=${DATABASE_PASSWORD}
+      - TOKEN_EXPIRES_IN=${TOKEN_EXPIRES_IN}
+      - REFRESH_TOKEN_EXPIRES_IN=${REFRESH_TOKEN_EXPIRES_IN}
+      - NUMBER_OF_AUTH_TRIALS=5
+      - KAFKA_BROKERS=broker:9092
+      - UPLOAD_SECRET_KEY=${UPLOAD_SECRET_KEY}
+      - ROOT_USER_EMAIL=${ROOT_USER_EMAIL}
+      - ROOT_USER_PASSWORD=${ROOT_USER_PASSWORD}
+      - EMAIL_SENDER=no-reply@mpsy.tn
+      - MICROSERVICE_NAME=mailing
+      - REDIS_CLIENT=redis://cache:6379
+      - SENDGRID_API_KEY=${SENDGRID_API_KEY}
+    networks:
+      - main-network
+    depends_on:
+      - database
   #  NEW_MICROSERVICE_PLACEHOLDER
   zookeeper:
     restart: always

@@ -1,0 +1,71 @@
+name: "client build and push image to GH registry"
+
+on:
+  push:
+    branches: [master]
+    paths:
+      - .docker/Dockerfile..docker/Dockerfile.next
+      - .github/build.image.yml
+      - .github/workflows/build-client-image.yml
+      - "apps/client/**"
+      - "packages/SDK/node/auth-sdk/**"
+      - "packages/node/api-types/auth-types/**"
+      - "packages/browser/authenticator/**"
+      - "packages/SDK/node/blogs-sdk/**"
+      - "packages/SDK/node/booking-sdk/**"
+      - "packages/SDK/node/categories-sdk/**"
+      - "packages/config/config/**"
+      - "packages/browser/core-hooks/**"
+      - "packages/browser/core-next-components/**"
+      - "packages/browser/core-ui/**"
+      - "packages/node/core-utils/**"
+      - "packages/browser/forms/**"
+      - "packages/browser/gdpr/**"
+      - "packages/SDK/node/payment-sdk/**"
+      - "packages/node/api-types/payment-types/**"
+      - "packages/SDK/node/server-sdk/**"
+      - "packages/SDK/node/therapist-sdk/**"
+      - "packages/SDK/node/threads-sdk/**"
+      - "packages/node/http-server/**"
+      - "packages/node/custom-error/**"
+      - "packages/node/token/**"
+      - "packages/node/api-types/blogs-types/**"
+      - "packages/node/api-types/categories-types/**"
+      - "packages/node/api-types/booking-types/**"
+      - "packages/browser/data-table/**"
+      - "packages/SDK/node/bucket-sdk/**"
+      - "packages/node/api-types/bucket-types/**"
+      - "packages/node/field-validator/**"
+      - "packages/node/api-types/therapist-types/**"
+      - "packages/node/api-types/threads-types/**"
+
+jobs:
+  client-build-and-push-to-registry:
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/master'
+    environment: "production"
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build and push
+        uses: docker/build-push-action@v3
+        with:
+          context: .
+          file: .docker/Dockerfile.next
+          push: true
+          build-args: |
+            MICROSERVICE_NAME=client
+            HOST_URL=${{ vars.HOST_URL }}
+            NEXT_PUBLIC_GOOGLE_CLIENT_ID=${{ secrets.GOOGLE_CLIENT_ID }}
+            NEXT_PUBLIC_FACEBOOK_APP_ID=${{ secrets.FACEBOOK_APP_ID }}
+          tags: ghcr.io/edonec/mr-psychologue/client:staging
+          cache-from: type=gha
+          cache-to: type=gha,mode=max

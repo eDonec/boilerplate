@@ -30,7 +30,7 @@ const EditAccessLevel = () => {
   const { pathname } = useLocation();
 
   if (isFirstMount && id) {
-    Api.authSDK.getClientById({ params: { id } }).then((data) => {
+    Api.authSDK.getUser({ params: { authID: id } }).then((data) => {
       setCustomAccess(data.customAccessList || []);
       setSelectedRole({ label: data.role.name, value: data.role._id });
       setClientReadableRef(data.userName || data.email || null);
@@ -84,7 +84,7 @@ const EditAccessLevel = () => {
       customButton: (
         <AccessProtectedWrapper
           privileges={PRIVILEGE.WRITE}
-          ressource={ACCESS_RESSOURCES.USER}
+          ressource={ACCESS_RESSOURCES.AUTHENTICATED_CLIENTS}
         >
           <Button
             disabled={!canSubmit}

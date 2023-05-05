@@ -29,7 +29,7 @@ const s3Client = new S3Client({
 });
 
 export const uploadBucketFile = (
-  { path }: Express.Multer.File,
+  { path }: { path: string },
   key: string,
   abortController?: AbortController
 ) =>
@@ -45,7 +45,7 @@ export const uploadBucketFile = (
   );
 
 export const batchUploadFiles = (
-  files: { file: Express.Multer.File; key: string }[],
+  files: { file: { path: string }; key: string }[],
   abortController?: AbortController
 ) =>
   Promise.all(
@@ -64,7 +64,7 @@ export const getBucketFileStream = async (
       }),
       { abortSignal: abortController?.signal }
     )
-  ).Body as fs.ReadStream;
+  ).Body as unknown as fs.ReadStream;
 
 export const deleteBucketFile = (
   key: string,

@@ -1,4 +1,4 @@
-FROM ghcr.io/edonec/boilerplate/proxy-balancer:staging
+FROM nader2560/base-proxy-balancer:latest
 COPY proxy-balancer.conf /etc/nginx/conf.d/default.conf
 COPY fullchain.pem /etc/nginx/ssl/fullchain.pem
 COPY privkey.pem /etc/nginx/ssl/privkey.pem

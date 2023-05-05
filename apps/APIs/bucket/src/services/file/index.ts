@@ -1,9 +1,11 @@
-import { AbortController } from "@aws-sdk/abort-controller";
+ import { AbortController } from "@aws-sdk/abort-controller";
+import axios from "axios";
 import { BucketFileDocument } from "bucket-types/models/BucketFile";
 import { FileRouteTypes } from "bucket-types/routes/file";
-import { NotFoundError } from "custom-error";
+import { NotFoundError, ObjectValidationError } from "custom-error";
 import producer from "events/producer";
 import fs from "fs-extra";
+import { resolvePath } from "init";
 import BucketFile from "models/BucketFile";
 import {
   deleteBucketFile,
@@ -12,7 +14,16 @@ import {
 } from "s3Client";
 import { ACCESS_RESSOURCES } from "shared-types";
 
+import { mimetypeExtensionDict } from "constants/mimetypeExtensionDict";
+
 import { assertFileType } from "helpers/assertFiletype";
+
+const getUrl = ({ mimetype, key }: { mimetype: string; key: string }) =>
+  mimetype.startsWith("image/")
+    ? `/imgproxy/insecure/rs:fit:$w:$h/g:no/${Buffer.from(
+        `s3://${process.env.AWS_BUCKET}/${key}`
+      ).toString("base64")}`
+    : `/api/v1/bucket/file/${key}`;
 
 const addSingleFile = async (
   file: Express.Multer.File,
@@ -21,17 +32,13 @@ const addSingleFile = async (
   await assertFileType(file);
 
   const invalidateTimestamp = getInvalidateTimeStamp();
+
   const key = await uploadFileToBucketAndDeleteOnDisk({
     file,
     abortController,
   });
 
-  const url = file.mimetype.startsWith("image/")
-    ? `/imgproxy/insecure/rs:fit:$w:$h/g:no/${Buffer.from(
-        `s3://${process.env.AWS_BUCKET}/${key}`
-      ).toString("base64")}`
-    : `/api/v1/bucket/file/${key}`;
-
+  const url = getUrl({ mimetype: file.mimetype, key });
   const bucketFile = await BucketFile.create({
     originalFileName: file.originalname,
     mimetype: file.mimetype,
@@ -53,7 +60,7 @@ const uploadFileToBucketAndDeleteOnDisk = async ({
   abortController,
   key,
 }: {
-  file: Express.Multer.File;
+  file: { path: string; filename: string };
   abortController?: AbortController;
   key?: string;
 }): Promise<string> => {
@@ -87,16 +94,20 @@ export const formatBucketFileResponse = ({
   id,
   originalFileName,
   url,
+  size,
 }: BucketFileDocument): FileRouteTypes["/file/"]["POST"]["response"] => ({
   key,
   type: mimetype,
   name: originalFileName,
   _id: id,
   url,
+  size,
 });
 export const deleteFile = async (bucketFile: BucketFileDocument) => {
   await deleteBucketFile(bucketFile.key);
   await bucketFile.delete();
+
+  producer.emit.FileDeleted(formatBucketFileResponse(bucketFile));
 };
 
 export const deleteFileByKey = async (key: string) => {
@@ -159,4 +170,76 @@ export const persistFileByEndOfUrl = async (endOfUrl: string) => {
     });
 
   producer.emit.FilePersisted(formatBucketFileResponse(bucketFile));
+};
+
+export const addByUrl = async (
+  url: string,
+  acceptedMimeTypes: string[] = []
+) => {
+  const {
+    data: stream,
+    headers: { "content-type": mimetype, "content-length": size },
+  } = await axios.get(url, {
+    responseType: "stream",
+  });
+
+  const extension = mimetypeExtensionDict[mimetype];
+
+  if (!acceptedMimeTypes.some((type) => mimetype.startsWith(type))) {
+    throw new ObjectValidationError({
+      message: `File not accepted`,
+      fields: [
+        {
+          fieldName: "file",
+          message: `File type ${mimetype} is not accepted. Should be one of : ${acceptedMimeTypes.join(
+            ", "
+          )}`,
+        },
+      ],
+    });
+  }
+
+  const now = Date.now().toString();
+  const invalidateTimestamp = getInvalidateTimeStamp();
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  const baseTmpPath = resolvePath(process.env.TMP_DIR_NAME!);
+  const filename = [now, extension].filter(Boolean).join(".");
+  const tmpPath = `${baseTmpPath}/${filename}`;
+  const writer = fs.createWriteStream(tmpPath);
+
+  stream.pipe(writer);
+
+  await new Promise((resolve, reject) => {
+    writer.on("finish", resolve);
+    writer.on("error", reject);
+  });
+
+  const file = {
+    path: tmpPath,
+    filename,
+    mimetype,
+    size,
+  };
+
+  await assertFileType(file);
+
+  const key = await uploadFileToBucketAndDeleteOnDisk({
+    file,
+  });
+
+  const bucketUrl = getUrl({ mimetype: file.mimetype, key });
+  const bucketFile = await BucketFile.create({
+    originalFileName: file.filename,
+    mimetype: file.mimetype,
+    size: file.size,
+    isPersisted: false,
+    key,
+    invalidateAt: invalidateTimestamp,
+    isDeleted: false,
+    url: bucketUrl,
+  });
+
+  producer.emit.FileUploaded(formatBucketFileResponse(bucketFile));
+
+  return bucketFile;
 };

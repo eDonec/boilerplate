@@ -1,5 +1,7 @@
 import { useState } from "react";
 
+let args: unknown;
+
 const useAlertDialog = <T extends Array<unknown>>(
   onSubmit: (...args: T) => void
 ): [
@@ -11,15 +13,15 @@ const useAlertDialog = <T extends Array<unknown>>(
   (...args: T) => void
 ] => {
   const [isOpen, setIsOpen] = useState(false);
-  const [args, setArgs] = useState<T>();
   const handleSubmit: (...submitionArgs: T) => void = (...submitionArgs) => {
     setIsOpen(true);
-    setArgs(submitionArgs);
+    args = submitionArgs;
   };
 
   const handleSuccess = () => {
-    if (Array.isArray(args)) onSubmit(...args);
+    if (Array.isArray(args)) onSubmit(...(args as T));
     setIsOpen(false);
+    args = undefined;
   };
 
   const modalProps = {

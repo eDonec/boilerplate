@@ -1,4 +1,4 @@
-import { LeanAuthDocument } from "auth-types/models/Auth";
+import { PopulatedUserDocument } from "auth-types/routes/user";
 import { clsx } from "core-utils";
 
 import { DataTableColumn } from "data-table/BaseDataTable/types";
@@ -8,7 +8,7 @@ import ClientActions, { CLIENT_ACTION_OPTIONS } from "./ClientActions";
 export const getDataColumns = (
   clientActions: (id: string) => (action: CLIENT_ACTION_OPTIONS) => void,
   isLoading: boolean | string
-): DataTableColumn<LeanAuthDocument>[] => [
+): DataTableColumn<PopulatedUserDocument>[] => [
   { selector: "_id", title: "ID" },
   {
     selector: "email",
@@ -38,7 +38,7 @@ export const getDataColumns = (
           <span className="text-red-400">Banned indefinitely</span>
         </>
       ) : (
-        <span className="text-success-400 text-sm">No</span>
+        <span className="text-sm text-success-400">No</span>
       ),
     sortCallbackValue: "isBanned",
   },
@@ -56,7 +56,7 @@ export const getDataColumns = (
           )}
         </>
       ) : (
-        <span className="text-success-400 text-sm">No</span>
+        <span className="text-sm text-success-400">No</span>
       ),
     sortCallbackValue: "isSuspended",
   },

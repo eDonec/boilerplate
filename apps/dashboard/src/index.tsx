@@ -2,13 +2,15 @@ import React from "react";
 import { createRoot } from "react-dom/client";
 import { Toaster } from "react-hot-toast";
 import { Provider } from "react-redux";
-import { BrowserRouter } from "react-router-dom";
 
+import Api from "api";
+import { AuthenticatorProvider } from "authenticator";
 import DarkModeProvider from "core-ui/DarkModeProvider";
+import GDPRConsent from "gdpr";
 import "locales";
 
-import "styles/globals.css";
-import "styles/colors.css";
+import "config/tailwind/styles/globals.css";
+import "styles/custom.css";
 
 import AppRouter from "containers/AppRouter";
 
@@ -23,14 +25,20 @@ const root = createRoot(container);
 
 root.render(
   <React.StrictMode>
-    <BrowserRouter basename={process.env.REACT_APP_BASE_URL}>
-      <Provider store={store}>
-        <DarkModeProvider>
+    <DarkModeProvider>
+      <AuthenticatorProvider
+        preventLoadingUntilInitiated
+        authDomain="DASHBOARD"
+        mainApi={Api.mainApi}
+        role={["SUPER_ADMIN", "ADMIN"]}
+      >
+        <Provider store={store}>
           <Toaster />
+          <GDPRConsent />
           <AppRouter />
-        </DarkModeProvider>
-      </Provider>
-    </BrowserRouter>
+        </Provider>
+      </AuthenticatorProvider>
+    </DarkModeProvider>
   </React.StrictMode>
 );
 

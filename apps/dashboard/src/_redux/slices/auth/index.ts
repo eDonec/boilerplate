@@ -34,7 +34,7 @@ const authSlice = createSlice({
           toast.error("already logged out");
         }
       })();
-      localStorage.removeItem("authId");
+      localStorage.removeItem("dashboardAuthId");
       db.deleteData("auth", state.authId || "");
       state.isLoggedIn = false;
       state.role = undefined;
@@ -73,7 +73,7 @@ const authSlice = createSlice({
       state.isLoading = false;
     });
     builder.addCase(checkSignInStatus.rejected, (state) => {
-      localStorage.removeItem("authId");
+      localStorage.removeItem("dashboardAuthId");
       state.isLoggedIn = false;
       state.role = undefined;
       state.access = undefined;

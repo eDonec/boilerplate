@@ -88,7 +88,7 @@ const RawSelect = forwardRef<HTMLButtonElement, RawSelectProps>(
           align="end"
           sideOffset={5}
           className={clsx(
-            "radix-side-top:animate-slide-up radix-side-bottom:animate-slide-down",
+            "radix-side-bottom:animate-slide-down radix-side-top:animate-slide-up",
             "min-w-[9rem] rounded-lg px-1.5 py-1 shadow-md",
             "bg-white dark:bg-gray-700"
           )}
@@ -100,9 +100,9 @@ const RawSelect = forwardRef<HTMLButtonElement, RawSelectProps>(
               className={clsx(
                 itemClassName || [
                   "flex cursor-default select-none items-center rounded-md px-2 py-2 text-xs outline-none",
-                  "focus:bg-primary-200 dark:focus:bg-primary-800  text-gray-400 dark:text-gray-500",
+                  "text-gray-400 focus:bg-primary-200  dark:text-gray-500 dark:focus:bg-primary-800",
                   option.value === value?.value &&
-                    "dark:bg-primary-900 bg-gray-300",
+                    "bg-gray-300 dark:bg-primary-900",
                 ]
               )}
             >

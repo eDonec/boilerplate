@@ -1,0 +1,31 @@
+{
+  "dependencies": {
+    "@vercel/og": "0.5.4",
+    "next": "13.4.0",
+    "react": "18.2.0",
+    "react-dom": "18.2.0"
+  },
+  "devDependencies": {
+    "@svgr/webpack": "7.0.0",
+    "@types/react": "18.0.28",
+    "config": "*",
+    "tsconfig": "*"
+  },
+  "name": "og-image-generator",
+  "private": true,
+  "scripts": {
+    "clean": "rimraf build",
+    "build": "yarn clean && next build",
+    "format": "prettier -w .",
+    "format:check": "prettier -c .",
+    "lint": "tsc --noEmit && next lint",
+    "lint:fix": "eslint src --fix && yarn format",
+    "lint:strict": "eslint --max-warnings=0 src",
+    "start": "next dev -p 4005",
+    "start:prod": "next start",
+    "test": "jest --coverage --passWithNoTests",
+    "test:watch": "jest --watch --passWithNoTests",
+    "typecheck": "tsc --noEmit --incremental false"
+  },
+  "version": "1.2.0"
+}

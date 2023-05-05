@@ -1,7 +1,7 @@
 import * as authNController from "controllers/authN";
 import { Router } from "init";
 import { getAuthByAccessToken } from "middlewares/currentAuth";
-import { AUTH_PROVIDERS } from "shared-types";
+import { ACCESS_RESSOURCES, AUTH_PROVIDERS, PRIVILEGE } from "shared-types";
 import * as asyncAuthNValidators from "validators/async/authN";
 import * as asyncAuthZValidators from "validators/async/authZ";
 import * as authNValidators from "validators/sync/authN";
@@ -14,6 +14,11 @@ router.post(
   authNValidators.signUpClassicValidator,
   asyncAuthNValidators.signUpClassicValidator,
   authNController.signUpClassic
+);
+router.post(
+  `${BASE_ROUTE}/google`,
+  authNValidators.googleSignIn,
+  authNController.googleSignIn
 );
 router.post(
   `${BASE_ROUTE}/facebook`,
@@ -49,6 +54,29 @@ router.get(
   authNValidators.tokenValidator(false),
   getAuthByAccessToken,
   authNController.getAuthByAccessToken
+);
+
+router.put(
+  `${BASE_ROUTE}/reset-password`,
+  authNValidators.resetPassword,
+  authNController.resetPassword
+);
+
+router.putProtected(
+  ACCESS_RESSOURCES.AUTHENTICATED_CLIENTS,
+  PRIVILEGE.WRITE_SELF
+)(
+  `${BASE_ROUTE}/update-password`,
+  authNValidators.updatePassword,
+  asyncAuthNValidators.findAndValidateAuthClientByAccessToken,
+  asyncAuthNValidators.checkPassword,
+  authNController.updatePassword
+);
+
+router.put(
+  `${BASE_ROUTE}/reset-password-confirm`,
+  authNValidators.resetPasswordConfirm,
+  authNController.resetPasswordConfirm
 );
 
 export default router;

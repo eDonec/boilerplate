@@ -9,9 +9,14 @@ import { validateForm } from "../helpers/validateForm";
 
 export interface RadioButtonProps extends Omit<RawRadioButtonProps, "error"> {
   validate?: TRule[];
+  displayName?: string;
 }
 
-const RadioButton: React.FC<RadioButtonProps> = ({ validate, ...props }) => {
+const RadioButton: React.FC<RadioButtonProps> = ({
+  validate,
+  displayName,
+  ...props
+}) => {
   const { register } = useFormContext();
   const { errors } = useFormState();
   const error = get(errors, props.name) as FieldError | undefined;
@@ -19,7 +24,7 @@ const RadioButton: React.FC<RadioButtonProps> = ({ validate, ...props }) => {
   return (
     <RawRadioButton
       {...register(props.name, {
-        validate: validateForm(props.name, validate || []),
+        validate: validateForm(props.name, validate || [], displayName),
       })}
       {...props}
       error={error?.message}

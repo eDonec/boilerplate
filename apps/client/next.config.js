@@ -1,7 +1,6 @@
 const path = require("path");
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const internalModules = require("./scripts/getInternalDependencies");
-
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   outputFileTracing: true,
@@ -11,7 +10,7 @@ const nextConfig = {
   },
   i18n: {
     locales: ["en", "fr"],
-    defaultLocale: "en",
+    defaultLocale: "fr",
     localeDetection: false,
   },
   reactStrictMode: true,
@@ -20,6 +19,7 @@ const nextConfig = {
   output: "standalone",
   experimental: {
     outputFileTracingRoot: path.join(__dirname, "../../"),
+    scrollRestoration: true,
   },
   // Uncoment to add domain whitelist
   // images: {

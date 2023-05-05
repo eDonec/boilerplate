@@ -43,19 +43,7 @@ export const getUploadToken: IAuthServerMiddleware<
   >,
   AuthNRouteTypes["/z/upload-token"]["GET"]["response"]
 > = (req, res) => {
-  const uploadToken = new TokenGenerator(
-    {
-      aud: "bucket",
-      iss: "auth",
-      sid: "none",
-      payload: {
-        mimeTypes: req.query.mimeTypes,
-      },
-    },
-    false,
-    process.env.UPLOAD_SECRET_KEY,
-    process.env.UPLOAD_TOKEN_EXPIRES_IN
-  );
+  const uploadToken = authZService.getUploadToken(req.query.mimeTypes);
 
   res.status(StatusCodes.Created).send(uploadToken.token);
 };
@@ -150,4 +138,22 @@ export const liftBanAndSuspension: IMiddleware<
   });
 
   res.status(StatusCodes.OK).send(response);
+};
+
+export const updateClientAccess: IAuthServerMiddleware<
+  Request<
+    AuthZRouteTypes["/z/access/:id"]["PUT"]["params"],
+    unknown,
+    AuthZRouteTypes["/z/access/:id"]["PUT"]["body"],
+    unknown
+  >,
+  AuthZRouteTypes["/z/access/:id"]["PUT"]["response"]
+> = async (req, res) => {
+  await authZService.updateClientAccess(
+    req.params.id,
+    res.locals.currentAuth,
+    req.body
+  );
+
+  res.status(StatusCodes.OK).send("OK");
 };

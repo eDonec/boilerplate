@@ -20,7 +20,7 @@ if (!i18n.isInitialized) {
     // we init with resources
     resources,
     fallbackLng: ["en", "fr"],
-    debug: process.env.NODE_ENV === "development",
+    debug: false,
     saveMissing: true,
 
     // have a common namespace used around the full app

@@ -1,11 +1,10 @@
+import { useAccessMatcher } from "authenticator";
 import { ACCESS_RESSOURCES, PRIVILEGE } from "shared-types";
 
 import { DataTableColumn } from "data-table/BaseDataTable/types";
 
-import { accessMatcher } from "containers/AuthWrappers/AccessProtectedWrapper/useAccessProtectedWrapper";
+// import { accessMatcher } from "containers/AuthWrappers/AccessProtectedWrapper/useAccessProtectedWrapper";
 import { RessourceItem } from "containers/RoleForm/types";
-
-import { useAppSelector } from "hooks/reduxHooks";
 
 import { AccessRessourceDataTableProps } from "./types";
 import {
@@ -22,18 +21,21 @@ export const useAccessRessourcesDataTable = ({
   baseAccess,
   isFormReadOnly: readonly,
 }: AccessRessourceDataTableProps) => {
-  const currentUserAccess = useAppSelector((state) => state.auth.access);
+  const accessMatcher = useAccessMatcher();
 
   const isFormReadOnly =
     readonly ||
-    !accessMatcher(currentUserAccess, ACCESS_RESSOURCES.ROLE, PRIVILEGE.WRITE);
+    !accessMatcher({
+      ressource: ACCESS_RESSOURCES.ROLE,
+      privileges: PRIVILEGE.WRITE,
+    });
 
   const ressourceAccessDict = Object.values(ACCESS_RESSOURCES).reduce<
     Record<ACCESS_RESSOURCES, { grant: boolean; revoke: boolean }>
   >((acc, value) => {
     acc[value] = {
-      grant: accessMatcher(currentUserAccess, value, PRIVILEGE.GRANT),
-      revoke: accessMatcher(currentUserAccess, value, PRIVILEGE.REVOKE),
+      grant: accessMatcher({ ressource: value, privileges: PRIVILEGE.GRANT }),
+      revoke: accessMatcher({ ressource: value, privileges: PRIVILEGE.REVOKE }),
     };
 
     return acc;
