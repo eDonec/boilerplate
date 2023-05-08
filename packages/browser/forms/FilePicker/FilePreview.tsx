@@ -77,9 +77,9 @@ const FilePreview = ({
         "dark:bg-dark bg-white shadow-md"
       )}
     >
-      <div className="flex items-center gap-2">
+      <div className="flex flex-wrap  items-center gap-2">
         <button
-          className="absolute top-[-12px] right-[-12px]"
+          className="absolute right-[-12px] top-[-12px]"
           role="button"
           onClick={onDelete}
         >
@@ -114,21 +114,19 @@ const FilePreview = ({
             "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" && (
             <img src={excel}></img>
           )}
-          {file.type === "image/png" ||
-            file.type === "image/jpg" ||
-            (file.type === "image/jpeg" && (
-              <img
-                alt="upload"
-                src={
-                  file instanceof File
-                    ? file.preview
-                    : getImageUrl(file.url, 80, 80)
-                }
-                className="my-auto"
-              />
-            ))}
+          {file.type.startsWith("image/") && (
+            <img
+              alt="upload"
+              src={
+                file instanceof File
+                  ? file.preview
+                  : getImageUrl(file.url, 80, 80)
+              }
+              className="my-auto"
+            />
+          )}
         </div>
-        <span className="text-xs">{file.name}</span>
+        <span className="break-all text-xs ">{file.name}</span>
       </div>
       {!didUpload && (
         <div className="rounded-full bg-gray-200">

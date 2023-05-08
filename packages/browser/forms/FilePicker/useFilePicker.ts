@@ -3,6 +3,8 @@ import { Accept, FileRejection, useDropzone } from "react-dropzone";
 
 import { UploadedFile } from "bucket-types/utils";
 
+import { isUploadedFile } from "./helpers/isUploadedFile";
+
 export interface IFileWithPreview extends File {
   preview: string;
   path?: string;
@@ -14,14 +16,18 @@ type FilePickerProps = {
   onChange?: (files: UploadedFile | UploadedFile[]) => void;
   errors?: (error: FileRejection[]) => void;
   mediaUploadToken: string | null;
+  value?: (UploadedFile | string)[] | UploadedFile | string;
 };
 export const useFilePicker = ({
   onChange,
   maxFiles,
   accept,
   mediaUploadToken,
+  value,
 }: FilePickerProps) => {
-  const [files, setFiles] = useState<(IFileWithPreview | UploadedFile)[]>([]);
+  const [files, setFiles] = useState<(IFileWithPreview | UploadedFile)[]>(
+    (value instanceof Array ? value : [value]).filter(isUploadedFile)
+  );
   const [rejectedFiles, setFilesRejected] = useState<string[][]>([]);
   const handlePictureClick = (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>,

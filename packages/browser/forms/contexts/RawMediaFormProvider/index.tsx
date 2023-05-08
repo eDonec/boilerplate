@@ -28,7 +28,9 @@ const RawMediaFormProvider = <TFieldValues extends FieldValues>({
   }, []);
 
   return (
-    <MediaFromContext.Provider value={{ mediaUploadToken }}>
+    <MediaFromContext.Provider
+      value={{ mediaUploadToken, fetchFunction: fetchTokenFunction }}
+    >
       <FormProvider {...formProps}>{children}</FormProvider>
     </MediaFromContext.Provider>
   );
