@@ -12,9 +12,7 @@ import { useFilePicker } from "./useFilePicker";
 export interface IProps {
   maxFiles?: number;
   accept?: Accept;
-
   label?: string;
-
   onChange?: (files: UploadedFile | UploadedFile[]) => void;
   error?: string;
   name: string;
