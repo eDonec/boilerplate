@@ -6,7 +6,7 @@ import MediaFromContext from "./context";
 export type RawMediaFormContextProviderProps<TFieldValues extends FieldValues> =
   FormProviderProps<TFieldValues> & {
     fetchTokenFunction: () => Promise<string>;
-    onFetchTokenFailure?: (error: Error) => void;
+    onFetchTokenFailure?: (error: Error) => unknown;
   };
 
 const RawMediaFormProvider = <TFieldValues extends FieldValues>({
