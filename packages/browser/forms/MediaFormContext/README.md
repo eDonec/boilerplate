@@ -1,7 +1,7 @@
 # MediaFormContext
 
 Wrapper around [`react-hook-form/FormProvider`](https://react-hook-form.com/api/formprovider/)
-to use as a drop-in replacement if the form contains at least a [`FilePicker`](packages/browser/forms/FilePicker/README.md)
+to use as a drop-in replacement if the form contains at least a [`FilePicker`](/packages/browser/forms/FilePicker/README.md)
 component.
 
 ## Import

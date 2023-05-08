@@ -48,7 +48,7 @@ const MyForm = () => {
 export default MyForm;
 ```
 
-> Note: `FilePicker` **should** be wrapped in a `MediaFormContext`.
+> Note: `FilePicker` **should** be wrapped in a [`MediaFormContext`](/packages/browser/forms/MediaFormContext/README.md).
 
 ## Props
 
