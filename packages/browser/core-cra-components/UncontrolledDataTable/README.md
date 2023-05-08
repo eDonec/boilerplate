@@ -57,16 +57,7 @@ export default Categories;
 
 ## Columns
 
-| Field                       | Type                              | Required                     | Default    | Description                                                                                                                         |
-| --------------------------- | --------------------------------- | ---------------------------- | ---------- | ----------------------------------------------------------------------------------------------------------------------------------- |
-| title                       | `string`                          | Yes                          | -          | Title of the column as shown in the header                                                                                          |
-| selector                    | `string`                          | Yes if `cell` is not set     | -          | Path of the attribute to select. Supports nested dot notation (uses [`get`](packages/node/core-utils/get/index.ts) under the hood ) |
-| cell                        | `(item: T) => React.ReactElement` | Yes if `selector` is not set | -          | Render cell function                                                                                                                |
-| sortCallbackValue           | `string`                          | No                           | `selector` | Value used for `sort-field` when this column is used for sorting                                                                    |
-| sortable                    | `boolean`                         | No                           | `true`     | Whether this column can be used to sort the data                                                                                    |
-| hideSortIcon                | `boolean`                         | No                           | `false`    | Whether the sort chevron icon is visible or not                                                                                     |
-| className                   | `string`                          | No                           | -          | `className` to be applied to all the cells of this column                                                                           |
-| headerRowContainerClassName | `string`                          | No                           | -          | `className` to be applied to the header wrapper of this column (including both the title and the chevron)                           |
+See [BaseDataTable Docs](/packages/browser/data-table/BaseDataTable/README.md#columns)
 
 ## Data Table
 
