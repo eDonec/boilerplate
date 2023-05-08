@@ -377,4 +377,4 @@ Work in progress...
 
 ## :warning: License
 
-This project is under the strict ownership of Donec no usage of this boilerplate is alowed out of work scope without a written consent. Any usage of this project outside of the allowed parameters will be subject of legal pursuit
+All code in this repository is licensed under the [MIT License](LICENSE).
