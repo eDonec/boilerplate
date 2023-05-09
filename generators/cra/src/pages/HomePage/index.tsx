@@ -4,12 +4,11 @@ import { useTranslation } from "react-i18next";
 import { Link, useLocation } from "react-router-dom";
 
 import Api from "api";
-import MediaFormContext from "contexts/MediaFormContext";
 import ButtonLink from "core-cra-components/ButtonLink";
 import { Button, useDarkMode } from "core-ui";
 import AlertDialog, { useAlertDialog } from "core-ui/AlertDialog";
 import clsx from "core-utils/clsx";
-import { Checkbox, Input, RadioButton, Select } from "forms";
+import { Checkbox, Input, MediaFormContext, RadioButton, Select } from "forms";
 import FilePicker from "forms/FilePicker";
 
 import LanguageSelector from "components/LanguageSelector";

@@ -23,8 +23,10 @@ export type InternalUncontrolledDataTableProps<T> = Omit<
   | "onPageChange"
   | "onSortChange"
   | "onLimitChange"
+  | "onKeywordChange"
   | "currentSort"
   | "limit"
+  | "keyword"
   | "loading"
 > & {
   fetchFunction: FetchFunction<T>;

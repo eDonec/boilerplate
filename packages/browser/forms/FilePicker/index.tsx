@@ -9,7 +9,7 @@ import { validateForm } from "../helpers/validateForm";
 export interface IProps
   extends Omit<
     IComponentProps,
-    "error" | "onChange" | "value" | "mediaUploadToken"
+    "error" | "onChange" | "value" | "mediaUploadToken" | "fetchFunction"
   > {
   name: string;
   validate?: TRule[];
@@ -20,7 +20,7 @@ const FilePicker: React.FC<IProps> = ({
   validate,
   ...filePickerProps
 }) => {
-  const { control, mediaUploadToken } = useMediaFormContext();
+  const { control, mediaUploadToken, fetchFunction } = useMediaFormContext();
   const { errors } = useFormState();
   const error = get(errors, name) as FieldError | undefined;
 
@@ -33,6 +33,7 @@ const FilePicker: React.FC<IProps> = ({
         <RawFilePicker
           {...filePickerProps}
           mediaUploadToken={mediaUploadToken}
+          fetchFunction={fetchFunction}
           name={name}
           ref={ref}
           value={value}
