@@ -5,7 +5,7 @@ cp = require("cpx");
 const workspaces = require(path.resolve(
   rootDir,
   "package.json"
-)).workspaces.map((workspace) => workspace.replace(/\*/g, ""));
+)).workspaces.packages.map((workspace) => workspace.replace(/\*/g, ""));
 const extractInternalPackagesFromPackageJson = (packageJson) =>
   packageJson.dependencies
     ? Object.keys(packageJson.dependencies)

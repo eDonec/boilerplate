@@ -3,6 +3,7 @@
   "private": true,
   "version": "0.0.9",
   "scripts": {
+    "reset": "find . -type dir -name node_modules | xargs rm -rf && rm -rf yarn.lock",
     "prepare": "husky install",
     "clean": "turbo run clean",
     "start": "yarn clean && turbo run start --parallel",
@@ -18,19 +19,33 @@
     "postinstall": "manypkg check",
     "postcommit": "git push --follow-tags origin master",
     "test": "turbo run test --concurrency=1",
-    "sync:workflows": "node .internal/sync-workflows.js"
+    "sync:workflows": "node .internal/sync-workflows.js",
+    "metro": "yarn workspace mobile-app metro",
+    "android:start": "yarn workspace mobile-app android",
+    "android:studio": "yarn workspace mobile-app studio",
+    "ios:start": "yarn workspace mobile-app ios",
+    "ios:xcode": "yarn workspace mobile-app xcode"
   },
-  "workspaces": [
-    "apps/APIs/*",
-    "apps/*",
-    "packages/browser/*",
-    "packages/config/*",
-    "packages/node/*",
-    "packages/SDK/browser/*",
-    "packages/SDK/node/*",
-    "packages/node/api-types/*",
-    "packages/node/events/*"
-  ],
+  "workspaces": {
+    "packages": [
+      "apps/APIs/*",
+      "apps/*",
+      "packages/browser/*",
+      "packages/config/*",
+      "packages/node/*",
+      "packages/SDK/browser/*",
+      "packages/SDK/node/*",
+      "packages/node/api-types/*",
+      "packages/node/events/*"
+    ],
+    "nohoist": [
+      "mobile-app/react",
+      "mobile-app/react-dom",
+      "**/react-native",
+      "**/react-native/**",
+      "**/react-native-vector-icons"
+    ]
+  },
   "lint-staged": {
     "*.config.js": [
       "prettier -w"
