@@ -1,9 +1,9 @@
-import { createStackNavigator } from '@react-navigation/stack';
-
-import { NavigatorParamList } from './types';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import RedScreen from 'screens/RedScreen';
 
-const Stack = createStackNavigator<NavigatorParamList>();
+import { NavigatorParamList } from './types';
+
+const Stack = createNativeStackNavigator<NavigatorParamList>();
 
 export const Navigator = () => {
   return (

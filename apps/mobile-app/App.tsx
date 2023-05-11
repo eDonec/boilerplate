@@ -1,10 +1,9 @@
 import { StyleSheet } from 'react-native';
 import RNBootSplash from 'react-native-bootsplash';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-
 import { NavigationContainer } from '@react-navigation/native';
 import { Navigator } from 'navigator/Navigator';
-//bonsoir
+import { navigationRef } from 'services/navigatorService';
 
 function onReady() {
   RNBootSplash.hide();
@@ -13,7 +12,7 @@ function onReady() {
 function App() {
   return (
     <GestureHandlerRootView style={styles.container}>
-      <NavigationContainer onReady={onReady}>
+      <NavigationContainer ref={navigationRef} onReady={onReady}>
         <Navigator />
       </NavigationContainer>
     </GestureHandlerRootView>
