@@ -5,7 +5,7 @@
   "scripts": {
     "prepare": "husky install",
     "clean": "turbo run clean",
-    "start": "yarn clean && dotenv -- turbo run start --parallel",
+    "start": "dotenv -- turbo run start --parallel",
     "build:packages": "turbo run build --token=tym4TfVTD5qGG7s9MudjhmCwQ9g20BV2 --filter=\"./packages/**\" && yarn resolve:packages:modules",
     "build:packages:cjs": "yarn clean --filter=\"./packages/**\" && turbo run build:cjs --token=tym4TfVTD5qGG7s9MudjhmCwQ9g20BV2 --filter=\"./packages/**\" && yarn resolve:packages:modules",
     "build:packages:esm": "yarn clean --filter=\"./packages/**\" && turbo run build:esm --token=tym4TfVTD5qGG7s9MudjhmCwQ9g20BV2 --filter=\"./packages/**\" && yarn resolve:packages:modules",

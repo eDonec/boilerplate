@@ -1,5 +1,5 @@
-import { UncontrolledDataTable } from "core-cra-components";
 import ButtonLink from "core-cra-components/ButtonLink";
+import UncontrolledDataTable from "core-cra-components/UncontrolledDataTable";
 import AlertDialog from "core-ui/AlertDialog";
 import { ACCESS_RESSOURCES, PRIVILEGE } from "shared-types";
 

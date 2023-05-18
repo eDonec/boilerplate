@@ -5,7 +5,6 @@ import {
   RouterProvider,
 } from "react-router-dom";
 
-import Api from "api";
 import AccessPage from "pages/AccessPage";
 import AddBlog from "pages/AddBlog";
 import AddCategory from "pages/AddCategory";
@@ -30,7 +29,7 @@ const AppRouter = () => {
       <Route>
         <Route path="/sign-in" element={<SignIn />} />
         <Route path="/" element={<MainWrapper />}>
-          <Route path="product/:id/edit" element={<HomePage />} />
+          <Route index element={<HomePage />} />
           <Route path="roles/add" element={<AddRole />} />
           <Route path="roles/edit/:id" element={<EditRole />} />
           <Route path="roles/:id" element={<EditRole />} />
@@ -52,7 +51,7 @@ const AppRouter = () => {
         </Route>
       </Route>
     ),
-    { basename: process.env.REACT_APP_BASE_URL }
+    { basename: process.env.VITE_APP_BASE_URL }
   );
 
   return <RouterProvider router={router} />;

@@ -42,8 +42,11 @@ services:
       - imgproxy
     ports:
       - 3007:80
+      - 3000:443
     networks:
       - main-network
+    volumes:
+      - ../apps/dashboard/node_modules:/usr/share/nginx/html/dashboard/node_modules
   zookeeper:
     restart: always
     image: confluentinc/cp-zookeeper:7.0.1

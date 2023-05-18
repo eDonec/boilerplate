@@ -1,7 +1,15 @@
 {
   "name": "dashboard",
-  "version": "0.2.0",
   "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "start": "vite --host",
+    "build": "yarn clean && tsc && vite build",
+    "clean": "rimraf build",
+    "lint": "tsc --noEmit && eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "preview": "vite preview"
+  },
   "dependencies": {
     "@edonec/indexed-db-class": "^1.0.7",
     "@reduxjs/toolkit": "1.9.5",
@@ -37,16 +45,11 @@
     "react-redux": "8.0.5",
     "react-router-dom": "6.11.1",
     "server-sdk": "*",
-    "shared-types": "*",
-    "web-vitals": "3.1.1"
+    "shared-types": "*"
   },
-  "scripts": {
-    "start": "craco start",
-    "clean": "rimraf build",
-    "build": "yarn clean && craco build",
-    "test": "craco test --coverage --watchAll=false",
-    "eject": "craco eject",
-    "lint": "tsc --noEmit && eslint src --fix"
+  "devDependencies": {
+    "@types/tailwindcss": "3.0.11",
+    "prettier-plugin-tailwindcss": "0.2.8"
   },
   "homepage": "/dashboard",
   "browserslist": {
@@ -60,9 +63,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "devDependencies": {
-    "@types/tailwindcss": "3.0.11",
-    "prettier-plugin-tailwindcss": "0.2.8"
   }
 }

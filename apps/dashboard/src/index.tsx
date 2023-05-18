@@ -16,8 +16,6 @@ import AppRouter from "containers/AppRouter";
 
 import store from "_redux/store";
 
-import reportWebVitals from "./reportWebVitals";
-
 const container = document.getElementById("root");
 
 if (!container) throw new Error("Root element not found");
@@ -41,8 +39,3 @@ root.render(
     </DarkModeProvider>
   </React.StrictMode>
 );
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();

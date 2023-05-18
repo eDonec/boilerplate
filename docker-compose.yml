@@ -155,7 +155,7 @@ services:
     environment:
       - NODE_ENV=${NODE_ENV}
       - PORT=${PORT}
-      - DATABASE_URI=mongodb://database:27017/ludo-monorepo-payment?authSource=admin
+      - DATABASE_URI=mongodb://database:27017/monorepo-payment?authSource=admin
       - ACCESS_TOKEN_SECRET_KEY=${ACCESS_TOKEN_SECRET_KEY}
       - REFRESH_TOKEN_SECRET_KEY=${REFRESH_TOKEN_SECRET_KEY}
       - DATABASE_USER=${DATABASE_USER}
@@ -314,7 +314,6 @@ services:
     networks:
       - main-network
 
-
   mailing:
     image: mailing
     restart: always
@@ -341,7 +340,6 @@ services:
     depends_on:
       - database
   #  NEW_MICROSERVICE_PLACEHOLDER
-
 
   zookeeper:
     restart: always
