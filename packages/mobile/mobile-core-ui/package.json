@@ -1,0 +1,25 @@
+{
+  "name": "mobile-core-ui",
+  "private": true,
+  "version": "0.0.1",
+  "main": "./index.tsx",
+  "types": "./index.tsx",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/react": "18.0.27",
+    "config": "*",
+    "tsconfig": "*"
+  },
+  "dependencies": {
+    "core-utils": "*",
+    "shared-types": "*"
+  },
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*"
+  },
+  "scripts": {
+    "test": "echo \"No tests yet...\"",
+    "lint": "eslint ."
+  }
+}

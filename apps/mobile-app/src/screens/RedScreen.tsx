@@ -9,6 +9,8 @@ import Animated, {
 } from 'react-native-reanimated';
 import IonicIcon from 'react-native-vector-icons/Ionicons';
 
+import { MyFirstMobileComponent } from 'mobile-core-ui';
+
 import AppText from 'components/general/AppText';
 
 import { useThemedStyleSheet } from 'hooks/useAppStyles';
@@ -53,6 +55,7 @@ function RedScreen() {
 
   return (
     <GestureHandlerRootView style={styles.container}>
+      <MyFirstMobileComponent />
       <AppText style={styles.text}>Hello, World!</AppText>
       <Animated.View style={styles.box} />
       <IonicIcon name="ios-home" size={20} color="red" />
