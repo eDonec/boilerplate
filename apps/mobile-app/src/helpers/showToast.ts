@@ -1,23 +1,24 @@
-import Toast from 'react-native-root-toast';
+import Toast from "react-native-root-toast";
 
-import { COLORS, FONT_WEIGHT } from 'constants/styleVariables';
+import { getFontFamily } from "mobile-core-ui/helpers/getFontFamily";
 
-import getFontFamily, { AppFonts } from './getFontFamily';
+import { COLORS, FONT_WEIGHT } from "constants/styleVariables";
+import { AppFonts, fonts } from "constants/fonts";
 
-const fontFamily = getFontFamily(AppFonts.Poppins, {
+const fontFamily = getFontFamily(AppFonts.Poppins, fonts, {
   fontWeight: FONT_WEIGHT.bold,
 });
 
-export const showToast = (
+export function showToast(
   message: string,
-  type: keyof Omit<typeof COLORS, 'TEXT'> = 'DANGER',
-) => {
+  type: keyof Omit<typeof COLORS, "TEXT"> = "DANGER"
+) {
   Toast.show(message, {
     position: 80,
     backgroundColor: COLORS[type],
     textStyle: {
       fontFamily,
-      color: type === 'WHITE' ? COLORS.TEXT.BLACK.MAIN : COLORS.TEXT.WHITE.MAIN,
+      color: type === "WHITE" ? COLORS.TEXT.BLACK.MAIN : COLORS.TEXT.WHITE.MAIN,
     },
   });
-};
+}

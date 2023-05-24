@@ -1,14 +1,14 @@
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import RedScreen from 'screens/RedScreen';
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import DemoScreen from "screens/DemoScreen";
 
-import { NavigatorParamList } from './types';
+import { NavigatorParamList } from "./types";
 
 const Stack = createNativeStackNavigator<NavigatorParamList>();
 
-export const Navigator = () => {
+export function Navigator() {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="RedScreen" component={RedScreen} />
+      <Stack.Screen name="DemoScreen" component={DemoScreen} />
     </Stack.Navigator>
   );
-};
+}

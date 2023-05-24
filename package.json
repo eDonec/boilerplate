@@ -45,6 +45,7 @@
       "**/react-native",
       "**/react-native/**",
       "**/react-scripts",
+      "**/@react-navigation/native",
       "**/react-native-vector-icons"
     ]
   },

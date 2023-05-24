@@ -1,13 +1,13 @@
-import { StyleSheet } from 'react-native';
-import RNBootSplash from 'react-native-bootsplash';
-import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { StyleSheet } from "react-native";
+import RNBootSplash from "react-native-bootsplash";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
-import { NavigationContainer } from '@react-navigation/native';
-import { FontProvider } from 'mobile-core-ui';
-import { Navigator } from 'navigator/Navigator';
-import { navigationRef } from 'services/navigatorService';
+import { DarkTheme, NavigationContainer } from "@react-navigation/native";
+import { FontProvider } from "mobile-core-ui";
+import { Navigator } from "navigator/Navigator";
+import { navigationRef } from "services/navigatorService";
 
-import { AppFonts } from 'helpers/getFontFamily';
+import { AppFonts, fonts } from "constants/fonts";
 
 function onReady() {
   RNBootSplash.hide();
@@ -20,11 +20,11 @@ if (__DEV__) {
 function App() {
   return (
     <GestureHandlerRootView style={styles.container}>
-      <FontProvider value={{ fontFamily: AppFonts.Poppins }}>
-        <NavigationContainer ref={navigationRef} onReady={onReady}>
+      <NavigationContainer ref={navigationRef} onReady={onReady}>
+        <FontProvider appFonts={fonts} defaultFontFamily={AppFonts.Poppins}>
           <Navigator />
-        </NavigationContainer>
-      </FontProvider>
+        </FontProvider>
+      </NavigationContainer>
     </GestureHandlerRootView>
   );
 }

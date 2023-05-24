@@ -1,25 +1,21 @@
-import { useEffect } from 'react';
-import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { useEffect } from "react";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 import Animated, {
   interpolate,
   useDerivedValue,
   useSharedValue,
   withRepeat,
   withSpring,
-} from 'react-native-reanimated';
-import IonicIcon from 'react-native-vector-icons/Ionicons';
+} from "react-native-reanimated";
+import IonicIcon from "react-native-vector-icons/Ionicons";
 
-import { MyFirstMobileComponent } from 'mobile-core-ui';
+import { AppText, useThemedStyleSheet } from "mobile-core-ui";
 
-import AppText from 'components/general/AppText';
-
-import { useThemedStyleSheet } from 'hooks/useAppStyles';
-
-function RedScreen() {
+function DemoScreen() {
   const width = useSharedValue(50);
   const height = useDerivedValue(() => 1e3 / width.value);
   const borderRadius = useDerivedValue(() =>
-    interpolate(width.value, [50, 100], [0, 50]),
+    interpolate(width.value, [50, 100], [0, 50])
   );
 
   useEffect(() => {
@@ -29,33 +25,32 @@ function RedScreen() {
         restDisplacementThreshold: 0.99,
       }),
       -1,
-      true,
+      true
     );
   }, [width]);
 
   const styles = useThemedStyleSheet(() => ({
     container: {
       flex: 1,
-      alignItems: 'center',
-      justifyContent: 'center',
+      alignItems: "center",
+      justifyContent: "center",
     },
     box: {
-      backgroundColor: 'red',
+      backgroundColor: "red",
       marginVertical: 16,
-      alignItems: 'center',
-      justifyContent: 'center',
+      alignItems: "center",
+      justifyContent: "center",
       width,
       height,
       borderRadius,
     },
     text: {
-      fontWeight: 'bold',
+      fontWeight: "bold",
     },
   }));
 
   return (
     <GestureHandlerRootView style={styles.container}>
-      <MyFirstMobileComponent />
       <AppText style={styles.text}>Hello, World!</AppText>
       <Animated.View style={styles.box} />
       <IonicIcon name="ios-home" size={20} color="red" />
@@ -63,4 +58,4 @@ function RedScreen() {
   );
 }
 
-export default RedScreen;
+export default DemoScreen;

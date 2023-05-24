@@ -1,7 +1,7 @@
-import { AppNavigationProp, AppRouteProp } from 'navigator/navigatorUtils';
+import { AppNavigationProp, AppRouteProp } from "navigator/navigatorUtils";
 
 export type NavigatorParamList = {
-  RedScreen: undefined;
+  DemoScreen: undefined;
 };
 
 export type NavigatorNavigationProp = AppNavigationProp<NavigatorParamList>;
