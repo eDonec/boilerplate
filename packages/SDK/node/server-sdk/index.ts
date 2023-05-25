@@ -2,6 +2,12 @@ import { AuthNRouteTypes } from "auth-types/routes/authN";
 import axios, { AxiosError, AxiosInstance } from "axios";
 import StatusCodes from "shared-types/StatusCodes";
 
+const DEFAULT_BASE_URL =
+  process.env.NODE_ENV === "production"
+    ? //!STARTERCONF change this to your production API URL
+    `https://test.example.com/api`
+    : "http://localhost:3007/api";
+
 type ResetTokenCallback = (
   setBearerToken: (token: string | null) => ApiSDK,
   refreshToken?: string
@@ -15,13 +21,13 @@ export default class ApiSDK {
 
   private onAccessTokenChange?: (token: string | null) => void;
 
-  constructor(accessToken?: string, refreshToken?: string) {
+  constructor(
+    baseURL: string = DEFAULT_BASE_URL,
+    accessToken?: string,
+    refreshToken?: string
+  ) {
     this.api = axios.create({
-      baseURL:
-        process.env.NODE_ENV === "production"
-          ? //!STARTERCONF change this to your production API URL
-            `https://test.example.com/api`
-          : "http://localhost:3007/api",
+      baseURL,
     });
     this.initOrReInit(accessToken, refreshToken);
   }

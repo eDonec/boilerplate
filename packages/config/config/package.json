@@ -9,9 +9,11 @@
     "jest/jest-api.js",
     "eslint/eslint-next.js",
     "eslint/eslint-server.js",
-    "eslint/eslint-cra.js"
+    "eslint/eslint-cra.js",
+    "eslint/eslint-rn.js"
   ],
   "devDependencies": {
+    "@react-native-community/eslint-config": "^3.2.0",
     "@typescript-eslint/eslint-plugin": "5.51.0",
     "@typescript-eslint/parser": "5.51.0",
     "eslint-config-airbnb": "19.0.4",
@@ -28,7 +30,7 @@
     "eslint-plugin-testing-library": "5.10.1",
     "eslint-plugin-unused-imports": "2.0.0",
     "react": "18.2.0",
-    "react-scripts": "5.0.1",
+    "react-scripts": "^5.0.1",
     "ts-jest": "^29.0.5"
   }
 }

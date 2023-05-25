@@ -3,6 +3,7 @@
   "private": true,
   "version": "0.0.9",
   "scripts": {
+    "reset": "find . -type dir -name node_modules | xargs rm -rf && rm -rf yarn.lock && yarn",
     "prepare": "husky install",
     "clean": "turbo run clean",
     "start": "yarn clean && turbo run start --parallel",
@@ -20,17 +21,29 @@
     "test": "turbo run test --concurrency=1",
     "sync:workflows": "node .internal/sync-workflows.js"
   },
-  "workspaces": [
-    "apps/APIs/*",
-    "apps/*",
-    "packages/browser/*",
-    "packages/config/*",
-    "packages/node/*",
-    "packages/SDK/browser/*",
-    "packages/SDK/node/*",
-    "packages/node/api-types/*",
-    "packages/node/events/*"
-  ],
+  "workspaces": {
+    "packages": [
+      "apps/APIs/*",
+      "apps/*",
+      "packages/browser/*",
+      "packages/mobile/*",
+      "packages/config/*",
+      "packages/node/*",
+      "packages/SDK/browser/*",
+      "packages/SDK/node/*",
+      "packages/node/api-types/*",
+      "packages/node/events/*"
+    ],
+    "nohoist": [
+      "**/react",
+      "**/react-dom",
+      "**/react-native",
+      "**/react-native/**",
+      "**/react-scripts",
+      "**/@react-navigation/native",
+      "**/react-native-vector-icons"
+    ]
+  },
   "lint-staged": {
     "*.config.js": [
       "prettier -w"

@@ -1,0 +1,7 @@
+{
+  "name": "template-mobile-bolerplate",
+  "version": "1.0.0",
+  "description": "Template for mobile projects to be used in eDonec monorepo",
+  "author": "Alaaeddine Chakroun <alaaeddine.chakroun@edonec.com>",
+  "license": "MIT"
+}

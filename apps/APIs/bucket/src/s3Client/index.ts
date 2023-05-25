@@ -64,7 +64,7 @@ export const getBucketFileStream = async (
       }),
       { abortSignal: abortController?.signal }
     )
-  ).Body as fs.ReadStream;
+  ).Body as unknown as fs.ReadStream;
 
 export const deleteBucketFile = (
   key: string,

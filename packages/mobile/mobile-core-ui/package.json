@@ -1,0 +1,31 @@
+{
+  "name": "mobile-core-ui",
+  "private": true,
+  "version": "0.0.1",
+  "main": "./index.tsx",
+  "types": "./index.tsx",
+  "license": "MIT",
+  "devDependencies": {
+    "@react-navigation/native": "^6.1.6",
+    "@types/react": "18.0.27",
+    "config": "*",
+    "react": "18.2.0",
+    "react-native": "0.71.7",
+    "react-native-reanimated": "^3.1.0",
+    "tsconfig": "*"
+  },
+  "dependencies": {
+    "core-utils": "*",
+    "shared-types": "*"
+  },
+  "peerDependencies": {
+    "@react-navigation/native": "*",
+    "react": "*",
+    "react-native": "*",
+    "react-native-reanimated": "*"
+  },
+  "scripts": {
+    "test": "echo \"No tests yet...\"",
+    "lint": "eslint ."
+  }
+}
