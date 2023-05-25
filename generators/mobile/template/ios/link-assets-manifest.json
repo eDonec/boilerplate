@@ -2,62 +2,6 @@
   "migIndex": 1,
   "data": [
     {
-      "path": "assets/fonts/Bungee-Regular.ttf",
-      "sha1": "b06a159b8d3229134497d61046259c4c0305434a"
-    },
-    {
-      "path": "assets/fonts/BungeeShade-Regular.ttf",
-      "sha1": "ba5515eeed9add3dde10e5195faf9b3a47c591b3"
-    },
-    {
-      "path": "assets/fonts/Lato-Black.ttf",
-      "sha1": "5fd35255dfd38b179c80db42e1b9d40b0d05e0b3"
-    },
-    {
-      "path": "assets/fonts/Lato-BlackItalic.ttf",
-      "sha1": "1bd4d9fbeaa6059b16f91f6195f4fc849a852712"
-    },
-    {
-      "path": "assets/fonts/Lato-Bold.ttf",
-      "sha1": "d67fee08c79a82ce375ab9629ae5a903da8bb321"
-    },
-    {
-      "path": "assets/fonts/Lato-BoldItalic.ttf",
-      "sha1": "2bf1b50c9b2173944aec0662d16701f0964440f2"
-    },
-    {
-      "path": "assets/fonts/Lato-Hairline.ttf",
-      "sha1": "7e750140b50f7f2c705cf2f67c559f2c267096c7"
-    },
-    {
-      "path": "assets/fonts/Lato-HairlineItalic.ttf",
-      "sha1": "15fe0f681d9ca679074add05c28e0899d49d8dc4"
-    },
-    {
-      "path": "assets/fonts/Lato-Italic.ttf",
-      "sha1": "ebf006602bcfc0467d29735fdf3481bb6121860e"
-    },
-    {
-      "path": "assets/fonts/Lato-Light.ttf",
-      "sha1": "e0132feb514feb3cdb745d479c71dee62ad37757"
-    },
-    {
-      "path": "assets/fonts/Lato-LightItalic.ttf",
-      "sha1": "1d0caca7d22d04bc6b84d67937498a1be04ceedd"
-    },
-    {
-      "path": "assets/fonts/Lato-Regular.ttf",
-      "sha1": "83dc5921761a7c3d1ee7badba3fc7e1e1f5ed803"
-    },
-    {
-      "path": "assets/fonts/LuckiestGuy-Regular.ttf",
-      "sha1": "7701304fb627ae9caa78cd982dce30d99a591296"
-    },
-    {
-      "path": "assets/fonts/Nabla-Regular.ttf",
-      "sha1": "141ace7e64266be3c85c8fbd56ae193fcab56acb"
-    },
-    {
       "path": "assets/fonts/Poppins-Black.ttf",
       "sha1": "048555c4d0c3a6022b480be4596b1c95d605d32b"
     },
