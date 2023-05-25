@@ -19,12 +19,7 @@
     "postinstall": "manypkg check",
     "postcommit": "git push --follow-tags origin master",
     "test": "turbo run test --concurrency=1",
-    "sync:workflows": "node .internal/sync-workflows.js",
-    "metro": "yarn workspace mobile-app metro",
-    "android:start": "yarn workspace mobile-app android",
-    "android:studio": "yarn workspace mobile-app studio",
-    "ios:start": "yarn workspace mobile-app ios",
-    "ios:xcode": "yarn workspace mobile-app xcode"
+    "sync:workflows": "node .internal/sync-workflows.js"
   },
   "workspaces": {
     "packages": [
