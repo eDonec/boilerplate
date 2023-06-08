@@ -1,4 +1,4 @@
-import { FC, useMemo } from "react";
+import { FC } from "react";
 
 import { dehydrate, QueryClient } from "@tanstack/react-query";
 import Api from "api";
@@ -6,7 +6,6 @@ import { LeanCategoryDocument } from "categories-types/models/Category";
 import { SEO } from "core-next-components";
 import { Button } from "core-ui";
 import { clsx } from "core-utils";
-import { ThreadSorting } from "threads-types/utils";
 
 import { GetStaticPaths, GetStaticProps } from "next";
 import Link from "next/link";
@@ -17,11 +16,8 @@ import { QueryKeys } from "constants/queryKeys";
 import BlendedText from "components/BlendedText";
 import BlogCard from "components/blogs/BlogCard";
 import GlassmorphicCard from "components/GlassmorphicCard";
-import MinimalThreadListItem from "components/threads/MinimalThreadListItem";
 
 import { useInfiniteBlogsByCategoryQuery } from "hooks/queries/useInfiniteBlogsByCategoryQuery";
-import { useInfiniteThreadsQuery } from "hooks/queries/useInfiniteThreadsQuery";
-import { getThreadSortingFromQuery } from "helpers/getThreadSortingFromQuery";
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   try {
     if (typeof params?.slug !== "string")
@@ -42,16 +38,6 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
         })
       ),
     ]);
-
-    await queryClient.fetchInfiniteQuery(
-      [QueryKeys.THREADS, ThreadSorting.HOT, category.slug],
-      () =>
-        Api.threadsSDK.getThreads({
-          query: {
-            category: category.slug,
-          },
-        })
-    );
 
     return {
       props: {
@@ -95,25 +81,9 @@ const BlogsByCategoryPage: FC<BlogsByCategoryPageProps> = ({
 }) => {
   const router = useRouter();
 
-  const { routerCategory } = useMemo(() => {
-    return {
-      currentSort: getThreadSortingFromQuery(router.query),
-      routerCategory:
-        typeof router.query.slug === "string" ? router.query.slug : undefined,
-    };
-  }, [router.query]);
-
   const { data, fetchNextPage, hasNextPage } = useInfiniteBlogsByCategoryQuery(
     router.query.slug as string
   );
-
-  const {
-    data: threadsData,
-    hasNextPage: threadsHasNextPage,
-    fetchNextPage: threadsFetchNextPage,
-  } = useInfiniteThreadsQuery({
-    category: routerCategory,
-  });
 
   if (!categories || !category) return null;
 
@@ -170,24 +140,6 @@ const BlogsByCategoryPage: FC<BlogsByCategoryPageProps> = ({
                   )}
                 </div>
               ))}
-            </div>
-            <div className="flex flex-col gap-2">
-              <h3>Publications</h3>
-              {threadsData?.pages
-                .map((page) => page.items)
-                .flat()
-                .map((item) => (
-                  <MinimalThreadListItem
-                    key={item._id}
-                    thread={item}
-                    textClassName="!line-clamp-3 md:!line-clamp-3"
-                  />
-                ))}
-              {threadsHasNextPage && (
-                <Button onClick={() => threadsFetchNextPage()}>
-                  Voir plus
-                </Button>
-              )}
             </div>
           </GlassmorphicCard>
         </div>
