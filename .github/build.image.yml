@@ -1,6 +1,18 @@
-${{packageName}}-build-and-publish-${{stage}}:
+name: "{{microserviceName}} build and push image to GH registry"
+
+on:
+  push:
+    branches: [{{branchName}}]
+    paths:
+      - .docker/Dockerfile.{{dockerfile}}
+      - .github/build.image.yml
+      - .github/workflows/build-{{microserviceName}}-image.yml
+{{triggerCondition}}
+
+jobs:
+  {{microserviceName}}-build-and-push-to-regestry:
     runs-on: ubuntu-latest
-${{changeCondition}}
+    if: github.ref == 'refs/heads/master'
     steps:
       -
         name: Checkout
@@ -20,9 +32,9 @@ ${{changeCondition}}
         uses: docker/build-push-action@v3
         with:
           context: .
-          file: ${{Dockerfile}}
+          file: {{dockerfile}}
           push: true
-          build-args: MICROSERVICE_NAME=${{packageName}}
-          tags: ghcr.io/edonec/boilerplate/${{packageName}}:${{stage}}
+          build-args: MICROSERVICE_NAME={{microserviceName}}
+          tags: ghcr.io/edonec/mr-psychologue/{{microserviceName}}:staging
           cache-from: type=gha
           cache-to: type=gha,mode=max
