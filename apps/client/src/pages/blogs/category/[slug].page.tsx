@@ -6,7 +6,6 @@ import { LeanCategoryDocument } from "categories-types/models/Category";
 import { SEO } from "core-next-components";
 import { Button } from "core-ui";
 import { clsx } from "core-utils";
-import { ThreadSorting } from "threads-types/utils";
 
 import { GetStaticPaths, GetStaticProps } from "next";
 import Link from "next/link";
@@ -42,16 +41,6 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
         })
       ),
     ]);
-
-    await queryClient.fetchInfiniteQuery(
-      [QueryKeys.THREADS, ThreadSorting.HOT, category.slug],
-      () =>
-        Api.threadsSDK.getThreads({
-          query: {
-            category: category.slug,
-          },
-        })
-    );
 
     return {
       props: {
