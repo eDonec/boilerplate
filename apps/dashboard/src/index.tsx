@@ -1,7 +1,6 @@
 import React from "react";
 import { createRoot } from "react-dom/client";
 import { Toaster } from "react-hot-toast";
-import { Provider } from "react-redux";
 
 import Api from "api";
 import { AuthenticatorProvider } from "authenticator";
@@ -13,8 +12,6 @@ import "config/tailwind/styles/globals.css";
 import "styles/custom.css";
 
 import AppRouter from "containers/AppRouter";
-
-import store from "_redux/store";
 
 const container = document.getElementById("root");
 
@@ -30,11 +27,9 @@ root.render(
         mainApi={Api.mainApi}
         role={["SUPER_ADMIN", "ADMIN"]}
       >
-        <Provider store={store}>
-          <Toaster />
-          <GDPRConsent />
-          <AppRouter />
-        </Provider>
+        <Toaster />
+        <GDPRConsent />
+        <AppRouter />
       </AuthenticatorProvider>
     </DarkModeProvider>
   </React.StrictMode>

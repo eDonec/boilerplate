@@ -5,21 +5,16 @@ import Api from "api";
 import { useFirstMount } from "core-hooks";
 import { LeanMicroServiceStatusDocument } from "health-types/models/MicroserviceStatus";
 
-import { useLoading } from "hooks/reduxHooks";
-
 export const useHealth = () => {
   const isFirstMount = useFirstMount();
-  const { isLoading, startLoading, stopLoading } = useLoading();
   const [microserviceStatuses, setMicroserviceStatuses] =
     useState<LeanMicroServiceStatusDocument[]>();
 
   if (isFirstMount) {
-    startLoading();
     Api.healthSDK
       .getMicroservicesStatus({})
       .then((res) => {
         setMicroserviceStatuses(res);
-        stopLoading();
       })
       .catch((error) => {
         toast.error((error as Error).message);
@@ -27,7 +22,6 @@ export const useHealth = () => {
   }
 
   return {
-    isLoading,
     microserviceStatuses,
   };
 };

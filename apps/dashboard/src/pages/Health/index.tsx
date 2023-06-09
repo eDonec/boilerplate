@@ -12,7 +12,7 @@ import { toPropperCase } from "helpers/toProperCase";
 import { useHealth } from "./useHealth";
 
 const Health = () => {
-  const { isLoading, microserviceStatuses } = useHealth();
+  const { microserviceStatuses } = useHealth();
   const outletContext = useOutletContext();
 
   return (
@@ -22,7 +22,7 @@ const Health = () => {
       isExplicit
     >
       <div className="mt-10 flex flex-wrap">
-        {isLoading || !microserviceStatuses ? (
+        {!microserviceStatuses ? (
           <div>Loading...</div>
         ) : (
           <div className="my-10 grid flex-1 grid-cols-[repeat(auto-fit,minmax(15rem,1fr))] gap-4 dark:text-gray-200">
