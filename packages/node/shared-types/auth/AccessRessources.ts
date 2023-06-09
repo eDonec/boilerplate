@@ -10,4 +10,5 @@ export enum ACCESS_RESSOURCES {
   "FILES" = "FILES",
   "BLOGS" = "BLOGS",
   "CATEGORY" = "CATEGORY",
+  "USER" = "USER",
 }
