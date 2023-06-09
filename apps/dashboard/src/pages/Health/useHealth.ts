@@ -5,7 +5,7 @@ import Api from "api";
 import { useFirstMount } from "core-hooks";
 import { LeanMicroServiceStatusDocument } from "health-types/models/MicroserviceStatus";
 
-import { useLoading } from "hooks/reduxHooks";
+import useLoading from "hooks/useLoading";
 
 export const useHealth = () => {
   const isFirstMount = useFirstMount();

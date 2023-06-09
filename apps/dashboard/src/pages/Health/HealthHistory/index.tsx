@@ -15,7 +15,9 @@ const HealthHistory = () => {
         <tr>
           <th colSpan={2} className="text-left">
             Service Name :{" "}
-            {isLoading ? "loading..." : toPropperCase(microserviceName || "")}
+            {microserviceName
+              ? "loading..."
+              : toPropperCase(microserviceName || "")}
           </th>
         </tr>
         <tr>
@@ -50,9 +52,9 @@ const HealthHistory = () => {
                 )}
                 <td>
                   {sample.status === "OK" ? (
-                    <div className="dark:bg-success-400 hover:bg-success-500 dark:hover:bg-success-700 bg-success-200  h-2 w-16 rounded-full" />
+                    <div className="h-2 w-16 rounded-full bg-success-200  hover:bg-success-500 dark:bg-success-400 dark:hover:bg-success-700" />
                   ) : (
-                    <div className="dark:bg-danger-400 hover:bg-danger-500 dark:hover:bg-danger-700 bg-danger-200  h-2 w-16 rounded-full" />
+                    <div className="h-2 w-16 rounded-full bg-danger-200  hover:bg-danger-500 dark:bg-danger-400 dark:hover:bg-danger-700" />
                   )}
                 </td>
               </tr>

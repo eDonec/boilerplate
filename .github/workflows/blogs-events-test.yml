@@ -1,5 +1,5 @@
 name:
-  "Test auth-events On PR Creation / update"
+  "Test blogs-events On PR Creation / update"
 
   # pull_request_review:
   # types: [submitted]
@@ -7,17 +7,15 @@ on:
   pull_request:
     types: [opened, synchronize, edited]
     paths:
-      - ".github/workflows/auth-events*"
-      - "packages/node/events/auth-events/**"
-      - "packages/node/api-types/auth-types/**"
+      - ".github/workflows/blogs-events*"
+      - "packages/node/events/blogs-events/**"
+      - "packages/node/api-types/blogs-types/**"
       - "packages/node/events/consumer/**"
       - "packages/node/events/producer/**"
-      - "packages/node/http-server/**"
-      - "packages/node/custom-error/**"
-      - "packages/node/token/**"
+      - "packages/node/api-types/categories-types/**"
 
 jobs:
-  lint-and-test-auth-events:
+  lint-and-test-blogs-events:
     # if: github.event.review.state == 'approved'
     runs-on: ubuntu-latest
     steps:
@@ -59,7 +57,7 @@ jobs:
 #          make compose-dev
 
       - name: Run lint
-        run: yarn lint --filter=auth-events
+        run: yarn lint --filter=blogs-events
 
       - name: Run tests
         run: |
@@ -86,4 +84,4 @@ jobs:
           echo "KAFKA_BROKERS=localhost:9092" >> .env
 
           echo "yarn test"
-          yarn test --filter=auth-events
+          yarn test --filter=blogs-events
