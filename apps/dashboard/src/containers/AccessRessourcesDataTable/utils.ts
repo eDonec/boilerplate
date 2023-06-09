@@ -25,6 +25,7 @@ export const ressourcesTitleDict: Record<ACCESS_RESSOURCES, string> = {
   [ACCESS_RESSOURCES.FILES]: "Files",
   [ACCESS_RESSOURCES.BLOGS]: "Blogs",
   [ACCESS_RESSOURCES.CATEGORY]: "Category",
+  [ACCESS_RESSOURCES.USER]: "User",
 };
 
 export const isVisiblePrevilege = (input: unknown): input is PRIVILEGE =>
