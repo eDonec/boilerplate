@@ -6,7 +6,8 @@ import { useHealthHistory } from "./useHealthHistory";
 
 const loadingArray = new Array(50).fill(0);
 const HealthHistory = () => {
-  const { microserviceStatusHistory, microserviceName } = useHealthHistory();
+  const { isLoading, microserviceStatusHistory, microserviceName } =
+    useHealthHistory();
 
   return (
     <table className="ml-4 dark:text-gray-50 md:min-w-[200px]">
@@ -22,14 +23,12 @@ const HealthHistory = () => {
         <tr>
           <th colSpan={2} className="text-left leading-10">
             Current Status:{" "}
-            {microserviceName
-              ? "loading..."
-              : microserviceStatusHistory?.status}
+            {isLoading ? "loading..." : microserviceStatusHistory?.status}
           </th>
         </tr>
       </thead>
       <tbody>
-        {microserviceName
+        {isLoading
           ? loadingArray.map((_, index) => (
               <tr key={index} className="mt-1 h-2 dark:text-gray-200">
                 {index % 10 === 0 && (

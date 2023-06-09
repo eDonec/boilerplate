@@ -10,8 +10,11 @@ import { MICROSERVICE_LIST } from "shared-types";
 
 import { useInitRoute } from "containers/AppRouter/useInitRoute";
 
+import useLoading from "hooks/useLoading";
+
 export const useHealthHistory = () => {
   const isFirstMount = useFirstMount();
+  const { isLoading, startLoading, stopLoading } = useLoading();
   const [
     microserviceStatusHistory,
     setMicroserviceStatusHMicroserviceStatusHistory,
@@ -45,6 +48,7 @@ export const useHealthHistory = () => {
   );
 
   if (isFirstMount && !(!params.name || !MICROSERVICE_LIST[params.name])) {
+    startLoading();
     Api.healthSDK
       .getMicroserviceStatusHistoryByName({
         params: { name: params.name },
@@ -52,6 +56,7 @@ export const useHealthHistory = () => {
       })
       .then((res) => {
         setMicroserviceStatusHMicroserviceStatusHistory(res);
+        stopLoading();
       })
       .catch((error) => {
         toast.error((error as Error).message);
@@ -64,6 +69,7 @@ export const useHealthHistory = () => {
       !(!params.name || !MICROSERVICE_LIST[params.name]) &&
       microserviceStatusHistory?.microserviceName !== params.name
     ) {
+      startLoading();
       Api.healthSDK
         .getMicroserviceStatusHistoryByName({
           params: { name: params.name },
@@ -71,6 +77,7 @@ export const useHealthHistory = () => {
         })
         .then((res) => {
           setMicroserviceStatusHMicroserviceStatusHistory(res);
+          stopLoading();
         })
         .catch((error) => {
           toast.error((error as Error).message);
@@ -79,6 +86,7 @@ export const useHealthHistory = () => {
   }, [params.name]);
 
   return {
+    isLoading,
     microserviceStatusHistory,
     microserviceName: params.name,
   };
