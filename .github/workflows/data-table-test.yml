@@ -7,16 +7,20 @@ on:
   pull_request:
     types: [opened, synchronize, edited]
     paths:
-      - "packages/browser/data-table/**"
       - ".github/workflows/data-table*"
-#      - "packages/**"
-
-# this runs when a PR is opened and a the review is approved
-# TODO: we need another one for when a PR is opened and unpdated
-# in both of the above we may not need to build the app
-# upon mering to master we need to build and push to the regestry
-# only the updated apps
-# Versionning needs to be done as well fo updated packages
+      - "packages/browser/data-table/**"
+      - "packages/browser/core-hooks/**"
+      - "packages/browser/core-ui/**"
+      - "packages/node/core-utils/**"
+      - "packages/browser/forms/**"
+      - "packages/SDK/node/bucket-sdk/**"
+      - "packages/node/api-types/bucket-types/**"
+      - "packages/SDK/node/server-sdk/**"
+      - "packages/node/api-types/auth-types/**"
+      - "packages/node/http-server/**"
+      - "packages/node/custom-error/**"
+      - "packages/node/token/**"
+      - "packages/node/field-validator/**"
 
 jobs:
   lint-and-test-data-table:
@@ -30,10 +34,9 @@ jobs:
 
       - name: Get yarn cache directory path
         id: yarn-cache-dir-path
-        run: echo "::set-output name=dir::$(yarn cache dir)"
-      - name: Cache yarn cache
-        uses: actions/cache@v2
-        id: cache-yarn-cache
+        run: echo "dir=$(yarn cache dir)" >> $GITHUB_OUTPUT
+      - uses: actions/cache@v3
+        id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
         with:
           path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
           key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
@@ -41,12 +44,12 @@ jobs:
             ${{ runner.os }}-yarn-
       - name: Cache node_modules
         id: cache-node-modules
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: node_modules
-          key: ${{ runner.os }}-${{ matrix.node-version }}-nodemodules-${{ hashFiles('**/yarn.lock') }}
+          key: ${{ runner.os }}-nodemodules-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
-            ${{ runner.os }}-${{ matrix.node-version }}-nodemodules-
+            ${{ runner.os }}-nodemodules-
 
       - name: Setup Node.js/ yarn environment
         uses: actions/setup-node@v3
@@ -55,9 +58,9 @@ jobs:
           cache: "yarn"
       - run: yarn
         if: |
-          steps.cache-yarn-cache.outputs.cache-hit != 'true' ||
+          steps.yarn-cache.outputs.cache-hit != 'true' ||
           steps.cache-node-modules.outputs.cache-hit != 'true'
-#      - name: Start Redis
+#      - name: Start Side Services
 #        run: |
 #          make compose-dev
 
@@ -65,4 +68,28 @@ jobs:
         run: yarn lint --filter=data-table
 
       - name: Run tests
-        run: yarn test --filter=data-table
+        run: |
+          touch .env
+          echo "AWS_REGION=${{ secrets.AWS_REGION }}" >> .env
+          echo "AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }}" >> .env
+          echo "AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}" >> .env
+          echo "NODE_ENV=test" >> .env
+          echo "ACCESS_TOKEN_SECRET_KEY=${{ secrets.ACCESS_TOKEN_SECRET_KEY }}" >> .env
+          echo "REFRESH_TOKEN_SECRET_KEY=${{ secrets.REFRESH_TOKEN_SECRET_KEY }}" >> .env
+          echo "TOKEN_EXPIRES_IN=${{ secrets.TOKEN_EXPIRES_IN }}" >> .env
+          echo "REFRESH_TOKEN_EXPIRES_IN=${{ secrets.REFRESH_TOKEN_EXPIRES_IN }}" >> .env
+          echo "NODE_TLS_REJECT_UNAUTHORIZED=0" >> .env
+          echo "ROOT_USER_EMAIL=test@email.com" >> .env
+          echo "ROOT_USER_PASSWORD=testpasword" >> .env
+          echo "UPLOAD_SECRET_KEY=${{ secrets.UPLOAD_SECRET_KEY }}" >> .env
+          echo "GOOGLE_CLIENT_ID=${{ secrets. GOOGLE_CLIENT_ID }}" >> .env
+          echo "NEXT_PUBLIC_GOOGLE_CLIENT_ID=${{ secrets. NEXT_PUBLIC_GOOGLE_CLIENT_ID }}" >> .env
+          echo "REACT_APP_GOOGLE_CLIENT_ID=${{ secrets. REACT_APP_GOOGLE_CLIENT_ID }}" >> .env
+          echo "FACEBOOK_APP_ID=${{ secrets. FACEBOOK_APP_ID }}" >> .env
+          echo "NEXT_PUBLIC_FACEBOOK_APP_ID=${{ secrets. NEXT_PUBLIC_FACEBOOK_APP_ID }}" >> .env
+          echo "REACT_APP_FACEBOOK_APP_ID=${{ secrets. REACT_APP_FACEBOOK_APP_ID }}" >> .env
+          echo "DATABASE_BASE_URI=mongodb://127.0.0.1:27017" >> .env
+          echo "KAFKA_BROKERS=localhost:9092" >> .env
+
+          echo "yarn test"
+          yarn test --filter=data-table

@@ -1,0 +1,40 @@
+name: "og-image-generator build and push image to GH registry"
+
+on:
+  push:
+    branches: [master]
+    paths:
+      - .docker/Dockerfile..docker/Dockerfile.next
+      - .github/build.image.yml
+      - .github/workflows/build-og-image-generator-image.yml
+      - "apps/og-image-generator/**"
+
+jobs:
+  og-image-generator-build-and-push-to-regestry:
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/master'
+    steps:
+      -
+        name: Checkout
+        uses: actions/checkout@v3
+      -
+        name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+      -
+        name: Login to GitHub Container Registry
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      -
+        name: Build and push
+        uses: docker/build-push-action@v3
+        with:
+          context: .
+          file: .docker/Dockerfile.next
+          push: true
+          build-args: MICROSERVICE_NAME=og-image-generator
+          tags: ghcr.io/edonec/mr-psychologue/og-image-generator:staging
+          cache-from: type=gha
+          cache-to: type=gha,mode=max

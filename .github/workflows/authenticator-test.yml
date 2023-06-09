@@ -1,5 +1,5 @@
 name:
-  "Test auth-events On PR Creation / update"
+  "Test authenticator On PR Creation / update"
 
   # pull_request_review:
   # types: [submitted]
@@ -7,17 +7,24 @@ on:
   pull_request:
     types: [opened, synchronize, edited]
     paths:
-      - ".github/workflows/auth-events*"
-      - "packages/node/events/auth-events/**"
+      - ".github/workflows/authenticator*"
+      - "packages/browser/authenticator/**"
+      - "packages/SDK/node/auth-sdk/**"
       - "packages/node/api-types/auth-types/**"
-      - "packages/node/events/consumer/**"
-      - "packages/node/events/producer/**"
+      - "packages/browser/core-hooks/**"
+      - "packages/browser/core-ui/**"
+      - "packages/node/core-utils/**"
+      - "packages/browser/forms/**"
+      - "packages/SDK/node/server-sdk/**"
       - "packages/node/http-server/**"
       - "packages/node/custom-error/**"
       - "packages/node/token/**"
+      - "packages/SDK/node/bucket-sdk/**"
+      - "packages/node/api-types/bucket-types/**"
+      - "packages/node/field-validator/**"
 
 jobs:
-  lint-and-test-auth-events:
+  lint-and-test-authenticator:
     # if: github.event.review.state == 'approved'
     runs-on: ubuntu-latest
     steps:
@@ -59,7 +66,7 @@ jobs:
 #          make compose-dev
 
       - name: Run lint
-        run: yarn lint --filter=auth-events
+        run: yarn lint --filter=authenticator
 
       - name: Run tests
         run: |
@@ -86,4 +93,4 @@ jobs:
           echo "KAFKA_BROKERS=localhost:9092" >> .env
 
           echo "yarn test"
-          yarn test --filter=auth-events
+          yarn test --filter=authenticator

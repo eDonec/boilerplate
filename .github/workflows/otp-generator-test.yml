@@ -1,5 +1,5 @@
 name:
-  "Test auth-events On PR Creation / update"
+  "Test otp-generator On PR Creation / update"
 
   # pull_request_review:
   # types: [submitted]
@@ -7,17 +7,11 @@ on:
   pull_request:
     types: [opened, synchronize, edited]
     paths:
-      - ".github/workflows/auth-events*"
-      - "packages/node/events/auth-events/**"
-      - "packages/node/api-types/auth-types/**"
-      - "packages/node/events/consumer/**"
-      - "packages/node/events/producer/**"
-      - "packages/node/http-server/**"
-      - "packages/node/custom-error/**"
-      - "packages/node/token/**"
+      - ".github/workflows/otp-generator*"
+      - "packages/node/otp-generator/**"
 
 jobs:
-  lint-and-test-auth-events:
+  lint-and-test-otp-generator:
     # if: github.event.review.state == 'approved'
     runs-on: ubuntu-latest
     steps:
@@ -59,7 +53,7 @@ jobs:
 #          make compose-dev
 
       - name: Run lint
-        run: yarn lint --filter=auth-events
+        run: yarn lint --filter=otp-generator
 
       - name: Run tests
         run: |
@@ -86,4 +80,4 @@ jobs:
           echo "KAFKA_BROKERS=localhost:9092" >> .env
 
           echo "yarn test"
-          yarn test --filter=auth-events
+          yarn test --filter=otp-generator

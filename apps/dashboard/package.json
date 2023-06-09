@@ -12,7 +12,6 @@
   },
   "dependencies": {
     "@edonec/indexed-db-class": "^1.0.7",
-    "@reduxjs/toolkit": "1.9.5",
     "@types/node": "18.16.3",
     "@types/react": "18.0.28",
     "@types/react-calendar": "^3.9.0",
@@ -42,7 +41,6 @@
     "react-hook-form": "7.43.9",
     "react-hot-toast": "^2.4.1",
     "react-i18next": "12.2.2",
-    "react-redux": "8.0.5",
     "react-router-dom": "6.11.1",
     "server-sdk": "*",
     "shared-types": "*"
