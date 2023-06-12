@@ -29,7 +29,7 @@ const ProfileAvatar = ({ authClient }: { authClient: AuthResponse }) => {
           },
         ]}
         trigger={
-          <button className=" cursor-pointer ">
+          <div className=" cursor-pointer ">
             <div className="w-auto p-3">
               <div className="-m-2 flex flex-wrap items-center">
                 <div className="w-auto p-2">
@@ -79,7 +79,7 @@ const ProfileAvatar = ({ authClient }: { authClient: AuthResponse }) => {
                 </div>
               </div>
             </div>
-          </button>
+          </div>
         }
         itemClassName={clsx(
           "cursor-default select-none items-center rounded-md text-sm outline-none",

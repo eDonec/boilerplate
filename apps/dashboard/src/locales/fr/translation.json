@@ -1,6 +1,5 @@
 {
   "imagePicker": {
-    "dragPrompt": "FR: Redux Counter",
     "draggingPrompt": "FR: CRA + Tailwind CSS + TypeScript + Redux Tookit",
     "maxFilesPrompt": "(Un maximum de :maxFiles fichier(s))"
   },
