@@ -13,12 +13,11 @@ type Props = {
 const SidebarLinkSection: React.FC<Props> = ({
   title: sectionTitle,
   links,
-  notification,
 }) => (
   <>
     <div className="py-3 pl-4 text-gray-50">{sectionTitle}</div>
     <ul className="pl-4">
-      {links.map(({ title, to, Icon, privileges }) => (
+      {links.map(({ title, to, Icon, privileges, notificationCountGetter }) => (
         <AccessProtectedWrapper
           key={to}
           ressource={privileges?.ressource}
@@ -27,10 +26,7 @@ const SidebarLinkSection: React.FC<Props> = ({
           <SidebarLink
             to={to}
             title={title}
-            numberOfUnseenNotifications={
-              notification?.find((notifiy) => notifiy.route === title)
-                ?.numberOfUnseenNotifications
-            }
+            notificationCountGetter={notificationCountGetter}
           >
             <Icon />
           </SidebarLink>

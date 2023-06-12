@@ -1,6 +1,5 @@
 {
   "imagePicker": {
-    "dragPrompt": "FR: Redux Counter",
     "draggingPrompt": "FR: CRA + Tailwind CSS + TypeScript + Redux Tookit",
     "maxFilesPrompt": "(Un maximum de :maxFiles fichier(s))"
   },
@@ -36,7 +35,8 @@
     "resetPassword": "Réussite de la demande de réinitialisation du mot de passe",
     "forgetPassword": "Réinitialisation du mot de passe avec succès",
     "logout": "Déconnecté avec succès",
-    "unauthorized": "Tu n'as pas accès "
+    "unauthorized": "Tu n'as pas accès ",
+    "loginFacebookError": "Une erreur est survenue lors de la connexion avec Facebook"
   },
   "homePage": {
     "joinUsButton": "Nous rejoindre",
@@ -45,6 +45,108 @@
   "linksNames": {
     "dashboard": "Administration",
     "authenticatedClients": "List des clients authentifiés",
-    "roles": "Liste des rôles"
+    "roles": "Liste des rôles",
+    "health": "Microservices health",
+    "blogs": "Blogs",
+    "categories": "Catégories",
+    "threads": "Threads",
+    "calendar": "Calendrier",
+    "schedule": "Schedule"
+  },
+  "blog": {
+    "addNewBlog": "Ajouter un nouveau blog",
+    "editBlog": "Modifier le blog",
+    "deleteBlog": "Supprimer le blog",
+    "blogDeletedSuccess": "Blog supprimé avec succès",
+    "blogUpdatedSuccess": "Blog mis à jour avec succès",
+    "blogCreatedSuccess": "Blog créé avec succès",
+    "creationTitle": "Création d'un blog",
+    "creationBody": "Voulez-vous vraiment créer ce blog ?",
+    "updateTitle": "Modification d'un blog",
+    "updateBody": "Voulez-vous vraiment modifier ce blog ?",
+    "deleteTitle": "Suppression d'un blog",
+    "deleteBody": "Voulez-vous vraiment supprimer ce blog ?",
+    "title": "Titre",
+    "description": "Description",
+    "banner": "Bannière",
+    "content": "Contenu"
+  },
+  "cateogry": {
+    "addNewCategory": "Ajouter une nouvelle catégorie",
+    "editCategory": "Modifier la catégorie",
+    "deleteCategory": "Supprimer la catégorie",
+    "categoryDeletedSuccess": "Catégorie supprimée avec succès",
+    "categoryUpdatedSuccess": "Catégorie mise à jour avec succès",
+    "categoryCreatedSuccess": "Catégorie créée avec succès",
+    "creationTitle": "Création d'une catégorie",
+    "creationBody": "Voulez-vous vraiment créer cette catégorie?",
+    "updateTitle": "Modification d'une catégorie",
+    "updateBody": "Voulez-vous vraiment modifier cette catégorie?",
+    "deleteTitle": "Suppression d'une catégorie",
+    "deleteBody": "Voulez-vous vraiment supprimer cette catégorie?",
+    "title": "Titre",
+    "description": "Description"
+  },
+  "days": {
+    "sunday": "Dimanche",
+    "monday": "Lundi",
+    "tuesday": "Mardi",
+    "wednesday": "Mercredi",
+    "thursday": "Jeudi",
+    "friday": "Vendredi",
+    "saturday": "Samedi"
+  },
+  "schedulePage": {
+    "setDuration": "Sélectionnez la durée du Rendez-vous",
+    "setStartAndFinish": "Assignez les horaires de début et de fin de journée",
+    "from": "De : ",
+    "to": "à : ",
+    "setWorkHours": "Assignez les heures de travail pour chaque jour de la semaine"
+  },
+  "reservationPage": {
+    "title": "Rendez-vous médical",
+    "description": "Prendre rendez-vous avec un médecin",
+    "btnReservation": "Prendre un rendez-vous",
+    "from": "de",
+    "to": "à",
+    "selectYrTime": "Sélectionnez votre heure préférée",
+    "bookingTitle": "Réserver un rendez-vous",
+    "alertMsg": "Confirmez-vous votre souhait de réserver un rendez-vous pour le",
+    "form": {
+      "filePickerLabel": "Téléchargez votre image de paiement",
+      "transferCodeInput": "Code de transfert"
+    },
+    "patient": "Nom du Patient"
+  },
+  "validateReservations": {
+    "title": "Gestion des réservations",
+    "description": "Gestion de vos Réservations",
+    "scheduleAnAppointment": "Rendez-vous pour le",
+    "cancel": "Annuler",
+    "reject": "Rejeter",
+    "approuve": "Approuver",
+    "accepted": "Remettre en Attente",
+    "onStandBy": "En attente",
+    "edit": "Modifier",
+    "patient": "Nom du Patient",
+    "paymentDocument": "Document de Paiement",
+    "transferCode": "Code de Transfert"
+  },
+  "calendarPage": {
+    "toolbarControls": "Parcourir ",
+    "toolbarViewSwitch": "Changer de Vue",
+    "today": "Aujourd'hui"
+  },
+  "paymentPage": {
+    "booking": "Reservation",
+    "status": "Status",
+    "modalTitle": "Valider/refuser paiement postal",
+    "paymentDocument": "Document Postal",
+    "transferCode": "Code de Transfer",
+    "noDocumentYet": "NO DOCUMENT PROVIDED YET, THIS PAYMENT WILL BE INVALIDATED AUTOMATICALLY IF NO DOCUMENT IS PROVIDED",
+    "noDocument": "NO DOCUMENT PROVIDED"
+  },
+  "meta": {
+    "description": "Meta description"
   }
 }

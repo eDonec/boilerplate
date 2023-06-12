@@ -53,7 +53,7 @@
   "dependencies": {
     "@commitlint/config-conventional": "17.6.3",
     "@craco/craco": "7.1.0",
-    "@edonec/generator": "latest",
+    "@edonec/generator": "^1.5.2",
     "@edonec/route-generator": "latest",
     "@manypkg/cli": "^0.20.0",
     "@testing-library/jest-dom": "5.16.5",

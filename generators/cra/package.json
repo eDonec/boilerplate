@@ -1,15 +1,29 @@
 {
   "name": "MICROSERVICE_NAME_PLACEHOLDER",
-  "version": "0.2.0",
   "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "start": "vite --host",
+    "build": "yarn clean && tsc && vite build",
+    "clean": "rimraf build",
+    "lint": "tsc --noEmit && eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "preview": "vite preview"
+  },
   "dependencies": {
     "@edonec/indexed-db-class": "^1.0.7",
-    "@reduxjs/toolkit": "1.9.5",
     "@types/node": "18.16.3",
     "@types/react": "18.0.28",
+    "@types/react-calendar": "^3.9.0",
     "@types/react-dom": "18.0.10",
     "auth-sdk": "*",
     "auth-types": "*",
+    "authenticator": "*",
+    "blogs-sdk": "*",
+    "blogs-types": "*",
+    "categories-sdk": "*",
+    "categories-types": "*",
+    "config": "*",
     "core-cra-components": "*",
     "core-hooks": "*",
     "core-ui": "*",
@@ -18,6 +32,7 @@
     "data-table": "*",
     "date-fns": "2.30.0",
     "forms": "*",
+    "gdpr": "*",
     "health-sdk": "*",
     "health-types": "*",
     "i18next": "22.4.15",
@@ -26,19 +41,13 @@
     "react-hook-form": "7.43.9",
     "react-hot-toast": "^2.4.1",
     "react-i18next": "12.2.2",
-    "react-redux": "8.0.5",
     "react-router-dom": "6.11.1",
     "server-sdk": "*",
-    "shared-types": "*",
-    "web-vitals": "3.1.1"
+    "shared-types": "*"
   },
-  "scripts": {
-    "start": "craco start",
-    "clean": "rimraf build",
-    "build": "yarn clean && craco build",
-    "test": "craco test --coverage --watchAll=false",
-    "eject": "craco eject",
-    "lint": "tsc --noEmit && eslint src --fix"
+  "devDependencies": {
+    "@types/tailwindcss": "3.0.11",
+    "prettier-plugin-tailwindcss": "0.2.8"
   },
   "homepage": "BASE_URL_PLACEHOLDER",
   "browserslist": {
@@ -52,9 +61,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "devDependencies": {
-    "@types/tailwindcss": "3.0.11",
-    "prettier-plugin-tailwindcss": "0.2.8"
   }
 }

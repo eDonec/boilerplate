@@ -10,8 +10,50 @@ export const routes: Routes = [
     title: "Dashboard",
     links: [
       {
-        title: "Home",
+        title: "Health",
         to: "/",
+        Icon: DashboardIcon,
+      },
+    ],
+  },
+  {
+    title: "Clients",
+    links: [
+      {
+        title: "Authenticated Clients",
+        to: "/authenticated-clients",
+        privileges: {
+          ressource: ACCESS_RESSOURCES.AUTHENTICATED_CLIENTS,
+          privileges: PRIVILEGE.READ,
+        },
+        Icon: DashboardIcon,
+      },
+    ],
+  },
+  {
+    title: "Blogs",
+    links: [
+      {
+        title: "Blogs",
+        to: "/blogs",
+        privileges: {
+          ressource: ACCESS_RESSOURCES.BLOGS,
+          privileges: PRIVILEGE.READ,
+        },
+        Icon: DashboardIcon,
+      },
+    ],
+  },
+  {
+    title: "Categories",
+    links: [
+      {
+        title: "Categories",
+        to: "/categories",
+        privileges: {
+          ressource: ACCESS_RESSOURCES.CATEGORY,
+          privileges: PRIVILEGE.READ,
+        },
         Icon: DashboardIcon,
       },
     ],
@@ -19,6 +61,14 @@ export const routes: Routes = [
   {
     title: "Configuration",
     links: [
+      {
+        title: "Roles",
+        to: "/roles",
+        privileges: {
+          ressource: ACCESS_RESSOURCES.ROLE,
+        },
+        Icon: DashboardIcon,
+      },
       {
         title: "Health checks",
         to: "/health",
@@ -34,7 +84,7 @@ export const routes: Routes = [
 
 export type UnseenNotification = {
   numberOfUnseenNotifications: number;
-  route: "Home" | "Roles" | "Authenticated Clients";
+  route: "Home" | "Roles" | "Authenticated Clients" | "Documents";
 };
 
 export type Routes = {
@@ -45,5 +95,6 @@ export type Routes = {
     to: keyof LinkTranslator;
     privileges?: Privileges;
     Icon: typeof DashboardIcon;
+    notificationCountGetter?: () => Promise<{ count: number }>;
   }[];
 }[];

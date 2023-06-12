@@ -27,7 +27,7 @@ const ProfileAvatar = () => {
         trigger={
           <button className="flex h-10 w-10 cursor-pointer rounded-full bg-gray-300 text-sm focus:ring-4 md:mr-0">
             <span className="sr-only">Open user menu</span>
-            <span className="m-auto text-2xl">
+            <span className="m-auto text-2xl text-gray-700">
               {toPropperCase(userFirstLetter)}
             </span>
           </button>

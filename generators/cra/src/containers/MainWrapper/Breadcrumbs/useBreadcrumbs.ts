@@ -12,6 +12,8 @@ export type LinkTranslator = {
   "/authenticated-clients": string;
   "/roles": string;
   "/health": string;
+  "/blogs": string;
+  "/categories": string;
 };
 export const useBreadcrumbs = (
   overrideBreadcrumbs?: { name: string; path: string }[]
@@ -24,6 +26,8 @@ export const useBreadcrumbs = (
     "/authenticated-clients": t("linksNames.authenticatedClients"),
     "/roles": t("linksNames.roles"),
     "/health": t("linksNames.health"),
+    "/blogs": t("linksNames.blogs"),
+    "/categories": t("linksNames.categories"),
   };
   const { pathname } = useLocation();
   const navigate = useNavigate();
@@ -35,7 +39,7 @@ export const useBreadcrumbs = (
       pathname
         .split("/")
         .filter((path) => path !== "")
-        .map((p) => `/${p}`) as (keyof typeof linkTranslator)[]
+        .map((path) => `/${path}`) as (keyof typeof linkTranslator)[]
     ).reduce<
       {
         path: string;
@@ -58,7 +62,7 @@ export const useBreadcrumbs = (
           toPropperCase(currentPath.replace("/", "")),
         path: `${
           pathOutputAcc[pathOutputAcc.length - 1]?.path || ""
-        }/${currentPath}`,
+        }${currentPath}`,
       };
 
       return [...pathOutputAcc, pathFinder];
