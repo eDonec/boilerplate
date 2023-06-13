@@ -1,5 +1,3 @@
-import { ACCESS_RESSOURCES, PRIVILEGE } from "shared-types";
-
 import DashboardIcon from "components/Icons/DashboardIcon";
 import { Privileges } from "containers/AuthWrappers/AccessProtectedWrapper";
 
@@ -16,75 +14,11 @@ export const routes: Routes = [
       },
     ],
   },
-  {
-    title: "Clients",
-    links: [
-      {
-        title: "Authenticated Clients",
-        to: "/authenticated-clients",
-        privileges: {
-          ressource: ACCESS_RESSOURCES.AUTHENTICATED_CLIENTS,
-          privileges: PRIVILEGE.READ,
-        },
-        Icon: DashboardIcon,
-      },
-    ],
-  },
-  {
-    title: "Blogs",
-    links: [
-      {
-        title: "Blogs",
-        to: "/blogs",
-        privileges: {
-          ressource: ACCESS_RESSOURCES.BLOGS,
-          privileges: PRIVILEGE.READ,
-        },
-        Icon: DashboardIcon,
-      },
-    ],
-  },
-  {
-    title: "Categories",
-    links: [
-      {
-        title: "Categories",
-        to: "/categories",
-        privileges: {
-          ressource: ACCESS_RESSOURCES.CATEGORY,
-          privileges: PRIVILEGE.READ,
-        },
-        Icon: DashboardIcon,
-      },
-    ],
-  },
-  {
-    title: "Configuration",
-    links: [
-      {
-        title: "Roles",
-        to: "/roles",
-        privileges: {
-          ressource: ACCESS_RESSOURCES.ROLE,
-        },
-        Icon: DashboardIcon,
-      },
-      {
-        title: "Health checks",
-        to: "/health",
-        Icon: DashboardIcon,
-        privileges: {
-          ressource: ACCESS_RESSOURCES.MICROSERVICE_STATUS,
-          privileges: PRIVILEGE.READ,
-        },
-      },
-    ],
-  },
 ];
 
 export type UnseenNotification = {
   numberOfUnseenNotifications: number;
-  route: "Home" | "Roles" | "Authenticated Clients" | "Documents";
+  route: "Home";
 };
 
 export type Routes = {
