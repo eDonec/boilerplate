@@ -9,25 +9,15 @@ export type LinkTranslator = {
   "/": string;
   "/edit": string;
   "/add": string;
-  "/authenticated-clients": string;
-  "/roles": string;
-  "/health": string;
-  "/blogs": string;
-  "/categories": string;
 };
 export const useBreadcrumbs = (
   overrideBreadcrumbs?: { name: string; path: string }[]
 ) => {
   const [t] = useTranslation();
   const linkTranslator: LinkTranslator = {
-    "/": t("linksNames.dashboard"),
+    "/": t("linksNames.home"),
     "/edit": t("misc.edit"),
     "/add": t("misc.add"),
-    "/authenticated-clients": t("linksNames.authenticatedClients"),
-    "/roles": t("linksNames.roles"),
-    "/health": t("linksNames.health"),
-    "/blogs": t("linksNames.blogs"),
-    "/categories": t("linksNames.categories"),
   };
   const { pathname } = useLocation();
   const navigate = useNavigate();

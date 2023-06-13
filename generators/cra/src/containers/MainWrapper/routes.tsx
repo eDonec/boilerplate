@@ -5,10 +5,10 @@ import { LinkTranslator } from "./Breadcrumbs/useBreadcrumbs";
 
 export const routes: Routes = [
   {
-    title: "Dashboard",
+    title: "Home",
     links: [
       {
-        title: "Health",
+        title: "Laniding Page",
         to: "/",
         Icon: DashboardIcon,
       },
