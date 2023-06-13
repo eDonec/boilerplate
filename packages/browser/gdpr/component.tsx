@@ -32,7 +32,7 @@ const GDPRConsent = () => {
                 vous montrer du contenu personnalisé et des publicités ciblées,
                 d&apos;analyser le trafic de notre site Web et de comprendre
                 d&apos;où viennent nos visiteurs. <br /> <br />
-                <p className="">
+                <span className="">
                   En continuant, vous acceptez
                   <a target="_blank" href="/terms-of-service">
                     <strong> les conditions d&apos;utilisation </strong>de Mr le
@@ -42,7 +42,7 @@ const GDPRConsent = () => {
                   <a href="/privacy-policy" target="_blank">
                     <strong> Politique de confidentialité.</strong>
                   </a>
-                </p>
+                </span>
               </p>
             </div>
           </div>
