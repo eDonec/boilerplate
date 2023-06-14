@@ -1,10 +1,10 @@
 import { useEffect } from "react";
 import toast from "react-hot-toast";
 
-import { useAuthState } from "hooks/useAuthState";
+import { useAuthStateWithRole } from "hooks/useAuthStateWithRole";
 
 export const useLogoutWrapper = () => {
-  const { isLoggedIn, isLoading, roleName } = useAuthState();
+  const { isLoading, isLoggedIn, roleName } = useAuthStateWithRole();
 
   useEffect(() => {
     if (!isLoading && isLoggedIn && roleName === "PUBLIC")

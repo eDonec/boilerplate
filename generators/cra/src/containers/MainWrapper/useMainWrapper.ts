@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 
-import { useAppSelector } from "hooks/reduxHooks";
+import { useAccessMatcher, useAuthClient } from "authenticator";
 
 import { Routes, routes } from "./routes";
 import {
@@ -11,18 +11,20 @@ import {
 } from "./routeUtils";
 
 export const useMainWrapper = () => {
-  const access = useAppSelector(({ auth }) => auth.access);
   const { pathname } = useLocation();
   const [filteredRoutes, setFilteredRoutes] = useState<Routes>([]);
-
+  const authClient = useAuthClient();
+  const accessMatcher = useAccessMatcher();
   const handleChange = (value: string) => {
-    setFilteredRoutes(findAccessibleRoutes(searchRoutes(value.trim()), access));
+    setFilteredRoutes(
+      findAccessibleRoutes(searchRoutes(value.trim()), accessMatcher)
+    );
   };
   const currentRouteIcon = getRouteIconFromPathName(pathname);
 
   useEffect(() => {
-    setFilteredRoutes(findAccessibleRoutes(routes, access));
-  }, [access]);
+    setFilteredRoutes(findAccessibleRoutes(routes, accessMatcher));
+  }, [authClient]);
 
-  return { access, handleChange, filteredRoutes, currentRouteIcon };
+  return { handleChange, filteredRoutes, currentRouteIcon };
 };

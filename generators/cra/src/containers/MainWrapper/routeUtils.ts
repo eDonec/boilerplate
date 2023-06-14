@@ -2,8 +2,8 @@ import { ACCESS } from "shared-types";
 
 import AddIcon from "components/Icons/AddIcon";
 import EditIcon from "components/Icons/EditIcon";
-import { accessMatcher } from "containers/AuthWrappers/AccessProtectedWrapper/useAccessProtectedWrapper";
 
+// import { accessMatcher } from "containers/AuthWrappers/AccessProtectedWrapper/useAccessProtectedWrapper";
 import { Routes, routes } from "./routes";
 
 export const getRouteIconFromPathName = (pathname: string) => {
@@ -36,30 +36,26 @@ export const searchRoutes = (query: string): Routes =>
 
 export const findAccessibleRoutes = (
   searchedRoutes: Routes,
-  access?: ACCESS[]
+  accessMatcher: ({ ressource, privileges }: Partial<ACCESS>) => boolean
 ) =>
-  access
-    ? searchedRoutes
-        .filter(({ privileges }) => {
-          if (!privileges) return true;
+  searchedRoutes
+    .filter(({ privileges }) => {
+      if (!privileges) return true;
 
-          return accessMatcher(
-            access,
-            privileges.ressource,
-            privileges.privileges
-          );
-        })
-        .map((section) => ({
-          ...section,
-          links: section.links.filter(({ privileges }) => {
-            if (!privileges) return true;
+      return accessMatcher({
+        ressource: privileges.ressource,
+        privileges: privileges.privileges,
+      });
+    })
+    .map((section) => ({
+      ...section,
+      links: section.links.filter(({ privileges }) => {
+        if (!privileges) return true;
 
-            return accessMatcher(
-              access,
-              privileges.ressource,
-              privileges.privileges
-            );
-          }),
-        }))
-        .filter((section) => section.links.length > 0)
-    : [];
+        return accessMatcher({
+          ressource: privileges.ressource,
+          privileges: privileges.privileges,
+        });
+      }),
+    }))
+    .filter((section) => section.links.length > 0);
