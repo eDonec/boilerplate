@@ -8,6 +8,7 @@ import {
 } from "@tanstack/react-query";
 import Api from "api";
 import { AuthenticatorProvider } from "authenticator";
+import { DarkModeProvider } from "core-ui";
 import GDPRConsent from "gdpr";
 import i18n from "locales";
 
@@ -44,13 +45,15 @@ function MyApp({ Component, pageProps }: AppProps) {
         <QueryClientProvider client={queryClient}>
           <Hydrate state={pageProps.dehydratedState}>
             <TranslationProvider>
-              <div id="navbar" />
-              <div id="main">
-                <Navbar />
-                <Toaster />
-                <GDPRConsent />
-                <Component {...pageProps} />
-              </div>
+              <DarkModeProvider>
+                <div id="navbar" />
+                <div id="main">
+                  <Navbar />
+                  <Toaster />
+                  <GDPRConsent />
+                  <Component {...pageProps} />
+                </div>
+              </DarkModeProvider>
             </TranslationProvider>
           </Hydrate>
         </QueryClientProvider>

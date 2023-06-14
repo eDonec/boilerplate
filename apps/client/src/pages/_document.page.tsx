@@ -14,6 +14,7 @@ class MyDocument extends Document {
               'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
               })(window,document,'script','dataLayer','GTM-5X2K3D5');`}
           </Script>
+          <Script src="/static/theme.js" strategy="lazyOnload"></Script>
         </Head>
         <body>
           <Main />
