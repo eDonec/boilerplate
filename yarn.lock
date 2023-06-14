@@ -2877,10 +2877,10 @@
   resolved "https://registry.yarnpkg.com/@csstools/selector-specificity/-/selector-specificity-1.0.0.tgz#91c560df2ed8d9700e4c7ed4ac21a3a322c9d975"
   integrity sha512-RkYG5KiGNX0fJ5YoI0f4Wfq2Yo74D25Hru4fxTOioYdQvHBxcrrtTTyT5Ozzh2ejcNrhFy7IEts2WyEY7yi5yw==
 
-"@edonec/generator@^1.5.2":
-  version "1.5.2"
-  resolved "https://registry.yarnpkg.com/@edonec/generator/-/generator-1.5.2.tgz#378a3c8f6d58e77a2256b57af1630f012dbece42"
-  integrity sha512-uAmYCC/SW7jVF6ayKu04eDbMwy0XLYdVz6DElSdOi2C32psCYf+ctWJfzzdtHCTu2/9DGyxNgq2M1q+c4kBJiQ==
+"@edonec/generator@latest":
+  version "1.6.1"
+  resolved "https://registry.yarnpkg.com/@edonec/generator/-/generator-1.6.1.tgz#526d496c310ff910400938d68d548692bb1bd020"
+  integrity sha512-3J7CCktckkP1rKr6+b3hmiaB4hzw3R0OeRVAEtrsrpppzLVyoTfWriE1k3yJzg8W0sv/ZUu3wnjHcW6AfysklQ==
   dependencies:
     chalk "^5.0.1"
     chalk-animation "^1.6.0"
