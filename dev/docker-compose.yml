@@ -47,7 +47,7 @@ services:
       - main-network
     volumes:
       - ../apps/dashboard/node_modules:/usr/share/nginx/html/dashboard/node_modules
-      # NEW_CRA_APP_VOLUME_ADDED
+        # NEW_CRA_APP_VOLUME_ADDED
   zookeeper:
     restart: always
     image: confluentinc/cp-zookeeper:7.0.1
