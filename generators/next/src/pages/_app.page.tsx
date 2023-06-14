@@ -1,3 +1,5 @@
+import Api from "api";
+import { AuthenticatorProvider } from "authenticator";
 import DarkModeProvider from "core-ui/DarkModeProvider";
 import i18n from "locales";
 
@@ -25,11 +27,13 @@ function MyApp({ Component, pageProps }: AppProps) {
           crossOrigin="anonymous"
         />
       </Head>
-      <TranslationProvider>
-        <DarkModeProvider>
-          <Component {...pageProps} />
-        </DarkModeProvider>
-      </TranslationProvider>
+      <AuthenticatorProvider authDomain="client" mainApi={Api.mainApi}>
+        <TranslationProvider>
+          <DarkModeProvider>
+            <Component {...pageProps} />
+          </DarkModeProvider>
+        </TranslationProvider>
+      </AuthenticatorProvider>
     </>
   );
 }

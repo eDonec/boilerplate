@@ -1,16 +1,23 @@
-import AuthSDK from "auth-sdk";
+import { AuthGuarded, useAuthStatus, useLogout } from "authenticator";
 import { ButtonLink, SEO, UnstyledLink } from "core-next-components";
+import AlertDialog, { useAlertDialog } from "core-ui/AlertDialog";
 import Button from "core-ui/Button";
-import ApiSDK from "server-sdk";
 
 // !STARTERCONF -> Select !STARTERCONF and CMD + SHIFT + F
 // Before you begin editing, follow all comments with `STARTERCONF`,
 // to customize the default configuration.
 
-const api = new ApiSDK();
-const authSDK = new AuthSDK(api);
-
 export default function HomePage() {
+  const logout = useLogout();
+  const { isLoggedIn, isLoading } = useAuthStatus();
+  const [modalProps, onLogout] = useAlertDialog(() => {
+    if (isLoading) return;
+    logout();
+  });
+  const handleLogout = () => {
+    onLogout();
+  };
+
   return (
     <>
       <SEO />
@@ -20,9 +27,17 @@ export default function HomePage() {
             className="
           layout flex min-h-screen flex-col items-center justify-center bg-white text-center"
           >
-            <Button info type="button" onClick={() => authSDK.logout()}>
-              logout
-            </Button>
+            {isLoggedIn ? (
+              <Button info type="button" onClick={handleLogout}>
+                logout
+              </Button>
+            ) : (
+              <AuthGuarded>
+                <div className="mr-2 inline-block rounded border border-primary-400 px-4 py-3 text-xs font-semibold leading-none text-primary-600 hover:border-primary-700 hover:text-primary-700">
+                  Se connecter
+                </div>
+              </AuthGuarded>
+            )}
             <ButtonLink className="mt-6" href="/components" light>
               See all components
             </ButtonLink>
@@ -33,6 +48,14 @@ export default function HomePage() {
           </div>
         </section>
       </main>
+      <AlertDialog
+        title="Logout"
+        confirmMessage="Confirmer"
+        cancelMessage="Annuler"
+        message="Êtes-vous sûr de vouloir vous déconnecter ?"
+        size="small"
+        {...modalProps}
+      />
     </>
   );
 }
