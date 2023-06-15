@@ -133,7 +133,7 @@ const FilePicker = forwardRef<HTMLInputElement, IComponentProps>(
           </div>
           <div
             className={clsx([
-              "pointer-events-none absolute inset-0 flex flex-col items-center justify-center bg-primary-600 bg-opacity-10 backdrop-blur transition-opacity",
+              "bg-primary-600 pointer-events-none absolute inset-0 flex flex-col items-center justify-center bg-opacity-10 backdrop-blur transition-opacity",
               {
                 "opacity-0": mediaUploadToken,
               },

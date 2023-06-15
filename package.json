@@ -3,6 +3,7 @@
   "private": true,
   "version": "0.0.9",
   "scripts": {
+    "reset": "find . -type dir -name node_modules | xargs rm -rf && rm -rf yarn.lock && yarn",
     "prepare": "husky install",
     "clean": "turbo run clean",
     "start": "dotenv -- turbo run start --parallel",

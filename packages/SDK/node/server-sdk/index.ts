@@ -2,6 +2,17 @@ import { AuthNRouteTypes } from "auth-types/routes/authN";
 import axios, { AxiosError, AxiosInstance } from "axios";
 import StatusCodes from "shared-types/StatusCodes";
 
+let DEFAULT_BASE_URL = "https://localhost:3000/api";
+
+if (typeof window !== "undefined") DEFAULT_BASE_URL = "/api";
+else if (process.env.NODE_ENV === "production")
+  DEFAULT_BASE_URL = `${
+    process.env.HOST_URL ||
+    process.env.NEXT_PUBLIC_HOSTNAME ||
+    process.env.REACT_APP_HOSTNAME ||
+    ""
+  }/api`;
+
 type ResetTokenCallback = (
   setBearerToken: (token: string | null) => ApiSDK,
   refreshToken?: string
@@ -15,18 +26,11 @@ export default class ApiSDK {
 
   private onAccessTokenChange?: (token: string | null) => void;
 
-  constructor(accessToken?: string, refreshToken?: string) {
-    let baseURL = "https://localhost:3000/api";
-
-    if (typeof window !== "undefined") baseURL = "/api";
-    else if (process.env.NODE_ENV === "production")
-      baseURL = `${
-        process.env.HOST_URL ||
-        process.env.NEXT_PUBLIC_HOSTNAME ||
-        process.env.REACT_APP_HOSTNAME ||
-        ""
-      }/api`;
-
+  constructor(
+    baseURL: string = DEFAULT_BASE_URL,
+    accessToken?: string,
+    refreshToken?: string
+  ) {
     this.api = axios.create({
       baseURL,
     });
