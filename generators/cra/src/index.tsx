@@ -1,20 +1,17 @@
 import React from "react";
 import { createRoot } from "react-dom/client";
 import { Toaster } from "react-hot-toast";
-import { Provider } from "react-redux";
-import { BrowserRouter } from "react-router-dom";
 
+import Api from "api";
+import { AuthenticatorProvider } from "authenticator";
 import DarkModeProvider from "core-ui/DarkModeProvider";
+import GDPRConsent from "gdpr";
 import "locales";
 
-import "styles/globals.css";
-import "styles/colors.css";
+import "config/tailwind/styles/globals.css";
+import "styles/custom.css";
 
 import AppRouter from "containers/AppRouter";
-
-import store from "_redux/store";
-
-import reportWebVitals from "./reportWebVitals";
 
 const container = document.getElementById("root");
 
@@ -23,18 +20,17 @@ const root = createRoot(container);
 
 root.render(
   <React.StrictMode>
-    <BrowserRouter basename={process.env.REACT_APP_BASE_URL}>
-      <Provider store={store}>
-        <DarkModeProvider>
-          <Toaster />
-          <AppRouter />
-        </DarkModeProvider>
-      </Provider>
-    </BrowserRouter>
+    <DarkModeProvider>
+      <AuthenticatorProvider
+        preventLoadingUntilInitiated
+        authDomain="DASHBOARD"
+        mainApi={Api.mainApi}
+        role={["SUPER_ADMIN", "ADMIN"]}
+      >
+        <Toaster />
+        <GDPRConsent />
+        <AppRouter />
+      </AuthenticatorProvider>
+    </DarkModeProvider>
   </React.StrictMode>
 );
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();

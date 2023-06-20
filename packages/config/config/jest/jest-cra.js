@@ -17,6 +17,6 @@ module.exports = {
   coveragePathIgnorePatterns: [],
   coverageThreshold: null,
   moduleNameMapper: {
-    "^axios$": "axios/dist/axios.js",
+    "\\.(css|less|sass)$": "config/jest/__mocks__/styleMock.js",
   },
 };

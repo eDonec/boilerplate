@@ -33,4 +33,5 @@ class Server {
 
 export default Server;
 
+export * from "./getSlugFromString";
 export * from "./types";

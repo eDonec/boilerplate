@@ -2,13 +2,15 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 
 import Api from "api";
-import { LeanAuthDocument } from "auth-types/models/Auth";
+import { PopulatedUserDocument } from "auth-types/routes/user";
 import DeepFreeze from "core-utils/deepFreeze";
 
 import { UncontrolledDataTableHandle } from "data-table/InternalUncontrolledDataTable/types";
 
 export const useClientActions = (
-  dataTableRef: React.RefObject<UncontrolledDataTableHandle<LeanAuthDocument>>
+  dataTableRef: React.RefObject<
+    UncontrolledDataTableHandle<PopulatedUserDocument>
+  >
 ) => {
   const [isLoading, setIsLoading] = useState<boolean | string>(false);
   const dataRef = dataTableRef.current?.useData?.();
@@ -39,6 +41,7 @@ export const useClientActions = (
     }
     setIsLoading(false);
   };
+
   const liftBanAndSuspension = async (id: string) => {
     if (!dataRef) return;
     setIsLoading(id);

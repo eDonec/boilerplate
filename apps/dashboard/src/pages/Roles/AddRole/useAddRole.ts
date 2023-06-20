@@ -28,7 +28,6 @@ export const useAddRole = () => {
       setLoading(true);
       try {
         await Api.authSDK.addRole({
-          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
           body: { ...role, name: role.name?.trim() },
         });
         baseRole.current = role;

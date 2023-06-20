@@ -1,9 +1,8 @@
-/* eslint-disable max-lines */
 import { SubmitHandler, useForm } from "react-hook-form";
-import { useTranslation } from "react-i18next";
 import { Link, useLocation } from "react-router-dom";
 
 import Api from "api";
+import { useLogout } from "authenticator";
 import MediaFormContext from "contexts/MediaFormContext";
 import ButtonLink from "core-cra-components/ButtonLink";
 import { Button, useDarkMode } from "core-ui";
@@ -15,27 +14,10 @@ import FilePicker from "forms/FilePicker";
 import LanguageSelector from "components/LanguageSelector";
 import { useInitRoute } from "containers/AppRouter/useInitRoute";
 
-import { useAppSelector, useLoadingDispatch } from "hooks/reduxHooks";
-
-import { logout } from "_redux/slices/auth";
-import { decrementCounter, incrementCounter } from "_redux/slices/counter";
-import { setCounterAsync } from "_redux/slices/counter/thunk";
-
 const HomePage = () => {
   useLocation();
-  const count = useAppSelector((state) => state.counter.count);
-  const { isLoading, dispatch, classicDispatch } = useLoadingDispatch();
-  const { t } = useTranslation();
-  const increment = () => {
-    classicDispatch(incrementCounter());
-  };
-  const decrement = () => {
-    classicDispatch(decrementCounter());
-  };
-  const setAsync = () => {
-    dispatch(setCounterAsync(300));
-  };
   const { toggleDarkMode } = useDarkMode();
+  const logout = useLogout();
   const fetchUploadToken = () =>
     Api.authSDK.getUploadToken({
       query: { mimeTypes: ["image/jpg", "image/jpeg", "image/png"] },
@@ -63,28 +45,26 @@ const HomePage = () => {
     <>
       <div className="mx-auto flex min-h-screen flex-col items-center justify-center dark:text-gray-200">
         <LanguageSelector />
-        <h1 className="mb-4">
-          CRA + Tailwind CSS + TypeScript + Redux Toolkit
-        </h1>
+        <h1 className="mb-4">CRA + Tailwind CSS + TypeScript</h1>
         <p className="mt-2 text-sm text-gray-700 dark:text-gray-200">
-          <a
+          {/* <a
             className={clsx(
               "inline-flex items-center rounded px-4 py-2 font-semibold",
-              "focus-visible:ring-primary-500 focus:outline-none focus-visible:ring",
+              "focus:outline-none focus-visible:ring focus-visible:ring-primary-500",
               "shadow-sm",
               "transition-colors duration-75"
             )}
             href="/"
           >
             Go to client {process.env.REACT_APP_HELLO || "hello World"}
-          </a>
+          </a> */}
         </p>
         this is a modal
         <p className="mt-2 text-sm text-gray-700 dark:text-gray-200">
           <Link
             className={clsx(
               "inline-flex items-center rounded px-4 py-2 font-semibold",
-              "focus-visible:ring-primary-500 focus:outline-none focus-visible:ring",
+              "focus:outline-none focus-visible:ring focus-visible:ring-primary-500",
               "shadow-sm",
               "transition-colors duration-75",
               "disabled:cursor-not-allowed"
@@ -94,12 +74,7 @@ const HomePage = () => {
             Go to sign-in
           </Link>
         </p>
-        <Button
-          primary
-          onClick={() => {
-            classicDispatch(logout());
-          }}
-        >
+        <Button primary onClick={logout}>
           logout
         </Button>
         <MediaFormContext
@@ -151,24 +126,6 @@ const HomePage = () => {
         <Button onClick={toggleDarkMode} light>
           Toggle Dark mode
         </Button>
-        <h2 className="my-3">Redux Counter : {count}</h2>
-        <div className="flex flex-col gap-2">
-          <div className="flex gap-2">
-            <Button
-              primary
-              disabled={count === 0 || isLoading}
-              onClick={decrement}
-            >
-              {t("user.activation")}
-            </Button>
-            <Button primary disabled={isLoading} onClick={increment}>
-              {t("api.notFound")}
-            </Button>
-          </div>
-          <Button gray outline onClick={setAsync} isLoading={isLoading}>
-            {t("api.updated")}
-          </Button>
-        </div>
       </div>
       <div className="min-h-screen"></div>
     </>

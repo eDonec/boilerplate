@@ -18,12 +18,17 @@ try {
   console.log("Seeding is not available");
 }
 
-if (!process.env.DATABASE_URI)
-  throw new Error("Missing .env key : DATABASE_URI");
+if (!process.env.DATABASE_BASE_URI || !process.env.MICROSERVICE_NAME)
+  throw new Error("Missing .env key : DATABASE_BASE_URI or MICROSERVICE_NAME");
 
 app.use(baseUrl, router);
 
-connect(process.env.DATABASE_URI, databaseConfig)
+connect(
+  process.env.NODE_ENV === "production"
+    ? `${process.env.DATABASE_URI}`
+    : `${process.env.DATABASE_BASE_URI}/${process.env.MICROSERVICE_NAME}`,
+  databaseConfig
+)
   .then(() => {
     app.listen(port, () => {
       console.log(`🚀 Server listening at http://localhost:${port}`);

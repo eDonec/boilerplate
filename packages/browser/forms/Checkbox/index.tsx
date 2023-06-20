@@ -8,9 +8,14 @@ import { validateForm } from "../helpers/validateForm";
 
 export interface CheckboxProps extends RawCheckboxProps {
   validate?: TRule[];
+  displayName?: string;
 }
 
-const Checkbox: React.FC<CheckboxProps> = ({ validate, ...props }) => {
+const Checkbox: React.FC<CheckboxProps> = ({
+  validate,
+  displayName,
+  ...props
+}) => {
   const { register } = useFormContext();
   const { errors } = useFormState();
   const error = get(errors, props.name) as FieldError | undefined;
@@ -18,7 +23,7 @@ const Checkbox: React.FC<CheckboxProps> = ({ validate, ...props }) => {
   return (
     <RawCheckbox
       {...register(props.name, {
-        validate: validateForm(props.name, validate || []),
+        validate: validateForm(props.name, validate || [], displayName),
       })}
       {...props}
       error={error?.message}

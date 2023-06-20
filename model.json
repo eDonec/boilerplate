@@ -1,0 +1,9 @@
+{
+  "name": "TemporaryBookingUser",
+  "ressource": "TEMPORARY_BOOKING_USER",
+  "schema": {
+    "firstName": "string",
+    "lastName": "string",
+    "phoneNumber": "string"
+  }
+}

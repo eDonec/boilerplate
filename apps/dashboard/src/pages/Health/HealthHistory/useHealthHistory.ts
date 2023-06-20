@@ -10,7 +10,7 @@ import { MICROSERVICE_LIST } from "shared-types";
 
 import { useInitRoute } from "containers/AppRouter/useInitRoute";
 
-import { useLoading } from "hooks/reduxHooks";
+import useLoading from "hooks/useLoading";
 
 export const useHealthHistory = () => {
   const isFirstMount = useFirstMount();

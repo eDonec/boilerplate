@@ -2,8 +2,11 @@
   "extends": "tsconfig/react.json",
   "compilerOptions": {
     "baseUrl": "./src",
-    "sourceMap": false
+    "sourceMap": false,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+    "allowJs": true
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
-  "exclude": ["node_modules"]
+  "include": ["src", "vite.config.ts", "**/*.ts", "**/*.tsx", ".eslintrc.cjs"]
 }

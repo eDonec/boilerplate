@@ -6,9 +6,15 @@ coverage
 dist
 !generators/*/.env
 !generators/*/*/.env
+apps/*/.env
 *.tsbuildinfo
 **/turbo*
 out
 graph*
 build
 .DS_Store
+!apps/APIs/**/.env
+!apps/**/.env
+!turbo.json
+!packages/node/token/.env
+.react-email

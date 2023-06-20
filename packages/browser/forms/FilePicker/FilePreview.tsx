@@ -74,7 +74,7 @@ const FilePreview = ({
     <div
       className={clsx(
         "relative flex flex-col gap-2 p-3",
-        "dark:bg-dark bg-white shadow-md"
+        "bg-white shadow-md dark:bg-dark"
       )}
     >
       <div className="flex flex-wrap  items-center gap-2">

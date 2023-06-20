@@ -1,13 +1,16 @@
 import * as React from "react";
 
+import { clsx } from "core-utils";
+
 import Link, { LinkProps } from "next/link";
 
 export type UnstyledLinkProps = {
-  href: string;
+  href: LinkProps["href"];
   children: React.ReactNode;
   openNewTab?: boolean;
   className?: string;
-} & React.ComponentPropsWithRef<"a"> &
+  disabled?: boolean;
+} & Omit<React.ComponentPropsWithRef<"a">, "href"> &
   LinkProps;
 
 const UnstyledLink = React.forwardRef<HTMLAnchorElement, UnstyledLinkProps>(
@@ -23,6 +26,7 @@ const UnstyledLink = React.forwardRef<HTMLAnchorElement, UnstyledLinkProps>(
       passHref,
       prefetch,
       locale,
+      disabled,
       ...rest
     },
     ref
@@ -30,11 +34,18 @@ const UnstyledLink = React.forwardRef<HTMLAnchorElement, UnstyledLinkProps>(
     const isNewTab =
       openNewTab !== undefined
         ? openNewTab
-        : href && !href.startsWith("/") && !href.startsWith("#");
+        : href &&
+          typeof href === "string" &&
+          !href.startsWith("/") &&
+          !href.startsWith("#");
 
     if (!isNewTab) {
       return (
         <Link
+          className={clsx(
+            rest.className,
+            disabled && "pointer-events-none cursor-not-allowed"
+          )}
           {...{
             href,
             as,
@@ -46,9 +57,7 @@ const UnstyledLink = React.forwardRef<HTMLAnchorElement, UnstyledLinkProps>(
             locale,
           }}
         >
-          <a ref={ref} {...rest}>
-            {children}
-          </a>
+          {children}
         </Link>
       );
     }
@@ -58,7 +67,7 @@ const UnstyledLink = React.forwardRef<HTMLAnchorElement, UnstyledLinkProps>(
         ref={ref}
         target="_blank"
         rel="noopener noreferrer"
-        href={href}
+        href={href as string}
         {...rest}
       >
         {children}

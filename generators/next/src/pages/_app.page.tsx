@@ -1,5 +1,5 @@
-import { Provider } from "react-redux";
-
+import Api from "api";
+import { AuthenticatorProvider } from "authenticator";
 import DarkModeProvider from "core-ui/DarkModeProvider";
 import i18n from "locales";
 
@@ -10,8 +10,6 @@ import "styles/globals.css";
 import "styles/colors.css";
 
 import TranslationProvider from "components/TranslationProvider";
-
-import store from "_redux/store";
 
 if (!i18n.isInitialized) {
   i18n.init();
@@ -29,13 +27,13 @@ function MyApp({ Component, pageProps }: AppProps) {
           crossOrigin="anonymous"
         />
       </Head>
-      <Provider store={store}>
+      <AuthenticatorProvider authDomain="client" mainApi={Api.mainApi}>
         <TranslationProvider>
           <DarkModeProvider>
             <Component {...pageProps} />
           </DarkModeProvider>
         </TranslationProvider>
-      </Provider>
+      </AuthenticatorProvider>
     </>
   );
 }

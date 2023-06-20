@@ -17,7 +17,16 @@ import { hashPassword } from "helpers/hashPassword";
 
 const schema = new Schema<AuthType, AuthModel>(
   {
-    email: String,
+    email: {
+      type: String,
+      trim: true,
+      lowercase: true,
+    },
+    isActivated: {
+      type: Boolean,
+      required: true,
+      default: false,
+    },
     userName: String,
     authType: {
       type: String,
@@ -36,6 +45,7 @@ const schema = new Schema<AuthType, AuthModel>(
       type: [String],
       enum: AUTH_PROVIDERS,
       required: true,
+      default: [AUTH_PROVIDERS.CLASSIC],
     },
     providerId: {
       type: [

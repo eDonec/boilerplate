@@ -15,7 +15,6 @@ export const privilegesTitleDict: Record<PRIVILEGE, string> = {
 
 export const ressourcesTitleDict: Record<ACCESS_RESSOURCES, string> = {
   [ACCESS_RESSOURCES["*"]]: "*",
-  [ACCESS_RESSOURCES.USER]: "Users",
   [ACCESS_RESSOURCES.ROLE]: "Roles",
   [ACCESS_RESSOURCES.AUTHENTICATED_CLIENTS]: "Authenticated Clients",
   [ACCESS_RESSOURCES.PUBLIC]: "Public",
@@ -24,6 +23,9 @@ export const ressourcesTitleDict: Record<ACCESS_RESSOURCES, string> = {
   [ACCESS_RESSOURCES.SUSPEND_CLIENTS]: "Suspend Clients",
   [ACCESS_RESSOURCES.MICROSERVICE_STATUS]: "View Microservice Status",
   [ACCESS_RESSOURCES.FILES]: "Files",
+  [ACCESS_RESSOURCES.BLOGS]: "Blogs",
+  [ACCESS_RESSOURCES.CATEGORY]: "Category",
+  [ACCESS_RESSOURCES.USER]: "User",
 };
 
 export const isVisiblePrevilege = (input: unknown): input is PRIVILEGE =>

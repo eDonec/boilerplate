@@ -1,3 +1,91 @@
 {
-  "signin": "Sign In"
+  "signin": "Sign In",
+  "reservationPage": {
+    "title": "Medical Appointment",
+    "description": "Make an appointment with a doctor",
+    "btnReservation": "Schedule Appointment",
+    "selectYrTime": "Select your preferred time",
+    "bookingTitle": "Book an appointment",
+    "alertMsg": "Do you confirm your wish to schedule an appointment for {{selectedDate}} from {{selectedTime}} ?",
+    "form": {
+      "filePickerLabel": "Upload your payment image",
+      "transferCodeInput": "Transfer code"
+    },
+    "chooseDateInfoMsg": "Please choose the date of the appointment",
+    "chooseTimeInfoMsg": "Please choose the time of the appointment"
+  },
+  "validateReservations": {
+    "title": "Reservations Management",
+    "description": "Management of your Reservations",
+    "scheduleAnAppointment": "Schedule an appointment for",
+    "cancel": "Cancel",
+    "reject": "Reject",
+    "approuve": "Approuve",
+    "accepted": "Already accepted",
+    "onStandBy": "On Stand By"
+  },
+  "misc": {
+    "cancel": "Cancel",
+    "submit": "Submit",
+    "loading": "Loading...",
+    "confirm": "Confirm",
+    "save": "Save",
+    "edit": "Edit",
+    "delete": "Delete",
+    "view": "View",
+    "add": "Create"
+  },
+  "calendar": {
+    "days": {
+      "sun": "Sun",
+      "mon": "Mon",
+      "tue": "Tue",
+      "wed": "Wed",
+      "thu": "Thu",
+      "fri": "Fri",
+      "sat": "Sat"
+    },
+    "fullyReserved": "Fully Reserved",
+    "noAvailableDatesMsg": "No availability for the therapist."
+  },
+  "payment": {
+    "choosePaymentMsg": "Validate your payment method",
+    "onlinePayment": "Online payment",
+    "postalPayment": "Payment by money order",
+    "paymentTransactionPhotoMsg": "Please upload the photo of your payment transaction to complete the process.",
+    "transferCode": "Transfer Code",
+    "reservationSuccessful": "Reservation Created.",
+    "paymentSuccessful": "Payment Successful",
+    "paymentConfirmation": "Before proceeding to payment, please confirm the date, time, service, and price of your appointment, as your payment will confirm your appointment.\n\nDate: {{date}}\nTime: {{hour}}\nService:{{service}}\nPrice: {{price}} DT",
+    "paymentFinalised": "Your Booking is Finalised !",
+    "paymentFailed": "Payment Failed",
+    "paymentFailedMessage": "Your payment was not successful! Please retry with another booking"
+  },
+  "notFound": {
+    "bouttonBackToHome": "Homepage",
+    "msg": "\nPage not found. \nPlease return to our homepage.",
+    "error404": "Error 404"
+  },
+  "profil": {
+    "getDirectionLink": "Get Direction",
+    "inPersonVisistsLabel": "In-person Visits",
+    "videoVisits": "Video visits ",
+    "aboutTitle": "About {{therapistName}}",
+    "ViewAllLink": "View all",
+    "focusAreaLabel": "Focus area",
+    "sessionDetailsLabel": "Session Details",
+    "identityLabel": "Identity",
+    "genderLabel": "Gender",
+    "languageSpokenLabel": "Language spoken",
+    "gettingToKnowTitle": "Getting to know {{therapistName}}",
+    "educationAndBackgroundTitle": "Education and background",
+    "FAQTitle": "Frequently asked questions",
+    "contactTitle": "Contact",
+    "headerLinks": {
+      "about": "About",
+      "education": "education",
+      "FAQ": "FAQ",
+      "contact": "contact"
+    }
+  }
 }

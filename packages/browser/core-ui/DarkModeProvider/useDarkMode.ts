@@ -1,4 +1,10 @@
-import { createContext, useCallback, useContext, useState } from "react";
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 
 type ITheme = "dark" | "light" | "system";
 export const DarkModeContext = createContext<{
@@ -9,13 +15,17 @@ export const DarkModeContext = createContext<{
   changeTheme: () => null,
 });
 
-const initialTheme =
-  typeof window !== "undefined"
-    ? (window?.localStorage.getItem("theme") as ITheme | undefined)
-    : "system";
-
 export const useDarkModeContext = () => {
-  const [mode, setMode] = useState<ITheme>(initialTheme || "system");
+  const [mode, setMode] = useState<ITheme>("system");
+
+  useEffect(() => {
+    const initialTheme =
+      typeof window !== "undefined"
+        ? (window?.localStorage.getItem("theme") as ITheme | undefined)
+        : "system";
+
+    setMode(initialTheme || "system");
+  }, []);
 
   return {
     value: {

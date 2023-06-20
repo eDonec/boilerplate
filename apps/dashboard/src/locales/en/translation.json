@@ -1,7 +1,6 @@
 {
   "imagePicker": {
-    "dragPrompt": "Redux Counter",
-    "draggingPrompt": "CRA + Tailwind CSS + TypeScript + Redux Tookit",
+    "draggingPrompt": "CRA + Tailwind CSS + TypeScript",
     "maxFilesPrompt": "(Max :maxFiles files)"
   },
   "api": {
@@ -47,6 +46,107 @@
     "dashboard": "Dashboard",
     "authenticatedClients": "List of authenticated clients",
     "roles": "List of roles",
-    "health": "Microservices health"
+    "health": "Microservices health",
+    "blogs": "Blogs",
+    "categories": "Categories",
+    "threads": "Threads",
+    "calendar": "Calendar",
+    "schedule": "Schedule"
+  },
+  "blog": {
+    "addNewBlog": "Add new blog",
+    "editBlog": "Edit blog",
+    "deleteBlog": "Delete blog",
+    "blogDeletedSuccess": "Blog deleted successfully",
+    "blogUpdatedSuccess": "Blog updated successfully",
+    "blogCreatedSuccess": "Blog created successfully",
+    "creationTitle": "Create new blog",
+    "creationBody": "Are you sure you want to create this blog?",
+    "updateTitle": "Update blog",
+    "updateBody": "Are you sure you want to update this blog?",
+    "deleteTitle": "Delete blog",
+    "deleteBody": "Are you sure you want to delete this blog?",
+    "title": "Title",
+    "description": "Description",
+    "banner": "Banner",
+    "content": "Content"
+  },
+  "category": {
+    "addNewCategory": "Add new category",
+    "editCategory": "Edit category",
+    "deleteCategory": "Delete category",
+    "categoryDeletedSuccess": "Category deleted successfully",
+    "categoryUpdatedSuccess": "Category updated successfully",
+    "categoryCreatedSuccess": "Category created successfully",
+    "creationTitle": "Create new category",
+    "creationBody": "Are you sure you want to create this category?",
+    "updateTitle": "Edit category",
+    "updateBody": "Are you sure",
+    "deleteTitle": "Delete category",
+    "deleteBody": "Are you sure you want to delete this category?",
+    "title": "Title",
+    "description": "Description"
+  },
+  "days": {
+    "sunday": "Sunday",
+    "monday": "Monday",
+    "tuesday": "Tuesday",
+    "wednesday": "Wednesday",
+    "thursday": "Thursday",
+    "friday": "Friday",
+    "saturday": "Saturday"
+  },
+  "schedulePage": {
+    "setDuration": "Set Session Duration",
+    "setStartAndFinish": "Set Start and Finish Hours of Every Work Day",
+    "from": "From : ",
+    "to": "To : ",
+    "setWorkHours": "Set Working Hours for Each Day"
+  },
+  "reservationPage": {
+    "title": "Medical Appointment",
+    "description": "Make an appointment with a doctor",
+    "btnReservation": "Schedule Appointment",
+    "from": "from",
+    "to": "to",
+    "selectYrTime": "Select your preferred time",
+    "bookingTitle": "Book an appointment",
+    "alertMsg": "Do you confirm your wish to schedule an appointment for",
+    "form": {
+      "filePickerLabel": "Upload your payment image",
+      "transferCodeInput": "Transfer code"
+    },
+    "patient": "Patient's Name"
+  },
+  "validateReservations": {
+    "title": "Reservations Management",
+    "description": "Management of your Reservations",
+    "scheduleAnAppointment": "Scheduled appointment for",
+    "cancel": "Cancel",
+    "reject": "Reject",
+    "approuve": "Approuve",
+    "accepted": "Remove approval",
+    "onStandBy": "On Stand By",
+    "edit": "Edit",
+    "patient": "Patient's Name",
+    "paymentDocument": "Payment Document",
+    "transferCode": "Transfer Code"
+  },
+  "calendarPage": {
+    "toolbarControls": "Switch Current Visible",
+    "toolbarViewSwitch": "Switch Current View",
+    "today": "Today"
+  },
+  "paymentPage": {
+    "booking": "Booking",
+    "status": "Status",
+    "modalTitle": "Validate Postal Transaction",
+    "paymentDocument": "Payment Document :",
+    "transferCode": "Transfer Code :",
+    "noDocumentYet": "NO DOCUMENT PROVIDED YET, THIS PAYMENT WILL BE INVALIDATED AUTOMATICALLY IF NO DOCUMENT IS PROVIDED",
+    "noDocument": "NO DOCUMENT PROVIDED"
+  },
+  "meta": {
+    "description": "Meta description"
   }
 }

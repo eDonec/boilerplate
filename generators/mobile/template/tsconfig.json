@@ -1,5 +1,5 @@
 {
-  "extends": "tsconfig/mobile.json",
+  // "extends": "tsconfig/mobile.json",
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {

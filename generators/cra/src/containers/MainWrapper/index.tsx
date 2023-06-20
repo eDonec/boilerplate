@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, Outlet } from "react-router-dom";
 
+import { SideBarProvider } from "contexts/SideBarContext";
 import SEO from "core-cra-components/SEO";
 
 import { IProps } from "components/Icons/DashboardIcon";
@@ -51,22 +52,24 @@ const MainWrapper = () => {
       <SEO title={toPropperCase(title)} description={description} />
 
       <div className="flex-no-wrap flex">
-        <Sidebar>
-          <Link to="/">
-            <div className="m-auto flex h-16 justify-center  border-b border-gray-500">
-              <EDonecLogo className="self-center align-middle" />
-            </div>
-          </Link>
-          <SidebarSearch onChange={handleChange} />
-          {filteredRoutes.map((section) => (
-            <SidebarLinkSection
-              notification={notification}
-              links={section.links}
-              key={section.title}
-              title={section.title}
-            />
-          ))}
-        </Sidebar>
+        <SideBarProvider>
+          <Sidebar>
+            <Link to="/">
+              <div className="m-auto flex h-16 justify-center  border-b border-gray-500">
+                <EDonecLogo className="self-center align-middle" />
+              </div>
+            </Link>
+            <SidebarSearch onChange={handleChange} />
+            {filteredRoutes.map((section) => (
+              <SidebarLinkSection
+                notification={notification}
+                links={section.links}
+                key={section.title}
+                title={section.title}
+              />
+            ))}
+          </Sidebar>
+        </SideBarProvider>
         <div className="h-full w-full md:max-w-[calc(100vw-18rem)]">
           <Navbar />
           <div className="mb-3 bg-gray-200 pb-3 shadow-2xl dark:bg-gray-700">

@@ -13,11 +13,13 @@ export interface IProps
   > {
   name: string;
   validate?: TRule[];
+  displayName?: string;
 }
 
 const FilePicker: React.FC<IProps> = ({
   name,
   validate,
+  displayName,
   ...filePickerProps
 }) => {
   const { control, mediaUploadToken, fetchFunction } = useMediaFormContext();
@@ -26,7 +28,7 @@ const FilePicker: React.FC<IProps> = ({
 
   return (
     <Controller
-      rules={{ validate: validateForm(name, validate || []) }}
+      rules={{ validate: validateForm(name, validate || [], displayName) }}
       name={name}
       control={control}
       render={({ field: { onChange, value, ref } }) => (

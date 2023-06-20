@@ -15,6 +15,7 @@ module.exports = {
     "^components/(.*)$": "<rootDir>/components/$1",
     "^pages/(.*)$": "<rootDir>/pages/$1",
     "^hooks/(.*)$": "<rootDir>/hooks/$1",
+    "^locales/(.*)$": "<rootDir>/locales/$1",
     "^constants/(.*)$": "<rootDir>/constants/$1",
     "^containers/(.*)$": "<rootDir>/containers/$1",
     "^_redux/(.*)$": "<rootDir>/_redux/$1",

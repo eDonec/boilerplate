@@ -6,12 +6,13 @@ export interface IProps {
 export const CloseButton = ({ handleClose }: IProps) => (
   <button
     className={clsx([
-      "absolute top-3.5 right-3.5",
+      "absolute right-3.5 top-3.5",
       "inline-flex items-center justify-center rounded-full p-1",
       "focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75",
       "text-gray-400 dark:text-gray-200",
     ])}
     type="button"
+    aria-label="Close modal"
     onClick={handleClose}
   >
     <svg

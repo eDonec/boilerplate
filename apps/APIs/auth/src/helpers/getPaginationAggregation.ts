@@ -11,7 +11,7 @@ export const getPaginationAggregation = <T>({
   match = {},
   projection,
 }: IPaginationQuery<T>): PipelineStage[] => {
-  const limitNumber = getNumberFromString(limit);
+  const limitNumber = getNumberFromString(limit, 10);
   const pageNumber = getNumberFromString(page);
   const skip = (pageNumber - 1) * limitNumber;
 

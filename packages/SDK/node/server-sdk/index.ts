@@ -2,11 +2,16 @@ import { AuthNRouteTypes } from "auth-types/routes/authN";
 import axios, { AxiosError, AxiosInstance } from "axios";
 import StatusCodes from "shared-types/StatusCodes";
 
-const DEFAULT_BASE_URL =
-  process.env.NODE_ENV === "production"
-    ? //!STARTERCONF change this to your production API URL
-    `https://test.example.com/api`
-    : "http://localhost:3007/api";
+let DEFAULT_BASE_URL = "https://localhost:3000/api";
+
+if (typeof window !== "undefined") DEFAULT_BASE_URL = "/api";
+else if (process.env.NODE_ENV === "production")
+  DEFAULT_BASE_URL = `${
+    process.env.HOST_URL ||
+    process.env.NEXT_PUBLIC_HOSTNAME ||
+    process.env.REACT_APP_HOSTNAME ||
+    ""
+  }/api`;
 
 type ResetTokenCallback = (
   setBearerToken: (token: string | null) => ApiSDK,

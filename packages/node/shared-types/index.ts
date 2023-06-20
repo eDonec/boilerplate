@@ -10,4 +10,6 @@ export * from "./IWithDBDocument";
 export * from "./MicroserviceList";
 export * from "./SortDirection";
 export { default as StatusCodes } from "./StatusCodes";
+export * from "./TextDirection";
+export * from "./UploadedBucketFileResponse";
 export * from "./utils";

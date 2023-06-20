@@ -23,7 +23,9 @@ RUN turbo prune --scope=${MICROSERVICE_NAME} --docker
 # Create an image with the installed dependacies
 FROM node:18-alpine AS builder
 ARG MICROSERVICE_NAME
-
+ARG HOST_URL
+ARG NEXT_PUBLIC_GOOGLE_CLIENT_ID
+ARG NEXT_PUBLIC_FACEBOOK_APP_ID
 RUN apk add --no-cache libc6-compat
 RUN apk update
 WORKDIR /app
@@ -40,6 +42,10 @@ COPY .gitignore .gitignore
 COPY .turbo .turbo
 COPY --from=pruner /app/.git ./.git
 ENV NODE_ENV production
+ENV HOST_URL ${HOST_URL}
+ENV NEXT_PUBLIC_GOOGLE_CLIENT_ID ${NEXT_PUBLIC_GOOGLE_CLIENT_ID}
+ENV NEXT_PUBLIC_FACEBOOK_APP_ID ${NEXT_PUBLIC_FACEBOOK_APP_ID}
+ENV NEXT_PUBLIC_HOSTNAME ${HOST_URL}
 RUN yarn build --filter=${MICROSERVICE_NAME}
 
 

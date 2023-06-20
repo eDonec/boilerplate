@@ -12,47 +12,24 @@ COPY ./yarn.lock ./yarn.lock
 
 
 
-# Create an image with the pruned microservice
-FROM nader2560/turborepo-base AS pruner
+# Create a builder image with the necessary files
+FROM nader2560/turborepo-base AS builder
 ARG MICROSERVICE_NAME
 WORKDIR /app
 COPY --from=copier /app .
-RUN turbo prune --scope=${MICROSERVICE_NAME} --docker
-
-
-# Create an image with the installed dependacies
-FROM node:18-alpine AS builder
-ARG MICROSERVICE_NAME
-
 RUN apk add --no-cache libc6-compat
-RUN apk update
-WORKDIR /app
-COPY --from=pruner /app/out/json/ .
-COPY --from=pruner /app/out/yarn.lock ./yarn.lock
-COPY --from=pruner /app/turbo.json ./turbo.json
 RUN yarn install
-
-# Create an image for the build
-
-COPY --from=pruner /app/out/full/ .
-COPY .internal ./.internal
-COPY .gitignore .gitignore
-COPY .turbo .turbo
-COPY --from=pruner /app/.git ./.git
-COPY nginx ./nginx/.
-COPY ./apps/${MICROSERVICE_NAME}/nginx/default.conf ./nginx/conf.d/default.conf
 ENV NODE_ENV production
 RUN yarn build --filter=${MICROSERVICE_NAME}
-
-# ADD your runner image here which will be the last image in the chain
 
 # Production image, copy all the files in the nginx image
 FROM nginx:1.21.6-alpine AS runner
 
 ARG MICROSERVICE_NAME
 
-COPY --from=builder /app/nginx /etc/nginx/.
+COPY ./nginx /etc/nginx/.
+COPY --from=builder /app/apps/${MICROSERVICE_NAME}/nginx/default.conf /etc/nginx/conf.d/default.conf
 
-COPY --from=builder /app/apps/dashboard/build /usr/share/nginx/html/dashboard
+COPY --from=builder /app/apps/${MICROSERVICE_NAME}/build /usr/share/nginx/html/dashboard
 
 

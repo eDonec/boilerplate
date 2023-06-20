@@ -77,3 +77,27 @@ export const getBucketFile: IMiddleware<
 
   stream.pipe(res);
 };
+
+export const addByUrl: IMiddleware<
+  Request<
+    unknown,
+    unknown,
+    FileRouteTypes["/file/create-by-url"]["POST"]["body"],
+    unknown
+  >,
+  Response<
+    FileRouteTypes["/file/create-by-url"]["POST"]["response"],
+    {
+      mimeTypes?: string[];
+    }
+  >
+> = async (req, res) => {
+  const bucketFile = await fileService.addByUrl(
+    req.body.url,
+    res.locals.mimeTypes
+  );
+
+  const response = fileService.formatBucketFileResponse(bucketFile);
+
+  res.status(StatusCodes.Created).send(response);
+};

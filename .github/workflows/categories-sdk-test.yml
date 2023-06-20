@@ -1,0 +1,89 @@
+name:
+  "Test categories-sdk On PR Creation / update"
+
+  # pull_request_review:
+  # types: [submitted]
+on:
+  pull_request:
+    types: [opened, synchronize, edited]
+    paths:
+      - ".github/workflows/categories-sdk*"
+      - "packages/SDK/node/categories-sdk/**"
+      - "packages/node/api-types/categories-types/**"
+      - "packages/SDK/node/server-sdk/**"
+      - "packages/node/api-types/auth-types/**"
+      - "packages/node/http-server/**"
+      - "packages/node/custom-error/**"
+      - "packages/node/token/**"
+
+jobs:
+  lint-and-test-categories-sdk:
+    # if: github.event.review.state == 'approved'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 2
+
+      - name: Get yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "dir=$(yarn cache dir)" >> $GITHUB_OUTPUT
+      - uses: actions/cache@v3
+        id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+      - name: Cache node_modules
+        id: cache-node-modules
+        uses: actions/cache@v3
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-nodemodules-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-nodemodules-
+
+      - name: Setup Node.js/ yarn environment
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: "yarn"
+      - run: yarn
+        if: |
+          steps.yarn-cache.outputs.cache-hit != 'true' ||
+          steps.cache-node-modules.outputs.cache-hit != 'true'
+#      - name: Start Side Services
+#        run: |
+#          make compose-dev
+
+      - name: Run lint
+        run: yarn lint --filter=categories-sdk
+
+      - name: Run tests
+        run: |
+          touch .env
+          echo "AWS_REGION=${{ secrets.AWS_REGION }}" >> .env
+          echo "AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }}" >> .env
+          echo "AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}" >> .env
+          echo "NODE_ENV=test" >> .env
+          echo "ACCESS_TOKEN_SECRET_KEY=${{ secrets.ACCESS_TOKEN_SECRET_KEY }}" >> .env
+          echo "REFRESH_TOKEN_SECRET_KEY=${{ secrets.REFRESH_TOKEN_SECRET_KEY }}" >> .env
+          echo "TOKEN_EXPIRES_IN=${{ secrets.TOKEN_EXPIRES_IN }}" >> .env
+          echo "REFRESH_TOKEN_EXPIRES_IN=${{ secrets.REFRESH_TOKEN_EXPIRES_IN }}" >> .env
+          echo "NODE_TLS_REJECT_UNAUTHORIZED=0" >> .env
+          echo "ROOT_USER_EMAIL=test@email.com" >> .env
+          echo "ROOT_USER_PASSWORD=testpasword" >> .env
+          echo "UPLOAD_SECRET_KEY=${{ secrets.UPLOAD_SECRET_KEY }}" >> .env
+          echo "GOOGLE_CLIENT_ID=${{ secrets. GOOGLE_CLIENT_ID }}" >> .env
+          echo "NEXT_PUBLIC_GOOGLE_CLIENT_ID=${{ secrets. NEXT_PUBLIC_GOOGLE_CLIENT_ID }}" >> .env
+          echo "REACT_APP_GOOGLE_CLIENT_ID=${{ secrets. REACT_APP_GOOGLE_CLIENT_ID }}" >> .env
+          echo "FACEBOOK_APP_ID=${{ secrets. FACEBOOK_APP_ID }}" >> .env
+          echo "NEXT_PUBLIC_FACEBOOK_APP_ID=${{ secrets. NEXT_PUBLIC_FACEBOOK_APP_ID }}" >> .env
+          echo "REACT_APP_FACEBOOK_APP_ID=${{ secrets. REACT_APP_FACEBOOK_APP_ID }}" >> .env
+          echo "DATABASE_BASE_URI=mongodb://127.0.0.1:27017" >> .env
+          echo "KAFKA_BROKERS=localhost:9092" >> .env
+
+          echo "yarn test"
+          yarn test --filter=categories-sdk

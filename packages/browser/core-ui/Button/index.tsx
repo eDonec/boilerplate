@@ -27,9 +27,8 @@ export type ButtonProps = {
   isLoading?: boolean;
   soft?: boolean;
   outline?: boolean;
-} & TButtonVariant &
+} & Omit<TButtonVariant, ""> &
   React.ComponentPropsWithRef<"button">;
-
 const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   (
     {
@@ -60,13 +59,10 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         disabled={disabled}
         className={clsx(
           "items-center rounded px-4 py-2 font-semibold",
-          "focus-visible:ring-primary-500 focus:outline-none focus-visible:ring",
+          "focus:outline-none focus-visible:ring focus-visible:ring-primary-500",
           "text-sm shadow-sm",
           "transition-colors duration-75",
           "disabled:cursor-not-allowed",
-          "dark:bg-gray-900 dark:text-white",
-          "dark:border-gray-600",
-          "dark:hover:bg-gray-800 dark:active:bg-gray-700 dark:disabled:bg-gray-700",
           isLoading && [
             "transition-none hover:text-gray-600 disabled:cursor-wait",
             {
@@ -77,12 +73,13 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
           ],
           getVariantsClsx(
             {
+              primary,
               ghost,
               light,
               success,
-              gray,
               warning,
               danger,
+              gray,
               info,
             },
             !!soft,

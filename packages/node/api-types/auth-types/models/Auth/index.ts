@@ -31,6 +31,7 @@ export type AuthType = {
   numberOfUnsuccessfulTrials: number;
   lastTrialSince: Date;
   _id: string;
+  isActivated: boolean;
 };
 
 export type AuthTypeSaticMethods = {

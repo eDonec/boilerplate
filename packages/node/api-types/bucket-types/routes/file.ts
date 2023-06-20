@@ -7,6 +7,7 @@ export type FileRouteTypes = {
         name: string;
         _id: string;
         url: string;
+        size: number;
       };
     };
   };
@@ -16,6 +17,9 @@ export type FileRouteTypes = {
         key: string;
         type: string;
         name: string;
+        url: string;
+        _id: string;
+        size: number;
       }>;
     };
   };
@@ -26,5 +30,20 @@ export type FileRouteTypes = {
       };
     };
   };
-  //! GENERATOR-ANCHOR
+  "/file/create-by-url": {
+    POST: {
+      body: {
+        url: string;
+      };
+
+      response: {
+        key: string;
+        url: string;
+        type: string;
+        name: string;
+        _id: string;
+        size: number;
+      };
+    };
+  };
 };

@@ -10,12 +10,13 @@ export type RawRadioButtonProps = {
   values: IRadioButton[];
   error?: string;
   name: string;
+  rowClassName?: string;
 } & Omit<React.ComponentPropsWithRef<"input">, "type">;
 const RawRadioButton = forwardRef<HTMLInputElement, RawRadioButtonProps>(
-  ({ error, name, className, values, ...rest }, ref) => (
+  ({ error, name, className, values, rowClassName, ...rest }, ref) => (
     <div className="mb-6 flex items-start">
       <div>
-        <div>
+        <div className={clsx(rowClassName)}>
           {values.map((o, i) => (
             <div key={o.value}>
               <div className="mr-2 mb-2 flex items-center">

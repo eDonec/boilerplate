@@ -34,7 +34,7 @@ const FlatList = <T,>({
       className
     )}
   >
-    <table className="w-full table-auto ">
+    <table className="w-full table-auto">
       {renderListHeader && <thead>{renderListHeader}</thead>}
       <tbody className={clsx(contentContainerClassName)}>
         {data.map((item, index) => (

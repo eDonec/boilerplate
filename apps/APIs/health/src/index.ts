@@ -12,12 +12,17 @@ const databaseConfig: ConnectOptions = {
   pass: process.env.DATABASE_PASSWORD,
 };
 
-if (!process.env.DATABASE_URI)
-  throw new Error("Missing .env key : DATABASE_URI");
+if (!process.env.DATABASE_BASE_URI || !process.env.MICROSERVICE_NAME)
+  throw new Error("Missing .env key : DATABASE_BASE_URI or MICROSERVICE_NAME");
 
 app.use(baseUrl, router);
 
-connect(process.env.DATABASE_URI, databaseConfig)
+connect(
+  process.env.NODE_ENV === "production"
+    ? `${process.env.DATABASE_URI}`
+    : `${process.env.DATABASE_BASE_URI}/${process.env.MICROSERVICE_NAME}`,
+  databaseConfig
+)
   .then(() => {
     import("helpers/cron");
     app.listen(port, () => {

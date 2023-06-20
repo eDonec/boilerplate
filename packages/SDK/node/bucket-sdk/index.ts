@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 import axios from "axios";
 import { FileRouteTypes } from "bucket-types/routes/file";
 import StatusCodes from "shared-types/StatusCodes";
@@ -93,6 +94,20 @@ export default class BucketSDK {
       },
       signal: abortController?.signal,
     });
+
+    return data;
+  }
+
+  public async addByUrl({
+    body,
+  }: {
+    body: FileRouteTypes["/file/create-by-url"]["POST"]["body"];
+    query?: never;
+    params?: never;
+  }) {
+    const { data } = await this.api.post<
+      FileRouteTypes["/file/create-by-url"]["POST"]["response"]
+    >(`/file/create-by-url`, body);
 
     return data;
   }

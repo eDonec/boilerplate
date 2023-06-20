@@ -1,8 +1,9 @@
 /* eslint-disable max-lines */
-import isAfter from "date-fns/isAfter";
+import { isAfter } from "date-fns";
 import isBefore from "date-fns/isBefore";
 import isValid from "date-fns/isValid";
 
+// TODO: Update multilanguage support somehow
 import {
   alphaNumRegex,
   alphaRegex,
@@ -19,6 +20,8 @@ export default class FieldValidator {
 
   private fieldName: string;
 
+  private displayName: string;
+
   fieldHasMultipleValidators = false;
 
   oneOfValidatorsIsClean = false;
@@ -33,9 +36,14 @@ export default class FieldValidator {
     fields: { fieldName: string; message: string }[];
   } = undefined;
 
-  constructor(fieldToTest: Primitives, fieldName: string) {
+  constructor(
+    fieldToTest: Primitives,
+    fieldName: string,
+    displayName?: string
+  ) {
     this.fieldToTest = fieldToTest;
     this.fieldName = fieldName;
+    this.displayName = displayName ?? fieldName;
   }
 
   private isStringType(field: Primitives = this.fieldToTest): field is string {
@@ -48,7 +56,7 @@ export default class FieldValidator {
         ...(this.error?.fields || []),
         {
           fieldName: this.fieldName,
-          message: `${this.fieldName} is not a string`,
+          message: `${this.displayName} n'est pas une chaîne de caractères valide`,
         },
       ],
     };
@@ -70,7 +78,7 @@ export default class FieldValidator {
           ...(this.error?.fields || []),
           {
             fieldName: this.fieldName,
-            message: `${this.fieldName} is not a Date`,
+            message: `${this.displayName} n'est pas une date valide`,
           },
         ],
       };
@@ -91,7 +99,7 @@ export default class FieldValidator {
         ...(this.error?.fields || []),
         {
           fieldName: this.fieldName,
-          message: `${this.fieldName} is not a number`,
+          message: `${this.displayName} n'est pas un nombre`,
         },
       ],
     };
@@ -127,7 +135,7 @@ export default class FieldValidator {
           ...(this.error?.fields || []),
           {
             fieldName: this.fieldName,
-            message: `${this.fieldName} must be a valid email address`,
+            message: `${this.displayName} doit être une adresse email valide`,
           },
         ],
       };
@@ -143,7 +151,7 @@ export default class FieldValidator {
           ...(this.error?.fields || []),
           {
             fieldName: this.fieldName,
-            message: `${this.fieldName} not exist`,
+            message: `${this.displayName} n'existe pas`,
           },
         ],
       };
@@ -159,7 +167,7 @@ export default class FieldValidator {
           ...(this.error?.fields || []),
           {
             fieldName: this.fieldName,
-            message: `${this.fieldName} is empty`,
+            message: `${this.displayName} est obligatoire`,
           },
         ],
       };
@@ -175,7 +183,7 @@ export default class FieldValidator {
           ...(this.error?.fields || []),
           {
             fieldName: this.fieldName,
-            message: `${this.fieldName} must be a string`,
+            message: `${this.displayName} doit être une chaine de caractères`,
           },
         ],
       };
@@ -191,7 +199,7 @@ export default class FieldValidator {
           ...(this.error?.fields || []),
           {
             fieldName: this.fieldName,
-            message: `${this.fieldName} must be a boolean`,
+            message: `${this.displayName} doit être un booléen`,
           },
         ],
       };
@@ -209,7 +217,9 @@ export default class FieldValidator {
           ...(this.error?.fields || []),
           {
             fieldName: this.fieldName,
-            message: `${this.fieldName} must be a string`,
+            message: `${
+              this.fieldName
+            } doit être l'un des valeurs [${paramArray.join(", ")}]`,
           },
         ],
       };
@@ -226,7 +236,7 @@ export default class FieldValidator {
           ...(this.error?.fields || []),
           {
             fieldName: this.fieldName,
-            message: `${this.fieldName} can only contain letters`,
+            message: `${this.displayName} ne peut contenir que des lettres`,
           },
         ],
       };
@@ -244,7 +254,7 @@ export default class FieldValidator {
           ...(this.error?.fields || []),
           {
             fieldName: this.fieldName,
-            message: `${this.fieldName} can only contain letters and dashes (it should be Kebab case) "-"`,
+            message: `${this.displayName} ne doit contenir que des lettres minuscules, des chiffres et des tirets`,
           },
         ],
       };
@@ -262,7 +272,7 @@ export default class FieldValidator {
           ...(this.error?.fields || []),
           {
             fieldName: this.fieldName,
-            message: `${this.fieldName} is not a valid ObjectId`,
+            message: `${this.displayName} is not a valid ObjectId`,
           },
         ],
       };
@@ -279,7 +289,7 @@ export default class FieldValidator {
           ...(this.error?.fields || []),
           {
             fieldName: this.fieldName,
-            message: `${this.fieldName} can only contain letters and spaces`,
+            message: `${this.displayName} ne doit contenir que des lettres et des espaces`,
           },
         ],
       };
@@ -296,7 +306,7 @@ export default class FieldValidator {
           ...(this.error?.fields || []),
           {
             fieldName: this.fieldName,
-            message: `${this.fieldName} can only contain letters and numbers`,
+            message: `${this.displayName} ne doit contenir que des lettres et des chiffres`,
           },
         ],
       };
@@ -313,7 +323,7 @@ export default class FieldValidator {
           ...(this.error?.fields || []),
           {
             fieldName: this.fieldName,
-            message: `${this.fieldName} must not exceed ${length}`,
+            message: `${this.displayName} ne doit pas depassé ${length} caractères`,
           },
         ],
       };
@@ -330,7 +340,7 @@ export default class FieldValidator {
           ...(this.error?.fields || []),
           {
             fieldName: this.fieldName,
-            message: `${this.fieldName}  must be at least ${length}`,
+            message: `${this.displayName} doit avoir au moins ${length} caractères`,
           },
         ],
       };
@@ -347,7 +357,7 @@ export default class FieldValidator {
           ...(this.error?.fields || []),
           {
             fieldName: this.fieldName,
-            message: `${this.fieldName} should be a same password`,
+            message: `${this.displayName} doit être identique au mot de passe`,
           },
         ],
       };
@@ -364,7 +374,7 @@ export default class FieldValidator {
           ...(this.error?.fields || []),
           {
             fieldName: this.fieldName,
-            message: `${this.fieldName} should be a valid url`,
+            message: `${this.displayName} doit être une url valide`,
           },
         ],
       };
@@ -381,7 +391,7 @@ export default class FieldValidator {
           ...(this.error?.fields || []),
           {
             fieldName: this.fieldName,
-            message: `${this.fieldName} should be a valid date`,
+            message: `${this.displayName} doit être une date valide`,
           },
         ],
       };
@@ -391,14 +401,14 @@ export default class FieldValidator {
 
   isBeforDate(maxDate: Date) {
     if (!this.isDateType(this.fieldToTest)) return this;
-    if (!isAfter(maxDate, this.fieldToTest))
+    if (isAfter(this.fieldToTest, maxDate))
       this.error = {
         message: "Validation error!",
         fields: [
           ...(this.error?.fields || []),
           {
             fieldName: this.fieldName,
-            message: `${this.fieldName} should be after ${maxDate}`,
+            message: `${this.displayName} doit être avant ${maxDate}`,
           },
         ],
       };
@@ -409,14 +419,14 @@ export default class FieldValidator {
   isAfterDate(minDate: Date) {
     if (!this.isDateType(this.fieldToTest)) return this;
 
-    if (!isBefore(minDate, this.fieldToTest))
+    if (isBefore(this.fieldToTest, minDate))
       this.error = {
         message: "Validation error!",
         fields: [
           ...(this.error?.fields || []),
           {
             fieldName: this.fieldName,
-            message: `${this.fieldName} should be before ${minDate} `,
+            message: `${this.displayName} doit être apres ${minDate} `,
           },
         ],
       };
@@ -435,7 +445,7 @@ export default class FieldValidator {
           ...(this.error?.fields || []),
           {
             fieldName: this.fieldName,
-            message: `${this.fieldName} should be a number`,
+            message: `${this.displayName} doit être un nombre valide`,
           },
         ],
       };
@@ -454,7 +464,7 @@ export default class FieldValidator {
           ...(this.error?.fields || []),
           {
             fieldName: this.fieldName,
-            message: `${this.fieldName}  must not exceed ${max}`,
+            message: `${this.displayName}  doit être inférieur à ${max}`,
           },
         ],
       };
@@ -473,7 +483,7 @@ export default class FieldValidator {
           ...(this.error?.fields || []),
           {
             fieldName: this.fieldName,
-            message: `${this.fieldName} must at least be ${min}`,
+            message: `${this.displayName} doit être superieur à ${min}`,
           },
         ],
       };
@@ -492,7 +502,7 @@ export default class FieldValidator {
           ...(this.error?.fields || []),
           {
             fieldName: this.fieldName,
-            message: `${this.fieldName} should be between ${min} and ${max} `,
+            message: `${this.displayName} doit être entre ${min} et ${max} `,
           },
         ],
       };

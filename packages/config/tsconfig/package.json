@@ -5,10 +5,9 @@
   "files": [
     "react.json",
     "server.json",
-    "base.json",
-    "mobile.json"
+    "base.json"
   ],
   "devDependencies": {
-    "@tsconfig/react-native": "^2.0.2"
+    "tsconfig-paths": "4.2.0"
   }
 }

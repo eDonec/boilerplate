@@ -99,7 +99,7 @@ describe("string Validators to initialize", () => {
   it("should throw an error in case of an empty string", () => {
     expect(
       validators.validate.emptyString.isEmpty().error?.fields[0].message
-    ).toBe("emptyString is empty");
+    ).toBe("emptyString est obligatoire");
     expect(() => validators.resolveErrors()).toThrow("Validation error!");
   });
   // password

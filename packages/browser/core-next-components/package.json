@@ -6,7 +6,7 @@
     "core-ui": "*",
     "core-utils": "*",
     "data-table": "*",
-    "next": "13.1.6",
+    "next": "13.4.0",
     "react": "18.2.0"
   },
   "scripts": {

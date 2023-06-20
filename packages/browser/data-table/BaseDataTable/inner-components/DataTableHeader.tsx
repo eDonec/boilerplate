@@ -17,6 +17,7 @@ const DataTableHeader = ({ headerItems }: DataTableHeaderProps) => {
     keyword,
     onKeywordChange,
     showSearch,
+    subHeader,
   } = useBaseDataTableContext();
 
   return (
@@ -41,6 +42,18 @@ const DataTableHeader = ({ headerItems }: DataTableHeaderProps) => {
           </td>
         </tr>
       )}
+      {subHeader && (
+        <tr
+          className={clsx(
+            headerClassName,
+            "bg-gray-100 text-left text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400"
+          )}
+        >
+          <td className="p-2" colSpan={columns.length}>
+            {subHeader}
+          </td>
+        </tr>
+      )}
 
       <tr
         className={clsx(
@@ -57,9 +70,13 @@ const DataTableHeader = ({ headerItems }: DataTableHeaderProps) => {
           return (
             <th
               key={headerItem.value || keyIndex}
-              className={clsx(headerItem.className, "px-6 py-4", {
-                "cursor-pointer": headerItem.sortable,
-              })}
+              className={clsx(
+                headerItem.className,
+                "hidden px-6 py-4 md:table-cell",
+                {
+                  "cursor-pointer": headerItem.sortable,
+                }
+              )}
               onClick={() =>
                 headerItem.sortable &&
                 onSortChange?.({

@@ -1,15 +1,4 @@
 {
-  "imagePicker": {
-    "dragPrompt": "FR: Redux Counter",
-    "draggingPrompt": "FR: CRA + Tailwind CSS + TypeScript + Redux Tookit",
-    "maxFilesPrompt": "(Un maximum de :maxFiles fichier(s))"
-  },
-  "api": {
-    "deleted": "FR: Go to client",
-    "created": "FR: Go to API",
-    "updated": "FR: Set Counter to 300 Async",
-    "notFound": "FR: Increment"
-  },
   "misc": {
     "cancel": "Annuler",
     "submit": "Valider",
@@ -21,30 +10,14 @@
     "view": "Afficher",
     "add": "Créer"
   },
-  "role": {
-    "confirmationTitle": "Sauvegarder les modifications?",
-    "confirmationBody": "Voulez-vous vraiment enregistrer les modifications actuelles ? Cette action est sensible et une double vérification est fortement recommandée.",
-    "deletionTitle": "Supprimer le rôle?",
-    "deletionBody": "Voulez-vous vraiment supprimer ce rôle ? Cette action est sensible et une double vérification est fortement recommandée.",
-    "roleDeletedSuccess": "Rôle supprimé avec succès",
-    "roleUpdatedSuccess": "Rôle mis à jour avec succès",
-    "roleCreatedSuccess": "Rôle créé avec succès",
-    "addNewRole": "Ajouter un rôle"
-  },
-  "user": {
-    "activation": "FR: Decrement",
-    "resetPassword": "Réussite de la demande de réinitialisation du mot de passe",
-    "forgetPassword": "Réinitialisation du mot de passe avec succès",
-    "logout": "Déconnecté avec succès",
-    "unauthorized": "Tu n'as pas accès "
-  },
   "homePage": {
     "joinUsButton": "Nous rejoindre",
     "activation": "activation"
   },
   "linksNames": {
-    "dashboard": "Administration",
-    "authenticatedClients": "List des clients authentifiés",
-    "roles": "Liste des rôles"
+    "home": "Home"
+  },
+  "meta": {
+    "description": "Meta description"
   }
 }

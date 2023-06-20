@@ -9,7 +9,11 @@ describe("SEO Renderer", () => {
   it("should render successfully", () => {
     const { baseElement } = render(
       <RouterContext.Provider value={createMockRouter()}>
-        <SEO />
+        <SEO
+          title="generated_string"
+          description="generated_string"
+          image="generated_string"
+        />
       </RouterContext.Provider>
     );
 

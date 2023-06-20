@@ -1,6 +1,8 @@
 import { AUTH_PROVIDERS } from "shared-types";
 import TCustomErrors from "shared-types/Errors";
 
+import { LeanUserDocument } from "../models/User";
+
 export enum AuthEvents {
   UserSuspended = "UserSuspended",
   UserCreated = "UserCreated",
@@ -9,6 +11,10 @@ export enum AuthEvents {
   AuthError = "AuthError",
   UserBanned = "UserBanned",
   UserBanAndSuspensionLifted = "UserBanAndSuspensionLifted",
+  ClientCreated = "ClientCreated",
+  ClientUpdated = "ClientUpdated",
+  ClientDeleted = "ClientDeleted",
+  ResetPasswordRequest = "ResetPasswordRequest",
 }
 
 export type AuthEventsPayload = {
@@ -46,5 +52,24 @@ export type AuthEventsPayload = {
     authId: string;
     createdAt: Date;
     liftedByUserId: string;
+  };
+  [AuthEvents.ClientCreated]: LeanUserDocument & {
+    filesToPersist: string[];
+  };
+  [AuthEvents.ClientDeleted]: {
+    filesToDelete: string[];
+  };
+  [AuthEvents.ClientUpdated]: LeanUserDocument & {
+    filesToPersist: string[];
+    filesToDelete: string[];
+  };
+  [AuthEvents.ResetPasswordRequest]: {
+    resetPasswordToken: string;
+    email: string;
+    firstName?: string;
+    lastName?: string;
+    browser?: string | null;
+    os?: string | null;
+    country?: string | null;
   };
 };

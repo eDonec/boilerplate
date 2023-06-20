@@ -8,6 +8,7 @@ type MediaFormContextProps<TFieldValues extends FieldValues> =
   RawMediaFormContextProviderProps<TFieldValues> & {
     onSubmit: SubmitHandler<TFieldValues>;
     className?: string;
+    id?: string;
   };
 
 const MediaFormContext = <TFieldValues extends FieldValues>({
@@ -15,13 +16,18 @@ const MediaFormContext = <TFieldValues extends FieldValues>({
   onSubmit,
   fetchTokenFunction,
   className = "",
+  id,
   ...formMethods
 }: MediaFormContextProps<TFieldValues>) => (
   <RawMediaFormProvider
     {...formMethods}
     fetchTokenFunction={fetchTokenFunction}
   >
-    <form className={className} onSubmit={formMethods.handleSubmit(onSubmit)}>
+    <form
+      id={id}
+      className={className}
+      onSubmit={formMethods.handleSubmit(onSubmit)}
+    >
       {children}
     </form>
   </RawMediaFormProvider>

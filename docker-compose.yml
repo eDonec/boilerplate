@@ -1,7 +1,7 @@
 version: "3.9"
 services:
   database:
-    image: mongo
+    image: mongo:5.0.13
     restart: always
     environment:
       - MONGO_INITDB_ROOT_USERNAME=${DATABASE_USER}
@@ -148,7 +148,199 @@ services:
       - database
       - cache
 
+  payment:
+    image: payment
+    restart: always
+    command: node /app/index.js
+    environment:
+      - NODE_ENV=${NODE_ENV}
+      - PORT=${PORT}
+      - DATABASE_URI=mongodb://database:27017/monorepo-payment?authSource=admin
+      - ACCESS_TOKEN_SECRET_KEY=${ACCESS_TOKEN_SECRET_KEY}
+      - REFRESH_TOKEN_SECRET_KEY=${REFRESH_TOKEN_SECRET_KEY}
+      - DATABASE_USER=${DATABASE_USER}
+      - DATABASE_PASSWORD=${DATABASE_PASSWORD}
+      - TOKEN_EXPIRES_IN=${TOKEN_EXPIRES_IN}
+      - REFRESH_TOKEN_EXPIRES_IN=${REFRESH_TOKEN_EXPIRES_IN}
+      - NUMBER_OF_AUTH_TRIALS=5
+      - KAFKA_BROKERS=broker:9092
+      - UPLOAD_SECRET_KEY=${UPLOAD_SECRET_KEY}
+      - ROOT_USER_EMAIL=${ROOT_USER_EMAIL}
+      - ROOT_USER_PASSWORD=${ROOT_USER_PASSWORD}
+      - MICROSERVICE_NAME=payment
+      - REDIS_CLIENT=redis://cache:6379
+    networks:
+      - main-network
+    depends_on:
+      - database
+
+  blogs:
+    image: blogs
+    restart: always
+    command: node /app/index.js
+    environment:
+      - NODE_ENV=${NODE_ENV}
+      - PORT=${PORT}
+      - DATABASE_URI=mongodb://database:27017/blogs?authSource=admin
+      - DATABASE_USER=${DATABASE_USER}
+      - DATABASE_PASSWORD=${DATABASE_PASSWORD}
+      - KAFKA_BROKERS=broker:9092
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+      - AWS_REGION=${AWS_REGION}
+      - AWS_BUCKET=edonec-boilerplate-files
+      - PENDING_DURATION_MINUTES=1440
+      - UPLOAD_SECRET_KEY=${UPLOAD_SECRET_KEY}
+      - TMP_DIR_NAME=tmp
+      - REDIS_CLIENT=redis://cache:6379
+
+    networks:
+      - main-network
+    depends_on:
+      - database
+      - cache
+
+  threads:
+    image: threads
+    restart: always
+    command: node /app/index.js
+    environment:
+      - NODE_ENV=${NODE_ENV}
+      - PORT=${PORT}
+      - DATABASE_URI=mongodb://database:27017/mr-psychologue-threads?authSource=admin
+      - ACCESS_TOKEN_SECRET_KEY=${ACCESS_TOKEN_SECRET_KEY}
+      - REFRESH_TOKEN_SECRET_KEY=${REFRESH_TOKEN_SECRET_KEY}
+      - DATABASE_USER=${DATABASE_USER}
+      - DATABASE_PASSWORD=${DATABASE_PASSWORD}
+      - TOKEN_EXPIRES_IN=${TOKEN_EXPIRES_IN}
+      - REFRESH_TOKEN_EXPIRES_IN=${REFRESH_TOKEN_EXPIRES_IN}
+      - NUMBER_OF_AUTH_TRIALS=5
+      - KAFKA_BROKERS=broker:9092
+      - UPLOAD_SECRET_KEY=${UPLOAD_SECRET_KEY}
+      - ROOT_USER_EMAIL=${ROOT_USER_EMAIL}
+      - ROOT_USER_PASSWORD=${ROOT_USER_PASSWORD}
+      - MICROSERVICE_NAME=threads
+      - REDIS_CLIENT=redis://cache:6379
+    networks:
+      - main-network
+    depends_on:
+      - database
+
+  booking:
+    image: booking
+    restart: always
+    command: node /app/index.js
+    environment:
+      - NODE_ENV=${NODE_ENV}
+      - PORT=${PORT}
+      - DATABASE_URI=mongodb://database:27017/mr-psychologue-booking?authSource=admin
+      - ACCESS_TOKEN_SECRET_KEY=${ACCESS_TOKEN_SECRET_KEY}
+      - REFRESH_TOKEN_SECRET_KEY=${REFRESH_TOKEN_SECRET_KEY}
+      - DATABASE_USER=${DATABASE_USER}
+      - DATABASE_PASSWORD=${DATABASE_PASSWORD}
+      - TOKEN_EXPIRES_IN=${TOKEN_EXPIRES_IN}
+      - REFRESH_TOKEN_EXPIRES_IN=${REFRESH_TOKEN_EXPIRES_IN}
+      - NUMBER_OF_AUTH_TRIALS=5
+      - KAFKA_BROKERS=broker:9092
+      - UPLOAD_SECRET_KEY=${UPLOAD_SECRET_KEY}
+      - ROOT_USER_EMAIL=${ROOT_USER_EMAIL}
+      - ROOT_USER_PASSWORD=${ROOT_USER_PASSWORD}
+      - MICROSERVICE_NAME=booking
+      - REDIS_CLIENT=redis://cache:6379
+    networks:
+      - main-network
+    depends_on:
+      - database
+
+  categories:
+    image: categories
+    restart: always
+    command: node /app/index.js
+    environment:
+      - NODE_ENV=${NODE_ENV}
+      - PORT=${PORT}
+      - DATABASE_URI=mongodb://database:27017/mr-psychologue-categories?authSource=admin
+      - ACCESS_TOKEN_SECRET_KEY=${ACCESS_TOKEN_SECRET_KEY}
+      - REFRESH_TOKEN_SECRET_KEY=${REFRESH_TOKEN_SECRET_KEY}
+      - DATABASE_USER=${DATABASE_USER}
+      - DATABASE_PASSWORD=${DATABASE_PASSWORD}
+      - TOKEN_EXPIRES_IN=${TOKEN_EXPIRES_IN}
+      - REFRESH_TOKEN_EXPIRES_IN=${REFRESH_TOKEN_EXPIRES_IN}
+      - NUMBER_OF_AUTH_TRIALS=5
+      - KAFKA_BROKERS=broker:9092
+      - UPLOAD_SECRET_KEY=${UPLOAD_SECRET_KEY}
+      - ROOT_USER_EMAIL=${ROOT_USER_EMAIL}
+      - ROOT_USER_PASSWORD=${ROOT_USER_PASSWORD}
+      - MICROSERVICE_NAME=categories
+      - REDIS_CLIENT=redis://cache:6379
+    networks:
+      - main-network
+    depends_on:
+      - database
+
+  therapist:
+    image: therapist
+    restart: always
+    command: node /app/index.js
+    environment:
+      - NODE_ENV=${NODE_ENV}
+      - PORT=${PORT}
+      - DATABASE_URI=mongodb://database:27017/mr-psychologue-therapist?authSource=admin
+      - ACCESS_TOKEN_SECRET_KEY=${ACCESS_TOKEN_SECRET_KEY}
+      - REFRESH_TOKEN_SECRET_KEY=${REFRESH_TOKEN_SECRET_KEY}
+      - DATABASE_USER=${DATABASE_USER}
+      - DATABASE_PASSWORD=${DATABASE_PASSWORD}
+      - TOKEN_EXPIRES_IN=${TOKEN_EXPIRES_IN}
+      - REFRESH_TOKEN_EXPIRES_IN=${REFRESH_TOKEN_EXPIRES_IN}
+      - NUMBER_OF_AUTH_TRIALS=5
+      - KAFKA_BROKERS=broker:9092
+      - UPLOAD_SECRET_KEY=${UPLOAD_SECRET_KEY}
+      - ROOT_USER_EMAIL=${ROOT_USER_EMAIL}
+      - ROOT_USER_PASSWORD=${ROOT_USER_PASSWORD}
+      - MICROSERVICE_NAME=therapist
+      - REDIS_CLIENT=redis://cache:6379
+    networks:
+      - main-network
+    depends_on:
+      - database
+
+  og-image-generator:
+    image: og-image-generator
+    environment:
+      - NODE_ENV=${NODE_ENV}
+      - REACT_APP_BASE_URL=og-image-generator
+    command: node server.js
+    restart: always
+    networks:
+      - main-network
+
+  mailing:
+    image: mailing
+    restart: always
+    command: node /app/index.js
+    environment:
+      - NODE_ENV=${NODE_ENV}
+      - PORT=${PORT}
+      - DATABASE_URI=mongodb://database:27017/mr-psychologue-mailing?authSource=admin
+      - ACCESS_TOKEN_SECRET_KEY=${ACCESS_TOKEN_SECRET_KEY}
+      - REFRESH_TOKEN_SECRET_KEY=${REFRESH_TOKEN_SECRET_KEY}
+      - DATABASE_USER=${DATABASE_USER}
+      - DATABASE_PASSWORD=${DATABASE_PASSWORD}
+      - TOKEN_EXPIRES_IN=${TOKEN_EXPIRES_IN}
+      - REFRESH_TOKEN_EXPIRES_IN=${REFRESH_TOKEN_EXPIRES_IN}
+      - NUMBER_OF_AUTH_TRIALS=5
+      - KAFKA_BROKERS=broker:9092
+      - UPLOAD_SECRET_KEY=${UPLOAD_SECRET_KEY}
+      - ROOT_USER_EMAIL=${ROOT_USER_EMAIL}
+      - ROOT_USER_PASSWORD=${ROOT_USER_PASSWORD}
+      - MICROSERVICE_NAME=mailing
+      - REDIS_CLIENT=redis://cache:6379
+    networks:
+      - main-network
+    depends_on:
+      - database
   #  NEW_MICROSERVICE_PLACEHOLDER
+
   zookeeper:
     restart: always
     image: confluentinc/cp-zookeeper:7.0.1

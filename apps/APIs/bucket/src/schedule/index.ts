@@ -1,5 +1,6 @@
 /* eslint-disable unused-imports/no-unused-vars */
 /* eslint-disable no-console */
+import AuthConsumer from "auth-events/consumer";
 import BucketFile from "models/BucketFile";
 import { scheduleJob } from "node-schedule";
 import {
@@ -18,6 +19,8 @@ scheduleJob("*/30 * * * *", async () => {
     })
   ).forEach(deleteFile);
 });
+
+const authConsumer = new AuthConsumer();
 
 const syncUpdateByEndOfUrl = ({
   filesToDelete,
@@ -68,3 +71,8 @@ const syncCreateByKey = async ({
 const syncDeleteByKey = ({ filesToDelete }: { filesToDelete: string[] }) => {
   Promise.all(filesToDelete.map(deleteFileByKey)).catch(console.error);
 };
+
+//Auth
+authConsumer.subscribe.ClientCreated(syncCreateByKey);
+authConsumer.subscribe.ClientUpdated(syncUpdateByKey);
+authConsumer.subscribe.ClientDeleted(syncDeleteByKey);

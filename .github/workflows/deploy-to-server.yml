@@ -1,0 +1,81 @@
+name: "deploy images to production server"
+on: workflow_dispatch
+
+jobs:
+  send-compose-files-to-server:
+    runs-on: ubuntu-latest
+    environment:
+      name: production
+    if: github.ref == 'refs/heads/master'
+    steps:
+      - uses: actions/checkout@v3 # Checking out the repo
+
+      - name: Operations
+        uses: alinz/ssh-scp-action@master
+        env:
+          HELLO: 22
+          MESSAGE: ${{ secrets.USERNAME }}
+        with:
+          key: ${{ secrets.PRIVATE_KEY }}
+          host: ${{ secrets.SERVER_IP }}
+          port: 22
+          user: ${{ secrets.USERNAME }}
+          # runs this on remove server
+          ssh_before: |
+            rm -rf /docker/staging || true
+
+          # then uploads these 2 files
+          scp: |
+            ${{ vars.DOCKER_SOURCE_PATH }} ${{ secrets.USERNAME }}@${{ secrets.SERVER_IP }}:/docker/staging
+
+  deploy-to-production:
+    runs-on: ubuntu-latest
+    environment:
+      name: production
+      url: ${{ vars.HOST_URL }}
+    needs: [send-compose-files-to-server]
+    steps:
+      - name: Set the value
+        run: |
+          echo "GH_TOKEN=${{ secrets.GITHUB_TOKEN }}" >> $GITHUB_ENV
+          echo "USERNAME=${{ secrets.USERNAME }}" >> $GITHUB_ENV
+      - name: remote docker-compose up via ssh
+        uses: appleboy/ssh-action@master
+        env:
+          APPTOKEN: ${{ secrets.GITHUB_TOKEN }}
+          USERNAME: ${{ env.USERNAME }}
+        with:
+          host: ${{ secrets.SERVER_IP }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.PRIVATE_KEY }}
+          port: 22
+          envs: APPTOKEN,USERNAME,DATABASE_USER,DATABASE_PASSWORD,AWS_REGION,AWS_ACCESS_KEY_ID,AWS_SECRET_ACCESS_KEY,CONTAINERS_PORT,NODE_ENV,ACCESS_TOKEN_SECRET_KEY,REFRESH_TOKEN_SECRET_KEY,TOKEN_EXPIRES_IN,REFRESH_TOKEN_EXPIRES_IN,ROOT_USER_EMAIL,ROOT_USER_PASSWORD,UPLOAD_SECRET_KEY
+          script: |
+            echo $APPTOKEN | docker login ghcr.io -u $USERNAME --password-stdin
+            cd /docker/staging
+            rm -f .env || true
+            rm -f fullchain.pem || true
+            rm -f privkey.pem || true
+            echo HOST_URL=${{ vars.HOST_URL }} >> .env
+            echo NODE_ENV=production >> .env
+            echo DATABASE_USER=${{ secrets.DATABASE_USER}} >> .env
+            echo DATABASE_PASSWORD=${{ secrets.DATABASE_PASSWORD}} >> .env
+            echo AWS_REGION=${{ secrets.AWS_REGION}} >> .env
+            echo AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID}} >> .env
+            echo AWS_SECRET_ACCESS_KEY= ${{ secrets.AWS_SECRET_ACCESS_KEY}} >> .env
+            echo PORT=3000 >> .env
+            echo ROOT_USER_EMAIL=${{ secrets.ROOT_USER_EMAIL }} >> .env
+            echo ROOT_USER_PASSWORD=${{ secrets.ROOT_USER_PASSWORD }} >> .env
+            echo ACCESS_TOKEN_SECRET_KEY=${{secrets.ACCESS_TOKEN_SECRET_KEY }} >> .env
+            echo REFRESH_TOKEN_SECRET_KEY=${{ secrets.REFRESH_TOKEN_SECRET_KEY }} >> .env
+            echo "FACEBOOK_APP_ID=${{ secrets.FACEBOOK_APP_ID }}" >> .env
+            echo "GOOGLE_CLIENT_ID=${{ secrets.GOOGLE_CLIENT_ID }}" >> .env
+            echo TOKEN_EXPIRES_IN=${{ secrets.TOKEN_EXPIRES_IN }} >> .env
+            echo REFRESH_TOKEN_EXPIRES_IN=${{ secrets.REFRESH_TOKEN_EXPIRES_IN }} >> .env
+            echo UPLOAD_SECRET_KEY=${{ secrets.UPLOAD_SECRET_KEY }} >> .env
+            rm .env || true
+            cp ../.env .env
+            cp ../fullchain.pem .
+            cp ../privkey.pem .
+            docker compose pull --include-deps
+            docker compose up --build --force-recreate -d --remove-orphans

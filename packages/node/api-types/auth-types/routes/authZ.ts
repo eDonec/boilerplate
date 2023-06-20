@@ -1,5 +1,5 @@
 import { IPaginatedResult } from "shared-types";
-import { PRIVILEGE } from "shared-types/auth/access";
+import { ACCESS, PRIVILEGE } from "shared-types/auth/access";
 import { ACCESS_RESSOURCES } from "shared-types/auth/AccessRessources";
 
 import { LeanRoleDocument } from "../models/Role";
@@ -59,5 +59,16 @@ export type AuthZRouteTypes = {
       };
     };
   };
-  //! GENERATOR-ANCHOR
+  "/z/access/:id": {
+    PUT: {
+      body: {
+        role: string;
+        access: ACCESS[];
+      };
+      response: string;
+      params: {
+        id: string;
+      };
+    };
+  };
 };

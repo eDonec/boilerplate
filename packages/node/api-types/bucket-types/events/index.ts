@@ -10,10 +10,7 @@ export enum BucketEvents {
 
 export type BucketEventsPayload = {
   [BucketEvents.FileUploaded]: UploadedBucketFileResponse;
-
   [BucketEvents.FilePersisted]: UploadedBucketFileResponse;
-  [BucketEvents.FileDeleted]: {
-    placeholder: string;
-  };
+  [BucketEvents.FileDeleted]: UploadedBucketFileResponse;
   [BucketEvents.BucketError]: TCustomErrors;
 };

@@ -44,11 +44,12 @@ export default class TokenValidator<T = string | object | Buffer> {
         message: "Token invalid or expired",
         reason: this.reason || "Token validation",
       });
-    if (!this.validate(token))
+    if (!this.validate(token)) {
       throw new UnauthorizedError({
         message: "Token invalid or expired",
         reason: this.reason || "Token validation",
       });
+    }
     this.token = token;
 
     this.decodedToken = this.desirializeToken(this.token);

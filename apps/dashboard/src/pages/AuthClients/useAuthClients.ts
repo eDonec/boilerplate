@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 
 import Api from "api";
-import { LeanAuthDocument } from "auth-types/models/Auth";
+import { PopulatedUserDocument } from "auth-types/routes/user";
 import { FetchFunction } from "core-cra-components/UncontrolledDataTable/types";
 import { useAlertDialog } from "core-ui/AlertDialog";
 
@@ -13,8 +13,8 @@ import { CLIENT_ACTION_OPTIONS } from "./ClientActions";
 import { useClientActions } from "./ClientActions/useClientActions";
 import { getDataColumns } from "./getDataColumns";
 
-export const fetchFunction: FetchFunction<LeanAuthDocument> = (args) =>
-  Api.authSDK.getAuthenticatedClients({ query: args });
+export const fetchFunction: FetchFunction<PopulatedUserDocument> = (args) =>
+  Api.authSDK.getUsers({ query: args });
 
 let selectedId = "";
 
@@ -40,7 +40,7 @@ export const useAuthClients = () => {
       }
     };
   const dataTableRef =
-    useRef<UncontrolledDataTableHandle<LeanAuthDocument>>(null);
+    useRef<UncontrolledDataTableHandle<PopulatedUserDocument>>(null);
 
   const { banClient, liftBanAndSuspension, suspendClient, isLoading } =
     useClientActions(dataTableRef);

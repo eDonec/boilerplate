@@ -1,0 +1,33 @@
+{
+  "name": "authenticator",
+  "version": "0.1.0",
+  "main": "./index.tsx",
+  "types": "./index.tsx",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/react": "18.0.28",
+    "@types/react-dom": "18.0.10",
+    "config": "*",
+    "tsconfig": "*"
+  },
+  "dependencies": {
+    "@edonec/indexed-db-class": "^1.0.7",
+    "@greatsumini/react-facebook-login": "^3.3.3",
+    "@react-oauth/google": "^0.11.0",
+    "auth-sdk": "*",
+    "auth-types": "*",
+    "core-hooks": "*",
+    "core-ui": "*",
+    "core-utils": "*",
+    "forms": "*",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "react-hook-form": "7.43.9",
+    "server-sdk": "*",
+    "shared-types": "*"
+  },
+  "scripts": {
+    "test": "jest --coverage",
+    "lint": "tsc --noEmit && eslint . --fix"
+  }
+}

@@ -4,7 +4,7 @@ const mainPackage = require("../package.json");
 
 const workspaces = mainPackage.workspaces;
 
-const packagesFolder = workspaces.packages.map((workspace) =>
+const packagesFolder = workspaces.map((workspace) =>
   path.join(__dirname, "../", workspace).replace("*", "")
 );
 
@@ -79,15 +79,7 @@ allPackagesWithTestScripts.forEach((package) => {
   package.jsonPath = package.jsonPath.replace(/\\/g, "/");
 });
 const appsWithTestScript = allPackagesWithTestScripts
-  .filter((package) => {
-    const isApp = package.jsonPath.includes("apps");
-    // TODO: handle react native apps
-    const isReactNativeApp =
-      fs.existsSync(path.join(package.jsonPath, "../android")) &&
-      fs.existsSync(path.join(package.jsonPath, "../ios"));
-
-    return isApp && !isReactNativeApp;
-  })
+  .filter((package) => package.jsonPath.includes("apps"))
   .map((package) => {
     const isNextApp = fs.existsSync(
       path.join(package.jsonPath, "../next.config.js")
@@ -103,10 +95,10 @@ const appsWithTestScript = allPackagesWithTestScripts
     const Dockerfile = isAPI
       ? ".docker/Dockerfile.express"
       : isCRAApp
-        ? ".docker/Dockerfile.cra"
-        : isNextApp
-          ? ".docker/Dockerfile.next"
-          : ".docker/Dockerfile.proxy-balancer";
+      ? ".docker/Dockerfile.cra"
+      : isNextApp
+      ? ".docker/Dockerfile.next"
+      : ".docker/Dockerfile.proxy-balancer";
     return {
       packageName: package.name,
       packagePath: `apps/${package.jsonPath

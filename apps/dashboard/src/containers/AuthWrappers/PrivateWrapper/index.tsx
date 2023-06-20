@@ -4,13 +4,13 @@ import { Navigate } from "react-router-dom";
 import Loader from "core-ui/Loader";
 import ReactChildrenProps from "shared-types/ReactChildren";
 
-import { useAuthState } from "hooks/useAuthState";
+import { useAuthStateWithRole } from "hooks/useAuthStateWithRole";
 
 type IProps = ReactChildrenProps & {
   fallback?: ReactNode;
 };
 const PrivateWrapper: React.FC<IProps> = ({ children, fallback }) => {
-  const { isLoggedIn, isLoading, roleName } = useAuthState();
+  const { isLoggedIn, isLoading, roleName } = useAuthStateWithRole();
 
   if (roleName === "PUBLIC") {
     return <Navigate to="/sign-in" replace />;

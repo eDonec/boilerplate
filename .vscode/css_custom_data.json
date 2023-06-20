@@ -49,6 +49,16 @@
           "url": "https://tailwindcss.com/docs/functions-and-directives#layer"
         }
       ]
+    },
+    {
+      "description": "The @apply directive allows you to apply one or more utility classes to a CSS rule using a concise syntax.",
+      "name": "@apply",
+      "references": [
+        {
+          "name": "Tailwind Documentation",
+          "url": "https://tailwindcss.com/docs/functions-and-directives#apply"
+        }
+      ]
     }
   ],
   "version": 1.1

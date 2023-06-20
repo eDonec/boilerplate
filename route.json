@@ -1,22 +1,11 @@
 {
-  "baseUrl": "/:name",
-  "name": "microserviceStatusHistoryByName",
+  "baseUrl": "/is-phonenumber-available",
+  "name": "isPhoneNumberAvailable",
   "method": "GET",
   "query": {
-    "page": "string",
-    "limit": "string"
-  },
-  "params": {
-    "name": "string"
+    "phoneNumber": "string"
   },
   "response": {
-    "microserviceName": "string",
-    "status": "string",
-    "history": [
-      {
-        "status": "string",
-        "sampleTime": "Date"
-      }
-    ]
+    "available": "boolean"
   }
 }

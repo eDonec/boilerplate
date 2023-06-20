@@ -1,8 +1,8 @@
 /* eslint-disable max-lines */
 import { AuthNRouteTypes } from "auth-types/routes/authN";
 import { AuthZRouteTypes } from "auth-types/routes/authZ";
-import { ClientRouteTypes } from "auth-types/routes/client";
 import { RolesRouteTypes } from "auth-types/routes/roles";
+import { UserRouteTypes } from "auth-types/routes/user";
 import ServerSDK from "server-sdk/sdk";
 import ServerSDKTypes from "server-sdk/types";
 import { IToken } from "shared-types";
@@ -111,10 +111,12 @@ export default class AuthSDK extends ServerSDK {
     this.refreshToken = token.refreshToken;
   }
 
-  public async getAuthByAccessToken() {
+  public async getAuthByAccessToken(signal?: AbortSignal) {
     const { data } = await this.api.get<
       AuthNRouteTypes["/n/me"]["GET"]["response"]
-    >(`${baseUrl}/n/me`);
+    >(`${baseUrl}/n/me`, {
+      signal,
+    });
 
     return data;
   }
@@ -143,20 +145,6 @@ export default class AuthSDK extends ServerSDK {
     const { data } = await this.api.get<
       RolesRouteTypes["/roles/"]["GET"]["response"]
     >(`${baseUrl}/roles`, { params: query });
-
-    return data;
-  }
-
-  public async getAuthenticatedClients({
-    query,
-  }: {
-    body?: never;
-    query: ClientRouteTypes["/clients/"]["GET"]["query"];
-    params?: never;
-  }) {
-    const { data } = await this.api.get<
-      ClientRouteTypes["/clients/"]["GET"]["response"]
-    >(`${baseUrl}/clients`, { params: query });
 
     return data;
   }
@@ -262,20 +250,6 @@ export default class AuthSDK extends ServerSDK {
     return data;
   }
 
-  public async getClientById({
-    params,
-  }: {
-    body?: never;
-    query?: never;
-    params: ClientRouteTypes["/clients/:id"]["GET"]["params"];
-  }) {
-    const { data } = await this.api.get<
-      ClientRouteTypes["/clients/:id"]["GET"]["response"]
-    >(`${baseUrl}/clients/${params.id}`);
-
-    return data;
-  }
-
   public async getGrantableRoles({
     params,
   }: {
@@ -294,13 +268,155 @@ export default class AuthSDK extends ServerSDK {
     body,
     params,
   }: {
-    body: ClientRouteTypes["/clients/clientAccess/:id"]["PUT"]["body"];
+    body: AuthZRouteTypes["/z/access/:id"]["PUT"]["body"];
     query?: never;
-    params: ClientRouteTypes["/clients/clientAccess/:id"]["PUT"]["params"];
+    params: AuthZRouteTypes["/z/access/:id"]["PUT"]["params"];
   }) {
     const { data } = await this.api.put<
-      ClientRouteTypes["/clients/clientAccess/:id"]["PUT"]["response"]
-    >(`${baseUrl}/clients/clientAccess/${params.id}`, body);
+      AuthZRouteTypes["/z/access/:id"]["PUT"]["response"]
+    >(`${baseUrl}/z/access/${params.id}`, body);
+
+    return data;
+  }
+
+  public async googleSignIn({
+    body,
+  }: {
+    body: AuthNRouteTypes["/n/google"]["POST"]["body"];
+    query?: never;
+    params?: never;
+  }) {
+    const { data } = await this.api.post<
+      AuthNRouteTypes["/n/google"]["POST"]["response"]
+    >(`${baseUrl}/n/google`, body);
+
+    this.handleAuthResponse(data.token);
+
+    return data;
+  }
+
+  public async updateUser({
+    body,
+    params,
+  }: {
+    body: UserRouteTypes["/user/:authID"]["PUT"]["body"];
+    query?: never;
+    params: UserRouteTypes["/user/:authID"]["PUT"]["params"];
+  }) {
+    const { data } = await this.api.put<
+      UserRouteTypes["/user/:authID"]["PUT"]["response"]
+    >(`${baseUrl}/user/${params.authID}`, body);
+
+    return data;
+  }
+
+  public async getUser({
+    params,
+  }: {
+    body?: never;
+    query?: never;
+    params: UserRouteTypes["/user/:authID"]["GET"]["params"];
+  }) {
+    const { data } = await this.api.get<
+      UserRouteTypes["/user/:authID"]["GET"]["response"]
+    >(`${baseUrl}/user/${params.authID}`);
+
+    return data;
+  }
+
+  public async getUsers({
+    query,
+  }: {
+    body?: never;
+    query: UserRouteTypes["/user/"]["GET"]["query"];
+    params?: never;
+  }) {
+    const { data } = await this.api.get<
+      UserRouteTypes["/user/"]["GET"]["response"]
+    >(`${baseUrl}/user/`, { params: query });
+
+    return data;
+  }
+
+  public async updateSelf({
+    body,
+  }: {
+    body: UserRouteTypes["/user/me"]["PUT"]["body"];
+    query?: never;
+    params?: never;
+  }) {
+    const { data } = await this.api.put<
+      UserRouteTypes["/user/me"]["PUT"]["response"]
+    >(`${baseUrl}/user/me`, body);
+
+    return data;
+  }
+
+  public async updatePassword({
+    body,
+  }: {
+    body: AuthNRouteTypes["/n/update-password"]["PUT"]["body"];
+    query?: never;
+    params?: never;
+  }) {
+    const { data } = await this.api.put<
+      AuthNRouteTypes["/n/update-password"]["PUT"]["response"]
+    >(`${baseUrl}/n/update-password`, body);
+
+    return data;
+  }
+
+  public async resetPassword({
+    body,
+  }: {
+    body: AuthNRouteTypes["/n/reset-password"]["PUT"]["body"];
+    query?: never;
+    params?: never;
+  }) {
+    const { data } = await this.api.put<
+      AuthNRouteTypes["/n/reset-password"]["PUT"]["response"]
+    >(`${baseUrl}/n/reset-password`, body);
+
+    return data;
+  }
+
+  public async resetPasswordConfirm({
+    body,
+    query,
+  }: {
+    body: AuthNRouteTypes["/n/reset-password-confirm"]["PUT"]["body"];
+    query: AuthNRouteTypes["/n/reset-password-confirm"]["PUT"]["query"];
+    params?: never;
+  }) {
+    const { data } = await this.api.put<
+      AuthNRouteTypes["/n/reset-password-confirm"]["PUT"]["response"]
+    >(`${baseUrl}/n/reset-password-confirm`, body, { params: query });
+
+    return data;
+  }
+
+  public async getUnpaginatedMinimalUsers(_args: {
+    body?: never;
+    query?: never;
+    params?: never;
+  }) {
+    const { data } = await this.api.get<
+      UserRouteTypes["/user/unpaginated-minimal-users"]["GET"]["response"]
+    >(`${baseUrl}/user/unpaginated-minimal-users`);
+
+    return data;
+  }
+
+  public async isPhoneNumberAvailable({
+    query,
+  }: {
+    body?: never;
+    query: UserRouteTypes["/user/is-phonenumber-available"]["GET"]["query"];
+    params?: never;
+  }) {
+    const { data } = await this.api.get<
+      UserRouteTypes["/user/is-phonenumber-available"]["GET"]["response"]
+    >(`${baseUrl}/user/is-phonenumber-available`, { params: query });
 
     return data;
   }

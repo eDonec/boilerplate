@@ -8,9 +8,13 @@ import {
 
 const PUBLIC_ACCESS: ACCESS[] = [
   { ressource: ACCESS_RESSOURCES.PUBLIC, privileges: FULL_ACCESS },
-  { ressource: ACCESS_RESSOURCES.USER, privileges: PRIVILEGE.DELETE_SELF },
+  {
+    ressource: ACCESS_RESSOURCES.AUTHENTICATED_CLIENTS,
+    privileges: PRIVILEGE.DELETE_SELF,
+  },
 ];
 
+// eslint-disable-next-line unused-imports/no-unused-vars
 const mergeAccessArrays = (base: ACCESS[], overRide: ACCESS[]) => {
   const result = base.slice();
 
@@ -34,14 +38,15 @@ export const GOD: Omit<RoleType, "_id"> = {
   name: "GOD",
   access: [{ ressource: ACCESS_RESSOURCES["*"], privileges: FULL_ACCESS }],
 };
-
 export const SUPER_ADMIN: Omit<RoleType, "_id"> = {
   isDefault: true,
   name: "SUPER_ADMIN",
-  access: mergeAccessArrays(PUBLIC_ACCESS, [
-    { ressource: ACCESS_RESSOURCES.ROLE, privileges: FULL_ACCESS },
-    { ressource: ACCESS_RESSOURCES.USER, privileges: FULL_ACCESS },
-  ]),
+  access: Object.values(ACCESS_RESSOURCES)
+    .filter((el) => el !== ACCESS_RESSOURCES["*"])
+    .map((ressource) => ({
+      ressource,
+      privileges: FULL_ACCESS,
+    })),
 };
 
 export const PUBLIC_ROLE: Omit<RoleType, "_id"> = {

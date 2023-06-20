@@ -2,7 +2,8 @@
 /* eslint-disable no-console */
 import Auth from "models/Auth";
 import Role from "models/Role";
-import { ACCESS_TYPE, AUTH_PROVIDERS } from "shared-types";
+import User from "models/User";
+import { ACCESS_TYPE } from "shared-types";
 
 import { seedRoles } from "constants/defaultRoles";
 
@@ -11,7 +12,6 @@ const DEFAULT_USER = {
   email: process.env.ROOT_USER_EMAIL,
   password: process.env.ROOT_USER_PASSWORD,
   authType: ACCESS_TYPE.USER,
-  authProvider: [AUTH_PROVIDERS.CLASSIC],
   isActive: true,
 };
 
@@ -38,10 +38,23 @@ export const seed = async (withLogs = true) => {
       {
         ...DEFAULT_USER,
         role: seededRoles.find((role) => role.name === "GOD"),
+        isActivated: true,
       },
       {
         upsert: true,
         new: true,
+      }
+    );
+
+    await User.findOneAndUpdate(
+      {
+        auth: newRootUser.id,
+      },
+      {
+        auth: newRootUser.id,
+      },
+      {
+        upsert: true,
       }
     );
 
