@@ -53,8 +53,8 @@ function ResetPasswordEmail({
         >
           <Container className="flex flex-col px-8 pb-16 pt-10 text-gray-800">
             <Text className="text-xl font-bold">
-              <Link className="text-gray-700" href="https://mpry.tn">
-                Mr. le Psy
+              <Link className="text-gray-700" href="https://www.edonec.com/">
+                Boilerplate
               </Link>
             </Text>
             <Hr />
@@ -64,8 +64,11 @@ function ResetPasswordEmail({
             <Text className="text-lg">
               Nous avons reçu une demande de réinitialisation du mot de passe
               pour votre compte{" "}
-              <Link className="text-blue-600 underline" href="https://mpry.tn">
-                Mr. le Psy
+              <Link
+                className="text-blue-600 underline"
+                href="https://www.edonec.com/"
+              >
+                Boilerplate
               </Link>{" "}
               associé à <b>{email || "nader2560@gmail.com"}</b>.
             </Text>
@@ -125,12 +128,12 @@ function ResetPasswordEmail({
               <Row className="mx-auto max-w-md">
                 <Column>
                   <Text>
-                    <Link href="https://mpsy.tn">Site web</Link>
+                    <Link href="https://www.edonec.com/">Site web</Link>
                   </Text>
                 </Column>
                 <Column>
                   <Text>
-                    <Link href="https://mpsy.tn/privacy-policy">
+                    <Link href="https://www.edonec.com/privacy-policy/">
                       Politique de confidentialité
                     </Link>
                   </Text>
@@ -141,11 +144,9 @@ function ResetPasswordEmail({
                 répondez à cet e-mail, nous ne pourrons pas le voir.)
               </Text>
               <Text>
-                © {new Date().getFullYear()} Mr. le Psy. | All Rights Reserved.
+                © {new Date().getFullYear()} Boilerplate | All Rights Reserved.
               </Text>
-              <Text>
-                Mr. le Psy. Avenue Des Violettes, Tunis 1082, Tunisie.
-              </Text>
+              <Text>Boilerplate | Address.</Text>
             </Section>
           </Container>
         </Body>

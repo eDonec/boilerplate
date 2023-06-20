@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 
 const FACEBOOK_SHARE_BASE_URL = "https://www.facebook.com/sharer.php?u=";
 const FacebookShare = () => {
-  const [currentUrl, setCurrentUrl] = useState("https://mpsy.tn");
+  const [currentUrl, setCurrentUrl] = useState("https://www.edonec.com/");
 
   useEffect(() => {
     setCurrentUrl(window.location.href);

@@ -90,7 +90,7 @@ const BlogsByCategoryPage: FC<BlogsByCategoryPageProps> = ({
   return (
     <div className="container mx-auto my-14 flex flex-col gap-4 overflow-x-hidden px-4 md:overflow-x-visible">
       <SEO
-        title={`Articles dans la catégorie ${category.title} | Mr le Psy`}
+        title={`Articles dans la catégorie ${category.title} | Boilerplate`}
         description={category.description}
         image={`${process.env.NEXT_PUBLIC_HOSTNAME}/og-image/api/main`}
       />

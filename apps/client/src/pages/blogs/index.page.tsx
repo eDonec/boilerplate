@@ -36,8 +36,8 @@ type BlogsPageProps = {
 const BlogsPage: FC<BlogsPageProps> = ({ blogs }) => (
   <Layout className="relative space-y-12 px-4 py-16">
     <SEO
-      title="Articles | Mr le Psy "
-      description="Articles en psychologie: conseils et astuces pour une meilleure santé mentale"
+      title="Articles | Boilerplate "
+      description="Articles"
       image={`${process.env.NEXT_PUBLIC_HOSTNAME}/og-image/api/main`}
     />
     <GradientBackgroundText text="إفهم روحك" />

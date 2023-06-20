@@ -82,7 +82,7 @@ const BlogDetailsPage: FC<BlogDetailsPageProps> = ({ blogData }) => {
       }}
     >
       <SEO
-        title={`${blog.title} | Mr le Psy`}
+        title={`${blog.title} | Boilerplate`}
         description={blog.metaDescription}
         image={`${process.env.NEXT_PUBLIC_HOSTNAME}/og-image/api/blog/${blog.slug}`}
       />
@@ -114,10 +114,8 @@ const BlogDetailsPage: FC<BlogDetailsPageProps> = ({ blogData }) => {
                 dangerouslySetInnerHTML={{ __html: blog.content }}
               />
               <p className="text-sm italic">
-                Les informations fournies sur mpsy.net ne sont en aucun cas
-                destinées à remplacer la relation entre un patient et son
-                psychologue. mpsy.net ne promeut aucun traitement spécifique,
-                produit commercial ou service en particulier.
+                Informations rassurantes pour les utilisateurs concernant les
+                activités du Boilerplate.
               </p>
               <Score className="sticky bottom-6 self-center" />
             </div>

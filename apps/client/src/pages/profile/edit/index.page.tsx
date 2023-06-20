@@ -22,7 +22,7 @@ function EditProfilePage() {
     <PrivateContainer>
       <div className="overfow-x-hidden container mx-auto space-y-6 p-4 md:p-0">
         <SEO
-          title="Modification du Profil | Mr le Psy"
+          title="Modification du Profil | Boilerplate"
           description="Mettez à jour votre profil en toute sécurité sur notre page de modification de profil. Ajoutez ou modifiez vos informations personnelles grâce à notre système de sécurité fiable. Votre confidentialité est notre priorité."
           image={`${process.env.NEXT_PUBLIC_HOSTNAME}/og-image/api/main`}
         />
