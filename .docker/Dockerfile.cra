@@ -20,7 +20,7 @@ COPY --from=copier /app .
 RUN apk add --no-cache libc6-compat
 RUN yarn install
 ENV NODE_ENV production
-ENV NODE_OPTIONS: --max-old-space-size=6144
+ENV NODE_OPTIONS --max-old-space-size=6144
 RUN yarn build --filter=${MICROSERVICE_NAME}
 # Production image, copy all the files in the nginx image
 FROM nginx:1.21.6-alpine AS runner
