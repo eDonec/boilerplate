@@ -16,11 +16,11 @@ interface ISEOProps {
 }
 
 const SEO: React.FC<ISEOProps> = ({
-  title = "Mr. le Psy",
-  siteName = "Mr. le Psy",
-  author = "Mr. le Psy",
+  title = "Boilerplate",
+  siteName = "Boilerplate",
+  author = "Boilerplate",
   description = "A monorepo for eDonec with microservice architecture and stuff",
-  url = "https://mpsy.tn",
+  url = "https://www.edonec.com/",
   type = "website",
   robots = "follow, index",
   image = "https://image.freepik.com/photos-gratuite/bagages-jaunes-plat-copie-espace_23-2148786124.jpg",

@@ -256,7 +256,7 @@ services:
       - UPLOAD_SECRET_KEY=${UPLOAD_SECRET_KEY}
       - ROOT_USER_EMAIL=${ROOT_USER_EMAIL}
       - ROOT_USER_PASSWORD=${ROOT_USER_PASSWORD}
-      - EMAIL_SENDER=no-reply@mpsy.tn
+      - EMAIL_SENDER=no-reply@edonec.com
       - MICROSERVICE_NAME=mailing
       - REDIS_CLIENT=redis://cache:6379
       - SENDGRID_API_KEY=${SENDGRID_API_KEY}

@@ -6,7 +6,7 @@ const DataDeletionInstruction = () => {
   return (
     <>
       <SEO
-        title="politique de recuperation de données | Mr le Psy"
+        title="politique de recuperation de données | Boilerplate"
         description="Suivez les instructions sur cette page pour demander la suppression de vos données."
         image={`${process.env.NEXT_PUBLIC_HOSTNAME}/og-image/api/main`}
       />

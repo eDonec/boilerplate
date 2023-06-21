@@ -6,7 +6,7 @@ const PrivacyPolicy = () => {
   return (
     <div className="container mx-auto my-16 px-10">
       <SEO
-        title="politique de confidentialité | Mr le Psy"
+        title="politique de confidentialité | Boilerplate"
         description="Consultez notre politique de confidentialité pour comprendre comment nous protégeons vos données personnelles sur notre site. Nous prenons votre vie privée très au sérieux et nous nous engageons à garantir la confidentialité et la sécurité de toutes vos informations personnelles."
         image={`${process.env.NEXT_PUBLIC_HOSTNAME}/og-image/api/main`}
       />

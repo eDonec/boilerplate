@@ -17,7 +17,7 @@ function EditPasswordPage() {
     <PrivateContainer>
       <div className="container mx-auto p-4 md:p-0">
         <SEO
-          title="Modification du mot de passe | Mr le Psy"
+          title="Modification du mot de passe | Boilerplate"
           description="Modifiez votre mot de passe en toute sécurité sur notre page de modification de mot de passe. Protégez votre compte en créant un mot de passe fort et complexe. Notre système sécurisé garantit la confidentialité de vos informations personnelles."
           image={`${process.env.NEXT_PUBLIC_HOSTNAME}/og-image/api/main`}
         />

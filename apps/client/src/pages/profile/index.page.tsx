@@ -23,7 +23,7 @@ function ProfilePage() {
     <PrivateContainer>
       <div className="container mx-auto space-y-4 px-4 pb-10 md:px-0">
         <SEO
-          title="Profile | Mr le Psy"
+          title="Profile | Boilerplate"
           description="Consultez votre profil sur notre page dédiée pour voir toutes vos informations personnelles en un seul endroit. Assurez-vous que toutes vos informations sont à jour et exactes. Nous prenons votre vie privée très au sérieux et nous nous engageons à garantir la confidentialité et la sécurité de vos données."
           image={`${process.env.NEXT_PUBLIC_HOSTNAME}/og-image/api/main`}
         />

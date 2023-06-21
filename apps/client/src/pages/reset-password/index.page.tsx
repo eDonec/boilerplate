@@ -42,8 +42,8 @@ function ResetPasswordPage({ token }: ResetPasswordPageProps) {
   return (
     <div className="container mx-auto pt-12">
       <SEO
-        title="Réinitialiser mon mot de passe | Mr le Psy"
-        description="Portail de réinitialisation de mot de passe de Mr le Psy."
+        title="Réinitialiser mon mot de passe | Boilerplate"
+        description="Portail de réinitialisation de mot de passe de Boilerplate."
         image={`${process.env.NEXT_PUBLIC_HOSTNAME}/og-image/main`}
       />
       <GlassmorphicCard>

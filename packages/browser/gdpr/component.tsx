@@ -35,8 +35,8 @@ const GDPRConsent = () => {
                 <span className="">
                   En continuant, vous acceptez
                   <a target="_blank" href="/terms-of-service">
-                    <strong> les conditions d&apos;utilisation </strong>de Mr le
-                    Psy
+                    <strong> les conditions d&apos;utilisation </strong>de
+                    Boilerplate
                   </a>{" "}
                   et reconnaissez avoir lu notre
                   <a href="/privacy-policy" target="_blank">

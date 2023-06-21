@@ -38,7 +38,7 @@ authConsumer.subscribe.ResetPasswordRequest(
     );
     const options: sendgrid.MailDataRequired = {
       to: email,
-      from: { email: process.env.EMAIL_SENDER, name: "Mr. le Psy" },
+      from: { email: process.env.EMAIL_SENDER, name: "Boilerplate" },
       subject: "Réinitialisation de votre mot de passe",
       html: emailHtml,
     };

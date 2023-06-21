@@ -6,7 +6,7 @@ const TermsOfService = () => {
   return (
     <div className="container mx-auto my-16 px-10">
       <SEO
-        title="Terms of Service | Mr le Psy"
+        title="Terms of Service | Boilerplate"
         description="Consultez nos conditions d'utilisation pour comprendre les règles et les obligations lors de l'utilisation de notre site. Nous sommes engagés à fournir un service de qualité et sommes là pour vous aider en cas de besoin."
         image={`${process.env.NEXT_PUBLIC_HOSTNAME}/og-image/api/main`}
       />
