@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "categories-types": "*",
-    "mongoose": "6.9.1",
+    "mongoose": "6.11.3",
     "shared-types": "*"
   }
 }

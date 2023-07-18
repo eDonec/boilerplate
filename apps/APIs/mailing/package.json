@@ -37,7 +37,7 @@
     "jsonwebtoken": "9.0.0",
     "mailing-events": "*",
     "mailing-types": "*",
-    "mongoose": "6.9.1",
+    "mongoose": "6.11.3",
     "nanoid": "3.3.4",
     "node-schedule": "^2.1.1",
     "react-email": "1.9.3",

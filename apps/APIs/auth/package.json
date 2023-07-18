@@ -34,7 +34,7 @@
     "google-auth-library": "^8.8.0",
     "http-server": "*",
     "jsonwebtoken": "9.0.0",
-    "mongoose": "6.9.1",
+    "mongoose": "6.11.3",
     "nanoid": "3.3.4",
     "shared-types": "*",
     "token": "*"
