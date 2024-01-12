@@ -79,22 +79,25 @@ export const useUncontrolledDataTable = <T>({
     searchParams.get(UncontrolledDataTableURLParams.KEYWORD)
   );
 
-  const handleKeywordDebounced = (debouncedKeyword: string) => {
-    if (debouncedKeyword.trim())
+  const updateSearchParamsAndSyncData = (
+    debouncedKeyword: string | undefined
+  ) => {
+    if (debouncedKeyword !== undefined && debouncedKeyword.trim()) {
       searchParams.set(
         UncontrolledDataTableURLParams.KEYWORD,
         debouncedKeyword
       );
-    else searchParams.delete(UncontrolledDataTableURLParams.KEYWORD);
+    } else searchParams.delete(UncontrolledDataTableURLParams.KEYWORD);
+
     setSearchParams(searchParams);
     syncData(searchParams);
   };
 
-  const debounceValue = useDebounce(handleKeywordDebounced);
+  const updateDebouncedKeyword = useDebounce(updateSearchParamsAndSyncData);
 
-  const onKeywordChange = (newKeyWord: string) => {
-    setKeyword(newKeyWord);
-    debounceValue(newKeyWord);
+  const onKeywordChange = (newKeyword: string) => {
+    setKeyword(newKeyword);
+    updateDebouncedKeyword(newKeyword);
   };
   const { limit, sortField, sortDirection } = useMemo(
     () => extractQueryParams(searchParams),

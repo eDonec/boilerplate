@@ -3,17 +3,14 @@ import { useEffect, useState } from "react";
 const DEFAULT_DELAY = 200;
 
 const useDebounce = <T>(
-  debounceResolutionCallback: (value: T) => void,
+  debounceResolutionCallback: (value: T | undefined) => void,
   delay: number = DEFAULT_DELAY
 ) => {
-  const [debouncedValue, setDebouncedValue] = useState<T | undefined>(
-    undefined
-  );
+  const [debouncedValue, setDebouncedValue] = useState<T | undefined>();
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
-      if (debouncedValue !== undefined)
-        debounceResolutionCallback(debouncedValue);
+      debounceResolutionCallback(debouncedValue);
     }, delay);
 
     return () => {
