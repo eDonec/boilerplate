@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-const DEFAULT_DELAY = 500;
+const DEFAULT_DELAY = 200;
 
 const useDebounce = <T>(
   debounceResolutionCallback: (value: T) => void,
@@ -9,23 +9,19 @@ const useDebounce = <T>(
   const [debouncedValue, setDebouncedValue] = useState<T | undefined>(
     undefined
   );
-  const updateDebouncedValue = (value: T) => {
-    setDebouncedValue(value);
-  };
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
-      if (debouncedValue !== undefined) {
+      if (debouncedValue !== undefined)
         debounceResolutionCallback(debouncedValue);
-      }
     }, delay);
 
     return () => {
       clearTimeout(timeoutId);
     };
-  }, [debouncedValue, delay, debounceResolutionCallback]);
+  }, [debouncedValue, delay]);
 
-  return updateDebouncedValue;
+  return setDebouncedValue;
 };
 
 export default useDebounce;
