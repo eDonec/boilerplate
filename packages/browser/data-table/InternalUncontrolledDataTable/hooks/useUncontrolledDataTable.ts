@@ -93,11 +93,11 @@ export const useUncontrolledDataTable = <T>({
     syncData(searchParams);
   };
 
-  const updateDebouncedKeyword = useDebounce(updateSearchParamsAndSyncData);
+  const debounceKeyword = useDebounce(updateSearchParamsAndSyncData);
 
   const onKeywordChange = (newKeyword: string) => {
     setKeyword(newKeyword);
-    updateDebouncedKeyword(newKeyword);
+    debounceKeyword(newKeyword);
   };
   const { limit, sortField, sortDirection } = useMemo(
     () => extractQueryParams(searchParams),
