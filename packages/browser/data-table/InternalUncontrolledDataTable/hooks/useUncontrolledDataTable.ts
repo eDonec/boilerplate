@@ -1,6 +1,6 @@
 import { useImperativeHandle, useMemo, useState } from "react";
 
-import { useFirstMount } from "core-hooks";
+import { useDebounce, useFirstMount } from "core-hooks";
 import { IPaginatedResult } from "shared-types/IPaginatedResult";
 import { SortDirection } from "shared-types/SortDirection";
 
@@ -75,15 +75,30 @@ export const useUncontrolledDataTable = <T>({
     setSearchParams(searchParams);
     syncData(searchParams);
   };
+  const [keyword, setKeyword] = useState(
+    searchParams.get(UncontrolledDataTableURLParams.KEYWORD)
+  );
 
-  const onKeywordChange = (keyword: string) => {
-    if (keyword.trim())
-      searchParams.set(UncontrolledDataTableURLParams.KEYWORD, keyword);
-    else searchParams.delete(UncontrolledDataTableURLParams.KEYWORD);
+  const updateSearchParamsAndSyncData = (
+    debouncedKeyword: string | undefined
+  ) => {
+    if (debouncedKeyword !== undefined && debouncedKeyword.trim()) {
+      searchParams.set(
+        UncontrolledDataTableURLParams.KEYWORD,
+        debouncedKeyword
+      );
+    } else searchParams.delete(UncontrolledDataTableURLParams.KEYWORD);
+
     setSearchParams(searchParams);
     syncData(searchParams);
   };
 
+  const debounceKeyword = useDebounce(updateSearchParamsAndSyncData);
+
+  const onKeywordChange = (newKeyword: string) => {
+    setKeyword(newKeyword);
+    debounceKeyword(newKeyword);
+  };
   const { limit, sortField, sortDirection } = useMemo(
     () => extractQueryParams(searchParams),
     [searchParams]
@@ -133,6 +148,6 @@ export const useUncontrolledDataTable = <T>({
     limit,
     loading,
     onKeywordChange,
-    keyword: searchParams.get(UncontrolledDataTableURLParams.KEYWORD),
+    keyword,
   };
 };
