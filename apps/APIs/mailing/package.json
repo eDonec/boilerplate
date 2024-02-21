@@ -25,7 +25,7 @@
     "@sendgrid/mail": "^7.7.0",
     "apple-signin-auth": "1.7.5",
     "auth-events": "*",
-    "axios": "1.4.0",
+    "axios": "1.6.0",
     "bcrypt": "5.1.0",
     "body-parser": "1.20.2",
     "core-utils": "*",

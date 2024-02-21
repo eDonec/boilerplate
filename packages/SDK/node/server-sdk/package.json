@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "auth-types": "*",
-    "axios": "1.4.0",
+    "axios": "1.6.0",
     "shared-types": "*"
   }
 }
