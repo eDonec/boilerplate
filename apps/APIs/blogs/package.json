@@ -17,7 +17,7 @@
     "lint": "tsc --noEmit && eslint src --fix"
   },
   "dependencies": {
-    "axios": "1.4.0",
+    "axios": "1.6.0",
     "bcrypt": "5.1.0",
     "blogs-events": "*",
     "blogs-types": "*",
