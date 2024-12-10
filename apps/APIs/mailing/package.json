@@ -38,7 +38,7 @@
     "mailing-events": "*",
     "mailing-types": "*",
     "mongoose": "6.9.1",
-    "nanoid": "3.3.4",
+    "nanoid": "3.3.8",
     "node-schedule": "^2.1.1",
     "react-email": "1.9.3",
     "shared-types": "*",
